@@ -11,6 +11,8 @@ import thunkMiddleware from 'redux-thunk';
 let initialState = {
     hybrid: false,
     initialized: false,
+    initPending: false,
+    session_start_after_init: false,
     message: 'NO_INIT_CALLED',   
     gameInfo: {},
     user: {logged: false},
