@@ -8,6 +8,8 @@ import { mainReducer } from './js/reducers/index.js';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
+import './css/menu.css';
+
 let initialState = {
     hybrid: false,
     initialized: false,
@@ -18,9 +20,17 @@ let initialState = {
     user: {logged: false},
     vhost: {},
     connectionState: { online: true, type: 'none' },
-    initConfig: {},
+    initConfig: {
+        lite: true,
+        moreGamesButtonStyle:{top:"50%", left:"1%"}
+    },
     currentSession: {opened:false},
-    isOnStartSessionRegistered: false
+    isOnStartSessionRegistered: false,
+    menu:{
+        shown:false,
+        dragging:false,
+        pressed:false
+    }
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -3,7 +3,8 @@ export function mainReducer(state = {}, action){
         case 'SET_IS_HYBRID':
             return Object.assign({}, state, { hybrid: action.hybrid });
         case 'INIT_START':
-            return Object.assign({}, state, { initConfig: action.initConfig, initPending: action.initPending });
+            let newInitConfig = {...state.initConfig, ...action.initConfig}
+            return Object.assign({}, state, { initConfig: newInitConfig, initPending: action.initPending });
         case 'INIT_ERROR':
             return Object.assign({}, state, { error: action.reason });
         case 'INIT_FINISHED':
@@ -19,14 +20,14 @@ export function mainReducer(state = {}, action){
         case 'USER_CHECK_LOAD_END':
             return Object.assign({}, state, { user: action.user });
         case 'USER_CHECK_LOAD_FAIL':
-            return Object.assign({}, state.user, { error: action.reason });
+            return Object.assign({}, state, {user:{...state.user, error: action.reason} });
         case 'GET_FAVOURITES_START':
             return state;
         case 'GET_FAVOURITES_END':            
             return Object.assign({}, state, {user:{...state.user, favourites: action.favourites}});
         case 'GET_FAVOURITES_FAIL':
             return Object.assign({}, state, {user:{...state.user, fetch_error: action.reason }});
-        case 'GAME_INFO_LOAD_START':         
+        case 'GAME_INFO_LOAD_START':
         case 'GAME_INFO_LOAD_END':
             return Object.assign({}, state, {gameInfo: action.gameInfo});          
         case 'GAME_INFO_LOAD_FAIL':
@@ -44,7 +45,19 @@ export function mainReducer(state = {}, action){
             }
             return Object.assign({}, state, { currentSession: newCurrentSession });            
         case 'REGISTER_ON_START_SESSION_CALLBACK':
-            return Object.assign({}, state, { isOnStartSessionRegistered: action.registered });
+            return Object.assign({}, state, { isOnStartSessionRegistered: action.registered });       
+        case 'MENU_SHOW':
+            var newMenuState = {...state.menu, shown: true, style: action.style || state.menu.style};
+            return Object.assign({}, state, {menu: newMenuState});
+        case 'MENU_HIDE':
+            var newMenuState = {...state.menu, shown: false};
+            return Object.assign({}, state, {menu: newMenuState});
+        case 'MENU_PRESSED':
+            var newMenuState = {...state.menu, pressed: true};
+            return Object.assign({}, state, {menu: newMenuState});
+        case 'MENU_RELEASED':
+            var newMenuState = {...state.menu, pressed: false};
+            return Object.assign({}, state, {menu: newMenuState});
         default:
             return state;
     }

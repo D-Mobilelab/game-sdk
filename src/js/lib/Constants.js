@@ -61,7 +61,7 @@ module.exports = {
     CONTENT_ID_REGEX: '(html5gameplay|sdk_integration_test|games)\/([a-zA-Z0-9]+)', // games in hybrid case(folder name)    
 
     // API
-    VHOST_API_URL: '/v01/config.getvars?keys=',
+    VHOST_API_URL: '/v01/config.getvars', //?keys
     GAME_INFO_API_URL: '/v01/gameplay', //?content_id=
     GAMEOVER_API_URL: '/v01/gameover',
     LEADERBOARD_API_URL: '/v01/leaderboard',

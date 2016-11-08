@@ -37,15 +37,15 @@ export class SDK{
     }
     
     showMoreGamesButton(){
-
+        _props_.actions.showMenu();
     }
     
     hideMoreGamesButton(){
-
+        _props_.actions.hideMenu();
     }
 
     getAvatar(){
-
+        
     }
 
     getNickName(){
@@ -53,6 +53,6 @@ export class SDK{
     }
 
     goToHome(){
-
+       _props_.actions.goToHome();
     } 
 }

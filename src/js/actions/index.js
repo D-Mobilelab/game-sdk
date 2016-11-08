@@ -43,10 +43,14 @@ export function init(initConfig){
         .then(()=>{
             dispatch({
                 type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
-            });            
+            });
+
+            let menuStyle = getState().initConfig.moreGamesButtonStyle;
+            menuStyle.backgroundImage = `url(${getState().vhost.IMAGES_SPRITE_GAME})`;
+            dispatch(showMenu(menuStyle));
             if(getState().session_start_after_init){
                 return dispatch(doStartSession());
-            }            
+            }
         }).catch((reason)=>{
             dispatch({
                 type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, error: reason
@@ -185,6 +189,37 @@ export function getGameInfo(){
         }).catch((reason)=>{
             dispatch({type:'GAME_INFO_LOAD_FAIL', error: reason});
         });
+    }
+}
+
+export function goToHome(){
+    return {
+        type:'GO_TO_HOME'
+    }
+}
+
+export function menuPressed(){
+    return {
+        type:'MENU_PRESSED'
+    }
+}
+
+export function menuReleased(){
+    return {
+        type:'MENU_RELEASED'
+    }
+}
+
+export function showMenu(style){
+    return {
+        type: 'MENU_SHOW',
+        style: style
+    }
+}
+
+export function hideMenu(){
+    return {
+        type: 'MENU_HIDE'
     }
 }
 

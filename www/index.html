@@ -4,10 +4,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <title>Titolo</title>      
+    <title>Titolo</title>
+    <script type="text/javascript">
+      (function(win, doc){
+        function is_touch_device() {
+          return (('ontouchstart' in win)
+                || (win.navigator.MaxTouchPoints > 0)
+                || (win.navigator.msMaxTouchPoints > 0));
+          }
+          win.is_touch = is_touch_device();
+      })(window, document);
+    </script>      
   </head>
-  <body>  
-  
-  <script type="text/javascript" src="js/bundle.js"></script>
+  <body>
+
+  <script type="text/javascript" src="bundle.js"></script>
   </body>
 </html>

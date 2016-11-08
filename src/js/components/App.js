@@ -5,7 +5,7 @@ import Menu from './Menu';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/index.js';
 import { bindActionCreators } from 'redux';
-import {SDK} from './sdk';
+import { SDK } from './sdk';
 class App extends React.Component{
     
     constructor(props){
@@ -16,8 +16,8 @@ class App extends React.Component{
     render(){
         return (
             <div>
-                <GameOver message={this.props.message} />
-                <Menu message={this.props.message}/>
+                <GameOver {...this.props} />
+                <Menu {...this.props}/>
             </div>
         )
     }

@@ -2,9 +2,9 @@ var path = require("path");
 var devConfiguration = {
     entry:["./src/index.js"],
     output:{
-        path: path.resolve(__dirname, "www", "js"),
+        path: path.resolve(__dirname, "www"),
         filename:"bundle.js",
-        publicPath: "/js/"
+        publicPath: "/"
     },    
     module:{
         loaders:[
@@ -15,6 +15,9 @@ var devConfiguration = {
             {test:/\.es6$/, exclude:/node_modules/,loader:'babel-loader'},
             {test:/\.(png|jpg|ttf|eot)$/, exclude:/node_modules/,loader:'url-loader?limit=1024'} //kb
         ]
+    },
+    devServer: {
+        contentBase:"www/"
     },
     // module end
     resolve:{
