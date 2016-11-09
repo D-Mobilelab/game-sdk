@@ -11,13 +11,13 @@ class App extends React.Component{
     constructor(props){
         super(props);
         window.GamifiveSDK = new SDK(props);
-    }   
+    }
 
     render(){
         return (
             <div>
-                <GameOver {...this.props} />
-                <Menu {...this.props}/>
+                <GameOver game={this.props.gameInfo} message={this.props.message}/>
+                <Menu {...this.props.menu} actions={this.props.actions}/>
             </div>
         )
     }

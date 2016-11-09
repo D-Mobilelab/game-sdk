@@ -10,12 +10,12 @@ let AxiosInstance = axios.create({
 let onStartCallback = function(){};
 let vhostKeys = [
     "CONTENT_RANKING",
-    "GAMEOVER_LIKE_CLASS_TO_TOGGLE",
-    "GAMEOVER_LIKE_SELECTOR",
+    //"GAMEOVER_LIKE_CLASS_TO_TOGGLE",
+    //"GAMEOVER_LIKE_SELECTOR",
     "IMAGES_SPRITE_GAME",
     "MOA_API_APPLICATION_OBJECTS_GET",
     "MOA_API_APPLICATION_OBJECTS_SET",
-    "MOA_API_USER_CHECK",
+    //"MOA_API_USER_CHECK",
     "NEWTON_SECRETID"
 ];
 export function init(initConfig){
@@ -137,24 +137,55 @@ function doStartSession(){
 export function canPlay(){
     return (dispatch, getState)=>{
         let url = Constants.CAN_DOWNLOAD_API_URL.replace(":ID", getContentId());
-        return AxiosInstance.get(url).then((response)=>{
-            dispatch({type:'SET_CAN_PLAY', canPlay: response.data.canDownload});
-        });        
+        return AxiosInstance.get(url, {
+            params:{
+                    cors_compliant:1
+                }
+            }).then((response)=>{
+                dispatch({type:'SET_CAN_PLAY', canPlay: response.data.canDownload});
+            });        
     }
 }
 
 
 export function endSession(scoreAndLevel={score:0,level:0}){
     return (dispatch, getState) => {
+        //only if init has been called
         if(!getState().initialized){
             console.log("Cannot end a session before initialized");
             return;
         }
+        // and a session was started
         if (Object.keys(getState().currentSession).length > 0 
             && getState().currentSession.opened){
             let endTime = new Date;
-            let session = { score: scoreAndLevel.score, level: scoreAndLevel.level, endTime, opened: false }
+            let session = { score: scoreAndLevel.score, level: scoreAndLevel.level, endTime, opened: false };
             dispatch({ type: 'END_SESSION', session });
+            //lite only leaderboard
+            if(getState().initConfig.lite){
+                let lastSession = getState().currentSession;
+                let leaderboardParams = {
+                    start: lastSession.startTime.getTime(),
+                    duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
+                    score: lastSession.score,
+                    newapps: 1,
+                    appId: getContentId(),
+                    label: getState().gameInfo.label,
+                    userId: getState().user.user,
+                    cors_compliant:1
+                };
+                console.log(leaderboardParams);
+
+                return AxiosInstance.get(Constants.LEADERBOARD_API_URL, { params: leaderboardParams })
+                    .then((response)=>{
+                        
+                    })
+                    .catch((reason)=>{
+                        
+                    });
+            } else {
+                console.log("endSession normal");
+            }           
         } else {
             console.log("No session started!");
         }
@@ -183,7 +214,10 @@ export function getGameInfo(){
     return (dispatch, getState) => {
         dispatch({type:'GAME_INFO_LOAD_START'});
         return AxiosInstance.get(Constants.GAME_INFO_API_URL, {
-            params:{content_id: getContentId()}
+            params:{
+                content_id: getContentId(), 
+                cors_compliant:1
+            }
         }).then((response)=>{            
             dispatch({type:'GAME_INFO_LOAD_END', gameInfo: response.data.game_info});
         }).catch((reason)=>{

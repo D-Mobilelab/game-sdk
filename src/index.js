@@ -8,8 +8,6 @@ import { mainReducer } from './js/reducers/index.js';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import './css/menu.css';
-
 let initialState = {
     hybrid: false,
     initialized: false,

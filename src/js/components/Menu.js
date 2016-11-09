@@ -1,4 +1,5 @@
 import React from 'react';
+import menuStyles from '../../css/menu.css';
 
 class Menu extends React.Component{
     constructor(props){
@@ -25,8 +26,7 @@ class Menu extends React.Component{
     onMouseDown(evt){
         if(window.is_touch){ return; }
         evt.preventDefault();
-        this.props.actions.menuPressed();
-            
+        this.props.actions.menuPressed();            
     }
 
     onMouseUp(evt){
@@ -40,20 +40,20 @@ class Menu extends React.Component{
     }
 
     onTouchMove(evt){ 
-        if(this.props.menu.pressed){
+        if(this.props.pressed){
             var touches = evt.changedTouches[0]; // get one finger
             //console.log("Touchmove",touches.pageX, touches.pageY);
         }          
     }
 
     render(){
-        let classNames = ['menu'];
-        classNames.push(this.props.menu.shown ? 'show' : 'hide');
-        classNames.push(this.props.menu.pressed ? 'active' : '');
+        let classNames = [menuStyles.menu];
+        classNames.push(this.props.shown ? menuStyles.show : menuStyles.hide);
+        classNames.push(this.props.pressed ? menuStyles.active : '');
         classNames.join(" ");
         
         return(
-            <div className={classNames.join(" ")} style={this.props.menu.style}
+            <div className={classNames.join(" ")} style={this.props.style}
                onMouseUp={this.onMouseUp}
                onMouseDown={this.onMouseDown}
                onMouseMove={this.onMouseMove}
