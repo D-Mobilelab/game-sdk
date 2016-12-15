@@ -25,15 +25,15 @@ export class SDK{
     }
     
     saveUserData(userData){
-        
+        _props_.actions.saveUserData(userData);
     }
     
     loadUserData(callback){
-
+        return _props_.actions.loadUserData(callback);
     }
     
     clearUserData(){
-
+        _props_.actions.clearUserData();
     }
     
     showMoreGamesButton(){

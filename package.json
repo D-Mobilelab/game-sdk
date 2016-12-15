@@ -1,5 +1,5 @@
 {
-  "name": "webpack-example",
+  "name": "docomo-sdk",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -46,6 +46,7 @@
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-tappable": "^0.8.4",
+    "redux-logger": "^2.7.4",
     "stargatejs": "^0.2.0"
   }
 }

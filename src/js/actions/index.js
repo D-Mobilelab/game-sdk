@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { JSONPRequest } from 'http-francis';
-import { Utils } from 'stargatejs';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
 
 let AxiosInstance = axios.create({
   baseURL: Location.getOrigin()
 });
-let onStartCallback = function(){};
+
+let onStartCallback = ()=>{};
+let onUserDataCallback = ()=>{};
+
 let vhostKeys = [
     "CONTENT_RANKING",
     //"GAMEOVER_LIKE_CLASS_TO_TOGGLE",
@@ -33,7 +34,8 @@ export function init(initConfig){
             params:{
                 keys: vhostKeys.join(',')
             }
-        }).then((response)=>{
+        })
+        .then((response)=>{
             dispatch({type: 'VHOST_LOAD_END', vhost: response.data});
             return dispatch(getUser());
         })
@@ -48,6 +50,12 @@ export function init(initConfig){
             let menuStyle = getState().initConfig.moreGamesButtonStyle;
             menuStyle.backgroundImage = `url(${getState().vhost.IMAGES_SPRITE_GAME})`;
             dispatch(showMenu(menuStyle));
+            /**
+             * Same here with loadUserData
+             * if(getState().loadUserDataCalled){
+             *      dispatch(getUserData());
+             * }
+             */
             if(getState().session_start_after_init){
                 return dispatch(doStartSession());
             }
@@ -102,13 +110,15 @@ export function getUser(){
 
 export function startSession(){
     return (dispatch, getState) => {
-            // no initialized but init called
+        // no initialized but init called
         if(!getState().initialized && getState().initPending){
             dispatch({type:'ADD_TO_AFTER_INIT', session_start_after_init: true});
         } else if(!getState().initialized && !getState().initPending){
             // no initialized and init not even called
             console.log("You should call init before startSession!");
         } else {
+            dispatch(hideMenu());
+            dispatch(hideGameOver());
             dispatch(doStartSession());
         }
     }
@@ -150,7 +160,7 @@ export function canPlay(){
 
 export function endSession(scoreAndLevel={score:0,level:0}){
     return (dispatch, getState) => {
-        //only if init has been called
+        //only if already initialized
         if(!getState().initialized){
             console.log("Cannot end a session before initialized");
             return;
@@ -161,31 +171,32 @@ export function endSession(scoreAndLevel={score:0,level:0}){
             let endTime = new Date;
             let session = { score: scoreAndLevel.score, level: scoreAndLevel.level, endTime, opened: false };
             dispatch({ type: 'END_SESSION', session });
-            //lite only leaderboard
-            if(getState().initConfig.lite){
-                let lastSession = getState().currentSession;
-                let leaderboardParams = {
-                    start: lastSession.startTime.getTime(),
-                    duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-                    score: lastSession.score,
-                    newapps: 1,
-                    appId: getContentId(),
-                    label: getState().gameInfo.label,
-                    userId: getState().user.user,
-                    cors_compliant:1
-                };
-                console.log(leaderboardParams);
+            
+            dispatch(showMenu());
 
-                return AxiosInstance.get(Constants.LEADERBOARD_API_URL, { params: leaderboardParams })
-                    .then((response)=>{
-                        
-                    })
-                    .catch((reason)=>{
-                        
-                    });
-            } else {
-                console.log("endSession normal");
-            }           
+            let lastSession = getState().currentSession;
+            //Lite only leaderboard
+            if(!getState().initConfig.lite){
+                dispatch(showGameOver());
+            }
+            let GAMEOVER_API = Constants.GAMEOVER_API_URL.replace(':CONTENT_ID', getContentId());                
+            let gameOverPromise = AxiosInstance.get(GAMEOVER_API, 
+                {params: {
+                        score: lastSession.score, 
+                        level: lastSession.level, 
+                        duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
+                        start: lastSession.startTime.getTime(),
+                        label: getState().gameInfo.label,
+                        userId: getState().user.user,
+                        cors_compliant: 1
+                    } 
+                })
+                .then((response)=>{
+                    // get ranking?
+                    // response.data.ranking                    
+                    dispatch(setRelated(response.data.related));                        
+                });
+                return gameOverPromise;
         } else {
             console.log("No session started!");
         }
@@ -199,6 +210,18 @@ export function setIsHybrid(){
     }*/
 }
 
+export function showGameOver(){
+    return {
+        type:'SHOW_GAME_OVER'
+    }
+}
+
+export function hideGameOver(){
+    return {
+        type:'HIDE_GAME_OVER'
+    }
+}
+
 function getContentId(){
     var urlToMatch = Location.getCurrentHref();
     var contentIdRegex = new RegExp(Constants.CONTENT_ID_REGEX);
@@ -207,7 +230,7 @@ function getContentId(){
     if (match !== null && match.length > 0){
         return match[2];
     }
-    throw new Error("Cannot get content id from url");
+    throw new Error('Cannot get content id from url');
 }
 
 export function getGameInfo(){
@@ -216,7 +239,7 @@ export function getGameInfo(){
         return AxiosInstance.get(Constants.GAME_INFO_API_URL, {
             params:{
                 content_id: getContentId(), 
-                cors_compliant:1
+                cors_compliant: 1
             }
         }).then((response)=>{            
             dispatch({type:'GAME_INFO_LOAD_END', gameInfo: response.data.game_info});
@@ -260,4 +283,70 @@ export function hideMenu(){
 export function registerOnStartCallback(callback){
     onStartCallback = callback;
     return { type:'REGISTER_ON_START_SESSION_CALLBACK', registered: true};
+}
+
+export function loadUserData(callback){
+    return (dispatch, getState) => {
+        onUserDataCallback = callback;        
+        if(getState().initPending && !getState().initialized){
+            // register this callback
+            return {type:'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true}
+        } else if(getState().initialized) {
+            /*return Promise.all([
+                getUserDataFromLocal(), 
+                getUserDataFromServer()
+            ]).then(syncUserData)
+              .then((userDataSynchronized)=>{
+                  dispatch({type: 'SET_USER_DATA', userData: userDataSynchronized});
+                  onUserDataCallback(getState().user.userData.info);                                    
+              });*/
+            let userDataGetApi = getState().vhost.MOA_API_APPLICATION_OBJECTS_GET
+                                .replace(':QUERY', JSON.stringify({contentId: getContentId()}))
+                                .replace(':ID', getState().user.userData._id)
+                                .replace(':ACCESS_TOKEN', '')
+                                .replace(':EXTERNAL_TOKEN', getState().user.user)
+                                .replace(':COLLECTION', 'gameInfo');
+            return AxiosInstance.get(userDataGetApi)
+                        .then((response)=>{
+                            // write the reducer part
+                            dispatch({type: 'SET_USER_DATA', userData: userDataSynchronized});
+                            return onUserDataCallback(getState().user.userData.info);
+                        });
+        }
+    }
+}
+
+function getUserDataFromServer(){
+
+}
+
+function getUserDataFromLocal(){
+
+}
+
+function setUserDataOnServer(){
+
+}
+
+function setUserDataOnLocal(){
+
+}
+
+function syncUserData(gameInfos){
+
+}
+
+export function saveUserData(){
+    return (dispatch, getState) => {
+        if(getState().initPending){
+
+        }
+    }
+}
+
+export function setRelated(related){
+    return {
+        type: 'SET_RELATED',
+        related: related
+    }
 }

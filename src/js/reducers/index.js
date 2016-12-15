@@ -28,8 +28,11 @@ export function mainReducer(state = {}, action){
         case 'GET_FAVOURITES_FAIL':
             return Object.assign({}, state, {user:{...state.user, fetch_error: action.reason }});
         case 'GAME_INFO_LOAD_START':
-        case 'GAME_INFO_LOAD_END':
-            return Object.assign({}, state, {gameInfo: action.gameInfo});          
+        case 'GAME_INFO_LOAD_END':            
+            return Object.assign({}, state, {
+                gameInfo: {...state.gameInfo, ...action.gameInfo},
+                user: {...state.user, ...state.gameInfo.user}
+            });
         case 'GAME_INFO_LOAD_FAIL':
             return Object.assign({}, state, {gameInfo: action.error});
         case 'SET_CAN_PLAY':
@@ -42,10 +45,16 @@ export function mainReducer(state = {}, action){
             let newCurrentSession = {
                 startTime: state.currentSession.startTime,
                 ...action.session
-            }
-            return Object.assign({}, state, { currentSession: newCurrentSession });            
+            };
+            return Object.assign({}, state, { currentSession: newCurrentSession });
+        case 'SHOW_GAME_OVER':
+            return Object.assign({}, state, {game_over:{show: true}});
+        case 'HIDE_GAME_OVER':
+            return Object.assign({}, state, {game_over:{show: false}});
         case 'REGISTER_ON_START_SESSION_CALLBACK':
-            return Object.assign({}, state, { isOnStartSessionRegistered: action.registered });       
+            return Object.assign({}, state, { isOnStartSessionRegistered: action.registered });
+        case 'REGISTER_ON_USER_DATA_CALLBACK':
+            return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });         
         case 'MENU_SHOW':
             var newMenuState = {...state.menu, shown: true, style: action.style || state.menu.style};
             return Object.assign({}, state, {menu: newMenuState});
@@ -58,6 +67,8 @@ export function mainReducer(state = {}, action){
         case 'MENU_RELEASED':
             var newMenuState = {...state.menu, pressed: false};
             return Object.assign({}, state, {menu: newMenuState});
+        case 'SET_RELATED':
+            return Object.assign({}, state, {gameInfo:{...state.gameInfo, related: action.related }});
         default:
             return state;
     }

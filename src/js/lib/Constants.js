@@ -63,7 +63,7 @@ module.exports = {
     // API
     VHOST_API_URL: '/v01/config.getvars', //?keys
     GAME_INFO_API_URL: '/v01/gameplay', //?content_id=
-    GAMEOVER_API_URL: '/v01/gameover',
+    GAMEOVER_API_URL: '/v01/gameover/:CONTENT_ID', // ?start&duration&score&level
     LEADERBOARD_API_URL: '/v01/leaderboard',
     CAN_DOWNLOAD_API_URL: '/v01/user.candownload/:ID',
     USER_CHECK:'/v01/user.check',

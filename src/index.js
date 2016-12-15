@@ -7,37 +7,22 @@ import { Provider } from 'react-redux';
 import { mainReducer } from './js/reducers/index.js';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-
-let initialState = {
-    hybrid: false,
-    initialized: false,
-    initPending: false,
-    session_start_after_init: false,
-    message: 'NO_INIT_CALLED',   
-    gameInfo: {},
-    user: {logged: false},
-    vhost: {},
-    connectionState: { online: true, type: 'none' },
-    initConfig: {
-        lite: true,
-        moreGamesButtonStyle:{top:"50%", left:"1%"}
-    },
-    currentSession: {opened:false},
-    isOnStartSessionRegistered: false,
-    menu:{
-        shown:false,
-        dragging:false,
-        pressed:false
-    }
-};
+import { initialState } from './initialState';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const middlewares = [thunkMiddleware];
+
+if (process.env.NODE_ENV === `development`) {
+  const createLogger = require(`redux-logger`);
+  const logger = createLogger();
+  middlewares.push(logger);
+}
 
 let store = createStore(
     mainReducer,
     initialState,
     composeEnhancers(
-        applyMiddleware(thunkMiddleware)
+        applyMiddleware(...middlewares)
     )
 );
 
@@ -48,7 +33,7 @@ window.document.body.appendChild(ROOT_ELEMENT);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App label='gameasy' />
     </Provider>,
     ROOT_ELEMENT
 );

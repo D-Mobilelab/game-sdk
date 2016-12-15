@@ -10,37 +10,51 @@ class Menu extends React.Component{
         this.onMouseUp = this.onMouseUp.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
+        this.state = {
+            active: false,
+            dragging: false
+        }
+    }
+    
+    setActive(bool){
+        this.setState({...this.state, active: bool});
     }
 
     onTouchStart(evt){
         evt.preventDefault();
-        this.props.actions.menuPressed();
+        this.setActive(true);
+        // this.props.actions.menuPressed();
     }
 
     onTouchEnd(evt){
-        evt.preventDefault();        
-        this.props.actions.goToHome();
-        this.props.actions.menuReleased();
+        evt.preventDefault();
+        this.setActive(false);
+        //this.props.actions.goToHome();
+        // this.props.actions.menuReleased();
     }
-        
+    
     onMouseDown(evt){
         if(window.is_touch){ return; }
         evt.preventDefault();
-        this.props.actions.menuPressed();            
+        this.setActive(true);
+        // this.props.actions.menuPressed();            
     }
 
     onMouseUp(evt){
         if(window.is_touch){ return; }
         evt.preventDefault();
-        this.props.actions.menuReleased();        
+        this.setActive(false);
+        // this.props.actions.menuReleased();        
     }
 
     onMouseMove(evt){
-        //console.log("Mousemove:", evt.pageX, evt.pageY);
+        if(this.state.active){
+            console.log("Mousemove:", evt.pageX, evt.pageY);
+        }
     }
 
     onTouchMove(evt){ 
-        if(this.props.pressed){
+        if(this.state.active){
             var touches = evt.changedTouches[0]; // get one finger
             //console.log("Touchmove",touches.pageX, touches.pageY);
         }          
@@ -49,7 +63,7 @@ class Menu extends React.Component{
     render(){
         let classNames = [menuStyles.menu];
         classNames.push(this.props.shown ? menuStyles.show : menuStyles.hide);
-        classNames.push(this.props.pressed ? menuStyles.active : '');
+        classNames.push(this.state.active ? menuStyles.active : '');
         classNames.join(" ");
         
         return(
