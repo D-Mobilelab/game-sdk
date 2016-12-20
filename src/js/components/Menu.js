@@ -10,64 +10,95 @@ class Menu extends React.Component{
         this.onMouseUp = this.onMouseUp.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
+
         this.state = {
+            show: this.props.show,
             active: false,
-            dragging: false
+            pointerDownPosition: {x:0, y:0},
+            pointerUpPosition: {x:0, y:0},
+            style: this.props.style
         }
     }
     
-    setActive(bool){
-        this.setState({...this.state, active: bool});
+    componentWillReceiveProps(nextProps){
+        this.setState({...this.state, show: nextProps.show});
+    }
+
+    onPointerStart(event){
+        this.setState({...this.state, 
+            active: true,
+            pointerDownPosition: {x: event.pageX, y: event.pageY}
+        });
+    }
+
+    onPointerEnd(event){
+        if(this.state.pointerDownPosition.x === event.pageX && this.state.pointerDownPosition.y && event.pageY){
+            //it's a click
+            window.alert("it's a T(r)ap!");
+        
+        } else {
+            // was dragged
+            window.alert("drag");
+        }
+        
+        this.setState({
+            ...this.state, 
+            active: false,
+            pointerUpPosition: {x: event.pageX, y: event.pageY}
+        });
+        this.props.actions.goToHome();
+    }
+
+    onPointerMove(event){
+        if(this.state.active){
+            let newStyle = {left:`${(event.pageX - 30)}px`, top: `${(event.pageY - 15)}px`}
+            this.setState({
+                ...this.state,
+                style: newStyle
+            });
+        }
     }
 
     onTouchStart(evt){
         evt.preventDefault();
-        this.setActive(true);
-        // this.props.actions.menuPressed();
+        let touch = evt.touches[0];
+        this.onPointerStart(touch);
     }
 
     onTouchEnd(evt){
         evt.preventDefault();
-        this.setActive(false);
-        //this.props.actions.goToHome();
-        // this.props.actions.menuReleased();
+        let touch = evt.changedTouches[0];
+        this.onPointerEnd(touch);
+    }
+
+    onTouchMove(evt){
+        evt.preventDefault();
+        let touch= evt.changedTouches[0]; // get one finger
+        this.onPointerMove(touch);
     }
     
     onMouseDown(evt){
         if(window.is_touch){ return; }
-        evt.preventDefault();
-        this.setActive(true);
-        // this.props.actions.menuPressed();            
+        this.onPointerStart(evt);
     }
 
     onMouseUp(evt){
         if(window.is_touch){ return; }
-        evt.preventDefault();
-        this.setActive(false);
-        // this.props.actions.menuReleased();        
+        this.onPointerEnd(evt);
     }
 
     onMouseMove(evt){
-        if(this.state.active){
-            console.log("Mousemove:", evt.pageX, evt.pageY);
-        }
-    }
-
-    onTouchMove(evt){ 
-        if(this.state.active){
-            var touches = evt.changedTouches[0]; // get one finger
-            //console.log("Touchmove",touches.pageX, touches.pageY);
-        }          
+        evt.preventDefault();
+        this.onPointerMove(evt);
     }
 
     render(){
         let classNames = [menuStyles.menu];
-        classNames.push(this.props.shown ? menuStyles.show : menuStyles.hide);
+        classNames.push(this.state.show ? menuStyles.show : menuStyles.hide);
         classNames.push(this.state.active ? menuStyles.active : '');
-        classNames.join(" ");
         
         return(
-            <div className={classNames.join(" ")} style={this.props.style}
+            <div className={classNames.join(' ')} style={this.state.style}
                onMouseUp={this.onMouseUp}
                onMouseDown={this.onMouseDown}
                onMouseMove={this.onMouseMove}

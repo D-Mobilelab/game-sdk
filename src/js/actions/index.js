@@ -179,7 +179,7 @@ export function endSession(scoreAndLevel={score:0,level:0}){
             if(!getState().initConfig.lite){
                 dispatch(showGameOver());
             }
-            let GAMEOVER_API = Constants.GAMEOVER_API_URL.replace(':CONTENT_ID', getContentId());                
+            let GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());                
             let gameOverPromise = AxiosInstance.get(GAMEOVER_API, 
                 {params: {
                         score: lastSession.score, 
@@ -193,7 +193,7 @@ export function endSession(scoreAndLevel={score:0,level:0}){
                 })
                 .then((response)=>{
                     // get ranking?
-                    // response.data.ranking                    
+                    // response.data.ranking
                     dispatch(setRelated(response.data.related));                        
                 });
                 return gameOverPromise;
@@ -255,18 +255,6 @@ export function goToHome(){
     }
 }
 
-export function menuPressed(){
-    return {
-        type:'MENU_PRESSED'
-    }
-}
-
-export function menuReleased(){
-    return {
-        type:'MENU_RELEASED'
-    }
-}
-
 export function showMenu(style){
     return {
         type: 'MENU_SHOW',
@@ -292,14 +280,14 @@ export function loadUserData(callback){
             // register this callback
             return {type:'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true}
         } else if(getState().initialized) {
-            /*return Promise.all([
+            return Promise.all([
                 getUserDataFromLocal(), 
                 getUserDataFromServer()
             ]).then(syncUserData)
-              .then((userDataSynchronized)=>{
+              .then((userDataSynchronized) =>{
                   dispatch({type: 'SET_USER_DATA', userData: userDataSynchronized});
                   onUserDataCallback(getState().user.userData.info);                                    
-              });*/
+              });
             let userDataGetApi = getState().vhost.MOA_API_APPLICATION_OBJECTS_GET
                                 .replace(':QUERY', JSON.stringify({contentId: getContentId()}))
                                 .replace(':ID', getState().user.userData._id)

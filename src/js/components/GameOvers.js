@@ -4,13 +4,18 @@ import gameasyStyle from '../../css/gameover.css';
 export class GameasyGameover extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            show:false
+        }
     }
-
+    componentWillReceiveProps(nextProps){
+        this.setState({...this.state, show: nextProps.show});
+    }
+    
     render(){
         let classNames = [gameasyStyle.gameover];
-        classNames.push(this.props.open ? gameasyStyle.show : gameasyStyle.hide);        
+        classNames.push(this.state.show ? gameasyStyle.show : gameasyStyle.hide);        
         let classes = classNames.join(" ");
-
         return(
            <div className={classes}>
                 <header className={gameasyStyle.header}>
@@ -22,13 +27,10 @@ export class GameasyGameover extends React.Component{
                     <h2>Related</h2>
                     <ul>
                     {
-                        this.props.related.map((related)=>{
-                            return (
-                                <li>
+                        this.props.related.map((related, index)=>
+                                <li key={index}>
                                     {related.title}
-                                </li>
-                            )
-                        })
+                                </li>)
                     }
                     </ul>
                 </div>

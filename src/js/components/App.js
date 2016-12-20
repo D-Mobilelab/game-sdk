@@ -34,7 +34,7 @@ class App extends React.Component{
                           score={this.props.currentSession.score} 
                           rank={this.props.currentSession.rank} 
                           related={this.props.gameInfo.related} 
-                          open={this.props.game_over.show} />
+                          show={this.props.game_over.show} />
                 <Menu {...this.props.menu} actions={this.props.actions} />
             </div>
         )

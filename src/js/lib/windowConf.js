@@ -1,4 +1,4 @@
-module.exports = function(HOST = 'appsworld.gamifive-app.com', GAME_ID = 'fakeid', COUNTRY_CODE = 'ww-it'){
+module.exports = function(HOST = 'www2.gameasy.com', GAME_ID = 'b67a8f2b6cf66b74b77d129cd5de17a1', COUNTRY_CODE = 'ww-it'){
     return {
         "hash": "",
         "search": "",

@@ -56,16 +56,10 @@ export function mainReducer(state = {}, action){
         case 'REGISTER_ON_USER_DATA_CALLBACK':
             return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });         
         case 'MENU_SHOW':
-            var newMenuState = {...state.menu, shown: true, style: action.style || state.menu.style};
+            var newMenuState = {...state.menu, show: true, style: action.style || state.menu.style};
             return Object.assign({}, state, {menu: newMenuState});
         case 'MENU_HIDE':
-            var newMenuState = {...state.menu, shown: false};
-            return Object.assign({}, state, {menu: newMenuState});
-        case 'MENU_PRESSED':
-            var newMenuState = {...state.menu, pressed: true};
-            return Object.assign({}, state, {menu: newMenuState});
-        case 'MENU_RELEASED':
-            var newMenuState = {...state.menu, pressed: false};
+            var newMenuState = {...state.menu, show: false};
             return Object.assign({}, state, {menu: newMenuState});
         case 'SET_RELATED':
             return Object.assign({}, state, {gameInfo:{...state.gameInfo, related: action.related }});

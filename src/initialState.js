@@ -34,9 +34,8 @@ export let initialState = {
     isOnStartSessionRegistered: false,
     loadUserDataCalled: false,
     menu:{
-        shown:false,
-        dragging:false,
-        pressed:false
+        show: false,
+        style:{ top:'50%', left:'1%' }
     }, 
     game_over:{
         show:false
