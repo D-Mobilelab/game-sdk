@@ -10,10 +10,9 @@ var devConfiguration = {
     module:{
         loaders:[
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader', query: {presets: ['react', 'es2015']}},
-            {test:/\.css$/, exclude:/node_modules/, loader:"style-loader!css-loader?modules"},
+            {test:/\.css$/, exclude:/node_modules/, loader:"style-loader!css-loader?modules&localIdentName=[path][name]__[local]!postcss"},
             {test:/\.less$/, exclude:/node_modules/, loader:"style-loader!auto-prefixer!css-loader!less-loader"},
             {test:/\.sass$/, exclude:/node_modules/, loader:"style-loader!auto-prefixer!css-loader!stylus-loader"},
-            {test:/\.es6$/, exclude:/node_modules/,loader:'babel-loader'},
             {
                 test:/\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/, 
                 exclude:/node_modules/,
@@ -28,8 +27,7 @@ var devConfiguration = {
     plugins:[
         new webpack.DefinePlugin({
                 'process.env':{
-                    'NODE_ENV': JSON.stringify('development'),
-                    'API_URL': JSON.stringify('http://localhost:8080/bands')
+                    'NODE_ENV': JSON.stringify('development')
                 }
             })
     ],

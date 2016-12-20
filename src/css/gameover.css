@@ -1,14 +1,17 @@
+@value colors: './colors.css';
+@value foreground_white, background_cyan from colors;
+
 @font-face{
     font-family: 'montserratultra_light';
-    src: url('./montserrat-ultralight-webfont.eot');
-    src: url('./montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('./montserrat-ultralight-webfont.woff') format('woff'), url('./montserrat-ultralight-webfont.ttf') format('truetype'), url('./montserrat-ultralight-webfont.svg') format('svg');
+    src: url('./font/montserrat-ultralight-webfont.eot');
+    src: url('./font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('./font/montserrat-ultralight-webfont.woff') format('woff'), url('./font/montserrat-ultralight-webfont.ttf') format('truetype'), url('./font/montserrat-ultralight-webfont.svg') format('svg');
     font-weight: normal;font-style: normal;
 }
 
 @font-face{
     font-family: 'icomoon';
-    src: url('./icomoon.eot');
-    src: url('./icomoon.eot') format('embedded-opentype'), url('./icomoon.woff') format('woff'), url('./icomoon.ttf') format('truetype'), url('./icomoon.svg') format('svg');
+    src: url('./font/icomoon.eot');
+    src: url('./font/icomoon.eot') format('embedded-opentype'), url('./font/icomoon.woff') format('woff'), url('./font/icomoon.ttf') format('truetype'), url('./font/icomoon.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -18,7 +21,7 @@
     background-color: #121721;
     transform: scale(0);
     transition: transform 200ms;
-    color: #e7e7f9;
+    color: foreground_white;
 }
 
 .gameover i{
@@ -34,8 +37,8 @@
 }
 
 .header{
-    background:#00c1e2;
+    background: background_cyan;
     height: 60px;
-    color:#e7e7f9;
+    color:foreground_white;
     clear: both;
 }
