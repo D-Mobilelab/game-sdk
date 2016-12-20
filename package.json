@@ -2,11 +2,12 @@
   "name": "docomo-sdk",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "dist/sdk.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "transpile": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:dev": "webpack --config webpack.config.dev.js",
+    "build:prod": "webpack --config webpack.config.prod.js",
+    "live": "webpack-dev-server --host local.appsworld.gamifive-app.com --config webpack.config.dev.js",
+    "build": "npm run build:prod"
   },
   "author": "eatsjobs",
   "license": "ISC",
@@ -24,8 +25,6 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",
-    "jshint": "^2.9.4",
-    "jshint-loader": "^0.8.3",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "node-libs-browser": "^1.0.0",
@@ -45,9 +44,9 @@
   },
   "dependencies": {
     "axios": "^0.15.2",
+    "newton-adapter": "^1.7.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
-    "react-tappable": "^0.8.4",
     "redux-logger": "^2.7.4",
     "stargatejs": "^0.2.0"
   }

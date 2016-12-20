@@ -18,7 +18,7 @@ export function mainReducer(state = {}, action){
         case 'USER_CHECK_LOAD_START':
             return state;
         case 'USER_CHECK_LOAD_END':
-            return Object.assign({}, state, { user: action.user });
+            return Object.assign({}, state, { user: { ...state.user, ...action.user } });
         case 'USER_CHECK_LOAD_FAIL':
             return Object.assign({}, state, {user:{...state.user, error: action.reason} });
         case 'GET_FAVOURITES_START':
@@ -56,7 +56,7 @@ export function mainReducer(state = {}, action){
         case 'REGISTER_ON_USER_DATA_CALLBACK':
             return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });         
         case 'MENU_SHOW':
-            var newMenuState = {...state.menu, show: true, style: action.style || state.menu.style};
+            var newMenuState = { ...state.menu, show: true, style: action.style };
             return Object.assign({}, state, {menu: newMenuState});
         case 'MENU_HIDE':
             var newMenuState = {...state.menu, show: false};

@@ -1,5 +1,5 @@
 let _props_;
-export class SDK{
+export class SDK {
     constructor(props){
         _props_ = props;
     }

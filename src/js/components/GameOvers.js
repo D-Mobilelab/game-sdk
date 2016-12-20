@@ -8,8 +8,9 @@ export class GameasyGameover extends React.Component{
             show:false
         }
     }
+
     componentWillReceiveProps(nextProps){
-        this.setState({...this.state, show: nextProps.show});
+        this.setState({ ...this.state, show: nextProps.show });
     }
     
     render(){

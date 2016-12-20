@@ -1,5 +1,5 @@
 import React from 'react';
-import menuStyles from '../../css/menu.css';
+import menuStyles from '../../css/menu.base.css';
 
 class Menu extends React.Component{
     constructor(props){
@@ -21,13 +21,13 @@ class Menu extends React.Component{
     }
     
     componentWillReceiveProps(nextProps){
-        this.setState({...this.state, show: nextProps.show});
+        this.setState({ ...this.state, show: nextProps.show, style: { ...this.state.style, ...nextProps.style } });
     }
 
     onPointerStart(event){
         this.setState({...this.state, 
             active: true,
-            pointerDownPosition: {x: event.pageX, y: event.pageY}
+            pointerDownPosition: { x : event.pageX, y: event.pageY }
         });
     }
 
@@ -35,18 +35,18 @@ class Menu extends React.Component{
         if(this.state.pointerDownPosition.x === event.pageX && this.state.pointerDownPosition.y && event.pageY){
             //it's a click
             window.alert("it's a T(r)ap!");
+            this.props.actions.goToHome();
         
         } else {
-            // was dragged
+            // was dragged. put in one of the angles
             window.alert("drag");
         }
         
         this.setState({
             ...this.state, 
             active: false,
-            pointerUpPosition: {x: event.pageX, y: event.pageY}
+            pointerUpPosition: { x: event.pageX, y: event.pageY }
         });
-        this.props.actions.goToHome();
     }
 
     onPointerMove(event){
@@ -54,7 +54,7 @@ class Menu extends React.Component{
             let newStyle = {left:`${(event.pageX - 30)}px`, top: `${(event.pageY - 15)}px`}
             this.setState({
                 ...this.state,
-                style: newStyle
+                style: { ...this.state.style, ...newStyle }
             });
         }
     }

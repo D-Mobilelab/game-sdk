@@ -25,7 +25,7 @@
     100% { opacity: 0; transform: scale(0);}
 }
 
-.menu{    
+.menu{
     background-image: url('../img/sprite.png');
     left: 1%;
     background-position: -5px -475px;

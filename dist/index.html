@@ -7,17 +7,14 @@
     <title>Titolo</title>
     <script type="text/javascript">
       (function(win, doc){
-        function is_touch_device() {
-          return (('ontouchstart' in win)
+          win.is_touch = (('ontouchstart' in win)
                 || (win.navigator.MaxTouchPoints > 0)
                 || (win.navigator.msMaxTouchPoints > 0));
-          }
-          win.is_touch = is_touch_device();
       })(window, document);
     </script>      
   </head>
   <body>
 
-  <script type="text/javascript" src="bundle.js"></script>
+  <script type="text/javascript" src="gfsdk.js"></script>
   </body>
 </html>

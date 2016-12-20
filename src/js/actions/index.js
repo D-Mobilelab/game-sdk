@@ -1,13 +1,15 @@
 import axios from 'axios';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
+import Stargate from 'stargatejs';
+import NewtonAdapter from 'newton-adapter';
 
 let AxiosInstance = axios.create({
-  baseURL: Location.getOrigin()
+  baseURL: window.location.origin
 });
 
-let onStartCallback = ()=>{};
-let onUserDataCallback = ()=>{};
+let onStartCallback = () => {};
+let onUserDataCallback = () => {};
 
 let vhostKeys = [
     "CONTENT_RANKING",
@@ -31,9 +33,7 @@ export function init(initConfig){
 
         dispatch({ type: 'VHOST_LOAD_START' });
         return AxiosInstance.get(Constants.VHOST_API_URL, {
-            params:{
-                keys: vhostKeys.join(',')
-            }
+            params:{ keys: vhostKeys.join(',') }
         })
         .then((response)=>{
             dispatch({type: 'VHOST_LOAD_END', vhost: response.data});
@@ -46,9 +46,8 @@ export function init(initConfig){
             dispatch({
                 type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
             });
-
-            let menuStyle = getState().initConfig.moreGamesButtonStyle;
-            menuStyle.backgroundImage = `url(${getState().vhost.IMAGES_SPRITE_GAME})`;
+            let menuStyle = {};
+            menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
             dispatch(showMenu(menuStyle));
             /**
              * Same here with loadUserData
@@ -70,12 +69,12 @@ export function init(initConfig){
 export function getUserFavourites(){
     return (dispatch, getState)=>{
         let getFavPromise;
-        dispatch({type: 'GET_FAVOURITES_START'}); 
+        dispatch({ type: 'GET_FAVOURITES_START' }); 
         if (getState().user.logged){                        
             getFavPromise = AxiosInstance.get(Constants.USER_GET_LIKE, {
                 params:{
                     user_id: getState().user.user, //userID
-                    size:51
+                    size: 51
                 }
             });
         } else {
@@ -92,9 +91,9 @@ export function getUserFavourites(){
 
 export function getUser(){
     return (dispatch, getState) =>{
-        dispatch({type: 'USER_CHECK_LOAD_START'});
+        dispatch({ type: 'USER_CHECK_LOAD_START' });
         return AxiosInstance.get(Constants.USER_CHECK)
-                .then((userResponse)=>{
+                .then((userResponse) => {
                     dispatch({type: 'USER_CHECK_LOAD_END', user: userResponse.data});
                     return Promise.all([
                         dispatch(canPlay()),
@@ -148,9 +147,7 @@ export function canPlay(){
     return (dispatch, getState)=>{
         let url = Constants.CAN_DOWNLOAD_API_URL.replace(":ID", getContentId());
         return AxiosInstance.get(url, {
-            params:{
-                    cors_compliant:1
-                }
+            params:{ cors_compliant:1 }
             }).then((response)=>{
                 dispatch({type:'SET_CAN_PLAY', canPlay: response.data.canDownload});
             });        
@@ -194,7 +191,7 @@ export function endSession(scoreAndLevel={score:0,level:0}){
                 .then((response)=>{
                     // get ranking?
                     // response.data.ranking
-                    dispatch(setRelated(response.data.related));                        
+                    dispatch(setRelated(response.data.related || []));                        
                 });
                 return gameOverPromise;
         } else {
@@ -274,22 +271,25 @@ export function registerOnStartCallback(callback){
 }
 
 export function loadUserData(callback){
+
     return (dispatch, getState) => {
         onUserDataCallback = callback;        
         if(getState().initPending && !getState().initialized){
             // register this callback
             return {type:'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true}
-        } else if(getState().initialized) {
+        } else if(getState().initialized && getState().user.logged) {
+            /*            
             return Promise.all([
                 getUserDataFromLocal(), 
                 getUserDataFromServer()
             ]).then(syncUserData)
               .then((userDataSynchronized) =>{
                   dispatch({type: 'SET_USER_DATA', userData: userDataSynchronized});
-                  onUserDataCallback(getState().user.userData.info);                                    
+                  return onUserDataCallback(getState().user.userData.info);                                    
               });
+            */
             let userDataGetApi = getState().vhost.MOA_API_APPLICATION_OBJECTS_GET
-                                .replace(':QUERY', JSON.stringify({contentId: getContentId()}))
+                                .replace(':QUERY', JSON.stringify({ contentId: getContentId() }))
                                 .replace(':ID', getState().user.userData._id)
                                 .replace(':ACCESS_TOKEN', '')
                                 .replace(':EXTERNAL_TOKEN', getState().user.user)
@@ -300,6 +300,8 @@ export function loadUserData(callback){
                             dispatch({type: 'SET_USER_DATA', userData: userDataSynchronized});
                             return onUserDataCallback(getState().user.userData.info);
                         });
+        } else {
+
         }
     }
 }

@@ -21,7 +21,7 @@ class App extends React.Component{
         super(props);
         let aliases = ['GamefiveSDK', 'GamifiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
         const instance = new SDK(props);
-        aliases.map((alias)=>{
+        aliases.map((alias) => {
             window[alias] = instance;
         });
     }
@@ -41,7 +41,7 @@ class App extends React.Component{
     }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {...state}
 };
 
