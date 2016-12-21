@@ -23,7 +23,8 @@ let vhostKeys = [
 ];
 export function init(initConfig){
     return (dispatch, getState) => {
-        if(getState().initialized){
+        
+        if(getState().generic.initialized){
             return Promise.resolve();
         }
 
@@ -113,7 +114,11 @@ export function startSession(){
         if(!getState().initialized && getState().initPending){
             dispatch({type:'ADD_TO_AFTER_INIT', session_start_after_init: true});
         } else if(!getState().initialized && !getState().initPending){
-            // no initialized and init not even called
+            /**
+             * TODO:
+             * Init not event called before startSession
+             * report an error in debug env
+             */
             console.log("You should call init before startSession!");
         } else {
             dispatch(hideMenu());
@@ -126,7 +131,7 @@ export function startSession(){
 
 function doStartSession(){
     return (dispatch, getState)=>{
-        if(!getState().currentSession.opened){
+        if(!getState().session.opened){
             let currentSession = {
                 opened: true,
                 startTime: new Date(),
@@ -137,6 +142,11 @@ function doStartSession(){
             dispatch({type: 'START_SESSION', currentSession});
             onStartCallback();
         } else {
+            /**
+             * TODO:
+             * startSession called before endSession
+             * report an error in debug env
+             */
             console.log("Cannot start a new session before closing the current one.");    
         }
         return Promise.resolve();
@@ -148,32 +158,37 @@ export function canPlay(){
         let url = Constants.CAN_DOWNLOAD_API_URL.replace(":ID", getContentId());
         return AxiosInstance.get(url, {
             params:{ cors_compliant:1 }
-            }).then((response)=>{
+            }).then((response) => {
                 dispatch({type:'SET_CAN_PLAY', canPlay: response.data.canDownload});
             });        
     }
 }
 
 
-export function endSession(scoreAndLevel={score:0,level:0}){
+export function endSession(scoreAndLevel = { score: 0, level: 0 }){
     return (dispatch, getState) => {
         //only if already initialized
-        if(!getState().initialized){
+        if(!getState().generic.initialized){
+            /**
+             * TODO:
+             * endSession before init
+             * report an error in debug env
+             */
             console.log("Cannot end a session before initialized");
             return;
         }
         // and a session was started
-        if (Object.keys(getState().currentSession).length > 0 
-            && getState().currentSession.opened){
+        if (Object.keys(getState().session).length > 0 
+            && getState().session.opened){
             let endTime = new Date;
             let session = { score: scoreAndLevel.score, level: scoreAndLevel.level, endTime, opened: false };
             dispatch({ type: 'END_SESSION', session });
             
             dispatch(showMenu());
 
-            let lastSession = getState().currentSession;
+            let lastSession = getState().session;
             //Lite only leaderboard
-            if(!getState().initConfig.lite){
+            if(!getState().generic.initConfig.lite){
                 dispatch(showGameOver());
             }
             let GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());                
@@ -183,7 +198,7 @@ export function endSession(scoreAndLevel={score:0,level:0}){
                         level: lastSession.level, 
                         duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
                         start: lastSession.startTime.getTime(),
-                        label: getState().gameInfo.label,
+                        label: getState().game_info.label,
                         userId: getState().user.user,
                         cors_compliant: 1
                     } 
@@ -195,16 +210,21 @@ export function endSession(scoreAndLevel={score:0,level:0}){
                 });
                 return gameOverPromise;
         } else {
+            /**
+             * TODO:
+             * endSession before startSession
+             * report an error in debug env
+             */
             console.log("No session started!");
         }
-    }    
+    }
 }
 
 export function setIsHybrid(){
-    /*return {
+    return {
         type: 'SET_IS_HYBRID',
         hybrid: Stargate.isHybrid()
-    }*/
+    }
 }
 
 export function showGameOver(){
@@ -238,9 +258,9 @@ export function getGameInfo(){
                 content_id: getContentId(), 
                 cors_compliant: 1
             }
-        }).then((response)=>{            
-            dispatch({type:'GAME_INFO_LOAD_END', gameInfo: response.data.game_info});
-        }).catch((reason)=>{
+        }).then((response) => {            
+            dispatch({type:'GAME_INFO_LOAD_END', game_info: response.data.game_info});
+        }).catch((reason) => {
             dispatch({type:'GAME_INFO_LOAD_FAIL', error: reason});
         });
     }
@@ -254,14 +274,14 @@ export function goToHome(){
 
 export function showMenu(style){
     return {
-        type: 'MENU_SHOW',
+        type: 'SHOW_MENU',
         style: style
     }
 }
 
 export function hideMenu(){
     return {
-        type: 'MENU_HIDE'
+        type: 'HIDE_MENU'
     }
 }
 
@@ -274,10 +294,10 @@ export function loadUserData(callback){
 
     return (dispatch, getState) => {
         onUserDataCallback = callback;        
-        if(getState().initPending && !getState().initialized){
+        if(getState().generic.initPending && !getState().generic.initialized){
             // register this callback
             return {type:'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true}
-        } else if(getState().initialized && getState().user.logged) {
+        } else if(getState().generic.initialized && getState().user.logged) {
             /*            
             return Promise.all([
                 getUserDataFromLocal(), 
@@ -290,14 +310,14 @@ export function loadUserData(callback){
             */
             let userDataGetApi = getState().vhost.MOA_API_APPLICATION_OBJECTS_GET
                                 .replace(':QUERY', JSON.stringify({ contentId: getContentId() }))
-                                .replace(':ID', getState().user.userData._id)
+                                .replace(':ID', getState().user.userData._id || '')
                                 .replace(':ACCESS_TOKEN', '')
                                 .replace(':EXTERNAL_TOKEN', getState().user.user)
                                 .replace(':COLLECTION', 'gameInfo');
             return AxiosInstance.get(userDataGetApi)
                         .then((response)=>{
                             // write the reducer part
-                            dispatch({type: 'SET_USER_DATA', userData: userDataSynchronized});
+                            // dispatch({ type: 'SET_USER_DATA', userData: userDataSynchronized });
                             return onUserDataCallback(getState().user.userData.info);
                         });
         } else {
@@ -328,7 +348,7 @@ function syncUserData(gameInfos){
 
 export function saveUserData(){
     return (dispatch, getState) => {
-        if(getState().initPending){
+        if(getState().generic.initPending){
 
         }
     }

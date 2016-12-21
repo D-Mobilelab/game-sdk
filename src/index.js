@@ -4,7 +4,7 @@ import App from './js/components/App';
 
 import * as Actions from './js/actions/index.js';
 import { Provider } from 'react-redux';
-import { mainReducer } from './js/reducers/index.js';
+import reducer from './js/reducers/index.js';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { initialState } from './initialState';
@@ -12,15 +12,14 @@ import { initialState } from './initialState';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = [thunkMiddleware];
 
-if (process.env.NODE_ENV === `development`) {
-  const createLogger = require(`redux-logger`);
+if (process.env.NODE_ENV === 'development') {
+  const createLogger = require('redux-logger');
   const logger = createLogger();
   middlewares.push(logger);
 }
 
 let store = createStore(
-    mainReducer,
-    initialState,
+    reducer,
     composeEnhancers(
         applyMiddleware(...middlewares)
     )

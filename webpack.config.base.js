@@ -5,7 +5,7 @@ var devConfiguration = {
         path: path.resolve(__dirname, "dist"),
         filename: "gfsdk.js",
         libraryTarget: 'umd',
-        library: 'gfsdk',
+        library: 'SDK',
     },   
     module:{
         loaders:[
@@ -15,7 +15,7 @@ var devConfiguration = {
                 test:/\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/, 
                 exclude:/node_modules/,
                 loader:'url-loader',
-                query:{limit:1024}
+                query:{ limit:1024 }
             } 
         ]
     },
