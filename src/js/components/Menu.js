@@ -78,12 +78,12 @@ class Menu extends React.Component{
     }
     
     onMouseDown(evt){
-        if(window.is_touch){ return; }
+        if(window.__IS_TOUCH__){ return; }
         this.onPointerStart(evt);
     }
 
     onMouseUp(evt){
-        if(window.is_touch){ return; }
+        if(window.__IS_TOUCH__){ return; }
         this.onPointerEnd(evt);
     }
 
