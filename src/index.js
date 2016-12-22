@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import App from './js/components/App';
 
-import * as Actions from './js/actions/index.js';
-import { Provider } from 'react-redux';
-import reducer from './js/reducers/index.js';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import { initialState } from './initialState';
+import reducer from './js/reducers/index.js';
+
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = [thunkMiddleware];
@@ -18,6 +19,7 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
+// CREATE THE REDUX STORE
 let store = createStore(
     reducer,
     composeEnhancers(
@@ -25,7 +27,7 @@ let store = createStore(
     )
 );
 
-// Dynamic Creation of the element
+// DYNAMIC CREATION OF THE ELEMENT
 let ROOT_ELEMENT = document.createElement('div');
 ROOT_ELEMENT.id = 'gfsdk_root';
 window.document.body.appendChild(ROOT_ELEMENT);

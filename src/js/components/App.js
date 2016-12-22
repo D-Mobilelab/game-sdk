@@ -1,15 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { 
     GameasyGameover, 
     GamifiveGameover 
 } from './GameOvers';
+
 import Menu from './Menu';
-
-import { connect } from 'react-redux';
-import * as Actions from '../actions/index.js';
-import { bindActionCreators } from 'redux';
+import * as Actions from '../actions/index';
 import { SDK } from '../lib/SDK';
-
 const GameoverTypes = {
     gameasy: GameasyGameover,
     gamifive: GamifiveGameover
@@ -19,6 +19,8 @@ class App extends React.Component{
     
     constructor(props){
         super(props);
+        
+        // INITIALIZE THE SDK
         let aliases = ['GamefiveSDK', 'GamifiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
         const instance = new SDK(props);
         aliases.map((alias) => {
@@ -34,8 +36,8 @@ class App extends React.Component{
                           score={this.props.session.score} 
                           rank={this.props.session.rank} 
                           related={this.props.game_info.related} 
-                          show={this.props.generic.game_over.show} />
-                <Menu {...this.props.generic.menu} actions={this.props.actions} />
+                          show={this.props.game_over.show} />
+                <Menu {...this.props.menu} actions={this.props.actions} />
             </div>
         )
     }
@@ -49,4 +51,5 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
+// CONNECT TO THE STORE AND RENDER IT
 export default connect(mapStateToProps, mapDispatchToProps)(App);

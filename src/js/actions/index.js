@@ -50,14 +50,9 @@ export function init(initConfig){
             let menuStyle = {};
             menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
             dispatch(showMenu(menuStyle));
-            /**
-             * Same here with loadUserData
-             * if(getState().loadUserDataCalled){
-             *      dispatch(getUserData());
-             * }
-             */
-            if(getState().session_start_after_init){
-                return dispatch(doStartSession());
+            
+            if(getState().generic.actions_after_init.length > 0){
+                getState().generic.actions_after_init.map((action_name) => dispatch({ type: action_name }));
             }
         }).catch((reason)=>{
             dispatch({

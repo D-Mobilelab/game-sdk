@@ -10,7 +10,8 @@ export function generic(state = {
         moreGamesButtonStyle:{ top: '50%', left: '1%' }
     },
     isOnStartSessionRegistered: false,
-    loadUserDataCalled: false
+    loadUserDataCalled: false,
+    actions_after_init:[]
 }, action){
     switch(action.type){
         case 'SET_IS_HYBRID':
