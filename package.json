@@ -6,7 +6,7 @@
   "scripts": {
     "build:dev": "webpack --config webpack.config.dev.js",
     "build:prod": "webpack --config webpack.config.prod.js",
-    "live": "webpack-dev-server --host local.appsworld.gamifive-app.com --config webpack.config.dev.js",
+    "live": "webpack-dev-server --config webpack.config.dev.js",
     "build": "npm run build:prod"
   },
   "author": "eatsjobs",
@@ -30,6 +30,7 @@
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.10.0",
     "postcss": "^5.2.6",
+    "postcss-loader": "^1.2.1",
     "postcss-modules-values": "^1.2.2",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",

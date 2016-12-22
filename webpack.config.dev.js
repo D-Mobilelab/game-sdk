@@ -8,7 +8,8 @@ var optimizeOccurence = new webpack.optimize.OccurenceOrderPlugin();
 var env_Plugin = new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('development') } });
 
 devConfiguration.devServer = { 
-    contentBase: 'dist/',    
+    contentBase: 'dist/',
+    // host: 'local.appsworld.gamifive-app.com',
     proxy: {
       '/v01/**': {
         target: 'http://appsworld.gamifive-app.com',
