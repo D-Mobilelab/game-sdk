@@ -27,13 +27,7 @@ export function generic(state = {
         case 'REGISTER_ON_START_SESSION_CALLBACK':
             return Object.assign({}, state, { isOnStartSessionRegistered: action.registered });
         case 'REGISTER_ON_USER_DATA_CALLBACK':
-            return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });         
-        case 'SHOW_MENU':
-            let newMenuStateShow = { ...state.menu, show: true, style: action.style };
-            return Object.assign({}, state, {menu: newMenuStateShow});
-        case 'HIDE_MENU':
-            let newMenuStateHide = {...state.menu, show: false};
-            return Object.assign({}, state, {menu: newMenuStateHide});
+            return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });
         default:
             return state;
     }
