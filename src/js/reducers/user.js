@@ -1,4 +1,5 @@
 export function user(state = {
+        matchPlayed: 0,
         user: '',
         userData:{
             CreatedAt: new Date(0).toISOString(),
@@ -29,6 +30,8 @@ export function user(state = {
             return Object.assign({}, state, {...state, fetch_error: action.reason });
         case 'SET_CAN_PLAY':
             return Object.assign({}, state, {...state, canPlay: action.canPlay});
+        case 'INCREASE_MATCH_PLAYED':
+            return Object.assign({}, state, {...state, matchPlayed: state.matchPlayed += 1 });
         default:
             return state;
     }

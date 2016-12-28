@@ -1,0 +1,94 @@
+@font-face{
+    font-family: 'montserratultra_light';
+    src: url('./font/montserrat-ultralight-webfont.eot');
+    src: url('./font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('./font/montserrat-ultralight-webfont.woff') format('woff'), url('./font/montserrat-ultralight-webfont.ttf') format('truetype'), url('./font/montserrat-ultralight-webfont.svg') format('svg');
+    font-weight: normal;font-style: normal;
+}
+
+@font-face{
+    font-family: 'icomoon';
+    src: url('./font/icomoon.eot');
+    src: url('./font/icomoon.eot') format('embedded-opentype'), url('./font/icomoon.woff') format('woff'), url('./font/icomoon.ttf') format('truetype'), url('./font/icomoon.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.grid {
+    width: auto;
+    overflow: auto;
+    position: relative;
+}
+
+.grid:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[class*='col'] {
+  float: left;
+}
+
+.col23 {
+  width: 66.66%;
+}
+.col13 {
+  width: 33.33%;
+}
+
+.col12 {
+  width: 50%;
+}
+
+.col14 {
+  width: 25%;
+}
+
+.col18 {
+  width: 12.5%;
+}
+
+[class*='col'] {
+  /*padding-right: 20px;*/
+}
+
+[class*='col']:last-of-type {
+  padding-right: 0;
+}
+
+.icon{
+    font-size: 30px;
+    display: block;
+    font-family: 'icomoon';
+}
+
+.iconCoppa {
+    color:#e7f943;
+}
+
+.iconCoppa:before {
+    content: "\e904";
+}
+
+.iconRank {
+    color: #00c1e2;
+}
+
+.iconRank:before {
+    content: "\e915";
+}
+
+.divider { 
+    position: relative;
+    width: 65%;
+    border: 0;
+    border-bottom: 1px solid rgba(231, 231, 249, 0.2);
+    margin: 0 auto;
+    top: -2px;
+}

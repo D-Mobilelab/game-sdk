@@ -6,7 +6,7 @@
   "scripts": {
     "build:dev": "webpack --config webpack.config.dev.js",
     "build:prod": "webpack --config webpack.config.prod.js",
-    "live": "webpack-dev-server --config webpack.config.dev.js",
+    "dev": "webpack-dev-server --config webpack.config.dev.js",
     "build": "npm run build:prod"
   },
   "author": "eatsjobs",
@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "axios": "^0.15.2",
+    "js-cookie": "^2.1.3",
     "newton-adapter": "^1.7.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",

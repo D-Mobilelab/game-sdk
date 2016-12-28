@@ -1,4 +1,5 @@
 import React from 'react';
+import { isTouch } from '../lib/TouchDetector';
 import menuStyles from '../../css/menu.base.css';
 
 class Menu extends React.Component{
@@ -10,52 +11,32 @@ class Menu extends React.Component{
         this.onMouseUp = this.onMouseUp.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
-
-        this.state = {
-            show: this.props.show,
-            active: false,
-            pointerDownPosition: {x:0, y:0},
-            pointerUpPosition: {x:0, y:0},
-            style: this.props.style
-        }
-    }
-    
-    componentWillReceiveProps(nextProps){
-        this.setState({ ...this.state, show: nextProps.show, style: { ...this.state.style, ...nextProps.style } });
     }
 
     onPointerStart(event){
-        this.setState({...this.state, 
-            active: true,
-            pointerDownPosition: { x : event.pageX, y: event.pageY }
-        });
+        let position = {x : event.pageX, y: event.pageY};
+        this.props.actions.setDownPosition({active: true, position });
     }
 
     onPointerEnd(event){
-        if(this.state.pointerDownPosition.x === event.pageX && this.state.pointerDownPosition.y && event.pageY){
-            //it's a click
+        if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y && event.pageY){
+            //it's a click/tap
             window.alert("it's a T(r)ap!");
+            // open the menu?
             this.props.actions.goToHome();
         
         } else {
-            // was dragged. put in one of the angles
+            // was dragged. put in the closer angle?
             window.alert("drag");
         }
-        
-        this.setState({
-            ...this.state, 
-            active: false,
-            pointerUpPosition: { x: event.pageX, y: event.pageY }
-        });
+        let position = {x : event.pageX, y: event.pageY};
+        this.props.actions.setUpPosition({active: false, position });
     }
 
     onPointerMove(event){
-        if(this.state.active){
-            let newStyle = {left:`${(event.pageX - 30)}px`, top: `${(event.pageY - 15)}px`}
-            this.setState({
-                ...this.state,
-                style: { ...this.state.style, ...newStyle }
-            });
+        if(this.props.active){
+            let position = {x : event.pageX, y: event.pageY};
+            this.props.actions.setPosition({position});
         }
     }
 
@@ -78,12 +59,12 @@ class Menu extends React.Component{
     }
     
     onMouseDown(evt){
-        if(window.__IS_TOUCH__){ return; }
+        if(isTouch()){ return; }
         this.onPointerStart(evt);
     }
 
     onMouseUp(evt){
-        if(window.__IS_TOUCH__){ return; }
+        if(isTouch()){ return; }
         this.onPointerEnd(evt);
     }
 
@@ -94,11 +75,11 @@ class Menu extends React.Component{
 
     render(){
         let classNames = [menuStyles.menu];
-        classNames.push(this.state.show ? menuStyles.show : menuStyles.hide);
-        classNames.push(this.state.active ? menuStyles.active : '');
+        classNames.push(this.props.show ? menuStyles.show : menuStyles.hide);
+        classNames.push(this.props.active ? menuStyles.active : '');
         
         return(
-            <div className={classNames.join(' ')} style={this.state.style}
+            <div className={classNames.join(' ')} style={this.props.style}
                onMouseUp={this.onMouseUp}
                onMouseDown={this.onMouseDown}
                onMouseMove={this.onMouseMove}

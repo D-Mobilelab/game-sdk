@@ -5,16 +5,19 @@
     <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>Titolo</title>
-    <script type="text/javascript">
-      (function(win, doc){
-          win.__IS_TOUCH__ = (('ontouchstart' in win)
-                || (win.navigator.MaxTouchPoints > 0)
-                || (win.navigator.msMaxTouchPoints > 0));
-      })(window, document);
-    </script>      
+    <style>
+      * {
+        margin:0;
+        padding:0;
+      }
+    </style>
   </head>
   <body>
 
   <script type="text/javascript" src="gfsdk.js"></script>
+  <script>
+    GamifiveSDK.init({lite:false});
+    GamifiveSDK.startSession();
+  </script>
   </body>
 </html>

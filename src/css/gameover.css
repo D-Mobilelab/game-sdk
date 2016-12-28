@@ -1,44 +1,35 @@
 @value colors: './colors.css';
 @value foreground_white, background_cyan from colors;
 
-@font-face{
-    font-family: 'montserratultra_light';
-    src: url('./font/montserrat-ultralight-webfont.eot');
-    src: url('./font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('./font/montserrat-ultralight-webfont.woff') format('woff'), url('./font/montserrat-ultralight-webfont.ttf') format('truetype'), url('./font/montserrat-ultralight-webfont.svg') format('svg');
-    font-weight: normal;font-style: normal;
-}
-
-@font-face{
-    font-family: 'icomoon';
-    src: url('./font/icomoon.eot');
-    src: url('./font/icomoon.eot') format('embedded-opentype'), url('./font/icomoon.woff') format('woff'), url('./font/icomoon.ttf') format('truetype'), url('./font/icomoon.svg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-.gameover{
+.gameover {
+    position: relative;
     font-family: 'montserratultra_light';
     background-color: #121721;
     transform: scale(0);
     transition: transform 200ms;
     color: foreground_white;
+    margin:0 auto;
 }
 
-.gameover i{
+.gameover i {
     font-family: 'icomoon';
 }
 
-.gameover.show{
+.gameover.show {
     transform: scale(1);
 }
 
-.gameover.hide{
+.gameover.hide {
     transform: scale(0);
 }
 
-.header{
+.header {
     background: background_cyan;
     height: 60px;
     color:foreground_white;
     clear: both;
+}
+
+.header h1 {
+    text-align: center;
 }

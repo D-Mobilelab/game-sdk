@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './js/components/App';
+import Location from './js/lib/Location';
 
 import { initialState } from './initialState';
 import reducer from './js/reducers/index.js';
@@ -34,7 +35,7 @@ window.document.body.appendChild(ROOT_ELEMENT);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App label='gameasy' />
+        <App label={Location.isGameasy() ? 'gameasy' : 'gamifive'}/>
     </Provider>,
     ROOT_ELEMENT
 );

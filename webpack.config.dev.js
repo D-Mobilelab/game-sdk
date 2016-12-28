@@ -12,15 +12,18 @@ devConfiguration.devServer = {
     // host: 'local.appsworld.gamifive-app.com',
     proxy: {
       '/v01/**': {
-        target: 'http://appsworld.gamifive-app.com',
+        target: 'http://www2.gameasy.com/ww-it/',
         secure: false,
         changeOrigin: true,
+        historyApiFallback: true,
         pathRewrite: {
         '': ''
-        }
+        },
+        cookieDomainRewrite:{'*':''}
       }
     }
 };
+
 devConfiguration.devtool = 'eval-source-map';
 devConfiguration.plugins.push(optimizeOccurence);
 devConfiguration.plugins.push(env_Plugin);

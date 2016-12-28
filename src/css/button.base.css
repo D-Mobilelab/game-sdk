@@ -1,0 +1,11 @@
+.btn {
+    cursor: pointer;
+    display: inline-block;
+    border: 2px solid #e7e7f9;
+    font-size: 22px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    background: transparent;
+    line-height: 38px;
+}

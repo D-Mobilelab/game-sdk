@@ -46,6 +46,10 @@ class Location{
         return Utils.dequeryfy(theWindow.location.href);
     }
 
+    isGameasy(){
+        return true;
+    }
 }
+
 const LocationInstance = new Location();
 export default LocationInstance;

@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import genericStyle from '../../css/generic.css';
 import { 
     GameasyGameover, 
     GamifiveGameover 
 } from './GameOvers';
 
 import Menu from './Menu';
-import * as Actions from '../actions/index';
+import { Actions } from '../actions/index';
 import { SDK } from '../lib/SDK';
 const GameoverTypes = {
     gameasy: GameasyGameover,
@@ -32,11 +32,12 @@ class App extends React.Component{
         const TheGameoverComponent = GameoverTypes[this.props.label];
         return (
             <div>
-                <TheGameoverComponent title={this.props.game_info.name}
+                <TheGameoverComponent game_info={this.props.game_info}
                           score={this.props.session.score} 
                           rank={this.props.session.rank} 
                           related={this.props.game_info.related} 
-                          show={this.props.game_over.show} />
+                          show={this.props.game_over.show} 
+                          actions={this.props.actions} />
                 <Menu {...this.props.menu} actions={this.props.actions} />
             </div>
         )

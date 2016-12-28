@@ -1,5 +1,3 @@
-let storeProtected;
-
 export class SDK {
     constructor(props){
         this.props = props;
@@ -46,7 +44,7 @@ export class SDK {
     }
 
     onStartSession(onStartSessionCallback){
-
+        return this.props.actions.registerOnStartCallback(onStartSessionCallback);
     }
 
     startSession(){
