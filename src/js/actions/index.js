@@ -44,8 +44,12 @@ function init(initConfig){
             dispatch({
                 type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
             });
+            
             let menuStyle = {};
-            menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
+            if(getState().vhost.IMAGES_SPRITE_GAME && getState().vhost.IMAGES_SPRITE_GAME !== ''){
+                menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
+            }
+
             dispatch(menuActions.showMenu(menuStyle));
 
             if(getState().generic.loadUserDataCalled){
