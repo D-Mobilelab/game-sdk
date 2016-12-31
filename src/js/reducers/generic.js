@@ -1,9 +1,9 @@
 export function generic(state = {
     hybrid: false,
+    connectionState: { online: true, type: 'none' },
     initialized: false,
     initPending: false,
     session_start_after_init: false,
-    connectionState: { online: true, type: 'none' },
     initConfig: {
         lite: true,
         debug: false,
@@ -29,6 +29,9 @@ export function generic(state = {
             return Object.assign({}, state, { isOnStartSessionRegistered: action.registered });
         case 'REGISTER_ON_USER_DATA_CALLBACK':
             return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });
+        case 'SET_CONNECTION_STATE':
+            let online = action.connectionState.type === 'online' ? true : false;
+            return Object.assign({}, state, { connectionState: { online: online, type: action.connectionState.networkState} });
         default:
             return state;
     }
