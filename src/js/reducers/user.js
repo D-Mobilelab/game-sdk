@@ -1,6 +1,6 @@
 export function user(state = {
         matchPlayed: 0,
-        user: '',
+        user: null,
         userData:{
             CreatedAt: new Date(0).toISOString(),
             UpdatedAt: new Date(0).toISOString(),
