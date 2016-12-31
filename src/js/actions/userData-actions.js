@@ -1,3 +1,6 @@
+import { AxiosInstance } from '../lib/AxiosService';
+import { getContentId } from './gameinfo-actions';
+
 let onUserDataCallback = () => {};
 export function saveUserData(){
     return (dispatch, getState) => {
@@ -7,10 +10,10 @@ export function saveUserData(){
     }
 }
 
-export function loadUserData(callback){
+export function loadUserData(callback = onUserDataCallback){
 
     return (dispatch, getState) => {
-        onUserDataCallback = callback;        
+        onUserDataCallback = callback;
         if(getState().generic.initPending && !getState().generic.initialized){
             // register this callback
             return {type:'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true}
