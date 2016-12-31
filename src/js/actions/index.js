@@ -10,6 +10,7 @@ import * as gameinfoActions from './gameinfo-actions';
 import * as userDataActions from './userData-actions';
 import * as menuActions from './menu-actions';
 import * as gameoverActions from './gameover-actions';
+import * as vhostActions from './vhost-actions';
 
 let vhostKeys = [
     "CONTENT_RANKING",
@@ -25,21 +26,23 @@ let vhostKeys = [
 function init(initConfig){
     return (dispatch, getState) => {
         
+        dispatch({type: 'SET_IS_HYBRID', hybrid: Stargate.isHybrid() });
         if(getState().generic.initialized){
             return Promise.resolve();
         }
 
         dispatch({ type: 'INIT_START', initConfig: initConfig, initPending: true });
 
-        dispatch({ type: 'VHOST_LOAD_START' });
-        return AxiosInstance.get(Constants.VHOST_API_URL, { params:{ keys: vhostKeys.join(',') } })
-        .then((response) => {
-            dispatch({type: 'VHOST_LOAD_END', vhost: response.data});
-            return dispatch(userActions.getUser());
-        })
+        return Stargate.initialize()
         .then(() => {
-            return dispatch(gameinfoActions.getGameInfo());
+            dispatch({ type: 'SET_CONNECTION_STATE', connectionState: Stargate.checkConnection()});
+            Stargate.addListener('connectionchange', (connState) => {
+                dispatch({ type: 'SET_CONNECTION_STATE', connectionState: connState });
+            });
         })
+        .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
+        .then(() => dispatch(userActions.getUser()))
+        .then(() => dispatch(gameinfoActions.getGameInfo()))
         .then(() => {
             dispatch({
                 type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false

@@ -5,7 +5,7 @@ export function vhost(state = { loaded: false, isFetching: false, error: null}, 
         case 'VHOST_LOAD_END':
             return Object.assign({}, state, { ...action.vhost, loaded: true, isFetching: false });
         case 'VHOST_LOAD_FAIL':
-            return state;
+            return Object.assign({}, state, {error: action.error });
         default:
             return state;
     }
