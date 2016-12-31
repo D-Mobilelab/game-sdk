@@ -2,9 +2,10 @@
     display: block;
     position: relative;
     height: 0;
-    background:black;
+    background:transparent;
 }
 
+/** ratio_1 */
 [class*='col'] .lazyContainer {
     padding-bottom: 100%;
 }
