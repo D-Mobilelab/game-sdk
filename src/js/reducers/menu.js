@@ -7,18 +7,17 @@ export function menu(state = {
 }, action){
     switch(action.type){
         case 'SHOW_MENU':
-            let newMenuStateShow = { ...state, show: true};
-            action.style ? newMenuStateShow['style'] = action.style : null;
-            return Object.assign({}, state, {...newMenuStateShow});
+            let newMenuStateShow = { ...state, show: true, style:{...state.style, ...action.style}};
+            return Object.assign({}, state, newMenuStateShow);
         case 'HIDE_MENU':
-            let newMenuStateHide = {...state, show: false};
-            return Object.assign({}, state, {...newMenuStateHide});
+            let newMenuStateHide = { ...state, show: false, style:{...state.style, ...action.style}};
+            return Object.assign({}, state, newMenuStateHide);
         case 'SET_DOWN_POSITION':
             return Object.assign({}, state, { active: action.active, pointerDownPosition: action.position });
         case 'SET_UP_POSITION':
             return Object.assign({}, state, { active: action.active, pointerUpPosition: action.position });
         case 'SET_POSITION':
-            let newStyle = {style:{left:`${(action.position.x - 30)}px`, top: `${(action.position.y - 15)}px`}};
+            let newStyle = {style:{...state.style, left:`${(action.position.x - 30)}px`, top: `${(action.position.y - 15)}px`}};
             return Object.assign({}, state, newStyle);
         default:
             return state;
