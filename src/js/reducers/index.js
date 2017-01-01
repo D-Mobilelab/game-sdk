@@ -7,8 +7,10 @@ import { game_info } from './game_info';
 import { vhost } from './vhost';
 import { menu } from './menu';
 import { game_over } from './game_over';
+import { banner } from './banner';
 
 export default combineReducers({
+  banner,
   generic,
   session,
   user,
