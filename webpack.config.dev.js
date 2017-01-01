@@ -9,7 +9,7 @@ var env_Plugin = new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.st
 
 devConfiguration.devServer = { 
     contentBase: 'dist/',
-    // host: 'local.appsworld.gamifive-app.com',
+    host: 'local.appsworld.gamifive-app.com',
     proxy: {
       '/v01/**': {
         target: 'http://www2.gameasy.com/ww-it/',
@@ -17,7 +17,7 @@ devConfiguration.devServer = {
         changeOrigin: true,
         historyApiFallback: true,
         pathRewrite: {
-        '': ''
+          '': ''
         },
         cookieDomainRewrite:{'*':''}
       }

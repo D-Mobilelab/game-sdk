@@ -1,7 +1,6 @@
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
 import Stargate from 'stargatejs';
-import NewtonAdapter from 'newton-adapter';
 import { AxiosInstance } from '../lib/AxiosService';
 
 import * as sessionActions from './session-actions';
@@ -11,6 +10,7 @@ import * as userDataActions from './userData-actions';
 import * as menuActions from './menu-actions';
 import * as gameoverActions from './gameover-actions';
 import * as vhostActions from './vhost-actions';
+import * as newtonActions from './newton-actions';
 
 let vhostKeys = [
     "CONTENT_RANKING",
@@ -20,7 +20,9 @@ let vhostKeys = [
     "MOA_API_APPLICATION_OBJECTS_GET",
     "MOA_API_APPLICATION_OBJECTS_SET",
     //"MOA_API_USER_CHECK",
-    "NEWTON_SECRETID"
+    "NEWTON_SECRETID",
+    "TLD",
+    "NT_REAL_COUNTRY"
 ];
 
 function init(initConfig){
@@ -43,10 +45,11 @@ function init(initConfig){
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))
         .then(() => dispatch(gameinfoActions.getGameInfo()))
+        .then(() =>{
+            // return if you want to wait
+            dispatch(newtonActions.init());
+        })
         .then(() => {
-            dispatch({
-                type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
-            });
             
             let menuStyle = {};
             if(getState().vhost.IMAGES_SPRITE_GAME && getState().vhost.IMAGES_SPRITE_GAME !== ''){
@@ -62,6 +65,10 @@ function init(initConfig){
             if(getState().generic.session_start_after_init){
                dispatch(sessionActions.startSession());
             }
+
+            dispatch({
+                type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
+            });
         }).catch((reason)=>{
             dispatch({
                 type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, error: reason
