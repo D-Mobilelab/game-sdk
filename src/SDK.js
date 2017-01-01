@@ -12,7 +12,8 @@ export class SDK {
     }
 
     getConfig(){
-
+        const {store} = privates.get(this);
+        return store.getState().user.level;
     }
 
     showMoreGamesButton(){
@@ -46,11 +47,18 @@ export class SDK {
     }
 
     getAvatar(){
-
+        const { store } = privates.get(this);
+        let { user } = store.getState();
+        return {
+            src: user.avatar || '', 
+            name: user.nickname || ''
+        }
     }
 
     getNickname(){
-
+        const { store } = privates.get(this);
+        let { user } = store.getState();
+        return user.nickname;
     }
 
     onStartSession(onStartSessionCallback){
@@ -67,5 +75,4 @@ export class SDK {
         const {store} = privates.get(this);
         store.dispatch(Actions.endSession(scoreAndLevel));
     }
-
 }

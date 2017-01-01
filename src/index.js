@@ -41,10 +41,10 @@ ReactDOM.render(
     ROOT_ELEMENT
 );
 
-let aliases = ['GamefiveSDK', 'GamifiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
+let aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
 const instance = new SDK(store);
-/* aliases.map((alias) => {
+aliases.map((alias) => {
     window[alias] = instance;
-});*/
+});
 
 export default instance
