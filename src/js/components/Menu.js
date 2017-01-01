@@ -2,7 +2,23 @@ import React from 'react';
 import { isTouch } from '../lib/TouchDetector';
 import menuStyles from '../../css/menu.base.css';
 
-class Menu extends React.Component{
+/** Connect to redux store */
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+/** TODO: import only needed actions */
+import { Actions } from '../actions/index';
+
+const mapStateToProps = (state) => {
+  return {...state.menu}
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+export class Menu extends React.Component{
     constructor(props){
         super(props);
         this.onTouchEnd = this.onTouchEnd.bind(this);         
@@ -90,5 +106,3 @@ class Menu extends React.Component{
         );
     }
 }
-
-export default Menu;

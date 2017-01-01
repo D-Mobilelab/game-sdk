@@ -15,11 +15,12 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
+// CREATE THE REDUX STORE
 let store = createStore(
     reducer,
     composeEnhancers(
         applyMiddleware(...middlewares)
     )
 );
-// CREATE THE REDUX STORE
+
 export default store;

@@ -4,8 +4,8 @@ var devConfiguration = {
     output:{
         path: path.resolve(__dirname, "dist"),
         filename: "gfsdk.js",
-        // libraryTarget: 'umd',
-        // library: 'SDK',
+        libraryTarget: 'umd',
+        library: 'GamifiveSDK',
     },   
     module:{
         loaders:[

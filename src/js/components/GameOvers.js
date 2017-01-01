@@ -1,10 +1,34 @@
 import React from 'react';
-import genericStyle from '../../css/generic.css';
-import gameasyStyle from '../../css/gameover.css';
+
+/** My Components */
 import { Button } from './Button';
 import { Related } from './Related';
 import { Image } from './Image';
 
+/** The styles */
+import genericStyle from '../../css/generic.css';
+import gameasyStyle from '../../css/gameover.css';
+
+/** Connect to redux store */
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+/** TODO: import only needed actions */
+import { Actions } from '../actions/index';
+const mapStateToProps = (state) => {
+  return {
+    show: state.game_over.show,
+    game_info: state.game_info,
+    score: state.session.score,
+    rank: state.session.rank
+  }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
 export class GameasyGameover extends React.Component{
     constructor(props){
         super(props);
@@ -59,7 +83,7 @@ export class GameasyGameover extends React.Component{
                     </div>
 
                 </div>
-                <Related related={this.props.related}/>
+                <Related related={this.props.game_info.related}/>
             </div>
         );
     }
