@@ -18,6 +18,17 @@ const mapDispatchToProps = (dispatch) => ({
 
 @connect(mapStateToProps, mapDispatchToProps)
 export class Banner extends React.Component {
+
+    constructor(props){
+        super(props);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    handleClose(evt){
+        evt.preventDefault();
+        this.props.actions.hideBanner();
+    }
+
     render(){
         let show = this.props.show ? bannerStyle.show : '';
         let contanierClass = [bannerStyle.bannerContainer, show].join(' ');
@@ -25,7 +36,7 @@ export class Banner extends React.Component {
         return (
             <div className={contanierClass}>
                 <div className={classNames}>
-                    <button className={bannerStyle.closeButton} >
+                    <button className={bannerStyle.closeButton} onClick={this.handleClose}>
                         <span >
                         </span>
                     </button>

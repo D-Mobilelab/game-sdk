@@ -11,6 +11,7 @@ import * as menuActions from './menu-actions';
 import * as gameoverActions from './gameover-actions';
 import * as vhostActions from './vhost-actions';
 import * as newtonActions from './newton-actions';
+import * as bannerActions from './banner-actions';
 
 let vhostKeys = [
     "CONTENT_RANKING",
@@ -84,5 +85,6 @@ export let Actions = {
     ...menuActions,
     ...gameoverActions,
     ...userDataActions,
-    ...gameinfoActions
+    ...gameinfoActions,
+    ...bannerActions
 }

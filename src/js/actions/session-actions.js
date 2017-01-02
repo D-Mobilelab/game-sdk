@@ -4,6 +4,7 @@ import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, showGameOver } from './gameover-actions';
 import { getContentId, setRelated } from './gameinfo-actions';
+import { showBanner } from './banner-actions';
 
 let onStartCallback = () => {};
 
@@ -86,6 +87,11 @@ export function endSession(scoreAndLevel = { score: 0, level: 0 }){
             console.log("Cannot end a session before initialized");
             return;
         }
+
+        if(getState().user.matchPlayed % 3 === 0){
+            dispatch(showBanner());
+        }
+
         // and a session was started
         if (Object.keys(getState().session).length > 0 
             && getState().session.opened){
