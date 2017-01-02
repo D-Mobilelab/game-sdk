@@ -88,7 +88,12 @@ export function endSession(scoreAndLevel = { score: 0, level: 0 }){
             return;
         }
 
-        if(getState().user.matchPlayed % 3 === 0){
+        /**
+         * TODO: and isAndroid()
+         * should not be visible on iOS
+         */
+        let { user, generic } = getState();
+        if((user.matchPlayed % 3 === 0) && !generic.hybrid){
             dispatch(showBanner());
         }
 
