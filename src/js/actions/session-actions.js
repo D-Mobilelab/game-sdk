@@ -1,4 +1,5 @@
 import { AxiosInstance } from '../lib/AxiosService';
+import { isAndroid } from '../lib/Platform';
 import Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
@@ -87,13 +88,10 @@ export function endSession(scoreAndLevel = { score: 0, level: 0 }){
             console.log("Cannot end a session before initialized");
             return;
         }
-
-        /**
-         * TODO: and isAndroid()
-         * should not be visible on iOS
-         */
+        
         let { user, generic } = getState();
-        if((user.matchPlayed % 3 === 0) && !generic.hybrid){
+        let bannerCondition = [(user.matchPlayed % 3 === 0), !generic.hybrid, isAndroid()].every((condition) => condition === true);
+        if(bannerCondition){
             dispatch(showBanner());
         }
 
