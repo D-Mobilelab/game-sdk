@@ -1,6 +1,5 @@
 import Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
-import Cookies from 'js-cookie';
 import { getContentId } from './gameinfo-actions';
 import userCheckMock from '../../mocks/user-check';
 const isProduction = (process.env.NODE_ENV === 'production');
