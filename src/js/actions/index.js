@@ -49,6 +49,7 @@ function init(initConfig){
         .then(() =>{
             // return if you want to wait
             dispatch(newtonActions.init());
+            return dispatch(newtonActions.login());
         })
         .then(() => {
             

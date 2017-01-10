@@ -62,6 +62,20 @@ export function canPlay(){
     }
 }
 
+/**
+ * Get the user type: guest(unlogged) free(facebook) or premium(subscribed)
+ * @returns {String}
+ */
+export function getUserType(userInfo){
+    if(!userInfo.user){
+        return 'guest';
+    } else if(!userInfo.subscribed) {
+        return 'free';
+    } else if(userInfo.subscribed) {
+        return 'premium';
+    }
+};
+
 export function increaseMatchPlayed(){
     return {
         type:'INCREASE_MATCH_PLAYED'
