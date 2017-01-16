@@ -7,21 +7,25 @@ import store from './store';
 
 import { Menu } from './js/components/Menu';
 import { Banner } from './js/components/Banner';
-import { GameasyGameover } from './js/components/GameOvers';
+import { GameasyGameover, GamifiveGameover} from './js/components/GameOvers';
+
+const Gameovers = { 
+    gamifive: GamifiveGameover,
+    gameasy: GameasyGameover
+}
 
 import { SDK } from './SDK';
 class App extends React.Component {
     
     constructor(props){
         super(props);
-        // INITIALIZE THE SDK
-        
     }
 
     render(){
+        let TheGameover = Gameovers[this.props.label];
         return (
             <div>
-                <GameasyGameover />
+                <TheGameover />
                 <Banner />
                 <Menu />
             </div>
@@ -34,9 +38,11 @@ let ROOT_ELEMENT = document.createElement('div');
 ROOT_ELEMENT.id = 'gfsdk_root';
 window.document.body.appendChild(ROOT_ELEMENT);
 
+let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
+
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App label={WHITE_LABEL} />
     </Provider>,
     ROOT_ELEMENT
 );
