@@ -4,19 +4,19 @@ import buttonStyle from '../../css/button.gameasy.css';
 export class Button extends React.Component {
     constructor(props){
         super(props);
+        this.onPointerDown = this.onPointerDown.bind(this);
+        this.onPointerUp = this.onPointerUp.bind(this);
         this.state = {
             active: false
         }
-        this.onMouseDown = this.onMouseDown.bind(this);
-        this.onMouseUp = this.onMouseUp.bind(this);
     }
 
-    onMouseDown(evt){
+    onPointerDown(evt){
         evt.preventDefault();
         this.setState({ active: true });
     }
 
-    onMouseUp(evt){
+    onPointerUp(evt){
         evt.preventDefault();
         this.setState({ active: false });
         this.props.onClick(evt);
@@ -30,8 +30,10 @@ export class Button extends React.Component {
         let classNames = buttonClasses.join(' ');
         return(
             <button 
-                onMouseDown={this.onMouseDown} 
-                onMouseUp={this.onMouseUp} 
+                onMouseDown={this.onPointerDown} 
+                onMouseUp={this.onPointerUp}
+                onTouchStart={this.onPointerDown}
+                onTouchEnd={this.onPointerUp}
                 className={classNames} 
                 style={{...this.props.style}}>
                 {this.props.text}
