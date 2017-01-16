@@ -8,4 +8,10 @@
     border-radius: 20px;
     background: transparent;
     line-height: 38px;
+    transform: scale(1);
+    transition: transform 100ms;
+}
+
+.btn.active{
+    transform: scale(0.9)
 }

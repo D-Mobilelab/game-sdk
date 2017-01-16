@@ -1,20 +1,23 @@
 @value colors: './colors.css';
-@value foreground_white from colors;
+@value foreground_white, purple_gameasy from colors;
 
 .btnGameasy {
     composes: btn from './button.base.css';
-    border-color: #f84975;
-    background: #f84975;
+    border-color: purple_gameasy;
+    background: purple_gameasy;
     text-transform: uppercase;
-    margin-top: -21px;
     color: foreground_white;
     font-family: 'montserratultra_light';
-    width: 50%;
+    width: 100%;
+}
+
+.btnGameasy.active{
+    transform: scale(0.9)
 }
 
 .centerBtn {
     position:absolute;
     top:50%;
     left:50%;
-    transform: translateX(-50%);
+    margin-left: -25%;
 }
