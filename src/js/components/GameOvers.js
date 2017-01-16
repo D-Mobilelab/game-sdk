@@ -40,7 +40,6 @@ export class GameasyGameover extends Gameover {
     }
 
     render(){
-        
         let classNames = [gameasyStyle.gameover];
         classNames.push(this.props.show ? gameasyStyle.show : gameasyStyle.hide);
 
@@ -55,39 +54,31 @@ export class GameasyGameover extends Gameover {
                 <header className={gameasyStyle.header}>
                     <h1>{this.props.game_info.title}</h1>
                 </header>
-                <div className={genericStyle.grid}>
+                <div className={gameasyStyle.box}>
+                <div className={genericStyle.grid} style={{position: 'relative'}}>
                     
-                    <div className={genericStyle.col + ' ' + genericStyle._2_3} style={{position:'relative'}}>
+                    <div className={genericStyle.col + ' ' + genericStyle._2_3} style={{position:'relative', paddingRight:'0'}}>
                         <Image srcSet={imgSrcSet} />
                         <Button text='play' onClick={this.handleReplay} center='true' style={{width:'50%'}} />
                     </div>
                     
-                    <div className={genericStyle.col + ' ' + genericStyle._1_3}>
-                        <div className={genericStyle.grid} style={{marginTop:'20%'}}>
-                            <div className={genericStyle.col + ' ' + genericStyle._1_1} style={{textAlign:'center', paddingRight:'0'}}>
-                                <div>
-                                    <span className={iconStyles.icon + ' ' + iconStyles.iconCoppa}></span>
-                                    <h3>Score:</h3>
-                                    <h2>{this.props.score}</h2>
-                                </div>
+                    <div className={gameasyStyle.scoreContainer}>
+                        <div>
+                            <div style={{textAlign:'center'}}>
+                                <span className={iconStyles.icon + ' ' + iconStyles.iconCoppa}></span>
+                                <h3>Score:</h3>
+                                <h2>{this.props.score}</h2> 
                             </div>
-                            
-                            <div className={genericStyle.col + ' ' + genericStyle._1_1} style={{textAlign:'center', paddingRight:'0'}}>
-                                <hr className={genericStyle.divider} />
+                        </div>
+                        <hr className={genericStyle.divider} />
+                        <div>
+                            <div style={{textAlign:'center'}}>
+                                <span className={iconStyles.icon + ' ' + iconStyles.iconRank}></span>
+                                <h3>Rank:</h3>
+                                <h2>{this.props.rank}</h2>
                             </div>
-                            
-                            
-                            <div className={genericStyle.col + ' ' + genericStyle._1_1} style={{textAlign:'center'}}>
-                                <div>
-                                    <span className={iconStyles.icon + ' ' + iconStyles.iconRank}></span>
-                                    <h3>Rank:</h3>
-                                    <h2>{this.props.rank}</h2>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-
                 </div>
 
                 <div className={genericStyle.grid} style={{marginTop:'20px', marginBottom:'20px'}}>
@@ -102,6 +93,7 @@ export class GameasyGameover extends Gameover {
                     
                 </div>
                 <Related related={this.props.game_info.related}/>
+                </div>
             </div>
         );
     }

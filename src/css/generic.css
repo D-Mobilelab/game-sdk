@@ -196,11 +196,11 @@
 	margin-left: 8.33%
 }
 
-.divider { 
+.divider {
+	width: 65%;
+	margin: 0 auto;
     position: relative;
-    width: 100%;
     border: 0;
     border-bottom: 1px solid rgba(231, 231, 249, 0.2);
-    margin: 15% 0 15% 0;
     top: -2px;
 }
