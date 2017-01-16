@@ -12,7 +12,7 @@ if(isProduction()){
     theWindow = window;
 }
 
-class Location{
+class Location {
     getOrigin(){
         if (!theWindow.location.origin) {             
             theWindow.location.origin = `${theWindow.location.protocol}//${theWindow.location.hostname}${(theWindow.location.port ? ':${theWindow.location.port}' : '')}`;
@@ -47,8 +47,26 @@ class Location{
         return Utils.dequeryfy(theWindow.location.href);
     }
 
+    /**
+     * gameasy.ru, gameasy.sg, www.gameasy.com
+     * @returns {Boolean} - return if the hostname it's a gameasy whitelabel
+     */
     isGameasy(){
-        return true;
+        /**
+         * this regex should get host
+         * let hostRegex = new RegExp(/(https?:)\/\/(www2?)?\.?([a-zA-Z0-9_-]+)\.?\.[a-zA-Z0-9_-]{2,}/, 'g');
+         */
+        let host = theWindow.location.host || theWindow.location.hostname;
+        let domainLevels = host.split('.');
+        return domainLevels.some((level)=> { return level.indexOf("gameasy") > -1;  });
+    }
+
+    /**
+     * isGamifive
+     * @returns {Boolean} - return if the hostname it's a gamifive whitelabel
+     */
+    isGamifive(){
+        return !this.isGameasy();
     }
 }
 

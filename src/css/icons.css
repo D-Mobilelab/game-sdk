@@ -1,0 +1,44 @@
+@value colors: './colors.css';
+@value foreground_white, purple_gameasy, blue_gameasy, background_cyan from colors;
+
+.icon {
+    font-size: 30px;
+    display: block;
+    font-family: 'icomoon';
+}
+
+.iconCoppa {
+    color:#e7f943;
+}
+
+.iconCoppa:before {
+    content: "\e904";
+}
+
+.iconRank {
+    color: background_cyan;
+}
+
+.iconRank:before {
+    content: "\e915";
+}
+
+.iconLike {
+    color: purple_gameasy;
+}
+
+.iconLike.full:before {
+    content:"\e91b";
+}
+
+.iconLike:before {
+	content: "\e906";
+}
+
+.iconShare:before{
+    content: "\e91c";
+}
+
+.iconShare {
+    color: blue_gameasy;
+}

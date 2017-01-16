@@ -6,8 +6,7 @@ export function generic(state = {
     session_start_after_init: false,
     initConfig: {
         lite: true,
-        debug: false,
-        moreGamesButtonStyle:{ top: '50%', left: '1%' }
+        debug: false
     },
     isOnStartSessionRegistered: false,
     loadUserDataCalled: false,

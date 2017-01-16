@@ -5,10 +5,13 @@ import { Gameover } from './Gameover';
 import { Button } from './Button';
 import { Related } from './Related';
 import { Image } from './Image';
+import { LikeButton } from './LikeButton';
+import { ShareButton } from './ShareButton';
 
 /** The styles */
 import genericStyle from '../../css/generic.css';
 import gameasyStyle from '../../css/gameover.css';
+import iconStyles from '../../css/icons.css';
 
 /** Connect to redux store */
 import { connect } from 'react-redux';
@@ -20,6 +23,7 @@ const mapStateToProps = (state) => {
   return {
     show: state.game_over.show,
     game_info: state.game_info,
+    user: state.user,
     score: state.session.score,
     rank: state.session.rank
   }
@@ -62,7 +66,7 @@ export class GameasyGameover extends Gameover {
                         <div className={genericStyle.grid} style={{marginTop:'20%'}}>
                             <div className={genericStyle.col + ' ' + genericStyle._1_1} style={{textAlign:'center', paddingRight:'0'}}>
                                 <div>
-                                    <span className={genericStyle.icon + ' ' + genericStyle.iconCoppa}></span>
+                                    <span className={iconStyles.icon + ' ' + iconStyles.iconCoppa}></span>
                                     <h3>Score:</h3>
                                     <h2>{this.props.score}</h2>
                                 </div>
@@ -75,7 +79,7 @@ export class GameasyGameover extends Gameover {
                             
                             <div className={genericStyle.col + ' ' + genericStyle._1_1} style={{textAlign:'center'}}>
                                 <div>
-                                    <span className={genericStyle.icon + ' ' + genericStyle.iconRank}></span>
+                                    <span className={iconStyles.icon + ' ' + iconStyles.iconRank}></span>
                                     <h3>Rank:</h3>
                                     <h2>{this.props.rank}</h2>
                                 </div>
@@ -85,13 +89,15 @@ export class GameasyGameover extends Gameover {
                     </div>
 
                 </div>
-                <div className={genericStyle.grid}>
-                    <div className={genericStyle.col + ' ' + genericStyle._1_2}>
-                        <button type="button">Favourite onClick={this.handleFavourites}></button>
+
+                <div className={genericStyle.grid} style={{marginTop:'20px', marginBottom:'20px'}}>
+                    <div className={genericStyle.col + ' ' + genericStyle._2_12}></div>
+                    <div className={genericStyle.col + ' ' + genericStyle._4_12}>
+                        <LikeButton onClick={this.handleFavourites} full={this.isGameFavourite() ? true : false} />
                     </div>
                     
-                    <div className={genericStyle.col + ' ' + genericStyle._1_2}>
-                        <button type="button" onClick={this.handleShare}>Share</button>
+                    <div className={genericStyle.col + ' ' + genericStyle._4_12}>
+                        <ShareButton onClick={this.handleShare} />
                     </div>
                     
                 </div>
@@ -136,7 +142,10 @@ export class GamifiveGameover extends Gameover {
 
         const baseFavourite = 'fa fa-heart'; 
         const addToFavouriteOn = 'ico-red';
-        let favouriteClasses = `${baseFavourite}`;
+        let favouriteClasses = [baseFavourite];
+        if(this.isGameFavourite()) favouriteClasses.push(addToFavouriteOn);
+        let favClass = favouriteClasses.join(' ');
+
         return (
             <div style={showAndHideStyle}>
                 <div className="container game-over">
@@ -181,7 +190,7 @@ export class GamifiveGameover extends Gameover {
 
                                 <div className="center-block like-btn">
                                     <a onClick={this.handleFavourites} id="gameOverLikeBtn" className="btn-social">
-                                        <span className={favouriteClasses} id="heartIcon"></span>
+                                        <span className={favClass} id="heartIcon"></span>
                                     </a>
                                 </div>
                                 

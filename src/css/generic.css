@@ -21,8 +21,6 @@
 */
 
 .grid:after {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;	
 }
 
@@ -30,13 +28,10 @@
 	float: left;
   	min-height: 1px;
 	padding-right: 20px; /* column-space */
-	
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;	
 }
 
-.col .col:last-child {
+.col:last-child {
 	padding-right: 0;
 }
 
@@ -199,28 +194,6 @@
 
 .push_1_12 {
 	margin-left: 8.33%
-}
-
-.icon {
-    font-size: 30px;
-    display: block;
-    font-family: 'icomoon';
-}
-
-.iconCoppa {
-    color:#e7f943;
-}
-
-.iconCoppa:before {
-    content: "\e904";
-}
-
-.iconRank {
-    color: #00c1e2;
-}
-
-.iconRank:before {
-    content: "\e915";
 }
 
 .divider { 

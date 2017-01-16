@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 
     PAYWALL_ELEMENT_ID: 'paywall',
     MAX_RECORDED_SESSIONS_NUMBER: 2,
@@ -63,6 +63,7 @@ module.exports = {
     // API
     VHOST_API_URL: '/v01/config.getvars', //?keys
     GAME_INFO_API_URL: '/v01/gameplay', //?content_id=
+    GAME_INFO_PROXY_API_URL: '/v01/gameplay_proxy', //?content_id=&_PONY=
     GAMEOVER_API_URL: '/v01/gameover/:CONTENT_ID', // ?start&duration&score&level
     LEADERBOARD_API_URL: '/v01/leaderboard',
     CAN_DOWNLOAD_API_URL: '/v01/user.candownload/:ID',
@@ -75,5 +76,6 @@ module.exports = {
     GAMEINFO_JSON_FILENAME:'offlineData.json',
     USER_JSON_FILENAME:'user.json',
     USER_DATA_JSON_FILENAME:'userData.json',
-    VHOST_JSON_FILENAME:'config.json'
+    VHOST_JSON_FILENAME:'config.json',
+    NEWTON_DEBUG_SECRET:'_BdH,S;lTr%Fd+#fka-]'
 }

@@ -1,4 +1,4 @@
-module.exports = function(HOST = 'www2.gameasy.com', GAME_ID = '8ca8ff681ca627444cdffc0b6c0c7111', COUNTRY_CODE = 'ww-it'){
+module.exports = function(HOST = 'www2.gameasy.com', GAME_ID = 'c2701133414427fee732e051abdfe3e8', COUNTRY_CODE = 'ww-it'){
     return {
         "hash": "",
         "search": "",

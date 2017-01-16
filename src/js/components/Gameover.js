@@ -25,9 +25,13 @@ export class Gameover extends React.Component{
         console.log(evt, "Handle share");
     }
     
+    isGameFavourite(){
+        return this.props.user.favourites.some((favourite) => favourite.id === this.props.game_info.id);
+    }
+
     handleFavourites(evt){
         evt.preventDefault();
-        this.props.actions.addGameLike();
+        this.props.actions.toggleGameLike();
     }
 
     handleOnClickRelated(item){

@@ -1,7 +1,13 @@
 export function game_info(state = {
         title:'',
         name:'',
-        images: {cover:{ratio_1:''}},
+        images: {
+            cover:{
+                ratio_1:'',
+                ratio_1_5:'',
+                ratio_2:''
+            }
+        },
         related:[]
     }, action){
     switch(action.type){

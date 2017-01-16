@@ -1,12 +1,21 @@
 import Location from '../lib/Location';
 import { getUserType } from './user-actions';
 import NewtonAdapter from 'newton-adapter';
+import { NEWTON_DEBUG_SECRET } from '../lib/Constants';
+
+const isProduction = () => process.env.NODE_ENV === 'production';
 
 export function init(){
     return (dispatch, getState) => {
         const currentState = getState();
+
+        let newtonSecret = currentState.vhost.NEWTON_SECRETID;
+        if(!isProduction()){ 
+             newtonSecret = NEWTON_DEBUG_SECRET;
+        }
+        
         return NewtonAdapter.init({
-            secretId: currentState.vhost.NEWTON_SECRETID,
+            secretId: newtonSecret,
             enable: true, // enable newton
             waitLogin: false,     // wait for login to have been completed (async)
             properties: {

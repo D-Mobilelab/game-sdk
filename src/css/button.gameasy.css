@@ -1,5 +1,5 @@
 @value colors: './colors.css';
-@value foreground_white, purple_gameasy from colors;
+@value foreground_white, purple_gameasy, blue_gameasy from colors;
 
 .btnGameasy {
     composes: btn from './button.base.css';
@@ -20,4 +20,27 @@
     top:50%;
     left:50%;
     margin-left: -25%;
+}
+
+.centerBlock {
+    display: table;
+    margin: auto;
+}
+
+.likeButton {
+    composes: btn from './button.base.css';
+	color: purple_gameasy;
+    width: 90px;
+    border-color: purple_gameasy;
+    background: transparent;
+    border-radius: 20px;
+}
+
+.shareButton {
+    composes: btn from './button.base.css';
+	color: blue_gameasy;
+    width: 90px;
+    border-color: blue_gameasy;
+    background: transparent;
+    border-radius: 20px;
 }

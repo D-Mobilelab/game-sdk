@@ -1,6 +1,14 @@
 @value colors: './colors.css';
 @value foreground_white, background_cyan from colors;
 
+.gameover * {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.gameover ul {
+    list-style-type: none;
+}
+
 .gameover {
     position: relative;
     font-family: 'montserratultra_light';

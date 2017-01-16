@@ -1,6 +1,7 @@
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
 import Stargate from 'stargatejs';
+import { Utils } from 'stargatejs';
 import { AxiosInstance } from '../lib/AxiosService';
 
 import * as sessionActions from './session-actions';
@@ -64,13 +65,13 @@ function init(initConfig){
                 return dispatch(userDataActions.loadUserData());
             }
         }).then(() => {
-            if(getState().generic.session_start_after_init){
-               dispatch(sessionActions.startSession());
-            }
-
             dispatch({
                 type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
             });
+            
+            if(getState().generic.session_start_after_init){            
+               dispatch(sessionActions.startSession());
+            }
         }).catch((reason)=>{
             dispatch({
                 type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, error: reason
@@ -79,8 +80,24 @@ function init(initConfig){
     }   
 }
 
-export let Actions = {    
+function redirectOnStore(){
+    let mfp_url = [Location.getOrigin(), '/#!/mfp'].join('');
+    mfp_url = Utils.queryfy(mfp_url, {
+        returnurl: `${Location.getCurrentHref()}`,
+        title: ''
+    });
+    
+    // setTimeout(() => window.location.href = mfp_url, 1000);
+    
+    return {
+        type:'REDIRECT_ON_STORE',
+        payload: mfp_url
+    }
+}
+
+export let Actions = {
     init,
+    redirectOnStore,
     ...sessionActions,
     ...userActions,
     ...menuActions,

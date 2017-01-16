@@ -1,6 +1,6 @@
 export function menu(state = { 
     show: false, 
-    style:{ top:'50%', left:'1%' },
+    style: { bottom:'2%', right:'2%' },
     active: false,
     pointerDownPosition: {x: 0, y: 0},
     pointerUpPosition: {x: 0, y: 0}
