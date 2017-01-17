@@ -4,6 +4,16 @@ import genericStyle from '../../css/generic.css';
 
 export class Related extends React.Component {
 
+    constructor(props){
+        super(props);
+        //this.onClick = this.onClick.bind(this);
+    }
+
+    onClick(related, evt) {
+        evt.preventDefault();
+        window.location.href = related.url_play;
+    }
+
     render(){
         return(
              <div className={genericStyle.grid}>
@@ -14,9 +24,11 @@ export class Related extends React.Component {
                         let oneThird = Math.round(window.innerWidth / 3);
                         let imgSrc = related.images.cover.ratio_1.replace('[WSIZE]', oneThird).replace('[HSIZE]', 0);
                         let classes = [genericStyle.col, genericStyle._1_3].join(' ');
-
+                        
                         return (
-                            <li className={classes} style={{padding:'1%'}} 
+                            <li className={classes} 
+                                onClick={this.onClick.bind(this, related)}
+                                style={{padding:'1%'}}
                                 key={index}>
                                 <Image src={imgSrc} />
                             </li>
