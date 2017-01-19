@@ -60,14 +60,14 @@ function init(initConfig){
             }
 
             dispatch(menuActions.showMenu(menuStyle));
-
+            dispatch({
+                type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
+            });
             if(getState().generic.loadUserDataCalled){
                 return dispatch(userDataActions.loadUserData());
             }
         }).then(() => {
-            dispatch({
-                type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
-            });
+
             
             if(getState().generic.session_start_after_init){            
                dispatch(sessionActions.startSession());
