@@ -8,6 +8,7 @@ var devConfiguration = {
         library: 'GamifiveSDK',
     },   
     module:{
+        noParse: /node_modules\/localforage\/dist\/localforage.js/,
         loaders:[
             {test: /\.js$/, exclude: /(bower_components|node_modules)/, loader: 'babel-loader'},
             {test:/\.css$/, exclude:/(bower_components|node_modules)/, loader:"style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!postcss-loader"},
