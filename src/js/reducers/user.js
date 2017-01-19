@@ -1,6 +1,10 @@
 export function user(state = {
         matchPlayed: 0,
-        user: null,
+        user: null, // the user id
+        isSaving: false,
+        isFetching: false,
+        localUserData: null,
+        remoteUserData: null,
         userData:{
             CreatedAt: new Date(0).toISOString(),
             UpdatedAt: new Date(0).toISOString(),
@@ -49,10 +53,47 @@ export function user(state = {
                     return favourite.id !== id;
                 }
             });
-            console.log(newFilteredFavourites);
-            return Object.assign({}, state, {favourites: newFilteredFavourites});
+            return Object.assign({}, state, { favourites: newFilteredFavourites });
         case 'REMOVE_GAME_LIKE_ERROR':
             return state;
+        /** SERVER SAVE */
+        case 'SAVE_USER_DATA_SERVER_START':
+            return Object.assign({}, state, { isSaving: true}); 
+        case 'SAVE_USER_DATA_SERVER_END':
+            let newUserDataEnd = {...state.userData, ...action.payload};
+            return Object.assign({}, state, { userData: newUserDataEnd, isSaving: false});
+        case 'SAVE_USER_DATA_SERVER_ERROR':
+            return Object.assign({}, state, { isSaving: false});
+        /** LOCAL SAVE */
+        case 'SAVE_USER_DATA_LOCAL_START':
+            return state;
+        case 'SAVE_USER_DATA_LOCAL_END':
+            let newUserDataMem = {...state.userData, info: action.payload.info, UpdatedAt: action.payload.UpdatedAt };
+            return Object.assign({}, state, { userData: newUserDataMem });
+        case 'SAVE_USER_DATA_LOCAL_ERROR':
+            return state;
+        /** LOAD SERVER */
+        case 'LOAD_USER_DATA_SERVER_START':
+            return Object.assign({}, state, { isFetching: true});
+        case 'LOAD_USER_DATA_SERVER_END':
+            let newUserData = {...state.remoteUserData, ...action.payload};
+            return Object.assign({}, state, { remoteUserData: newUserData, isFetching: false}); 
+        case 'LOAD_USER_DATA_SERVER_ERROR':
+            return Object.assign({}, state, { isFetching: false});
+        /** LOAD LOCAL */
+        case 'LOAD_USER_DATA_LOCAL_START':
+            return state;
+        case 'LOAD_USER_DATA_LOCAL_END':
+            if(action.payload){
+                let newUserLocalData = {...state.localUserData, ...action.payload};
+                return Object.assign({}, state, { localUserData: newUserLocalData});
+            }
+            return state;
+        case 'LOAD_USER_DATA_LOCAL_ERROR':
+            return state;
+        case 'LOAD_USER_DATA_END':
+            let syncedData = {...state.userData, ...action.payload};
+            return Object.assign({}, state, { userData: syncedData});
         default:
             return state;
     }
