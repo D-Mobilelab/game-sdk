@@ -10,8 +10,13 @@ export function generic(state = {
     },
     isOnStartSessionRegistered: false,
     loadUserDataCalled: false,
-    actions_after_init:[]
-}, action){
+    actions_after_init:[],
+    config:{
+        WEBAPP_CONGRATULATIONS_SCORE: 'Your score is',
+        WEBAPP_YOUR_POSITION_TITLE:'Rank',
+        WEBAPP_CANVAS_BUTTON_PLAY:'Play'
+    }
+}, action) {
     switch(action.type){
         case 'SET_IS_HYBRID':
             return Object.assign({}, state, { hybrid: action.hybrid });

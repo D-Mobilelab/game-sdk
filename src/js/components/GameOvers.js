@@ -25,13 +25,20 @@ const mapStateToProps = (state) => {
     game_info: state.game_info,
     user: state.user,
     score: state.session.score,
-    rank: state.session.rank
+    rank: state.session.rank,
+    config: state.generic.config
   }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
+
+/** 
+ * WEBAPP_CONGRATULATIONS_SCORE
+ * WEBAPP_YOUR_POSITION_TITLE
+ * WEBAPP_CANVAS_BUTTON_PLAY
+ * */
 
 @connect(mapStateToProps, mapDispatchToProps)
 export class GameasyGameover extends Gameover {
@@ -48,7 +55,7 @@ export class GameasyGameover extends Gameover {
         let percentage = Math.round(window.innerWidth * 60 / 100);
         let imgSrc = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
         let imgSrcSet = `${imgSrc}, ${innerWidth}w`;
-        
+        let { WEBAPP_CONGRATULATIONS_SCORE, WEBAPP_YOUR_POSITION_TITLE, WEBAPP_CANVAS_BUTTON_PLAY} = this.props.config;
         return(
            <div className={classes}>
                 <header className={gameasyStyle.header}>
@@ -59,14 +66,14 @@ export class GameasyGameover extends Gameover {
                     
                     <div className={genericStyle.col + ' ' + genericStyle._2_3} style={{position:'relative', paddingRight:'0'}}>
                         <Image srcSet={imgSrcSet} />
-                        <Button text='play' onClick={this.handleReplay} center='true' style={{width:'50%'}} />
+                        <Button text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
                     </div>
                     
                     <div className={gameasyStyle.scoreContainer}>
                         <div>
                             <div style={{textAlign:'center'}}>
                                 <span className={iconStyles.icon + ' ' + iconStyles.iconCoppa}></span>
-                                <h3>Score:</h3>
+                                <h3>{WEBAPP_CONGRATULATIONS_SCORE}</h3>
                                 <h2>{this.props.score}</h2> 
                             </div>
                         </div>
@@ -74,7 +81,7 @@ export class GameasyGameover extends Gameover {
                         <div>
                             <div style={{textAlign:'center'}}>
                                 <span className={iconStyles.icon + ' ' + iconStyles.iconRank}></span>
-                                <h3>Rank:</h3>
+                                <h3>{WEBAPP_YOUR_POSITION_TITLE}</h3>
                                 <h2>{this.props.rank}</h2>
                             </div>
                         </div>
