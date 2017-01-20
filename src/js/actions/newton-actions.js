@@ -16,8 +16,8 @@ export function init(){
         
         return NewtonAdapter.init({
             secretId: newtonSecret,
-            enable: true, // enable newton
-            waitLogin: false,     // wait for login to have been completed (async)
+            enable: true,    // enable newton
+            waitLogin: true, // wait for login to have been completed (async)
             properties: {
                 environment: (currentState.generic.hybrid ? 'hybrid' : 'webapp'),
                 white_label_id: currentState.game_info.label || 'it-gameasy'
