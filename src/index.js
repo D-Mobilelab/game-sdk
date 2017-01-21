@@ -33,19 +33,22 @@ class App extends React.Component {
     }
 }
 
-// DYNAMIC CREATION OF THE ELEMENT
-let ROOT_ELEMENT = document.createElement('div');
-ROOT_ELEMENT.id = 'gfsdk_root';
-window.document.body.appendChild(ROOT_ELEMENT);
+function onDomLoaded(event) {
+    let ROOT_ELEMENT = document.createElement('div');
+    ROOT_ELEMENT.id = 'gfsdk_root';
+    window.document.body.appendChild(ROOT_ELEMENT);
 
-let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
+    let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App label={WHITE_LABEL} />
-    </Provider>,
-    ROOT_ELEMENT
-);
+    ReactDOM.render(
+        <Provider store={store}>
+            <App label={WHITE_LABEL} />
+        </Provider>,
+        ROOT_ELEMENT
+    );
+}
+
+window.document.addEventListener("DOMContentLoaded", onDomLoaded);
 
 let aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
 const instance = new SDK(store);
