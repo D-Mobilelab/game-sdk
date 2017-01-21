@@ -23,7 +23,6 @@ export const newtonMiddleware = (store) => (next) => (action) => {
             });
             break;
         case 'START_SESSION':
-
             NewtonAdapter.trackEvent({
                 name: "GameStart",
                 rank: getContentRanking('GameStart', 'Play', currentState.game_info.contentId, userType, CONTENT_RANKING, userFrom),
@@ -76,7 +75,37 @@ export const newtonMiddleware = (store) => (next) => (action) => {
                     reason: currentState.generic.error
                 }
             });
-            break; 
+            break;
+        case 'REDIRECT_ON_STORE':
+            NewtonAdapter.trackEvent({
+                name: 'NativeAppPromoClick',
+                properties:{
+                    action: 'Yes',
+                    category: 'Behavior',
+                    valuable: 'Yes',
+                }
+            });
+            break;
+        case 'SHOW_BANNER':
+            NewtonAdapter.trackEvent({
+                name: 'NativeAppPromoLoad',                        
+                properties:{
+                    action: 'Yes',
+                    category: 'Behavior',
+                    valuable: 'Yes',
+                }
+            });
+            break;
+        case 'HIDE_BANNER':
+            NewtonAdapter.trackEvent({
+                name: 'NativeAppPromoClose',                        
+                properties:{
+                    action: 'Yes',
+                    category: 'Behavior',
+                    valuable: 'Yes',
+                }
+            });
+            break;
         default:
             break;
     }
