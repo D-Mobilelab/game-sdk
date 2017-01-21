@@ -14,6 +14,14 @@ const Gameovers = {
     gameasy: GameasyGameover
 }
 
+const Styles = {
+    position: 'absolute',
+	top: '0',
+	left: '0',
+	width: '100%',
+	height: '100%',
+}
+
 import { SDK } from './SDK';
 class App extends React.Component {
     
@@ -24,7 +32,7 @@ class App extends React.Component {
     render(){
         let TheGameover = Gameovers[this.props.label];
         return (
-            <div>
+            <div style={Styles}>
                 <TheGameover />
                 <Banner />
                 <Menu />
