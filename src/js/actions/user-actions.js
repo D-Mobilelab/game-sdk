@@ -2,6 +2,7 @@ import Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getContentId } from './gameinfo-actions';
 import userCheckMock from '../../mocks/user-check';
+import Stargate from 'stargatejs';
 const isProduction = (process.env.NODE_ENV === 'production');
 
 export function getUserFavourites(){
@@ -28,9 +29,14 @@ export function getUserFavourites(){
 }
 
 export function getUser(){
-    return (dispatch, getState) =>{
+    return (dispatch, getState) => {
         dispatch({ type: 'USER_CHECK_LOAD_START' });
-        return AxiosInstance.get(Constants.USER_CHECK)
+        let { generic } = getState();
+        const query = {};
+        if(generic.hybrid) { query.hybrid = 1; }
+        
+        if(generic.connectionState.online) {
+            return AxiosInstance.get(Constants.USER_CHECK, { params: query })
                 .then((userResponse) => {
                     let data = {};
                     !isProduction ? data = userCheckMock : data = userResponse.data;                 
@@ -43,6 +49,18 @@ export function getUser(){
                 .catch((reason)=>{
                     dispatch({type: 'USER_CHECK_LOAD_FAIL', reason: reason});
                 });
+
+        } else {
+            if(generic.hybrid) {
+                const filePath = [Stargate.file.BASE_DIR, Constants.USER_JSON_FILENAME].join('');
+                return Stargate.file.readFileAsJSON(filePath)
+                        .then((responseData) => { 
+                            dispatch({type: 'USER_CHECK_LOAD_END', user: responseData});
+                        }).catch((reason)=>{
+                            dispatch({type: 'USER_CHECK_LOAD_FAIL', reason: reason});
+                        });
+            }
+        }
     }
 }
 
@@ -94,12 +112,12 @@ export function removeGameLike(gameId){
 
 export function addGameLike(gameId){
     return (dispatch, getState) => {
-            dispatch({type:'ADD_GAME_LIKE_START'});
+            dispatch({ type: 'ADD_GAME_LIKE_START' });
             const query = {
                 content_id: gameId,
                 user_id: getState().user.user
             };
-            return AxiosInstance.get(Constants.USER_SET_LIKE, {params:query})
+            return AxiosInstance.get(Constants.USER_SET_LIKE, { params: query })
                 .then((response) => {
                     let { object_id } = response.data;
                     dispatch({type:'ADD_GAME_LIKE_END', payload: { id: object_id, content_id: object_id } });
@@ -115,8 +133,7 @@ export function toggleGameLike(){
         let { user } = getState();
         let { game_info } = getState();
 
-        let isFavourite = user.favourites.some((favourite) => favourite.id === game_info.id);
-        console.log(user.favourites[0].id, game_info.id);
+        let isFavourite = user.favourites.some((favourite) => favourite.contentId === game_info.contentId);
         let content_id = game_info.id;
         
         console.log("isFavourite", isFavourite);
