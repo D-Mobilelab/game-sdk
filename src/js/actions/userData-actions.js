@@ -97,10 +97,11 @@ function getUserDataFromServer(){
             return Promise.resolve(user.userData);
         }
 
+        let NewtonInstance = Newton.getSharedInstance();
         let userDataGetApi = vhost.MOA_API_APPLICATION_OBJECTS_GET
                             .replace(':QUERY', JSON.stringify({ contentId: getContentId() }))
                             .replace(':ID', user.userData._id || '')
-                            .replace(':ACCESS_TOKEN', '')
+                            .replace(':ACCESS_TOKEN', NewtonInstance.getUserToken())
                             .replace(':EXTERNAL_TOKEN', user.user) //userId
                             .replace(':COLLECTION', 'gameInfo');
                             
@@ -147,8 +148,14 @@ function setUserDataOnServer(newInfo){
         
         let APPLICATION_OBJECT_SET_END_POINT = vhost.MOA_API_APPLICATION_OBJECTS_SET.split('?')[0];
         let queryObject = Utils.dequeryfy(vhost.MOA_API_APPLICATION_OBJECTS_SET);
+        
+        /**
+         * TODO: call NewtonInstance.syncUserState 
+         * to ensure the user server side it's in sync with the local one
+         */
+        let NewtonInstance = Newton.getSharedInstance();
         let body = {
-            access_token: user.user,
+            access_token: NewtonInstance.getUserToken(),
             external_token: user.user,
             id: user.userData._id || '',
             info: infoSerialized,
