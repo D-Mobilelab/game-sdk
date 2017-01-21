@@ -2,12 +2,13 @@
   "name": "docomo-sdk",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/sdk.js",
+  "main": "dist/gfsdk.js",
   "scripts": {
     "build:dev": "webpack --config webpack.config.dev.js",
     "build:debug": "webpack --config webpack.config.debug.js",
-    "build:prod": "webpack --config webpack.config.prod.js",
+    "build:prod": "webpack --config webpack.config.prod.js -p",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
+    "debug": "webpack-dev-server --config webpack.config.debug.js",
     "build": "npm run build:prod"
   },
   "author": "eatsjobs",
