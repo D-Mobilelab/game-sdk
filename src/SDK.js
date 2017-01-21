@@ -13,7 +13,11 @@ export class SDK {
 
     getConfig(){
         const {store} = privates.get(this);
-        return store.getState().user.level;
+        return store.getState();
+    }
+
+    getLevel(){
+        
     }
 
     showMoreGamesButton(){
