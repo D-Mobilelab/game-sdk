@@ -13,6 +13,7 @@ import * as gameoverActions from './gameover-actions';
 import * as vhostActions from './vhost-actions';
 import * as newtonActions from './newton-actions';
 import * as bannerActions from './banner-actions';
+import * as sharerActions from './sharer-actions';
 
 let vhostKeys = [
     "CONTENT_RANKING",
@@ -24,7 +25,8 @@ let vhostKeys = [
     //"MOA_API_USER_CHECK",
     "NEWTON_SECRETID",
     "TLD",
-    "NT_REAL_COUNTRY"
+    "NT_REAL_COUNTRY",
+    "INSTALL_HYBRID_VISIBLE"
 ];
 
 function init(initConfig){
@@ -47,6 +49,7 @@ function init(initConfig){
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))
         .then(() => dispatch(gameinfoActions.getGameInfo()))
+        .then(() => dispatch(sharerActions.initFacebook( { fbAppId: getState().game_info.fbAppId } )) )
         .then(() =>{
             // return if you want to wait
             dispatch(newtonActions.init());
@@ -104,5 +107,6 @@ export let Actions = {
     ...gameoverActions,
     ...userDataActions,
     ...gameinfoActions,
-    ...bannerActions
+    ...bannerActions,
+    ...sharerActions
 }

@@ -22,7 +22,7 @@ export class Gameover extends React.Component{
 
     handleShare(evt){
         evt.preventDefault();
-        console.log(evt, "Handle share");
+        this.props.actions.share(window.location.href, 'facebook');
     }
     
     isGameFavourite(){

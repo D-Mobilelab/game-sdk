@@ -7,7 +7,7 @@ export class ShareButton extends React.Component {
         let btnStyles = [buttonStyle.shareButton, buttonStyle.centerBlock].join(' ');
         let iconsStyles = [iconsStyle.icon, iconsStyle.iconShare].join(' ');
         return (
-            <button type='button' className={btnStyles}>
+            <button type='button' className={btnStyles} onClick={this.props.onClick}>
                 <span className={iconsStyles}>
                 </span>
             </button>
