@@ -144,6 +144,7 @@ export class GamifiveGameover extends Gameover {
         let favouriteClasses = [baseFavourite];
         if(this.isGameFavourite()) favouriteClasses.push(addToFavouriteOn);
         let favClass = favouriteClasses.join(' ');
+        let { WEBAPP_CONGRATULATIONS_SCORE, WEBAPP_YOUR_POSITION_TITLE, WEBAPP_CANVAS_BUTTON_PLAY} = this.props.config;
 
         return (
             <div style={showAndHideStyle}>
@@ -160,13 +161,13 @@ export class GamifiveGameover extends Gameover {
                                 
                                 <div className="score score--noChallenge">
                                     <h2 className="title-game">
-                                        Your score 
+                                        {WEBAPP_CONGRATULATIONS_SCORE}
                                     </h2>
                                     <h2 className="score__title">
                                         {this.props.score} 
                                     </h2>
                                     <h2 className="scoreResult__title">
-                                        Ranking {this.props.rank}
+                                        {WEBAPP_YOUR_POSITION_TITLE} {this.props.rank}
                                     </h2>
                                 </div>
 
@@ -207,7 +208,7 @@ export class GamifiveGameover extends Gameover {
                                                                  evt.preventDefault();
                                                                  this.handleOnClickRelated(item);
                                                              }}
-                                                             PLAY_TEXT='Play'/>)
+                                                             PLAY_TEXT={WEBAPP_CANVAS_BUTTON_PLAY}/>)
                                 })
                             }
                         </div>
@@ -231,7 +232,7 @@ export class GamifiveGameover extends Gameover {
                                     <div className="box__bd box__bd--default">
                                         <h4 id="message-title" className="message-type"></h4>
                                         <p id="message-text" className="message-text"></p>
-                                        <a href="javascript:;" onClick={(evt)=>evt} className="btn btn--messages" type="button"></a>
+                                        <a onClick={(evt)=>evt} className="btn btn--messages" type="button"></a>
                                     </div>
                                     <div className="box__ft box__ft--default">
                                         <div>&nbsp;</div>
