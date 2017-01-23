@@ -9,7 +9,8 @@
     "build:prod": "webpack --config webpack.config.prod.js -p",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "debug": "webpack-dev-server --config webpack.config.debug.js",
-    "build": "npm run build:prod"
+    "build": "npm run build:prod",
+    "upload":"scp -r dist/* super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/2.x.x/dist/"
   },
   "author": "eatsjobs",
   "license": "ISC",

@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
-var ROOT = 'http://s.motime.com/js/wl/webstore_html5game/gfsdk/2.x.x/dist/';
+var ROOT = 'http://d2.motime.com/js/wl/webstore_html5game/gfsdk/2.x.x/dist/';
 
 var prodConfiguration = Object.create(baseConfiguration);
 prodConfiguration.output.filename = 'gfsdk.min.js';
