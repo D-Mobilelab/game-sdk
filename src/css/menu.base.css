@@ -12,7 +12,7 @@
     background-image: url('../img/sprite.png');
     background-position: -5px -475px;
     margin-top: -22px;
-    z-index: 9;
+    z-index: 10;
     position: absolute;    
     cursor:pointer;
     width: 60px; 
