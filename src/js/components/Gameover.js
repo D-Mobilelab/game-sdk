@@ -20,13 +20,12 @@ export class Gameover extends React.Component{
         this.props.actions.goToHome();
     }
 
-    handleShare(evt){
-        evt.preventDefault();
-        this.props.actions.share(window.location.href, 'facebook');
+    handleShare(url){
+        this.props.actions.share(url, 'facebook');
     }
     
     isGameFavourite(){
-        return this.props.user.favourites.some((favourite) => favourite.contentId === this.props.game_info.contentId);
+        return this.props.user.favourites.some((favourite) => favourite.content_id === this.props.game_info.content_id);
     }
 
     handleFavourites(evt){

@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
     user: state.user,
     score: state.session.score,
     rank: state.session.rank,
-    config: state.generic.config
+    dictionary: state.generic.dictionary
   }
 };
 
@@ -35,9 +35,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 /** 
- * WEBAPP_CONGRATULATIONS_SCORE
- * WEBAPP_YOUR_POSITION_TITLE
- * WEBAPP_CANVAS_BUTTON_PLAY
+ * Dictionary
+    WEBAPP_CONGRATULATIONS_SCORE: 'Your score is',
+    WEBAPP_YOUR_POSITION_TITLE: 'Rank',
+    WEBAPP_CANVAS_BUTTON_PLAY: 'Play',
+    WEBAPP_RELATED_TITLE: 'Related',
+    PLAY: 'Replay',
+    WEBAPP_GAMEOVER_GUEST_FAVS: '',
+    WEBAPP_GAMEOVER_GUEST_FAVS_SIGNIN: '',
  * */
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -55,7 +60,12 @@ export class GameasyGameover extends Gameover {
         let percentage = Math.round(window.innerWidth * 60 / 100);
         let imgSrc = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
         let imgSrcSet = `${imgSrc}, ${innerWidth}w`;
-        let { WEBAPP_CONGRATULATIONS_SCORE, WEBAPP_YOUR_POSITION_TITLE, WEBAPP_CANVAS_BUTTON_PLAY} = this.props.config;
+        let { 
+            WEBAPP_CONGRATULATIONS_SCORE, 
+            WEBAPP_YOUR_POSITION_TITLE, 
+            WEBAPP_CANVAS_BUTTON_PLAY,
+            WEBAPP_RELATED_TITLE
+        } = this.props.dictionary;
         return(
            <div className={classes}>
                 <header className={gameasyStyle.header}>
@@ -95,11 +105,14 @@ export class GameasyGameover extends Gameover {
                     </div>
                     
                     <div className={genericStyle.col + ' ' + genericStyle._4_12}>
-                        <ShareButton onClick={this.handleShare} />
+                        <ShareButton onClick={(evt) => {
+                            evt.preventDefault();
+                            this.handleShare(this.props.game_info.url_share);
+                        }} />
                     </div>
                     
                 </div>
-                <Related related={this.props.game_info.related}/>
+                <Related related={this.props.game_info.related} title={WEBAPP_RELATED_TITLE}/>
                 </div>
             </div>
         );
@@ -132,7 +145,7 @@ export class GamifiveGameover extends Gameover {
     }
 
     render(){
-        const showAndHideStyle = this.props.show ? {display:'block'} : {display:'none'};
+        const showAndHideStyle = this.props.show ? { display: 'block', position: 'absolute', top:'0', width: '100%' } : { display: 'none' };
         const imgWidth = (Math.round(window.innerWidth / 100) * 100);
 
         let imgHeight = (Math.round(innerWidth / 2));
@@ -144,7 +157,13 @@ export class GamifiveGameover extends Gameover {
         let favouriteClasses = [baseFavourite];
         if(this.isGameFavourite()) favouriteClasses.push(addToFavouriteOn);
         let favClass = favouriteClasses.join(' ');
-        let { WEBAPP_CONGRATULATIONS_SCORE, WEBAPP_YOUR_POSITION_TITLE, WEBAPP_CANVAS_BUTTON_PLAY} = this.props.config;
+        let {
+            WEBAPP_CONGRATULATIONS_SCORE, 
+            WEBAPP_YOUR_POSITION_TITLE,
+            WEBAPP_CANVAS_BUTTON_PLAY,
+            PLAY,
+            WEBAPP_RELATED_TITLE
+        } = this.props.dictionary;
 
         return (
             <div style={showAndHideStyle}>
@@ -173,7 +192,10 @@ export class GamifiveGameover extends Gameover {
 
                                 <div className="row score__info">
                                     <h4></h4>
-                                    <button className="btn-mini btn--fb fa-facebook-official" id="fb-challenge-button" onClick={this.handleShare}>
+                                    <button className="btn-mini btn--fb fa-facebook-official" id="fb-challenge-button" onClick={(evt) => {
+                                        evt.preventDefault();
+                                        this.handleShare(this.props.game_info.url_share);
+                                    }}>
                                         FB SHARE
                                     </button>
                                 </div>
@@ -183,7 +205,7 @@ export class GamifiveGameover extends Gameover {
                                     
                                     <div className="col-xs-8 col-xs-offset-2 container-absolute-btn">
                                         <button className="btn btn--play fa fa-repeat" onClick={this.handleReplay}>
-                                            <span className="line-btn">REPLAY</span>
+                                            <span className="line-btn">{PLAY}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -198,7 +220,7 @@ export class GamifiveGameover extends Gameover {
                         </div>
 
                         <div className="container-boxgrid container-boxgrid-over">
-                            <h2>Suggested Titles</h2>
+                            <h2>{WEBAPP_RELATED_TITLE}</h2>
                             {
                                 this.props.game_info.related.map((item, index) =>{
                                     return (
@@ -211,12 +233,6 @@ export class GamifiveGameover extends Gameover {
                                                              PLAY_TEXT={WEBAPP_CANVAS_BUTTON_PLAY}/>)
                                 })
                             }
-                        </div>
-
-                        <div>
-                            <a className="btn btn--otherGames" href="http://appsworld.gamifive-app.com/" onClick={(evt)=>evt}>
-                                <span></span>
-                            </a>
                         </div>
 
                         <div id="messages" className="mask mask--gameover hide">
@@ -233,28 +249,6 @@ export class GamifiveGameover extends Gameover {
                                         <h4 id="message-title" className="message-type"></h4>
                                         <p id="message-text" className="message-text"></p>
                                         <a onClick={(evt)=>evt} className="btn btn--messages" type="button"></a>
-                                    </div>
-                                    <div className="box__ft box__ft--default">
-                                        <div>&nbsp;</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="fbconnect-calltoaction" className="mask mask--gameover connect hide">
-                            <div className="box box-game-over">
-                                <div className="box__inner">
-                                    <div className="box__hd box__hd--messages h3">
-                                        <div className="box__avatar--center">
-                                            <img src="http://s.motime.com/img/wl/webstore_html5game/images/avatar/big/virgilio.png?v=20170111153950" className="img-avatar-abs" title="virgilio" alt="virgilio" />
-                                        </div>
-                                        <span> QATeam!</span>
-                                    </div>
-                                    <div className="box__bd box__bd--default">
-                                        <p></p>
-                                        <button onClick={(evt)=>evt} className="btn btn--fb" type="button">
-                                        </button>
-                                        <span className="message-link" onClick={(evt)=>evt}></span>
                                     </div>
                                     <div className="box__ft box__ft--default">
                                         <div>&nbsp;</div>

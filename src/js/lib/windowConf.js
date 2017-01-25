@@ -1,4 +1,4 @@
-module.exports = function (HOST = 'www2.gameasy.com', GAME_ID = 'c2701133414427fee732e051abdfe3e8', COUNTRY_CODE = 'ww-it') {
+export default function location(HOST = 'www2.gameasy.com', GAME_ID = 'c2701133414427fee732e051abdfe3e8', COUNTRY_CODE = 'ww-it') {
   return {
     hash: '',
     search: '',
@@ -10,4 +10,4 @@ module.exports = function (HOST = 'www2.gameasy.com', GAME_ID = 'c2701133414427f
     origin: `http://${HOST}`,
     href: `http://${HOST}/${COUNTRY_CODE}/html5gameplay/${GAME_ID}/game/sample`,
   };
-};
+}
