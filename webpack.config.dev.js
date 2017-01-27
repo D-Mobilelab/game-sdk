@@ -12,7 +12,7 @@ devConfiguration.devServer = {
   host: 'local.appsworld.gamifive-app.com',
   proxy: {
     '/v01/**': {
-      target: 'http://www2.gameasy.com/ww-it/',
+      target: 'http://appsworld.gamifive-app.com',
       secure: false,
       changeOrigin: true,
       historyApiFallback: true,
