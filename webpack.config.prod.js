@@ -1,11 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
-var ROOT = 'http://d2.motime.com/js/wl/webstore_html5game/gfsdk/2.x.x/dist/';
+var ROOT_DIRECTORY = 'http://d.motime.com/js/wl/webstore_html5game/gfsdk/2.x.x/dist/';
 
 var prodConfiguration = Object.create(baseConfiguration);
 prodConfiguration.output.filename = 'gfsdk.min.js';
-prodConfiguration.output.publicPath = ROOT;
+prodConfiguration.output.publicPath = ROOT_DIRECTORY;
 prodConfiguration.devtool = 'source-map';
 prodConfiguration.plugins = [
   new webpack.optimize.OccurenceOrderPlugin(),
