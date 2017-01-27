@@ -43,6 +43,8 @@ const mapDispatchToProps = (dispatch) => ({
     PLAY: 'Replay',
     WEBAPP_GAMEOVER_GUEST_FAVS: '',
     WEBAPP_GAMEOVER_GUEST_FAVS_SIGNIN: '',
+    WEBAPP_CHALLENGE_INVITE
+    WEBAPP_SHARE_FACEBOOK
  * */
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -162,7 +164,9 @@ export class GamifiveGameover extends Gameover {
             WEBAPP_YOUR_POSITION_TITLE,
             WEBAPP_CANVAS_BUTTON_PLAY,
             PLAY,
-            WEBAPP_RELATED_TITLE
+            WEBAPP_RELATED_TITLE,
+            WEBAPP_CHALLENGE_INVITE,
+            WEBAPP_SHARE_FACEBOOK
         } = this.props.dictionary;
 
         return (
@@ -196,7 +200,7 @@ export class GamifiveGameover extends Gameover {
                                         evt.preventDefault();
                                         this.handleShare(this.props.game_info.url_share);
                                     }}>
-                                        FB SHARE
+                                    {WEBAPP_SHARE_FACEBOOK}
                                     </button>
                                 </div>
 
