@@ -14,14 +14,6 @@ const Gameovers = {
     gameasy: GameasyGameover
 }
 
-const Styles = {
-    position: 'absolute',
-	top: '0',
-	left: '0',
-	width: '100%',
-	height: '100%',
-}
-
 import { SDK } from './SDK';
 class App extends React.Component {
     
@@ -32,7 +24,7 @@ class App extends React.Component {
     render(){
         let TheGameover = Gameovers[this.props.label];
         return (
-            <div style={Styles}>
+            <div>
                 <TheGameover />
                 <Banner />
                 <Menu />
@@ -43,7 +35,7 @@ class App extends React.Component {
 
 function onDomLoaded(event) {
     let ROOT_ELEMENT = document.createElement('div');
-    ROOT_ELEMENT.id = 'gfsdk_root';
+    ROOT_ELEMENT.id = 'gfsdk_root_new';
     window.document.body.appendChild(ROOT_ELEMENT);
 
     let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';

@@ -1,14 +1,15 @@
 import { Utils } from 'stargatejs';
+import localStorage from './LocalStorage';
 
 let theWindow = {};
 const isProduction = () => process.env.NODE_ENV === 'production';
 
 if (!isProduction()) {
-  let DEBUG_OPTIONS = {};
   const windowConf = require('./windowConf');
 
-  DEBUG_OPTIONS = Utils.dequeryfy(window.location.href);
-  theWindow.location = windowConf(DEBUG_OPTIONS.host, DEBUG_OPTIONS.game_id, DEBUG_OPTIONS.country_code);
+  const gameId = localStorage.getItem('gfsdk-debug-game_id');
+  const host = localStorage.getItem('gfsdk-debug-host');
+  theWindow.location = windowConf(host, gameId);
 } else if (isProduction()) {
   theWindow = window;
 }
@@ -16,7 +17,8 @@ if (!isProduction()) {
 class Location {
   getOrigin() {
     if (!theWindow.location.origin) {
-      theWindow.location.origin = `${theWindow.location.protocol}//${theWindow.location.hostname}${(theWindow.location.port ? ':${theWindow.location.port}' : '')}`;
+      const port = (theWindow.location.port ? `:${theWindow.location.port}` : '');
+      theWindow.location.origin = `${theWindow.location.protocol}//${theWindow.location.hostname}${port}`;
     }
     const isGameasyRegex = new RegExp(/http:\/\/www2?\.gameasy\.com\/([a-zA-Z0-9-_]*)/);
     const isGameasyMatch = theWindow.location.href.match(isGameasyRegex);
@@ -25,14 +27,14 @@ class Location {
         toJoin = [];
     if (isGameasyMatch !== null) {
       gameasyCountryCode = isGameasyMatch[1];
-          // if we are in testing integration mode we need this for url composition
+      // if we are in testing integration mode we need this for url composition
       gameasyCountryCode = gameasyCountryCode === 'test' ? 'ww-it' : gameasyCountryCode;
     }
 
     toJoin.push(theWindow.location.origin);
     if (gameasyCountryCode && gameasyCountryCode !== '') {
-        toJoin.push(gameasyCountryCode);
-      }
+      toJoin.push(gameasyCountryCode);
+    }
     return toJoin.join('/');
   }
 

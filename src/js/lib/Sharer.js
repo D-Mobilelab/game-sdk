@@ -87,7 +87,7 @@ class FacebookInterface {
         link: url,
       };
 
-      return new Promise((resolve) => window.FB.ui(shareParams, resolve));
+      return new Promise(resolve => window.FB.ui(shareParams, resolve));
     }
   }
 }

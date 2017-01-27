@@ -13,24 +13,24 @@ export const newtonMiddleware = store => next => (action) => {
   switch (action.type) {
     case 'INIT_FINISHED':
       NewtonAdapter.trackEvent({
-          name: 'GameLoad',
-          properties: {
-            action: 'Yes',
-            category: 'Play',
-            game_title: currentState.game_info.game.title,
-            label: currentState.game_info.contentId,
-            valuable: 'No',
-          },
-        });
+        name: 'GameLoad',
+        properties: {
+          action: 'Yes',
+          category: 'Play',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+        },
+      });
       break;
     case 'START_SESSION':
       NewtonAdapter.trackEvent({
         name: 'GameStart',
-        rank: getContentRanking('GameStart', 'Play', currentState.game_info.contentId, userType, CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameStart', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         properties: {
           category: 'Play',
-          game_title: currentState.game_info.game.title,
-          label: currentState.game_info.contentId,
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
           valuable: 'Yes',
           action: 'Yes',
         },
@@ -39,12 +39,12 @@ export const newtonMiddleware = store => next => (action) => {
     case 'END_SESSION':
 
       NewtonAdapter.trackEvent({
-        rank: getContentRanking('GameEnd', 'Play', currentState.game_info.contentId, userType, CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameEnd', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         name: 'GameEnd',
         properties: {
           category: 'Play',
-          game_title: currentState.game_info.game.title,
-          label: currentState.game_info.contentId,
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
           valuable: 'No',
           action: 'No',
         },
@@ -53,13 +53,13 @@ export const newtonMiddleware = store => next => (action) => {
     case 'GO_TO_HOME':
 
       NewtonAdapter.trackEvent({
-        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.contentId, 'guest', CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, 'guest', CONTENT_RANKING, userFrom),
         name: 'GoToHome',
         properties: {
           action: 'Yes',
           category: 'Behavior',
-          game_title: currentState.game_info.game.title,
-          label: currentState.game_info.contentId,
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
           valuable: 'No',
         },
       });
@@ -70,8 +70,8 @@ export const newtonMiddleware = store => next => (action) => {
         properties: {
           action: 'No',
           category: 'SDK_ERROR',
-          game_title: currentState.game_info.game.title,
-          label: currentState.game_info.contentId,
+          game_title: currentState.game_info.title || '',
+          label: currentState.game_info.content_id || '',
           valuable: 'No',
           reason: currentState.generic.error,
         },

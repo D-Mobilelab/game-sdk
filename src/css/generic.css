@@ -20,6 +20,11 @@
   Site - http://dallasbass.com
 */
 
+* {
+	margin:0;
+	padding:0;
+}
+
 .grid:after {
 	box-sizing: border-box;	
 }

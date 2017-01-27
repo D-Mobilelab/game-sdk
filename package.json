@@ -11,7 +11,8 @@
     "build:prod": "webpack --config webpack.config.prod.js -p",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "debug": "webpack-dev-server --config webpack.config.debug.js",
-    "build": "npm run build:prod"
+    "build": "npm run build:prod",
+    "upload":"scp -r dist/* super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/2.x.x/dist/"
   },
   "author": "eatsjobs",
   "license": "ISC",
@@ -37,6 +38,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",
+    "jest": "^17.0.3",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "moxios": "^0.3.0",
