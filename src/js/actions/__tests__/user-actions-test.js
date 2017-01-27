@@ -1,4 +1,3 @@
-import axios from 'axios';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
@@ -7,7 +6,6 @@ import { USER_CHECK,
          USER_SET_LIKE,
          USER_GET_LIKE, 
          USER_DELETE_LIKE } from '../../lib/Constants';
-
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -22,14 +20,14 @@ describe('async actions', () => {
     moxios.uninstall();
   });
 
-  xit('user.check action', () => {
+  it('user.check action', () => {
     moxios.stubRequest(USER_CHECK, {
-        status: 200,
-        response: {
-          "user": "903833c2c35a11e589cb005056b60712",
-          "msisdn": "+12345678",
-          logged: 1
-        }
+      status: 200,
+      response: {
+        user: "903833c2c35a11e589cb005056b60712",
+        msisdn: "+12345678",
+        logged: 1
+      }
     });
 
     const store = mockStore({ 
@@ -42,7 +40,7 @@ describe('async actions', () => {
 
     const expectedActions = [
       { type: 'USER_CHECK_LOAD_START' },
-      { type: 'USER_CHECK_LOAD_END' }
+      { type: 'USER_CHECK_LOAD_END' },
     ];      
     
     return store.dispatch(userActions.getUser())
@@ -57,11 +55,11 @@ describe('async actions', () => {
       response: []
     });
 
-    const store = mockStore({ 
+    const store = mockStore({
       user: {
-        logged: 1,
+        logged: 0,
         favourites: [],
-        user: '903833c2c35a11e589cb005056b60712'
+        user: '903833c2c35a11e589cb005056b60712',
       },
       generic: {
         hybrid: false,

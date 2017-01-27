@@ -1,3 +1,4 @@
+import localStorage from '../lib/LocalStorage';
 import { AxiosInstance } from '../lib/AxiosService';
 
 export function load(VHOST_API_URL, keys) {
@@ -5,8 +6,8 @@ export function load(VHOST_API_URL, keys) {
     dispatch({ type: 'VHOST_LOAD_START' });
 
     let vhost;
-    if (window.localStorage) {
-      vhost = JSON.parse(window.localStorage.getItem('gfsdk_vhost'));
+    if (localStorage) {
+      vhost = JSON.parse(localStorage.getItem('gfsdk_vhost'));
     }
 
     /**
@@ -29,8 +30,8 @@ export function load(VHOST_API_URL, keys) {
 export function dictLoad() {
   let dictionary;
   let action = { type: 'DICTIONARY_LOAD_END', payload: {} };
-  if (window.localStorage) {
-    dictionary = JSON.parse(window.localStorage.getItem('gfsdk_dictionary'));
+  if (localStorage) {
+    dictionary = JSON.parse(localStorage.getItem('gfsdk_dictionary'));
     action.payload = dictionary;
   }
   return action;

@@ -1,4 +1,5 @@
 import { Utils } from 'stargatejs';
+import localStorage from './LocalStorage';
 
 let theWindow = {};
 const isProduction = () => process.env.NODE_ENV === 'production';

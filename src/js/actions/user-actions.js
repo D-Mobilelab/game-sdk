@@ -2,6 +2,7 @@ import Stargate from 'stargatejs';
 import Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getContentId } from './gameinfo-actions';
+import localStorage from '../lib/LocalStorage';
 
 export function canPlay() {
   return (dispatch) => {
