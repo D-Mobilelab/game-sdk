@@ -64,7 +64,7 @@ function getUserDataFromServer() {
 
 function setUserDataOnServer(newInfo) {
   return (dispatch, getState) => {
-        // SAVE_USER_DATA
+    // SAVE_USER_DATA
     const Logger = window.console;
     const { vhost, game_info, user } = getState();
     const userDataSetApi = vhost.MOA_API_APPLICATION_OBJECTS_SET;
@@ -76,7 +76,7 @@ function setUserDataOnServer(newInfo) {
 
     if (!user.userData._id || user.userData._id === '') {
       Logger.warn('GamifiveSDK', 'You must call loadUserData first!');
-      return Promise.resolve();
+      // return Promise.resolve();
     }
 
     let infoSerialized;
@@ -121,11 +121,11 @@ function setUserDataOnServer(newInfo) {
                 data.response.data.info = newInfo;
                 dispatch({ type: 'SAVE_USER_DATA_SERVER_END', payload: data.response.data });
               } else {
-                console.warn('GamifiveSDK', 'NEWTON', 'userData FAIL to be set on server', data.response);
+                Logger.warn('GamifiveSDK', 'NEWTON', 'userData FAIL to be set on server', data.response);
                 dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: data.response });
               }
             }).catch((reason) => {
-              console.warn('GamifiveSDK', 'PHP', 'userData FAIL to be set on server', reason);
+              Logger.warn('GamifiveSDK', 'PHP', 'userData FAIL to be set on server', reason);
               dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: reason });
             });
   };
@@ -222,7 +222,7 @@ export function saveUserData(newInfo) {
     } else if (getState().generic.initialized &&
               !getState().user.isSaving &&
               !getState().user.isFetching) {
-      const { user } = getState();
+      
       if (typeof newInfo === 'string') {
         console.warn('GamifiveSDK: the data to be saved should be an object! got a:', typeof newInfo);
         try {
@@ -238,6 +238,7 @@ export function saveUserData(newInfo) {
        * ONLY
        * FOR PREMIUM USER
        */
+      const { user } = getState();
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_START' });
       if (getUserType(user) === 'guest') {
         const message = 'User type guest cannot save their data';
