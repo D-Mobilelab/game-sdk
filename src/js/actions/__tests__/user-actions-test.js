@@ -1,65 +1,43 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import moxios from 'moxios';
 import * as userActions from '../user-actions';
 import { USER_CHECK,
          USER_SET_LIKE,
          USER_GET_LIKE, 
          USER_DELETE_LIKE } from '../../lib/Constants';
 
+require('jasmine-ajax');
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 // This sets the mock adapter on the default instance
-describe('async actions', () => { 
-  beforeEach(() => {
-    moxios.install();
+describe('async actions', function(){
+
+  beforeEach(function() {
+    jasmine.Ajax.install();
   });  
 
-  afterEach(() => {
-    moxios.uninstall();
+  afterEach(function() {
+    jasmine.Ajax.uninstall();
   });
 
-  it('user.check action', () => {
-    moxios.stubRequest(USER_CHECK, {
-        status: 200,
-        response: {
-          "user": "903833c2c35a11e589cb005056b60712",
-          "msisdn": "+12345678",
-          logged: 1
-        }
-    });
+  it('user favourites action', function(done){
+    let poggioId = "903833c2c35a11e589cb005056b60712";
+    let url = USER_GET_LIKE + '?user_id=' + poggioId + '&size=51';
 
-    const store = mockStore({ 
-      user: {},
-      generic: {
-        hybrid: false,
-        connectionState: { online: true }
-      }
-    });
-
-    const expectedActions = [
-      { type: 'USER_CHECK_LOAD_START' },
-      { type: 'USER_CHECK_LOAD_END' }
-    ];      
-    
-    return store.dispatch(userActions.getUser())
-      .then(() => {
-        expect(store.getActions()).toEqual(expectedActions)
+      jasmine.Ajax.stubRequest(url).andReturn({
+        "status": 200,
+        "contentType": 'text/plain',
+        "responseText": '[]',
+        response: []
       });
-  });
-
-  it('user favourites action', () => {
-    moxios.stubRequest(USER_GET_LIKE, {
-      status: 200,
-      response: []
-    });
 
     const store = mockStore({
       user: {
-        logged: 0,
+        logged: 1,
         favourites: [],
-        user: '903833c2c35a11e589cb005056b60712',
+        user: poggioId,
       },
       generic: {
         hybrid: false,
@@ -70,11 +48,12 @@ describe('async actions', () => {
     const expectedActions = [
       { type: 'GET_FAVOURITES_START' },
       { type: 'GET_FAVOURITES_END', favourites: [] }
-    ];      
-
-    return store.dispatch(userActions.getUserFavourites())
+    ];
+    
+    store.dispatch(userActions.getUserFavourites())
       .then(() => {
-        expect(store.getActions()).toEqual(expectedActions)
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
       });
   });
 });
