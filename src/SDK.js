@@ -17,7 +17,9 @@ export class SDK {
   }
 
   getLevel() {
-
+    const { store } = privates.get(this);
+    let { user } = store.getState();
+    return user.level;
   }
 
   showMoreGamesButton() {
@@ -36,34 +38,33 @@ export class SDK {
   }
 
   saveUserData(userDataInfo) {
-    console.log(Actions);
     const { store } = privates.get(this);
     store.dispatch(Actions.saveUserData(userDataInfo));
   }
 
   clearUserData() {
-      const { store } = privates.get(this);
-      store.dispatch(Actions.clearUserData());
-    }
+    const { store } = privates.get(this);
+    store.dispatch(Actions.clearUserData());
+  }
 
   goToHome() {
-      const { store } = privates.get(this);
-      store.dispatch(Actions.goToHome());
-    }
+    const { store } = privates.get(this);
+    store.dispatch(Actions.goToHome());
+  }
 
   getAvatar() {
-      const { store } = privates.get(this);
-      const { user } = store.getState();
-      return {
-        src: user.avatar || '',
-        name: user.nickname || '',
-      };
+    const { store } = privates.get(this);
+    const { user } = store.getState();
+    return {
+      src: user.avatar || '',
+      name: user.nickname || '',
+    };
   }
 
   getNickname() {
-      const { store } = privates.get(this);
-      const { user } = store.getState();
-      return user.nickname;
+    const { store } = privates.get(this);
+    const { user } = store.getState();
+    return user.nickname;
   }
 
   onStartSession(onStartSessionCallback) {
