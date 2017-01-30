@@ -119,7 +119,7 @@ export function removeGameLike(gameId) {
     const URL = `${Constants.USER_DELETE_LIKE}?content_id=${gameId}&user_id=${getState().user.user}`;
     return AxiosInstance.post(URL)
             .then(() => {
-              dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId, content_id: gameId } });
+              dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId } });
             })
             .catch((reason) => {
               dispatch({ type: 'REMOVE_GAME_LIKE_ERROR', payload: reason });
@@ -137,7 +137,7 @@ export function addGameLike(gameId) {
     return AxiosInstance.get(Constants.USER_SET_LIKE, { params: query })
                 .then((response) => {
                   const { object_id } = response.data;
-                  dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: object_id, content_id: object_id } });
+                  dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: object_id } });
                 })
                 .catch((reason) => {
                   dispatch({ type: 'ADD_GAME_LIKE_ERROR', payload: reason });
@@ -151,9 +151,9 @@ export function toggleGameLike() {
     const { game_info } = getState();
 
     const isFavourite = user.favourites.some((favourite) => {
-      return (favourite.contentId === game_info.contentId || favourite.content_id === game_info.content_id);
+      return (favourite.id === game_info.id);
     });
-    const contentId = game_info.id || game_info.content_id;
+    const contentId = game_info.id;
     if (isFavourite) {
       return dispatch(removeGameLike(contentId));
     }
