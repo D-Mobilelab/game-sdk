@@ -1,0 +1,15 @@
+{
+	"extends": "airbnb/base",
+	"rules": {
+		"valid-jsdoc": 1
+	},
+	"parserOptions":{
+		"ecmaFeatures": {
+			"spread": true
+		}
+	},
+	"env": {
+        "browser": true,
+        "jasmine": true
+    }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <title> GFSDK v2 | Setup </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        
+    </head>
+    <body>
+        <h1 style="text-align:center;">Settings for SDK debug enviroment</h1>
+        
+        <form style='margin:2%;' id="settings-form">
+
+            <div class="form-group">
+                <h3>Host</h3>
+                <label for="host">host:</label>
+                <input type="text" id="gfsdk-debug-host" name="gfsdk-debug-host" value="appsworld.gamifive-app.com"></input>  
+            </div>
+
+            <div class="form-group">
+                <h3>Game</h3>
+                <label for="game_id">game_id:</label>
+                <input type="text" value="b6888c4fdbdfa02585da087f134556d8" id="gfsdk-debug-game_id" name="gfsdk-debug-game_id">
+            </div>
+
+            <div class="form-group">
+                <h3>User</h3>    
+                <label for='user_id'>
+                    user_id:
+                    <input type='text' name="gfsdk-debug-user_id" id='gfsdk-debug-user_id' value='903833c2c35a11e589cb005056b60712'>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    User type
+                    <select name="gfsdk-debug-user_type" class="form-control">
+                        <option>guest</option>
+                        <option>free</option>
+                        <option>premium</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="url_to_launch">
+                    URL to launch: should be inside debug folder example
+                    "/test_this_game/index.html"
+                    <input type='text' name='url_to_launch' id='url_to_launch' value='/game/index.html'>
+                </label>
+                <label for="button_launch">
+                    <button id="launch_button" class="btn btn-primary">Play</button>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Set</button>
+            <button id="clear_setting" class="btn btn-default">Clear Setting</button>
+        </form>
+        <script type="text/javascript">
+            var formElement = document.querySelector('form#settings-form');
+            var clearButtonElement = document.querySelector('button#clear_setting');
+            var playButtonElement = document.querySelector('button#launch_button');
+            var urlToLaunchElement = document.querySelector('input#url_to_launch');
+            var formData;
+            function onSubmit(evt){
+                evt.preventDefault();
+                var currentForm = evt.target;
+                var serialized = [].filter.call(currentForm.elements, function(node){
+                    return !node.disabled && node.value !== "" && node.name !== "";
+                }).map(function(node){
+                    return [node.name, node.value].map(encodeURIComponent);
+                }).map(function(setting){
+                    localStorage.setItem(setting[0], setting[1]);
+                });
+            }
+            
+            playButtonElement.addEventListener('click', function(evt){
+                evt.preventDefault();
+                var redirect_url = urlToLaunchElement.value;
+                window.open([window.location.origin, redirect_url].join(''), '_blank');
+            }, false);
+
+            clearButtonElement.addEventListener('click', function(evt){
+                evt.preventDefault();
+                localStorage.clear();
+            }, false);
+
+            formElement.addEventListener('submit', onSubmit, false);
+        </script>
+    </body>
+</html>

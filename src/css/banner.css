@@ -1,0 +1,78 @@
+@value colors: './colors.css';
+@value foreground_white, background_cyan from colors;
+
+.bannerContainer {
+    display: none;
+}
+
+.bannerContainer.show {
+    height: 100%;
+    width: 100%;
+    z-index: 14;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: block;
+}
+
+.banner {
+    display: block !important;
+    position: absolute;
+    width: 300px;
+    height: 220px;
+    z-index: 15;
+    top: 50%;
+    left: 50%;
+    margin: -110px 0 0 -159px;
+    border-radius: 5px;
+
+    background: url('../img/banner.png') background_cyan no-repeat center center;
+    background-size: cover;
+}
+
+.closeButton {
+    display: block;
+    background-color: transparent;
+    border: none;   
+    color: foreground_white;
+    width: 100%;
+    height: 30px;
+}
+
+.closeButton span {
+    font-family: 'icomoon';
+}
+
+.closeButton span:before{
+    content: "\e911";    
+}
+
+.appIcon {
+
+}
+
+.title {
+    font-family: 'montserratultra_light', sans-serif;
+    color: foreground_white;
+    font-size: 16px;
+    margin:0; 
+    padding:0;
+    text-transform: capitalize;
+}
+
+.appDescription {
+    font-family: 'montserratultra_light', sans-serif;
+    color: foreground_white;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.appIcon:before {
+    background: url('../img/apple-touch-icon-60x60.png') center left no-repeat;
+    background-size: 40px;
+    content: ' ';
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+}

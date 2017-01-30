@@ -1,263 +1,111 @@
-import axios from 'axios';
-import { JSONPRequest } from 'http-francis';
-import { Utils } from 'stargatejs';
+import Stargate from 'stargatejs';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
+import { AxiosInstance } from '../lib/AxiosService';
 
-let AxiosInstance = axios.create({
-  baseURL: Location.getOrigin()
-});
-let onStartCallback = function(){};
-let vhostKeys = [
-    "CONTENT_RANKING",
-    //"GAMEOVER_LIKE_CLASS_TO_TOGGLE",
-    //"GAMEOVER_LIKE_SELECTOR",
-    "IMAGES_SPRITE_GAME",
-    "MOA_API_APPLICATION_OBJECTS_GET",
-    "MOA_API_APPLICATION_OBJECTS_SET",
-    //"MOA_API_USER_CHECK",
-    "NEWTON_SECRETID"
+import * as sessionActions from './session-actions';
+import * as userActions from './user-actions';
+import * as gameinfoActions from './gameinfo-actions';
+import * as userDataActions from './userData-actions';
+import * as menuActions from './menu-actions';
+import * as gameoverActions from './gameover-actions';
+import * as vhostActions from './vhost-actions';
+import * as newtonActions from './newton-actions';
+import * as bannerActions from './banner-actions';
+import * as sharerActions from './sharer-actions';
+
+const { Utils } = Stargate;
+const vhostKeys = [
+  'CONTENT_RANKING',
+    // "GAMEOVER_LIKE_CLASS_TO_TOGGLE",
+    // "GAMEOVER_LIKE_SELECTOR",
+  'IMAGES_SPRITE_GAME',
+  'MOA_API_APPLICATION_OBJECTS_GET',
+  'MOA_API_APPLICATION_OBJECTS_SET',
+    // "MOA_API_USER_CHECK",
+  'NEWTON_SECRETID',
+  'TLD',
+  'NT_REAL_COUNTRY',
+  'INSTALL_HYBRID_VISIBLE',
 ];
-export function init(initConfig){
-    return (dispatch, getState) => {
-        if(getState().initialized){
-            return Promise.resolve();
-        }
 
-        dispatch({
-            type: 'INIT_START', initConfig: initConfig, initPending: true
-        });
+function init(initConfig) {
+  return (dispatch, getState) => {
+    dispatch({ type: 'SET_IS_HYBRID', hybrid: Stargate.isHybrid() });
+    if (getState().generic.initialized) {
+      return Promise.resolve();
+    }
 
-        dispatch({ type: 'VHOST_LOAD_START' });
-        return AxiosInstance.get(Constants.VHOST_API_URL, {
-            params:{
-                keys: vhostKeys.join(',')
-            }
-        }).then((response)=>{
-            dispatch({type: 'VHOST_LOAD_END', vhost: response.data});
-            return dispatch(getUser());
+    dispatch({ type: 'INIT_START', initConfig, initPending: true });
+
+    return Stargate.initialize()
+        .then(() => {
+          dispatch({ type: 'SET_CONNECTION_STATE', connectionState: Stargate.checkConnection() });
+          Stargate.addListener('connectionchange', (connState) => {
+            dispatch({ type: 'SET_CONNECTION_STATE', connectionState: connState });
+          });
         })
-        .then(()=>{
-            return dispatch(getGameInfo());
+        .then(() => dispatch(vhostActions.dictLoad()))
+        .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
+        .then(() => dispatch(userActions.getUser()))
+        .then(() => dispatch(gameinfoActions.getGameInfo()))
+        .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().game_info.fbAppId })))
+        .then(() => {
+          // return if you want to wait
+          dispatch(newtonActions.init());
+          return dispatch(newtonActions.login());
         })
-        .then(()=>{
-            dispatch({
-                type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false
-            });
+        .then(() => {
+          const menuStyle = {};
+          if (getState().vhost.IMAGES_SPRITE_GAME && getState().vhost.IMAGES_SPRITE_GAME !== '') {
+            menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
+          }
 
-            let menuStyle = getState().initConfig.moreGamesButtonStyle;
-            menuStyle.backgroundImage = `url(${getState().vhost.IMAGES_SPRITE_GAME})`;
-            dispatch(showMenu(menuStyle));
-            if(getState().session_start_after_init){
-                return dispatch(doStartSession());
-            }
-        }).catch((reason)=>{
-            dispatch({
-                type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, error: reason
-            });
+          dispatch(menuActions.showMenu(menuStyle));
+          dispatch({
+            type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
+          });
+          if (getState().generic.loadUserDataCalled) {
+            return dispatch(userDataActions.loadUserData());
+          }
+        })
+        .then(() => {
+          if (getState().generic.session_start_after_init) {
+            dispatch(sessionActions.startSession());
+          }
+        })
+        .catch((reason) => {
+          dispatch({
+            type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, error: reason,
+          });
         });
-    }   
+  };
 }
 
-export function getUserFavourites(){
-    return (dispatch, getState)=>{
-        let getFavPromise;
-        dispatch({type: 'GET_FAVOURITES_START'}); 
-        if (getState().user.logged){                        
-            getFavPromise = AxiosInstance.get(Constants.USER_GET_LIKE, {
-                params:{
-                    user_id: getState().user.user, //userID
-                    size:51
-                }
-            });
-        } else {
-            getFavPromise = Promise.resolve({data:[]});
-        }
+function redirectOnStore() {
+  let mfp_url = [Location.getOrigin(), '/#!/mfp'].join('');
+  mfp_url = Utils.queryfy(mfp_url, {
+    returnurl: `${Location.getCurrentHref()}`,
+    title: '',
+  });
 
-        return getFavPromise.then((userFavouritesResponse)=>{
-            dispatch({type: 'GET_FAVOURITES_END', favourites: userFavouritesResponse.data});
-        }).catch((reason)=>{
-            dispatch({type: 'GET_FAVOURITES_FAIL'});
-        });
-    }
+    // setTimeout(() => window.location.href = mfp_url, 1000);
+
+  return {
+    type: 'REDIRECT_ON_STORE',
+    payload: mfp_url,
+  };
 }
 
-export function getUser(){
-    return (dispatch, getState) =>{
-        dispatch({type: 'USER_CHECK_LOAD_START'});
-        return AxiosInstance.get(Constants.USER_CHECK)
-                .then((userResponse)=>{
-                    dispatch({type: 'USER_CHECK_LOAD_END', user: userResponse.data});
-                    return Promise.all([
-                        dispatch(canPlay()),
-                        dispatch(getUserFavourites())
-                    ]);
-                })                
-                .catch((reason)=>{
-                    dispatch({type: 'USER_CHECK_LOAD_FAIL', reason: reason});
-                });
-    }
-    
-}
-
-export function startSession(){
-    return (dispatch, getState) => {
-            // no initialized but init called
-        if(!getState().initialized && getState().initPending){
-            dispatch({type:'ADD_TO_AFTER_INIT', session_start_after_init: true});
-        } else if(!getState().initialized && !getState().initPending){
-            // no initialized and init not even called
-            console.log("You should call init before startSession!");
-        } else {
-            dispatch(doStartSession());
-        }
-    }
-}
-
-
-function doStartSession(){
-    return (dispatch, getState)=>{
-        if(!getState().currentSession.opened){
-            let currentSession = {
-                opened: true,
-                startTime: new Date(),
-                endTime: undefined,
-                score: undefined,
-                level: undefined
-            }
-            dispatch({type: 'START_SESSION', currentSession});
-            onStartCallback();
-        } else {
-            console.log("Cannot start a new session before closing the current one.");    
-        }
-        return Promise.resolve();
-    }
-}
-
-export function canPlay(){
-    return (dispatch, getState)=>{
-        let url = Constants.CAN_DOWNLOAD_API_URL.replace(":ID", getContentId());
-        return AxiosInstance.get(url, {
-            params:{
-                    cors_compliant:1
-                }
-            }).then((response)=>{
-                dispatch({type:'SET_CAN_PLAY', canPlay: response.data.canDownload});
-            });        
-    }
-}
-
-
-export function endSession(scoreAndLevel={score:0,level:0}){
-    return (dispatch, getState) => {
-        //only if init has been called
-        if(!getState().initialized){
-            console.log("Cannot end a session before initialized");
-            return;
-        }
-        // and a session was started
-        if (Object.keys(getState().currentSession).length > 0 
-            && getState().currentSession.opened){
-            let endTime = new Date;
-            let session = { score: scoreAndLevel.score, level: scoreAndLevel.level, endTime, opened: false };
-            dispatch({ type: 'END_SESSION', session });
-            //lite only leaderboard
-            if(getState().initConfig.lite){
-                let lastSession = getState().currentSession;
-                let leaderboardParams = {
-                    start: lastSession.startTime.getTime(),
-                    duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-                    score: lastSession.score,
-                    newapps: 1,
-                    appId: getContentId(),
-                    label: getState().gameInfo.label,
-                    userId: getState().user.user,
-                    cors_compliant:1
-                };
-                console.log(leaderboardParams);
-
-                return AxiosInstance.get(Constants.LEADERBOARD_API_URL, { params: leaderboardParams })
-                    .then((response)=>{
-                        
-                    })
-                    .catch((reason)=>{
-                        
-                    });
-            } else {
-                console.log("endSession normal");
-            }           
-        } else {
-            console.log("No session started!");
-        }
-    }    
-}
-
-export function setIsHybrid(){
-    /*return {
-        type: 'SET_IS_HYBRID',
-        hybrid: Stargate.isHybrid()
-    }*/
-}
-
-function getContentId(){
-    var urlToMatch = Location.getCurrentHref();
-    var contentIdRegex = new RegExp(Constants.CONTENT_ID_REGEX);
-    var match = urlToMatch.match(contentIdRegex);
-
-    if (match !== null && match.length > 0){
-        return match[2];
-    }
-    throw new Error("Cannot get content id from url");
-}
-
-export function getGameInfo(){
-    return (dispatch, getState) => {
-        dispatch({type:'GAME_INFO_LOAD_START'});
-        return AxiosInstance.get(Constants.GAME_INFO_API_URL, {
-            params:{
-                content_id: getContentId(), 
-                cors_compliant:1
-            }
-        }).then((response)=>{            
-            dispatch({type:'GAME_INFO_LOAD_END', gameInfo: response.data.game_info});
-        }).catch((reason)=>{
-            dispatch({type:'GAME_INFO_LOAD_FAIL', error: reason});
-        });
-    }
-}
-
-export function goToHome(){
-    return {
-        type:'GO_TO_HOME'
-    }
-}
-
-export function menuPressed(){
-    return {
-        type:'MENU_PRESSED'
-    }
-}
-
-export function menuReleased(){
-    return {
-        type:'MENU_RELEASED'
-    }
-}
-
-export function showMenu(style){
-    return {
-        type: 'MENU_SHOW',
-        style: style
-    }
-}
-
-export function hideMenu(){
-    return {
-        type: 'MENU_HIDE'
-    }
-}
-
-export function registerOnStartCallback(callback){
-    onStartCallback = callback;
-    return { type:'REGISTER_ON_START_SESSION_CALLBACK', registered: true};
-}
+export const Actions = {
+  init,
+  redirectOnStore,
+  ...sessionActions,
+  ...userActions,
+  ...menuActions,
+  ...gameoverActions,
+  ...userDataActions,
+  ...gameinfoActions,
+  ...bannerActions,
+  ...sharerActions,
+};

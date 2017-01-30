@@ -1,54 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './js/components/App';
 
-import * as Actions from './js/actions/index.js';
+import Location from './js/lib/Location';
 import { Provider } from 'react-redux';
-import { mainReducer } from './js/reducers/index.js';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import store from './store';
 
-let initialState = {
-    hybrid: false,
-    initialized: false,
-    initPending: false,
-    session_start_after_init: false,
-    message: 'NO_INIT_CALLED',   
-    gameInfo: {},
-    user: {logged: false},
-    vhost: {},
-    connectionState: { online: true, type: 'none' },
-    initConfig: {
-        lite: true,
-        moreGamesButtonStyle:{top:"50%", left:"1%"}
-    },
-    currentSession: {opened:false},
-    isOnStartSessionRegistered: false,
-    menu:{
-        shown:false,
-        dragging:false,
-        pressed:false
+import { Menu } from './js/components/Menu';
+import { Banner } from './js/components/Banner';
+import { GameasyGameover, GamifiveGameover} from './js/components/GameOvers';
+
+const Gameovers = { 
+    gamifive: GamifiveGameover,
+    gameasy: GameasyGameover
+}
+
+import { SDK } from './SDK';
+class App extends React.Component {
+    
+    constructor(props){
+        super(props);
     }
-};
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    render(){
+        let TheGameover = Gameovers[this.props.label];
+        return (
+            <div>
+                <TheGameover />
+                <Banner />
+                <Menu />
+            </div>
+        )
+    }
+}
 
-let store = createStore(
-    mainReducer,
-    initialState,
-    composeEnhancers(
-        applyMiddleware(thunkMiddleware)
-    )
-);
+function onDomLoaded(event) {
+    let ROOT_ELEMENT = document.createElement('div');
+    ROOT_ELEMENT.id = 'gfsdk_root_new';
+    window.document.body.appendChild(ROOT_ELEMENT);
 
-// Dynamic Creation of the element
-let ROOT_ELEMENT = document.createElement('div');
-ROOT_ELEMENT.id = 'gfsdk_root';
-window.document.body.appendChild(ROOT_ELEMENT);
+    let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    ROOT_ELEMENT
-);
+    ReactDOM.render(
+        <Provider store={store}>
+            <App label={WHITE_LABEL} />
+        </Provider>,
+        ROOT_ELEMENT
+    );
+}
+
+window.document.addEventListener("DOMContentLoaded", onDomLoaded);
+
+let aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
+const instance = new SDK(store);
+aliases.map((alias) => {
+    window[alias] = instance;
+});
+
+export default instance

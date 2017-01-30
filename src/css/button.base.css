@@ -1,0 +1,16 @@
+.btn {
+    cursor: pointer;
+    display: inline-block;
+    border: 2px solid #e7e7f9;
+    font-size: 22px;
+    border-radius: 20px;
+    background: transparent;
+    line-height: 38px;
+    transform: scale(1);
+    transition: transform 100ms;
+    outline:none;
+}
+
+.btn.active{
+    transform: scale(0.9)
+}

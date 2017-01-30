@@ -1,7 +1,24 @@
 import React from 'react';
-import menuStyles from '../../css/menu.css';
+import { isTouch } from '../lib/TouchDetector';
+import menuStyles from '../../css/menu.base.css';
 
-class Menu extends React.Component{
+/** Connect to redux store */
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+/** TODO: import only needed actions */
+import { Actions } from '../actions/index';
+
+const mapStateToProps = (state) => {
+  return {...state.menu}
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    actions: bindActionCreators(Actions, dispatch)
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
+export class Menu extends React.Component{
     constructor(props){
         super(props);
         this.onTouchEnd = this.onTouchEnd.bind(this);         
@@ -12,48 +29,73 @@ class Menu extends React.Component{
         this.onTouchMove = this.onTouchMove.bind(this);
     }
 
+    onPointerStart(event){
+        let position = {x : event.pageX, y: event.pageY};
+        this.props.actions.setDownPosition({active: true, position });
+    }
+
+    onPointerEnd(event){
+        if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y && event.pageY){
+            //it's a click/tap
+            window.alert("it's a T(r)ap!");
+            // open the menu?
+            this.props.actions.goToHome();
+        
+        } else {
+            // was dragged. put in the closer angle?
+            window.alert("drag");
+        }
+        let position = {x : event.pageX, y: event.pageY};
+        this.props.actions.setUpPosition({active: false, position });
+    }
+
+    onPointerMove(event){
+        if(this.props.active){
+            let position = {x : event.pageX, y: event.pageY};
+            this.props.actions.setPosition({position});
+        }
+    }
+
     onTouchStart(evt){
         evt.preventDefault();
-        this.props.actions.menuPressed();
+        let touch = evt.touches[0];
+        this.onPointerStart(touch);
     }
 
     onTouchEnd(evt){
-        evt.preventDefault();        
-        this.props.actions.goToHome();
-        this.props.actions.menuReleased();
-    }
-        
-    onMouseDown(evt){
-        if(window.is_touch){ return; }
         evt.preventDefault();
-        this.props.actions.menuPressed();            
+        let touch = evt.changedTouches[0];
+        this.onPointerEnd(touch);
+    }
+
+    onTouchMove(evt){
+        evt.preventDefault();
+        let touch= evt.changedTouches[0]; // get one finger
+        this.onPointerMove(touch);
+    }
+    
+    onMouseDown(evt){
+        if(isTouch()){ return; }
+        this.onPointerStart(evt);
     }
 
     onMouseUp(evt){
-        if(window.is_touch){ return; }
-        evt.preventDefault();
-        this.props.actions.menuReleased();        
+        if(isTouch()){ return; }
+        this.onPointerEnd(evt);
     }
 
     onMouseMove(evt){
-        //console.log("Mousemove:", evt.pageX, evt.pageY);
-    }
-
-    onTouchMove(evt){ 
-        if(this.props.pressed){
-            var touches = evt.changedTouches[0]; // get one finger
-            //console.log("Touchmove",touches.pageX, touches.pageY);
-        }          
+        evt.preventDefault();
+        this.onPointerMove(evt);
     }
 
     render(){
         let classNames = [menuStyles.menu];
-        classNames.push(this.props.shown ? menuStyles.show : menuStyles.hide);
-        classNames.push(this.props.pressed ? menuStyles.active : '');
-        classNames.join(" ");
+        classNames.push(this.props.show ? menuStyles.show : menuStyles.hide);
+        classNames.push(this.props.active ? menuStyles.active : '');
         
         return(
-            <div className={classNames.join(" ")} style={this.props.style}
+            <div className={classNames.join(' ')} style={this.props.style}
                onMouseUp={this.onMouseUp}
                onMouseDown={this.onMouseDown}
                onMouseMove={this.onMouseMove}
@@ -64,5 +106,3 @@ class Menu extends React.Component{
         );
     }
 }
-
-export default Menu;

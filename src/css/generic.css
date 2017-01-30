@@ -1,0 +1,211 @@
+@font-face{
+    font-family: 'montserratultra_light';
+    src: url('./font/montserrat-ultralight-webfont.eot');
+    src: url('./font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('./font/montserrat-ultralight-webfont.woff') format('woff'), url('./font/montserrat-ultralight-webfont.ttf') format('truetype'), url('./font/montserrat-ultralight-webfont.svg') format('svg');
+    font-weight: normal;font-style: normal;
+}
+
+@font-face{
+    font-family: 'icomoon';
+    src: url('./font/icomoon.eot');
+    src: url('./font/icomoon.eot') format('embedded-opentype'), url('./font/icomoon.woff') format('woff'), url('./font/icomoon.ttf') format('truetype'), url('./font/icomoon.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*
+  Simple Grid
+  Project Page - http://thisisdallas.github.com/Simple-Grid/
+  Author - Dallas Bass
+  Site - http://dallasbass.com
+*/
+
+* {
+	margin:0;
+	padding:0;
+}
+
+.grid:after {
+	box-sizing: border-box;	
+}
+
+.col {
+	float: left;
+  	min-height: 1px;
+	padding-right: 20px; /* column-space */
+	box-sizing: border-box;	
+}
+
+.col:last-child {
+	padding-right: 0;
+}
+
+.grid {
+	width: 100%;
+	max-width: 1140px;
+	min-width: 0; /* when using padded grid on ipad in portrait mode, width should be viewport-width - padding = (768 - 20) = 748. actually, it should be even smaller to allow for padding of grid containing element */
+	margin: 0 auto;
+	overflow: hidden;
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;	
+}
+
+.grid:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.gridPad {
+	padding-top: 20px;
+	padding-left: 20px; /* grid-space to left */
+	padding-right: 0; /* grid-space to right: (grid-space-left - column-space) e.g. 20px-20px=0 */
+}
+
+.pushRight {
+	float: right;
+}
+
+/* Content Columns */
+
+._1_1 {
+	width: 100%;
+}
+._2_3, ._8_12 {
+	width: 66.66%;
+}
+
+._1_2, ._6_12 {
+	width: 50%;
+}
+
+._1_3, ._4_12 {
+	width: 33.33%;
+}
+
+._1_4, ._3_12 {
+	width: 25%;
+}
+
+._1_5 {
+	width: 20%;
+}
+
+._1_6, ._2_12 {
+	width: 16.667%;
+}
+
+._1_7 {
+	width: 14.28%;
+}
+
+._1_8 {
+	width: 12.5%;
+}
+
+._1_9 {
+	width: 11.1%;
+}
+
+._1_10 {
+	width: 10%;
+}
+
+._1_11 {
+	width: 9.09%;
+}
+
+._1_12 {
+	width: 8.33%
+}
+
+/* Layout Columns */
+
+._11_12 {
+	width: 91.66%
+}
+
+._10_12 {
+	width: 83.333%;
+}
+
+._9_12 {
+	width: 75%;
+}
+
+._5_12 {
+	width: 41.66%;
+}
+
+._7_12 {
+	width: 58.33%
+}
+
+/* Pushing blocks */
+
+.push_10_12 {
+	margin-left: 83.33%;
+}
+
+.push_11_12 {
+	margin-left: 91.66666666666667%
+}
+
+.push_2_3, .push_8_12 {
+	margin-left: 66.66%;
+}
+
+.push_1_2, .push_6_12 {
+	margin-left: 50%;
+}
+
+.push_1_3, .push_4_12 {
+	margin-left: 33.33%;
+}
+
+.push_1_4, .push_3_12 {
+	margin-left: 25%;
+}
+
+.push_1_5 {
+	margin-left: 20%;
+}
+
+.push_1_6, .push_2_12 {
+	margin-left: 16.667%;
+}
+
+.push_1_7 {
+	margin-left: 14.28%;
+}
+
+.push_1_8 {
+	margin-left: 12.5%;
+}
+
+.push_1_9 {
+	margin-left: 11.1%;
+}
+
+.push_1_10 {
+	margin-left: 10%;
+}
+
+.push_1_11 {
+	margin-left: 9.09%;
+}
+
+.push_1_12 {
+	margin-left: 8.33%
+}
+
+.divider {
+	width: 65%;
+	margin: 0 auto;
+    position: relative;
+    border: 0;
+    border-bottom: 1px solid rgba(231, 231, 249, 0.2);
+    top: -2px;
+}
