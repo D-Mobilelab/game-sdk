@@ -89,13 +89,19 @@ export function endSession(scoreAndLevel = { score: 0, level: 0 }) {
       return;
     }
 
-    const { user, generic } = getState();
-    const bannerCondition = [(user.matchPlayed % 3 === 0), !generic.hybrid, isAndroid()].every(condition => condition === true);
+    const { user, generic, vhost } = getState();
+    const bannerCondition = [
+      (user.matchPlayed % 3 === 0),
+      !generic.hybrid,
+      isAndroid(),
+      vhost.INSTALL_HYBRID_VISIBLE,
+    ].every(condition => condition === true);
+
     if (bannerCondition) {
       dispatch(showBanner());
     }
 
-        // and a session was started
+    // and a session was started
     if (Object.keys(getState().session).length > 0
             && getState().session.opened) {
       const endTime = new Date();
