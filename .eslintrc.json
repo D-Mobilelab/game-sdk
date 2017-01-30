@@ -7,5 +7,9 @@
 		"ecmaFeatures": {
 			"spread": true
 		}
-	}
+	},
+	"env": {
+        "browser": true,
+        "jasmine": true
+    }
 }
