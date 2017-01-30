@@ -25,7 +25,7 @@ export function generic(state = {
     WEBAPP_HYBRIDINSTALL_APPINFOSMALL: '...and play OFFLINE',
     WEBAPP_BANNER_BUTTON: 'get the app',
     WEBAPP_CHALLENGE_INVITE: '',
-    WEBAPP_SHARE_FACEBOOK: '',
+    WEBAPP_SHARE_FACEBOOK: 'Share',
   },
 }, action) {
   switch (action.type) {
