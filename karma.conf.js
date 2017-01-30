@@ -1,26 +1,24 @@
 var webpackConfig = require('./webpack.config.base.js');
+var path = require('path');
 var webpack = require('webpack');
+
 module.exports = function (config) {
   config.set({
 
     // Add any browsers here
-    browsers: ['PhantomJS', 'Chrome'],
+    browsers: ['PhantomJS'],
     frameworks: ['jasmine'],
 
     // The entry point for our test suite
-    basePath: '.',
+    basePath: '',
     autoWatch: false,
-    files: ['webpack.tests.js'],
+    files: ['tests.webpack.js'],
     preprocessors: {
       // Run this through webpack, and enable inline sourcemaps
-      'webpack.tests.js': ['webpack', 'sourcemap'],
+      'tests.webpack.js': ['webpack', 'sourcemap'],
     },
 
     webpack: {
-      entry: ["webpack.tests.js"],
-      output: {
-        path: __dirname + 'tests',
-      },
       devtool: 'inline-sourcemap',
       module: {
         loaders: [
@@ -36,7 +34,7 @@ module.exports = function (config) {
       captureConsole: true,
     },
 
-    reporters: ['mocha', 'dots'],
+    reporters: ['mocha'],
     singleRun: true, // exit after tests have completed
 
     webpackMiddleware: {
