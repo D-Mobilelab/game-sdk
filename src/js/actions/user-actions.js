@@ -2,9 +2,35 @@ import Stargate from 'stargatejs';
 import Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getContentId } from './gameinfo-actions';
-import userCheckMock from '../../mocks/user-check';
+import localStorage from '../lib/LocalStorage';
 
-const isProduction = (process.env.NODE_ENV === 'production');
+export function canPlay() {
+  return (dispatch) => {
+    const url = Constants.CAN_DOWNLOAD_API_URL.replace(':ID', getContentId());
+    return AxiosInstance.get(url, {
+      params: { cors_compliant: 1 },
+    }).then((response) => {
+      if (process.env.NODE_ENV === 'debug' || process.env.NODE_ENV === 'development') {
+        response.data.canDownload = true;
+      }
+      dispatch({ type: 'SET_CAN_PLAY', canPlay: response.data.canDownload });
+    });
+  };
+}
+
+/**
+ * Get the user type: guest(unlogged) free(facebook) or premium(subscribed)
+ * @returns {String}
+ */
+export function getUserType(userInfo) {
+  if (!userInfo.user) {
+    return 'guest';
+  } else if (!userInfo.subscribed) {
+    return 'free';
+  } else if (userInfo.subscribed) {
+    return 'premium';
+  }
+}
 
 export function getUserFavourites() {
   return (dispatch, getState) => {
@@ -40,9 +66,23 @@ export function getUser() {
     if (generic.connectionState.online) {
       return AxiosInstance.get(Constants.USER_CHECK, { params: query })
         .then((userResponse) => {
-          let data = {};
-          !isProduction ? data = userCheckMock : data = userResponse.data;
-          dispatch({ type: 'USER_CHECK_LOAD_END', user: data });
+          const user = userResponse.data;
+
+          if (process.env.NODE_ENV === 'debug' || process.env.NODE_ENV === 'development') {
+            const userType = localStorage.getItem('gfsdk-debug-user_type');
+            if (userType === 'guest') {
+              user.user = null;
+              user.subscribed = false;
+            } else if (userType === 'free') {
+              user.user = localStorage.getItem('gfsdk-debug-user_id');
+              user.subscribed = false;
+            } else {
+              user.user = localStorage.getItem('gfsdk-debug-user_id');
+              user.subscribed = true;
+            }
+          }
+
+          dispatch({ type: 'USER_CHECK_LOAD_END', user });
           return Promise.all([
             dispatch(canPlay()),
             dispatch(getUserFavourites()),
@@ -65,30 +105,6 @@ export function getUser() {
   };
 }
 
-export function canPlay() {
-  return (dispatch) => {
-    const url = Constants.CAN_DOWNLOAD_API_URL.replace(':ID', getContentId());
-    return AxiosInstance.get(url, {
-      params: { cors_compliant: 1 },
-    }).then((response) => {
-      dispatch({ type: 'SET_CAN_PLAY', canPlay: response.data.canDownload });
-    });
-  };
-}
-
-/**
- * Get the user type: guest(unlogged) free(facebook) or premium(subscribed)
- * @returns {String}
- */
-export function getUserType(userInfo) {
-  if (!userInfo.user) {
-    return 'guest';
-  } else if (!userInfo.subscribed) {
-    return 'free';
-  } else if (userInfo.subscribed) {
-    return 'premium';
-  }
-}
 
 export function increaseMatchPlayed() {
   return {
@@ -102,7 +118,7 @@ export function removeGameLike(gameId) {
 
     const URL = `${Constants.USER_DELETE_LIKE}?content_id=${gameId}&user_id=${getState().user.user}`;
     return AxiosInstance.post(URL)
-            .then((response) => {
+            .then(() => {
               dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId, content_id: gameId } });
             })
             .catch((reason) => {
@@ -134,13 +150,13 @@ export function toggleGameLike() {
     const { user } = getState();
     const { game_info } = getState();
 
-    const isFavourite = user.favourites.some(favourite => favourite.contentId === game_info.contentId);
-    const content_id = game_info.id;
-
-    console.log('isFavourite', isFavourite);
+    const isFavourite = user.favourites.some((favourite) => {
+      return (favourite.contentId === game_info.contentId || favourite.content_id === game_info.content_id);
+    });
+    const contentId = game_info.id || game_info.content_id;
     if (isFavourite) {
-      return dispatch(removeGameLike(content_id));
+      return dispatch(removeGameLike(contentId));
     }
-    return dispatch(addGameLike(content_id));
+    return dispatch(addGameLike(contentId));
   };
 }

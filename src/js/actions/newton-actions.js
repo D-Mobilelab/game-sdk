@@ -48,11 +48,16 @@ export function login() {
       return accumulator;
     }, queryString);
 
+    let logged = true;
+    if (getUserType(currentState.user) === 'guest') {
+      logged = false;
+    }
+
     return NewtonAdapter.login({
       type: 'external',
-      userId: currentState.user.user,
+      userId: currentState.user.user || '',
       userProperties,
-      logged: getUserType(currentState.user),
+      logged,
     }).catch(reason => Promise.resolve(reason));
   };
 }

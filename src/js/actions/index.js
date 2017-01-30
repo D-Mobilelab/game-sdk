@@ -45,12 +45,13 @@ function init(initConfig) {
             dispatch({ type: 'SET_CONNECTION_STATE', connectionState: connState });
           });
         })
+        .then(() => dispatch(vhostActions.dictLoad()))
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))
         .then(() => dispatch(gameinfoActions.getGameInfo()))
         .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().game_info.fbAppId })))
         .then(() => {
-            // return if you want to wait
+          // return if you want to wait
           dispatch(newtonActions.init());
           return dispatch(newtonActions.login());
         })

@@ -10,6 +10,9 @@
  */
 export default function getContentRanking(eventName, eventCategory, contentId, userType, contentRankingObject, userFrom = 'natural') {
   const contentRanking = contentRankingObject;
+  if (Object.keys(contentRankingObject).length < 1) {
+    return null;
+  }
   let scopeType = 'social';
   let ranking = 0;
 

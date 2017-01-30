@@ -7,18 +7,19 @@ import bannerStyle from '../../css/banner.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+/*			
+WEBAPP_HYBRIDINSTALL_TXT
+WEBAPP_HYBRIDINSTALL_APPINFO
+WEBAPP_HYBRIDINSTALL_APPINFOSMALL
+WEBAPP_BANNER_BUTTON
+*/
 /** TODO: import only needed actions */
 import { Actions } from '../actions/index';
 const mapStateToProps = (state) => {
   return {
-      ...state.banner,
-      dictionary: {
-          WEB_INSTALL_BUTTON_TEXT: 'Get the app',
-          BANNER_DESCRIPTION: `Get the Native app
-          Get the app to increase your Game Experience!
-          ...and play OFFLINE too!`
-      }
-    }
+    ...state.banner,
+    dictionary: state.generic.dictionary
+  }
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -47,6 +48,13 @@ export class Banner extends React.Component {
     render(){
         let show = this.props.show ? bannerStyle.show : '';
         let contanierClass = [bannerStyle.bannerContainer, show].join(' ');
+        let { 
+          WEBAPP_HYBRIDINSTALL_TXT, 
+          WEBAPP_HYBRIDINSTALL_APPINFO, 
+          WEBAPP_HYBRIDINSTALL_APPINFOSMALL,
+          WEBAPP_BANNER_BUTTON
+        } = this.props.dictionary;
+
         return (            
             <div className={contanierClass}>
                 <div className={bannerStyle.banner}>
@@ -61,18 +69,19 @@ export class Banner extends React.Component {
                         </div>
                         <div className={genericStyle.col + ' ' + genericStyle._1_12}></div>
 
-
                             <div className={genericStyle.col + ' ' + genericStyle._2_12} style={{marginTop:'10px'}}>
                                 <div className={bannerStyle.appIcon}></div>
                             </div>
                             <div className={genericStyle.col + ' ' + genericStyle._9_12} style={{marginTop:'10px'}}>
+                                <h2 className={bannerStyle.title}>{WEBAPP_HYBRIDINSTALL_TXT}</h2>
                                 <p className={bannerStyle.appDescription}>
-                                    {this.props.dictionary.BANNER_DESCRIPTION}
+                                    {WEBAPP_HYBRIDINSTALL_APPINFO}
+                                    {WEBAPP_HYBRIDINSTALL_APPINFOSMALL}
                                 </p>
                             </div>
                         <div className={genericStyle.col + ' ' + genericStyle._3_12}></div>
                         <div className={genericStyle.col + ' ' + genericStyle._6_12} style={{padding:'0',marginTop:'25px'}}>
-                            <Button text={this.props.dictionary.WEB_INSTALL_BUTTON_TEXT} style={{fontSize: '15px'}} onClick={this.handleGetAppButton}/>
+                            <Button text={WEBAPP_BANNER_BUTTON} style={{fontSize: '15px'}} onClick={this.handleGetAppButton}/>
                         </div>
                         <div className={genericStyle.col + ' ' + genericStyle._3_12}></div>
                     </div>                    

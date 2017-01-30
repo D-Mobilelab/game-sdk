@@ -24,68 +24,6 @@ import { getUserType } from './user-actions';
  */
 
 let onUserDataCallback = () => {};
-export function saveUserData(newInfo) {
-  return (dispatch, getState) => {
-    if (getState().generic.initPending) {
-
-    } else if (getState().generic.initialized) {
-      const { user } = getState();
-      if (typeof newInfo === 'string') {
-        console.warn('GamifiveSDK: the data to be saved should be an object! got a:', typeof newInfo);
-        try {
-          console.warn('GamifiveSDK: try to parse the string');
-          newInfo = JSON.parse(newInfo);
-        } catch (e) {
-          console.error('GamifiveSDK: could not save the data: not even json parseable', newInfo);
-          newInfo = null;
-        }
-        return Promise.resolve();
-      }
-          /**
-           * ONLY
-           * FOR PREMIUM USER
-           */
-      dispatch({ type: 'SAVE_USER_DATA_LOCAL_START' });
-      if (getUserType(user) === 'guest') {
-        const message = 'User type guest cannot save their data';
-        console.warn('GamifiveSDK: User not logged cannot save userData', message);
-        dispatch({ type: 'SAVE_USER_DATA_LOCAL_END', payload: { message, info: newInfo, UpdatedAt: new Date().toISOString() } });
-        return Promise.resolve();
-      }
-
-      return Promise.all([
-        dispatch(setUserDataOnServer(newInfo)),
-        dispatch(setUserDataOnLocal(newInfo)),
-      ])
-      .catch((reason) => {
-        dispatch({ type: 'SAVE_USER_DATA_ERROR', payload: reason });
-      });
-    }
-  };
-}
-
-export function loadUserData(callback = onUserDataCallback) {
-  return (dispatch, getState) => {
-    onUserDataCallback = callback;
-    if (getState().generic.initPending && !getState().generic.initialized) {
-            // register this callback
-      return dispatch({ type: 'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true });
-    } else if (getState().generic.initialized) {
-      return Promise.all([
-        dispatch(getUserDataFromServer()),
-        dispatch(getUserDataFromLocal()),
-      ]).then(() => {
-        const { user } = getState();
-        const finalUserData = syncUserData([
-          user.localUserData,
-          user.remoteUserData,
-        ]);
-        dispatch({ type: 'LOAD_USER_DATA_END', payload: finalUserData });
-        return onUserDataCallback(getState().user.userData.info);
-      });
-    }
-  };
-}
 
 function getUserDataFromServer() {
   return (dispatch, getState) => {
@@ -126,7 +64,7 @@ function getUserDataFromServer() {
 
 function setUserDataOnServer(newInfo) {
   return (dispatch, getState) => {
-        // SAVE_USER_DATA
+    // SAVE_USER_DATA
     const Logger = window.console;
     const { vhost, game_info, user } = getState();
     const userDataSetApi = vhost.MOA_API_APPLICATION_OBJECTS_SET;
@@ -138,7 +76,7 @@ function setUserDataOnServer(newInfo) {
 
     if (!user.userData._id || user.userData._id === '') {
       Logger.warn('GamifiveSDK', 'You must call loadUserData first!');
-      return Promise.resolve();
+      // return Promise.resolve();
     }
 
     let infoSerialized;
@@ -149,10 +87,10 @@ function setUserDataOnServer(newInfo) {
     const APPLICATION_OBJECT_SET_END_POINT = vhost.MOA_API_APPLICATION_OBJECTS_SET.split('?')[0];
     const queryObject = Utils.dequeryfy(vhost.MOA_API_APPLICATION_OBJECTS_SET);
 
-        /**
-         * TODO: call NewtonInstance.syncUserState
-         * to ensure the user server side it's in sync with the local one
-         */
+    /**
+     * TODO: call NewtonInstance.syncUserState
+     * to ensure the user server side it's in sync with the local one
+     */
     const NewtonInstance = Newton.getSharedInstance();
     const body = {
       access_token: NewtonInstance.getUserToken(),
@@ -183,11 +121,11 @@ function setUserDataOnServer(newInfo) {
                 data.response.data.info = newInfo;
                 dispatch({ type: 'SAVE_USER_DATA_SERVER_END', payload: data.response.data });
               } else {
-                console.warn('GamifiveSDK', 'NEWTON', 'userData FAIL to be set on server', data.response);
+                Logger.warn('GamifiveSDK', 'NEWTON', 'userData FAIL to be set on server', data.response);
                 dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: data.response });
               }
             }).catch((reason) => {
-              console.warn('GamifiveSDK', 'PHP', 'userData FAIL to be set on server', reason);
+              Logger.warn('GamifiveSDK', 'PHP', 'userData FAIL to be set on server', reason);
               dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: reason });
             });
   };
@@ -243,13 +181,14 @@ function syncUserData(results) {
   if (localGameInfo && serverGameInfo) {
     let localUpdatedAt = new Date(localGameInfo.UpdatedAt);
     let serverUpdatedAt = new Date(serverGameInfo.UpdatedAt);
-        // seconds and ms to
+    // seconds and ms cut
     localUpdatedAt = new Date(localUpdatedAt.setSeconds(-1, 1000));
     serverUpdatedAt = new Date(serverUpdatedAt.setSeconds(-1, 1000));
 
     /**
      * This is the unique _id that in newton stands for userid-gameid object
-     * and should always be added to the request otherwise php try to set on newton with a POST and not
+     * and should always be added to the request otherwise php 
+     * try to set on newton with a POST and not
      * with a PATCH resulting in a newton error 'Duplicate key error'
      */
     localGameInfo._id = serverGameInfo._id;
@@ -273,4 +212,73 @@ function syncUserData(results) {
     Logger.info('GamifiveSDK: sync userData', 'server won', 'no local');
     return serverGameInfo;
   }
+  return null;
+}
+
+export function saveUserData(newInfo) {
+  return (dispatch, getState) => {
+    if (getState().generic.initPending) {
+      // cannot save while initialize
+    } else if (getState().generic.initialized &&
+              !getState().user.isSaving &&
+              !getState().user.isFetching) {
+      
+      if (typeof newInfo === 'string') {
+        console.warn('GamifiveSDK: the data to be saved should be an object! got a:', typeof newInfo);
+        try {
+          console.warn('GamifiveSDK: try to parse the string');
+          newInfo = JSON.parse(newInfo);
+        } catch (e) {
+          console.error('GamifiveSDK: could not save the data: not even json parseable', newInfo);
+          newInfo = null;
+        }
+        return Promise.resolve();
+      }
+      /**
+       * ONLY
+       * FOR PREMIUM USER
+       */
+      const { user } = getState();
+      dispatch({ type: 'SAVE_USER_DATA_LOCAL_START' });
+      if (getUserType(user) === 'guest') {
+        const message = 'User type guest cannot save their data';
+        console.warn('GamifiveSDK: User not logged cannot save userData', message);
+        dispatch({ type: 'SAVE_USER_DATA_LOCAL_END', payload: { message, info: newInfo, UpdatedAt: new Date().toISOString() } });
+        return Promise.resolve();
+      }
+
+      return Promise.all([
+        dispatch(setUserDataOnServer(newInfo)),
+        dispatch(setUserDataOnLocal(newInfo)),
+      ])
+      .catch((reason) => {
+        dispatch({ type: 'SAVE_USER_DATA_ERROR', payload: reason });
+      });
+    }
+  };
+}
+
+export function loadUserData(callback = onUserDataCallback) {
+  return (dispatch, getState) => {
+    onUserDataCallback = callback;
+    if (getState().generic.initPending && !getState().generic.initialized) {
+      // register this callback
+      return dispatch({ type: 'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true });
+    } else if (getState().generic.initialized &&
+              !getState().user.isSaving &&
+              !getState().user.isFetching) {
+      return Promise.all([
+        dispatch(getUserDataFromServer()),
+        dispatch(getUserDataFromLocal()),
+      ]).then(() => {
+        const { user } = getState();
+        const finalUserData = syncUserData([
+          user.localUserData,
+          user.remoteUserData,
+        ]);
+        dispatch({ type: 'LOAD_USER_DATA_END', payload: finalUserData });
+        return onUserDataCallback(getState().user.userData.info);
+      });
+    }
+  };
 }

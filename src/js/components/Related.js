@@ -17,7 +17,7 @@ export class Related extends React.Component {
     render(){
         return(
              <div className={genericStyle.grid}>
-                <h2 style={{marginBottom:'2%'}}>Related</h2>
+                <h2 style={{marginBottom:'2%'}}>{this.props.title}</h2>
                 <ul style={{textAlign:'center'}}>
                 {
                     this.props.related.map((related, index) => {

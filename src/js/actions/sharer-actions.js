@@ -11,10 +11,10 @@ export function initFacebook(config) {
 export function share(url, service) {
   return (dispatch) => {
     if (service === 'facebook') {
-      dispatch({ type: 'SHARE_START', payload: { service } });
+      dispatch({ type: 'SHARE_START', payload: { service, url } });
       return FacebookSharer.share(url)
         .then(() => {
-          dispatch({ type: 'SHARE_END', payload: { service } });
+          dispatch({ type: 'SHARE_END', payload: { service, url } });
         });
     }
   };
