@@ -58,7 +58,7 @@ function init(initConfig) {
         .then(() => {
           const menuStyle = {};
           if (getState().vhost.IMAGES_SPRITE_GAME && getState().vhost.IMAGES_SPRITE_GAME !== '') {
-            menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
+          //  menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
           }
 
           dispatch(menuActions.showMenu(menuStyle));

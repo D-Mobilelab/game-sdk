@@ -27,7 +27,7 @@ class App extends React.Component {
             <div>
                 <TheGameover />
                 <Banner />
-                <Menu />
+                <Menu white_label={this.props.label}/>
             </div>
         )
     }
@@ -39,7 +39,7 @@ function onDomLoaded(event) {
     window.document.body.appendChild(ROOT_ELEMENT);
 
     let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
-
+    
     ReactDOM.render(
         <Provider store={store}>
             <App label={WHITE_LABEL} />

@@ -8,8 +8,7 @@
     100% { opacity: 0; transform: scale(0);}
 }
 
-.menu{
-    background-image: url('../img/sprite.png');
+.menu {
     background-position: -5px -475px;
     margin-top: -22px;
     z-index: 10;
@@ -21,6 +20,10 @@
     transition: transform 100ms;
 }
 
+.menu.show {
+    transform: scale(1);
+}
+
 .menu.show.active{
     transform: scale(0.9);
 }
@@ -29,6 +32,12 @@
     transform: scale(0);
 }
 
-.menu.show{
-    transform: scale(1);
+.menu_g5 {
+  composes: menu;
+  background-image: url('../img/sprite_g5.png');
+}
+
+.menu_gameasy {
+  composes: menu;
+  background-image: url('../img/sprite_gameasy.png');
 }
