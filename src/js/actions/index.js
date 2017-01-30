@@ -1,7 +1,6 @@
 import Stargate from 'stargatejs';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
-import { AxiosInstance } from '../lib/AxiosService';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
