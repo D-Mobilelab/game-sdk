@@ -171,7 +171,7 @@ export class GamifiveGameover extends Gameover {
 
         return (
             <div style={showAndHideStyle}>
-                <div className="container game-over">
+                <div className="container game-over" style={{position:'fixed', zIndex: '10'}}>
                     <a onClick={this.goToHome}>
                         <p className="logo-b"></p>
                     </a>
