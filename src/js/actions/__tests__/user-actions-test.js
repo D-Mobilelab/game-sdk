@@ -55,4 +55,39 @@ describe('User', () =>  {
         done();
       });
   });
+
+  it('should get the favourites when 404', (done) =>  {
+    const poggioId = '903833c2c35a11e589cb005056b60712';
+    const url = `${USER_GET_LIKE}?user_id=${poggioId}&size=51`;
+
+    jasmine.Ajax.stubRequest(url).andReturn({
+      status: 404,
+      contentType: 'text/plain',
+      responseText: '[]',
+      response: [],
+    });
+
+    const store = mockStore({
+      user: {
+        logged: 1,
+        favourites: [],
+        user: poggioId,
+      },
+      generic: {
+        hybrid: false,
+        connectionState: { online: true },
+      },
+    });
+
+    const expectedActions = [
+      { type: 'GET_FAVOURITES_START' },
+      { type: 'GET_FAVOURITES_END', favourites: [] },
+    ];
+
+    store.dispatch(userActions.getUserFavourites())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+        done();
+      });
+  });
 });

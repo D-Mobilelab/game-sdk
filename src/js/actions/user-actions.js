@@ -42,6 +42,9 @@ export function getUserFavourites() {
           user_id: getState().user.user, // userID
           size: 51,
         },
+        validateStatus: (status) => {
+          return status === 200 || status === 404;
+        },
       });
     } else {
       getFavPromise = Promise.resolve({ data: [] });
