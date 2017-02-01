@@ -3,14 +3,15 @@ import localStorage from './LocalStorage';
 
 let theWindow = {};
 const isProduction = () => process.env.NODE_ENV === 'production';
+const isPreprod = () => process.env.NODE_ENV === 'preprod';
 
-if (!isProduction()) {
+if (!isProduction() && !isPreprod()) {
   const windowConf = require('./windowConf');
 
   const gameId = localStorage.getItem('gfsdk-debug-game_id');
   const host = localStorage.getItem('gfsdk-debug-host');
   theWindow.location = windowConf(host, gameId);
-} else if (isProduction()) {
+} else {
   theWindow = window;
 }
 

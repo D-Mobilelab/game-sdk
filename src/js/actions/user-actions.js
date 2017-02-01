@@ -68,7 +68,8 @@ export function getUser() {
         .then((userResponse) => {
           const user = userResponse.data;
 
-          if (process.env.NODE_ENV === 'debug' || process.env.NODE_ENV === 'development') {
+          if (process.env.NODE_ENV === 'development' && 
+              process.env.NODE_ENV !== 'preprod') {
             const userType = localStorage.getItem('gfsdk-debug-user_type');
             if (userType === 'guest') {
               user.user = null;

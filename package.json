@@ -7,12 +7,12 @@
     "test": "karma start",
     "test:watch": "karma start",
     "build:dev": "webpack --config webpack.config.dev.js",
-    "build:debug": "webpack --config webpack.config.debug.js",
     "build:prod": "webpack --config webpack.config.prod.js -p",
+    "build:preprod": "webpack --config webpack.config.pre.prod.js",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
-    "debug": "webpack-dev-server --config webpack.config.debug.js",
-    "build": "npm run build:prod",
-    "upload": "scp -r dist/* super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/2.x.x/dist/"
+    "build": "npm run build:prod && npm run build:preprod",
+    "upload": "scp -r dist/* super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/2.x.x/dist/",
+    "upload:preprod": "scp -r preprod/* super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/2.x.x/dist/"
   },
   "author": "eatsjobs",
   "license": "ISC",
