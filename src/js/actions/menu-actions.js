@@ -1,6 +1,19 @@
+import Stargate from 'stargatejs';
+import Location from '../lib/Location';
+
 export function goToHome() {
-  return {
-    type: 'GO_TO_HOME',
+  return (dispatch, getState) => {
+    const { generic } = getState();
+    if (generic.hybrid) {
+      if (window.webview) {
+        window.webview.Close();
+      } else {
+        Stargate.goToLocalIndex();
+      }
+    } else {
+      window.location.href = Location.getOrigin();
+    }
+    dispatch({ type: 'GO_TO_HOME' });
   };
 }
 
