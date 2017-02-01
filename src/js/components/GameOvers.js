@@ -163,10 +163,11 @@ export class GamifiveGameover extends Gameover {
             WEBAPP_CONGRATULATIONS_SCORE, 
             WEBAPP_YOUR_POSITION_TITLE,
             WEBAPP_CANVAS_BUTTON_PLAY,
-            PLAY,
+            WEBAPP_REPLAY,
             WEBAPP_RELATED_TITLE,
             WEBAPP_CHALLENGE_INVITE,
-            WEBAPP_SHARE_FACEBOOK
+            WEBAPP_SHARE_FACEBOOK,
+            WEBAPP_GAME_OVER,
         } = this.props.dictionary;
 
         return (
@@ -175,7 +176,7 @@ export class GamifiveGameover extends Gameover {
                     <a onClick={this.goToHome}>
                         <p className="logo-b"></p>
                     </a>
-                    <h1>Gameover</h1>
+                    <h1>{WEBAPP_GAME_OVER}</h1>
                     <div className="box-game-over" style={{marginTop:0}}>
 
                         <div className="bg-line-box">
@@ -209,7 +210,7 @@ export class GamifiveGameover extends Gameover {
                                     
                                     <div className="col-xs-8 col-xs-offset-2 container-absolute-btn">
                                         <button className="btn btn--play fa fa-repeat" onClick={this.handleReplay}>
-                                            <span className="line-btn">{PLAY}</span>
+                                            <span className="line-btn">{WEBAPP_REPLAY}</span>
                                         </button>
                                     </div>
                                 </div>

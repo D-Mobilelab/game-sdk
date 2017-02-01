@@ -18,7 +18,7 @@ export const newtonMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Play',
           game_title: currentState.game_info.title,
-          label: currentState.game_info.contentId,
+          label: currentState.game_info.content_id,
           valuable: 'No',
         },
       });
@@ -26,11 +26,11 @@ export const newtonMiddleware = store => next => (action) => {
     case 'START_SESSION':
       NewtonAdapter.trackEvent({
         name: 'GameStart',
-        rank: getContentRanking('GameStart', 'Play', currentState.game_info.contentId, userType, CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameStart', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         properties: {
           category: 'Play',
           game_title: currentState.game_info.title,
-          label: currentState.game_info.contentId,
+          label: currentState.game_info.content_id,
           valuable: 'Yes',
           action: 'Yes',
         },
@@ -39,12 +39,12 @@ export const newtonMiddleware = store => next => (action) => {
     case 'END_SESSION':
 
       NewtonAdapter.trackEvent({
-        rank: getContentRanking('GameEnd', 'Play', currentState.game_info.contentId, userType, CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameEnd', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         name: 'GameEnd',
         properties: {
           category: 'Play',
           game_title: currentState.game_info.title,
-          label: currentState.game_info.contentId,
+          label: currentState.game_info.content_id,
           valuable: 'No',
           action: 'No',
         },
@@ -53,13 +53,13 @@ export const newtonMiddleware = store => next => (action) => {
     case 'GO_TO_HOME':
 
       NewtonAdapter.trackEvent({
-        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.contentId, 'guest', CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, 'guest', CONTENT_RANKING, userFrom),
         name: 'GoToHome',
         properties: {
           action: 'Yes',
           category: 'Behavior',
           game_title: currentState.game_info.title,
-          label: currentState.game_info.contentId,
+          label: currentState.game_info.content_id,
           valuable: 'No',
         },
       });
@@ -71,7 +71,7 @@ export const newtonMiddleware = store => next => (action) => {
           action: 'No',
           category: 'SDK_ERROR',
           game_title: currentState.game_info.title || '',
-          label: currentState.game_info.contentId || '',
+          label: currentState.game_info.content_id || '',
           valuable: 'No',
           reason: currentState.generic.error,
         },

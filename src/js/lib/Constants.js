@@ -7,22 +7,22 @@ export default {
   OVERLAY_ELEMENT_ID: 'gfsdk_root',
   BACK_BUTTON_SELECTOR: '#backBtn',
   DEFAULT_MENU_STYLE: {
-      left: '2px',
-      height: '60px',
-      'background-position': '-5px -475px',
-      top: '50%',
-      'margin-top': '-22px',
-      'z-index': '9',
-      width: '60px',
-      position: 'absolute',
-    },
+    left: '2px',
+    height: '60px',
+    'background-position': '-5px -475px',
+    top: '50%',
+    'margin-top': '-22px',
+    'z-index': '9',
+    width: '60px',
+    position: 'absolute',
+  },
   IMMUTABLE_MENU_STYLE_PROPERTIES: [
-      'background-image',
-      'background-position',
-      'z-index',
-      'width',
-      'height',
-    ],
+    'background-image',
+    'background-position',
+    'z-index',
+    'width',
+    'height',
+  ],
 
   AFTER_LOAD_EVENT_KEY: 'VHOST_AFTER_LOAD',
   AFTER_INIT_EVENT_KEY: 'SESSION_AFTER_INIT',
@@ -62,6 +62,7 @@ export default {
 
     // API
   VHOST_API_URL: '/v01/config.getvars', // ?keys
+  DICTIONARY_API_URL: '/dictionary', // dictionary keys
   GAME_INFO_API_URL: '/v01/gameplay', // ?content_id=
   GAME_INFO_PROXY_API_URL: '/v01/gameplay_proxy', // ?content_id=&_PONY=
   GAMEOVER_API_URL: '/v01/gameover/:CONTENT_ID', // ?start&duration&score&level

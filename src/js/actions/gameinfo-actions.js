@@ -10,6 +10,12 @@ export function setRelated(related) {
   };
 }
 
+function normalizeGameInfo(gameInfo) {
+  const newGameInfo = JSON.parse(JSON.stringify(gameInfo));
+  newGameInfo.content_id = newGameInfo.content_id || newGameInfo.contentId || newGameInfo.id;
+  return newGameInfo;
+}
+
 export function getGameInfo() {
   return (dispatch, getState) => {
     dispatch({ type: 'GAME_INFO_LOAD_START' });
@@ -21,8 +27,9 @@ export function getGameInfo() {
           cors_compliant: 1,
         },
       }).then((response) => {
-        dispatch({ type: 'GAME_INFO_LOAD_END', game_info: response.data.game_info });
-        persist(response.data.game_info);
+        const gameInfo = normalizeGameInfo(response.data.game_info);
+        dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo});
+        persist(gameInfo);
       }).catch((reason) => {
         dispatch({ type: 'GAME_INFO_LOAD_FAIL', error: reason });
       });

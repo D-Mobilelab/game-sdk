@@ -27,12 +27,21 @@ export function load(VHOST_API_URL, keys) {
   };
 }
 
-export function dictLoad() {
-  let dictionary;
-  let action = { type: 'DICTIONARY_LOAD_END', payload: {} };
-  if (localStorage) {
-    dictionary = JSON.parse(localStorage.getItem('gfsdk_dictionary'));
-    action.payload = dictionary;
-  }
-  return action;
+export function dictLoad(DICTIONARY_API) {
+  return (dispatch) => {
+    let dictionary = JSON.parse(localStorage.getItem('gfsdk_dictionary'));
+    let action = { type: 'DICTIONARY_LOAD_END', payload: {} };
+    if (dictionary) {
+      action.payload = dictionary;
+      dispatch(action);
+      return Promise.resolve();
+    } else {
+      return AxiosInstance.get(DICTIONARY_API).then((response) => {
+        action.payload = response.data;
+        dispatch(action);
+      }).catch((reason) => {
+        dispatch({type: 'DICTIONARY_LOAD_ERROR', payload: reason });
+      });
+    }
+  };
 }

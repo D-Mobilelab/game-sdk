@@ -44,7 +44,10 @@ function init(initConfig) {
             dispatch({ type: 'SET_CONNECTION_STATE', connectionState: connState });
           });
         })
-        .then(() => dispatch(vhostActions.dictLoad()))
+        .then(() => {
+          const dictURL = [Location.getOrigin(), Constants.DICTIONARY_API_URL].join('');
+          return dispatch(vhostActions.dictLoad(dictURL));
+        })
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))
         .then(() => dispatch(gameinfoActions.getGameInfo()))
