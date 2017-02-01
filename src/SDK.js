@@ -33,8 +33,22 @@ export class SDK {
   }
 
   loadUserData(onLoadUserData) {
+    // retro compatibility
     const { store } = privates.get(this);
     store.dispatch(Actions.loadUserData(onLoadUserData));
+
+    if (window.GamifiveInfo && window.GamifiveInfo.user) {
+      console.info('GamifiveSDK: Load userInfo from in page data');
+      const userInfoCloned = JSON.parse(JSON.stringify(window.GamifiveInfo.user));
+      if (typeof userInfoCloned.gameInfo.info === 'string') {
+        try {
+          userInfoCloned.gameInfo.info = JSON.parse(userInfoCloned.gameInfo.info);
+        } catch (e) {
+          userInfoCloned.gameInfo.info = null;
+        }
+      }
+      return userInfoCloned.user.info;
+    }
   }
 
   saveUserData(userDataInfo) {
