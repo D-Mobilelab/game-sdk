@@ -12,7 +12,7 @@
     background-position: -5px -475px;
     margin-top: -22px;
     z-index: 10;
-    position: absolute;    
+    position: fixed;    
     cursor:pointer;
     width: 60px; 
     height: 60px;
@@ -28,7 +28,7 @@
     transform: scale(0.9);
 }
 
-.menu.hide{
+.menu.hide {
     transform: scale(0);
 }
 
