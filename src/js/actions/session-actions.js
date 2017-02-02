@@ -89,13 +89,19 @@ export function endSession(scoreAndLevel = { score: 0, level: 0 }) {
       return;
     }
 
-    const { user, generic } = getState();
-    const bannerCondition = [(user.matchPlayed % 3 === 0), !generic.hybrid, isAndroid()].every(condition => condition === true);
+    const { user, generic, vhost } = getState();
+    const bannerCondition = [
+      (user.matchPlayed % 3 === 0),
+      !generic.hybrid,
+      isAndroid(),
+      vhost.INSTALL_HYBRID_VISIBLE,
+    ].every(condition => condition === true);
+
     if (bannerCondition) {
       dispatch(showBanner());
     }
 
-        // and a session was started
+    // and a session was started
     if (Object.keys(getState().session).length > 0
             && getState().session.opened) {
       const endTime = new Date();
@@ -112,14 +118,14 @@ export function endSession(scoreAndLevel = { score: 0, level: 0 }) {
       const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
       const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
         params: {
-            score: lastSession.score,
-            level: lastSession.level,
-            duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-            start: lastSession.startTime.getTime(),
-            label: getState().game_info.label,
-            userId: getState().user.user,
-            cors_compliant: 1,
-          },
+          score: lastSession.score,
+          level: lastSession.level,
+          duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
+          start: lastSession.startTime.getTime(),
+          label: getState().game_info.label,
+          userId: getState().user.user,
+          cors_compliant: 1,
+        },
       })
       .then((response) => {
         // get ranking?

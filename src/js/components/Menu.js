@@ -37,13 +37,14 @@ export class Menu extends React.Component{
     onPointerEnd(event){
         if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y && event.pageY){
             //it's a click/tap
-            window.alert("it's a T(r)ap!");
+            // window.alert("it's a T(r)ap!");
             // open the menu?
             this.props.actions.goToHome();
         
         } else {
             // was dragged. put in the closer angle?
-            window.alert("drag");
+            // window.alert("drag");
+            console.log('Drag menu');
         }
         let position = {x : event.pageX, y: event.pageY};
         this.props.actions.setUpPosition({active: false, position });
@@ -90,7 +91,8 @@ export class Menu extends React.Component{
     }
 
     render(){
-        let classNames = [menuStyles.menu];
+        let menu = this.props.white_label === 'gamifive' ? menuStyles.menu_g5 : menuStyles.menu_gameasy;
+        let classNames = [menu];
         classNames.push(this.props.show ? menuStyles.show : menuStyles.hide);
         classNames.push(this.props.active ? menuStyles.active : '');
         

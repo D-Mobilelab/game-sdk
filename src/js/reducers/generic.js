@@ -17,7 +17,7 @@ export function generic(state = {
     WEBAPP_YOUR_POSITION_TITLE: 'Rank',
     WEBAPP_CANVAS_BUTTON_PLAY: 'Play',
     WEBAPP_RELATED_TITLE: 'Related',
-    PLAY: 'Replay',
+    WEBAPP_REPLAY: 'Replay',
     WEBAPP_GAMEOVER_GUEST_FAVS: '',
     WEBAPP_GAMEOVER_GUEST_FAVS_SIGNIN: '',
     WEBAPP_HYBRIDINSTALL_TXT: 'get the native app',
@@ -25,7 +25,8 @@ export function generic(state = {
     WEBAPP_HYBRIDINSTALL_APPINFOSMALL: '...and play OFFLINE',
     WEBAPP_BANNER_BUTTON: 'get the app',
     WEBAPP_CHALLENGE_INVITE: '',
-    WEBAPP_SHARE_FACEBOOK: '',
+    WEBAPP_SHARE_FACEBOOK: 'Share',
+    WEBAPP_GAME_OVER: 'Gameover',
   },
 }, action) {
   switch (action.type) {

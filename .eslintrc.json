@@ -5,7 +5,8 @@
 	},
 	"parserOptions":{
 		"ecmaFeatures": {
-			"spread": true
+			"spread": true,
+			"experimentalObjectRestSpread": true
 		}
 	},
 	"env": {

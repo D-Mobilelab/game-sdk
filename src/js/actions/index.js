@@ -1,7 +1,6 @@
 import Stargate from 'stargatejs';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
-import { AxiosInstance } from '../lib/AxiosService';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -45,7 +44,10 @@ function init(initConfig) {
             dispatch({ type: 'SET_CONNECTION_STATE', connectionState: connState });
           });
         })
-        .then(() => dispatch(vhostActions.dictLoad()))
+        .then(() => {
+          const dictURL = [Location.getOrigin(), Constants.DICTIONARY_API_URL].join('');
+          return dispatch(vhostActions.dictLoad(dictURL));
+        })
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))
         .then(() => dispatch(gameinfoActions.getGameInfo()))
@@ -58,7 +60,7 @@ function init(initConfig) {
         .then(() => {
           const menuStyle = {};
           if (getState().vhost.IMAGES_SPRITE_GAME && getState().vhost.IMAGES_SPRITE_GAME !== '') {
-            menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
+          //  menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
           }
 
           dispatch(menuActions.showMenu(menuStyle));
