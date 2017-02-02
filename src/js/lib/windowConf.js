@@ -1,4 +1,4 @@
-export default function location(HOST = 'www2.gameasy.com', GAME_ID = 'c2701133414427fee732e051abdfe3e8', COUNTRY_CODE = 'ww-it') {
+export default function location(HOST = 'appsworld.gamifive-app.com', GAME_ID = 'c2701133414427fee732e051abdfe3e8', COUNTRY_CODE = 'ww-it') {
   return {
     hash: '',
     search: '',

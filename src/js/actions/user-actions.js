@@ -77,8 +77,8 @@ export function getUser() {
             if (userType === 'guest') {
               user.user = null;
               user.subscribed = false;
-            } else if (userType === 'free') {
-              user.user = localStorage.getItem('gfsdk-debug-user_id');
+            } else if (userType === 'free') {              
+              user.user = decodeURIComponent(localStorage.getItem('gfsdk-debug-user_id'));
               user.subscribed = false;
             } else {
               user.user = localStorage.getItem('gfsdk-debug-user_id');

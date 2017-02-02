@@ -12,78 +12,90 @@
         
         <form style='margin:2%;' id="settings-form">
 
-            <div class="form-group">
+            <!--div class="form-group">
                 <h3>Host</h3>
                 <label for="host">host:</label>
                 <input type="text" id="gfsdk-debug-host" name="gfsdk-debug-host" value="appsworld.gamifive-app.com"></input>  
-            </div>
+            </div -->
 
             <div class="form-group">
                 <h3>Game</h3>
                 <label for="game_id">game_id:</label>
-                <input type="text" value="b6888c4fdbdfa02585da087f134556d8" id="gfsdk-debug-game_id" name="gfsdk-debug-game_id">
+                <input type="text" value="" id="gfsdk-debug-game_id" name="gfsdk-debug-game_id">
             </div>
 
             <div class="form-group">
                 <h3>User</h3>    
                 <label for='user_id'>
                     user_id:
-                    <input type='text' name="gfsdk-debug-user_id" id='gfsdk-debug-user_id' value='903833c2c35a11e589cb005056b60712'>
+                    <input type='text' name="gfsdk-debug-user_id" id='gfsdk-debug-user_id' value=''>
                 </label>
             </div>
             <div class="form-group">
                 <label>
                     User type
                     <select name="gfsdk-debug-user_type" class="form-control">
+                        <option selected="selected">premium</option>
                         <option>guest</option>
-                        <option>free</option>
-                        <option>premium</option>
+                        <option>free</option>                        
                     </select>
                 </label>
             </div>
+            
+            <button type="submit" class="btn btn-primary">Set</button>
+            <button id="clear_setting" class="btn btn-default">Clear Setting</button>
             <div class="form-group">
                 <label for="url_to_launch">
-                    URL to launch: should be inside debug folder example
-                    "/test_this_game/index.html"
-                    <input type='text' name='url_to_launch' id='url_to_launch' value='/game/index.html'>
+                    URL to launch: should be inside debug folder example                    
+                    <input type='text' name='url_to_launch' id='url_to_launch' value='/game-folder/index.html'>
                 </label>
                 <label for="button_launch">
                     <button id="launch_button" class="btn btn-primary">Play</button>
                 </label>
             </div>
-            <button type="submit" class="btn btn-primary">Set</button>
-            <button id="clear_setting" class="btn btn-default">Clear Setting</button>
         </form>
         <script type="text/javascript">
-            var formElement = document.querySelector('form#settings-form');
-            var clearButtonElement = document.querySelector('button#clear_setting');
-            var playButtonElement = document.querySelector('button#launch_button');
-            var urlToLaunchElement = document.querySelector('input#url_to_launch');
-            var formData;
-            function onSubmit(evt){
-                evt.preventDefault();
-                var currentForm = evt.target;
-                var serialized = [].filter.call(currentForm.elements, function(node){
-                    return !node.disabled && node.value !== "" && node.name !== "";
-                }).map(function(node){
-                    return [node.name, node.value].map(encodeURIComponent);
-                }).map(function(setting){
-                    localStorage.setItem(setting[0], setting[1]);
-                });
+            function onDomLoaded(){
+                var loadedGameId = localStorage.getItem('gfsdk-debug-game_id') || 'b6888c4fdbdfa02585da087f134556d8';
+                var loadedUserId = localStorage.getItem('gfsdk-debug-user_id') || 'user.name@service.com';
+                var userIdField = document.querySelectorAll('#gfsdk-debug-user_id')[0];
+                var gameIdField = document.querySelectorAll('#gfsdk-debug-game_id')[0];
+                
+                userIdField.value = decodeURIComponent(loadedUserId);
+                gameIdField.value = loadedGameId;
+
+                var formElement = document.querySelector('form#settings-form');
+                var clearButtonElement = document.querySelector('button#clear_setting');
+                var playButtonElement = document.querySelector('button#launch_button');
+                var urlToLaunchElement = document.querySelector('input#url_to_launch');
+                var formData;
+                function onSubmit(evt){
+                    evt.preventDefault();
+                    var currentForm = evt.target;
+                    var serialized = [].filter.call(currentForm.elements, function(node){
+                        return !node.disabled && node.value !== "" && node.name !== "";
+                    }).map(function(node){
+                        return [node.name, node.value].map(encodeURIComponent);
+                    }).map(function(setting){
+                        localStorage.setItem(setting[0], setting[1]);
+                    });
+                }
+                
+                playButtonElement.addEventListener('click', function(evt){
+                    evt.preventDefault();
+                    var redirect_url = urlToLaunchElement.value;
+                    window.open([window.location.origin, redirect_url].join(''), '_blank');
+                }, false);
+
+                clearButtonElement.addEventListener('click', function(evt){
+                    evt.preventDefault();
+                    localStorage.clear();
+                }, false);
+
+                formElement.addEventListener('submit', onSubmit, false);
             }
-            
-            playButtonElement.addEventListener('click', function(evt){
-                evt.preventDefault();
-                var redirect_url = urlToLaunchElement.value;
-                window.open([window.location.origin, redirect_url].join(''), '_blank');
-            }, false);
 
-            clearButtonElement.addEventListener('click', function(evt){
-                evt.preventDefault();
-                localStorage.clear();
-            }, false);
-
-            formElement.addEventListener('submit', onSubmit, false);
+            window.document.addEventListener("DOMContentLoaded", onDomLoaded);
         </script>
     </body>
 </html>

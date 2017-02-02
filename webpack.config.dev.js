@@ -9,7 +9,7 @@ var env_Plugin = new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stri
 
 devConfiguration.devServer = {
   contentBase: 'dist/',
-  host: 'local.appsworld.gamifive-app.com',
+  host: 'local.appsworld.gamifive-app.com', // 0.0.0.0 to test on device. then add <ip>:8080/webpack-dev-server/
   proxy: {
     '/v01/**': {
       target: 'http://appsworld.gamifive-app.com',
@@ -20,9 +20,9 @@ devConfiguration.devServer = {
         '': '',
       },
       cookieDomainRewrite: { '*': '' },
-    },
-  },
-};
+    }
+  }
+}
 
 devConfiguration.devtool = 'eval-source-map';
 devConfiguration.plugins.push(optimizeOccurence);
