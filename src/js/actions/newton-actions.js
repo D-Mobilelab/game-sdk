@@ -4,13 +4,14 @@ import { getUserType } from './user-actions';
 import { NEWTON_DEBUG_SECRET } from '../lib/Constants';
 
 const isProduction = () => process.env.NODE_ENV === 'production';
+const isPreProd = () => process.env.NODE_ENV === 'preprod';
 
 export function init() {
   return (dispatch, getState) => {
     const currentState = getState();
 
     let newtonSecret = currentState.vhost.NEWTON_SECRETID;
-    if (!isProduction()) {
+    if (!isProduction() && !isPreProd()) {
       newtonSecret = NEWTON_DEBUG_SECRET;
     }
 
