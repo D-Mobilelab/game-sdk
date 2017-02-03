@@ -66,8 +66,10 @@
 .header {
     background: background_cyan;
     height: 60px;
+    line-height: 60px;
     color:foreground_white;
     clear: both;
+    vertical-align: middle;
 }
 
 .header h1 {
