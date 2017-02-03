@@ -16,6 +16,17 @@ function normalizeGameInfo(gameInfo) {
   return newGameInfo;
 }
 
+export function getContentId() {
+  const urlToMatch = Location.getCurrentHref();
+  const contentIdRegex = new RegExp(Constants.CONTENT_ID_REGEX);
+  const match = urlToMatch.match(contentIdRegex);
+
+  if (match !== null && match.length > 0) {
+    return match[2];
+  }
+  throw new Error('Cannot get content id from url');
+}
+
 export function getGameInfo() {
   return (dispatch, getState) => {
     dispatch({ type: 'GAME_INFO_LOAD_START' });
@@ -28,7 +39,7 @@ export function getGameInfo() {
         },
       }).then((response) => {
         const gameInfo = normalizeGameInfo(response.data.game_info);
-        dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo});
+        dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo });
         persist(gameInfo);
       }).catch((reason) => {
         dispatch({ type: 'GAME_INFO_LOAD_FAIL', error: reason });
@@ -44,17 +55,6 @@ export function getGameInfo() {
       });
     }
   };
-}
-
-export function getContentId() {
-  const urlToMatch = Location.getCurrentHref();
-  const contentIdRegex = new RegExp(Constants.CONTENT_ID_REGEX);
-  const match = urlToMatch.match(contentIdRegex);
-
-  if (match !== null && match.length > 0) {
-    return match[2];
-  }
-  throw new Error('Cannot get content id from url');
 }
 
 function persist(gameInfo) {
