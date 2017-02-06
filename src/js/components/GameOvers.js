@@ -2,7 +2,7 @@ import React from 'react';
 import { Gameover } from './Gameover';
 
 /** My Components */
-import { Button } from './Button';
+import { MaterialButton } from './MaterialButton';
 import { Related } from './Related';
 import { Image } from './Image';
 import { LikeButton } from './LikeButton';
@@ -78,7 +78,7 @@ export class GameasyGameover extends Gameover {
                     
                     <div className={genericStyle.col + ' ' + genericStyle._2_3} style={{position:'relative', paddingRight:'0'}}>
                         <Image srcSet={imgSrcSet} />
-                        <Button text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
+                        <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={()=>'asd'} center='true' style={{width:'50%'}} />
                     </div>
                     
                     <div className={gameasyStyle.scoreContainer}>
