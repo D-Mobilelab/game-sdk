@@ -76,7 +76,7 @@ export function setMissingGameInfoPart(gameInfo) {
   };
 }
 
-export function endSession(scoreAndLevel = { score: 0, level: 0 }) {
+export function endSession({ score = 0, level = 1 }) {
   return (dispatch, getState) => {
         // only if already initialized
     if (!getState().generic.initialized) {
@@ -105,7 +105,7 @@ export function endSession(scoreAndLevel = { score: 0, level: 0 }) {
     if (Object.keys(getState().session).length > 0
             && getState().session.opened) {
       const endTime = new Date();
-      const session = { score: scoreAndLevel.score, level: scoreAndLevel.level, endTime, opened: false };
+      const session = { score, level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
       dispatch(increaseMatchPlayed());
       dispatch(showMenu());
