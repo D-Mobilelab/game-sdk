@@ -67,7 +67,7 @@ export class Menu extends React.Component{
     }
 
     onPointerEnd(event){
-        if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y && event.pageY){
+        if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y === event.pageY){
             //it's a click/tap
             // window.alert("it's a T(r)ap!");
             // open the menu?
@@ -123,11 +123,9 @@ export class Menu extends React.Component{
         let menu = this.props.white_label === 'gamifive' ? menuStyles.menu_g5 : menuStyles.menu_gameasy;
         let classNames = [menu];
         classNames.push(this.props.show ? menuStyles.show : menuStyles.hide);
-        classNames.push(this.props.active ? menuStyles.active : '');
-        
+        classNames.push(this.props.active ? menuStyles.active : '');        
         return(
-            <div ref='menu' className={classNames.join(' ')} style={this.props.style}>
-            </div>
+            <div ref='menu' className={classNames.join(' ')} style={this.props.style}></div>
         );
     }
 }
