@@ -91,7 +91,11 @@ function redirectOnStore() {
     title: '',
   });
 
-    // setTimeout(() => window.location.href = mfp_url, 1000);
+  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'preprod') {
+    setTimeout(() => {
+      window.location.href = mfp_url;
+    }, 500);
+  }
 
   return {
     type: 'REDIRECT_ON_STORE',

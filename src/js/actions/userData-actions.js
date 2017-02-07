@@ -224,14 +224,25 @@ export function saveUserData(newInfo) {
               !getState().user.isFetching) {
       
       if (typeof newInfo === 'string') {
-        console.warn('GamifiveSDK: the data to be saved should be an object! got a:', typeof newInfo);
+        
+        const warn = { type: 'warn', message: '' };
+        let message = 'saveUserData: the data to be saved should be an object! got a string';
+        warn.message = message;
+        console.warn(message);
+
         try {
           console.warn('GamifiveSDK: try to parse the string');
           newInfo = JSON.parse(newInfo);
         } catch (e) {
-          console.error('GamifiveSDK: could not save the data: not even json parseable', newInfo);
+          message = 'saveUserData:could not save the data: not even json parseable';
+          warn.type = 'error';
+          warn.message = message;
+
+          console.error(message, newInfo);
           newInfo = null;
         }
+
+        window.__GAME_REPORT__.push(warn);
         return Promise.resolve();
       }
       /**

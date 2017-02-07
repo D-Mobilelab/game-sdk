@@ -17,6 +17,11 @@ function doStartSession() {
      * startSession called before endSession
      * report an error in debug env
      */
+      const warn = {
+        type: 'warn',
+        message: 'Trying to start a session when one is already opened',
+      };
+      window.__GAME_REPORT__.push(warn);
       console.warn('Cannot start a new session before closing the current one. Session reset');
     }
 
@@ -46,11 +51,16 @@ export function startSession() {
       dispatch({ type: 'ADD_TO_AFTER_INIT', session_start_after_init: true });
       // Not initialized, not even called init
     } else if (!getState().generic.initialized && !getState().generic.initPending) {
-        /**
-         * TODO:
-         * Init not event called before startSession
-         * report an error in debug env
-         */
+    /**
+     * TODO:
+     * Init not event called before startSession
+     * report an error in debug env
+     */
+      const error = {
+        type: 'error',
+        message: 'start session before init!',
+      };
+      window.__GAME_REPORT__.push(error);
       console.log('You should call init before startSession!');
     } else if (getState().user.canPlay || getState().user.canDownload) {
       dispatch(hideMenu());
@@ -80,11 +90,16 @@ export function endSession({ score = 0, level = 1 }) {
   return (dispatch, getState) => {
         // only if already initialized
     if (!getState().generic.initialized) {
-          /**
-           * TODO:
-           * endSession before init
-           * report an error in debug env
-           */
+      /**
+       * TODO:
+       * endSession before init
+       * report an error in debug env
+       */
+      const error = {
+        type: 'error',
+        message: 'endSession before init!',
+      };
+      window.__GAME_REPORT__.push(error);
       console.log('Cannot end a session before initialized');
       return;
     }
@@ -137,11 +152,16 @@ export function endSession({ score = 0, level = 1 }) {
       });
       return gameOverPromise;
     }
-    /**
-     * TODO:
-     * endSession before startSession
-     * report an error in debug env
-     */
-    console.log('No session started!');
+      /**
+       * TODO:
+       * endSession before startSession
+       * report an error in debug env
+       */
+      const error = {
+        type: 'error',
+        message: 'endSession before startSession!',
+      };
+      window.__GAME_REPORT__.push(error);
+      console.log('No session started!');
   };
 }
