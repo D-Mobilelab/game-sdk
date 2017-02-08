@@ -11,17 +11,17 @@ require('jasmine-ajax');
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('User', () =>  {
+describe('User', function() {
 
-  beforeEach(() => {
+  beforeEach(function() {
     jasmine.Ajax.install();
   });
 
-  afterEach(() => {
+  afterEach(function() {
     jasmine.Ajax.uninstall();
   });
 
-  it('should get the favourites when 200', (done) =>  {
+  it('should get the favourites when 200', function (done) {
     const poggioId = '903833c2c35a11e589cb005056b60712';
     const url = `${USER_GET_LIKE}?user_id=${poggioId}&size=51`;
 
@@ -56,7 +56,7 @@ describe('User', () =>  {
       });
   });
 
-  it('should get the favourites when 404', (done) =>  {
+  it('should get the favourites when 404', function (done) {
     const poggioId = '903833c2c35a11e589cb005056b60712';
     const url = `${USER_GET_LIKE}?user_id=${poggioId}&size=51`;
 
