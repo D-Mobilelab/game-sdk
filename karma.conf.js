@@ -4,7 +4,13 @@ var webpack = require('webpack');
 
 module.exports = function (config) {
   config.set({
-
+    coverageReporter: {
+      reporters: [
+        { type: 'html', subdir: 'html' },
+        { type: 'lcovonly', subdir: '.' },
+        { type: 'text' },
+      ],
+    },
     // Add any browsers here
     browsers: ['PhantomJS'],
     frameworks: ['jasmine'],
@@ -19,10 +25,35 @@ module.exports = function (config) {
     },
 
     webpack: {
+      cache: true,
       devtool: 'inline-sourcemap',
       module: {
+        preLoaders: [
+          {
+            test: /-test\.js$/,
+            include: /src/,
+            exclude: /(bower_components|node_modules)/,
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: true,
+            },
+          },
+          {
+            test: /\.js?$/,
+            include: /src/,
+            exclude: /(node_modules|bower_components|__tests__)/,
+            loader: 'babel-istanbul',
+            query: {
+              cacheDirectory: true,
+            },
+          },
+        ],
         loaders: [
-          { test: /\.js$/, exclude: /(bower_components|node_modules)/, loader: 'babel-loader' },
+          {
+            test: /\.js$/,
+            exclude: /(bower_components|node_modules)/,
+            loader: 'babel-loader',
+          },
         ],
       },
       plugins: [
@@ -33,8 +64,7 @@ module.exports = function (config) {
       // log console output in our test console
       captureConsole: true,
     },
-
-    reporters: ['mocha'],
+    reporters: ['mocha', 'coverage'],
     singleRun: true, // exit after tests have completed
 
     webpackMiddleware: {
