@@ -12,6 +12,8 @@
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "build:hybrid": "webpack --config webpack.config.hybrid.js",
     "build": "npm run build:prod && npm run build:preprod",
+    "preversion":"npm run test",
+    "version": "sh .getrevision.sh && npm run build && git add -A src/ dist/",
     "upload": "scp -r dist/* super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/dist/",
     "upload:preprod": "scp -r preprod/* super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/dist/"
   },

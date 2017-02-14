@@ -8,7 +8,7 @@ var optimizeOccurence = new webpack.optimize.OccurenceOrderPlugin();
 var env_Plugin = new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('development') } });
 
 devConfiguration.devServer = {
-  contentBase: 'dist/',
+  contentBase: 'sample/',
   host: 'local.appsworld.gamifive-app.com', // 0.0.0.0 to test on device. then add <ip>:8080/webpack-dev-server/
   proxy: {
     '/v01/**': {

@@ -6,7 +6,7 @@ var ROOT_DIRECTORY = 'http://d2.motime.com/js/wl/webstore_html5game/gfsdk/3.x.x/
 var prodConfiguration = Object.create(baseConfiguration);
 prodConfiguration.output.filename = 'gfsdk.js';
 prodConfiguration.output.publicPath = ROOT_DIRECTORY;
-prodConfiguration.output.path = path.resolve(__dirname, 'preprod');
+prodConfiguration.output.path = path.resolve(__dirname, 'dist');
 prodConfiguration.devtool = 'source-map';
 prodConfiguration.plugins = [
   new webpack.optimize.OccurenceOrderPlugin(),
