@@ -25,7 +25,9 @@ export class Gameover extends React.Component{
     }
     
     isGameFavourite(){
-        return this.props.user.favourites.some((favourite) => favourite.content_id === this.props.game_info.content_id);
+        return this.props.user.favourites.some((favourite) => {
+            return (favourite.content_id === this.props.game_info.content_id) || (favourite.id === this.props.game_info.id);
+        });
     }
 
     handleFavourites(evt){
