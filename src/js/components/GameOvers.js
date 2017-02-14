@@ -78,7 +78,7 @@ export class GameasyGameover extends Gameover {
                     
                     <div className={genericStyle.col + ' ' + genericStyle._2_3} style={{position:'relative', paddingRight:'0'}}>
                         <Image srcSet={imgSrcSet} />
-                        <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={()=>'asd'} center='true' style={{width:'50%'}} />
+                        <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
                     </div>
                     
                     <div className={gameasyStyle.scoreContainer}>

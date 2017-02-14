@@ -61,6 +61,7 @@ export class MaterialButton extends React.Component {
             <button
                 ref='button'
                 onTouchStart={this.handleTouchStart}
+                onTouchEnd={this.handleTouchEnd}
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
                 className={classNames} 
