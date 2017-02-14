@@ -11,7 +11,7 @@ export function init() {
     const currentState = getState();
 
     let newtonSecret = currentState.vhost.NEWTON_SECRETID;
-    if (!isProduction() && !isPreProd()) {
+    if (process.env.NODE_ENV === 'development') {
       newtonSecret = NEWTON_DEBUG_SECRET;
     }
 
