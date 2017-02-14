@@ -1,4 +1,5 @@
 import { Actions } from './js/actions/index';
+import version from './version';
 
 const privates = new WeakMap();
 export class SDK {
@@ -98,5 +99,9 @@ export class SDK {
   endSession(scoreAndLevel) {
     const { store } = privates.get(this);
     store.dispatch(Actions.endSession(scoreAndLevel));
+  }
+
+  getVersion() {
+    return version;
   }
 }
