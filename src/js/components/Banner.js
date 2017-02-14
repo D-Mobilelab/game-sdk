@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from './Button';
+import { MaterialButton } from './MaterialButton';
 import genericStyle from '../../css/generic.css';
 import bannerStyle from '../../css/banner.css';
 
@@ -81,7 +81,7 @@ export class Banner extends React.Component {
                             </div>
                         <div className={genericStyle.col + ' ' + genericStyle._3_12}></div>
                         <div className={genericStyle.col + ' ' + genericStyle._6_12} style={{padding:'0',marginTop:'25px'}}>
-                            <Button text={WEBAPP_BANNER_BUTTON} style={{fontSize: '15px'}} onClick={this.handleGetAppButton}/>
+                            <MaterialButton text={WEBAPP_BANNER_BUTTON} style={{fontSize: '15px', width:'100%'}} onClick={this.handleGetAppButton}/>
                         </div>
                         <div className={genericStyle.col + ' ' + genericStyle._3_12}></div>
                     </div>                    

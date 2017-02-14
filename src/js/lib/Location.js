@@ -8,9 +8,13 @@ const isPreprod = () => process.env.NODE_ENV === 'preprod';
 if (!isProduction() && !isPreprod()) {
   const windowConf = require('./windowConf');
 
-  const gameId = localStorage.getItem('gfsdk-debug-game_id');
-  const host = localStorage.getItem('gfsdk-debug-host');
-  theWindow.location = windowConf(host, gameId);
+  const GAME_ID = localStorage.getItem('gfsdk-debug-game_id');
+  const HOST = localStorage.getItem('gfsdk-debug-host');
+  const params = {};
+
+  if (HOST) { params.HOST = HOST; }
+  if (GAME_ID) { params.GAME_ID = GAME_ID; }
+  theWindow.location = windowConf(params);
 } else {
   theWindow = window;
 }
@@ -75,4 +79,5 @@ class Location {
 }
 
 const LocationInstance = new Location();
+window.Location = LocationInstance;
 export default LocationInstance;

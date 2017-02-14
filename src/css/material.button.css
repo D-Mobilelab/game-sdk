@@ -1,0 +1,43 @@
+@value colors: './colors.css';
+@value foreground_white, purple_gameasy from colors;
+
+.btn {
+  position: relative;
+  background: purple_gameasy;
+  color: foreground_white;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 38px;
+  outline: none;
+  font-family: 'montserratultra_light';
+  border: 0;
+  margin: 0;
+  overflow: hidden;
+  user-select: none;
+  border-radius: 20px;
+  width: 100px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.centerBtn {
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left: -25%;
+}
+
+.btn.active .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255,255,255, 0.4);
+  z-index: 1;
+  animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}

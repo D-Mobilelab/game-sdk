@@ -29,13 +29,45 @@ export class Menu extends React.Component{
         this.onTouchMove = this.onTouchMove.bind(this);
     }
 
+    addEventsListener(){
+      if (isTouch()) {
+        this.refs.menu.addEventListener("touchstart", this.onTouchStart, false);
+        this.refs.menu.addEventListener("touchmove", this.onTouchMove, false);
+        this.refs.menu.addEventListener("touchend", this.onTouchEnd, false);
+      } else {
+        this.refs.menu.addEventListener("mousedown", this.onMouseDown, false);
+        this.refs.menu.addEventListener("mousemove", this.onMouseMove, false);
+        this.refs.menu.addEventListener("mouseup", this.onMouseUp, false);
+      }
+    }
+    
+    removeEventsListener(){
+      if (isTouch()) {
+        this.refs.menu.removeEventListener("touchstart", this.onTouchStart, false);
+        this.refs.menu.removeEventListener("touchmove", this.onTouchMove, false);
+        this.refs.menu.removeEventListener("touchend", this.onTouchEnd, false);
+      } else {
+        this.refs.menu.removeEventListener("mousedown", this.onMouseDown, false);
+        this.refs.menu.removeEventListener("mousemove", this.onMouseMove, false);
+        this.refs.menu.removeEventListener("mouseup", this.onMouseUp, false);
+      }
+    }
+
+    componentDidMount() {
+      this.addEventsListener();
+    }
+
+    componentWillUnmount() {
+      this.removeEventsListener();
+    }
+
     onPointerStart(event){
         let position = {x : event.pageX, y: event.pageY};
         this.props.actions.setDownPosition({active: true, position });
     }
 
     onPointerEnd(event){
-        if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y && event.pageY){
+        if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y === event.pageY){
             //it's a click/tap
             // window.alert("it's a T(r)ap!");
             // open the menu?
@@ -71,40 +103,29 @@ export class Menu extends React.Component{
 
     onTouchMove(evt){
         evt.preventDefault();
-        let touch= evt.changedTouches[0]; // get one finger
+        let touch = evt.changedTouches[0]; // get one finger
         this.onPointerMove(touch);
     }
     
     onMouseDown(evt){
-        if(isTouch()){ return; }
-        this.onPointerStart(evt);
+      this.onPointerStart(evt);
     }
 
     onMouseUp(evt){
-        if(isTouch()){ return; }
-        this.onPointerEnd(evt);
+      this.onPointerEnd(evt);
     }
 
     onMouseMove(evt){
-        evt.preventDefault();
-        this.onPointerMove(evt);
+      this.onPointerMove(evt);
     }
 
     render(){
         let menu = this.props.white_label === 'gamifive' ? menuStyles.menu_g5 : menuStyles.menu_gameasy;
         let classNames = [menu];
         classNames.push(this.props.show ? menuStyles.show : menuStyles.hide);
-        classNames.push(this.props.active ? menuStyles.active : '');
-        
+        classNames.push(this.props.active ? menuStyles.active : '');        
         return(
-            <div className={classNames.join(' ')} style={this.props.style}
-               onMouseUp={this.onMouseUp}
-               onMouseDown={this.onMouseDown}
-               onMouseMove={this.onMouseMove}
-               onTouchStart={this.onTouchStart} 
-               onTouchEnd={this.onTouchEnd}
-               onTouchMove={this.onTouchMove}>
-            </div>
+            <div ref='menu' className={classNames.join(' ')} style={this.props.style}></div>
         );
     }
 }
