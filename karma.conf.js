@@ -57,14 +57,14 @@ module.exports = function (config) {
         ],
       },
       plugins: [
-        new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('test') } })
+        new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('test') } }),
       ],
     },
     client: {
       // log console output in our test console
       captureConsole: true,
     },
-    reporters: ['mocha', 'coverage'],
+    reporters: ['spec', 'coverage'],
     singleRun: true, // exit after tests have completed
 
     webpackMiddleware: {
