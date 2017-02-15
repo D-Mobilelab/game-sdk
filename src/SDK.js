@@ -82,6 +82,8 @@ export class SDK {
    */
   loadUserData(onLoadUserData) {
     // retro compatibility
+    const { store } = privates.get(this);
+    store.dispatch(Actions.loadUserData(onLoadUserData));
     if (window.GamifiveInfo && window.GamifiveInfo.user) {
       console.info('GamifiveSDK: Load userInfo from in page data');
       const userInfoCloned = JSON.parse(JSON.stringify(window.GamifiveInfo.user));
@@ -99,8 +101,6 @@ export class SDK {
       }
       return userInfoCloned.gameInfo.info;
     }
-    const { store } = privates.get(this);
-    return store.dispatch(Actions.loadUserData(onLoadUserData));
   }
 
   /**
