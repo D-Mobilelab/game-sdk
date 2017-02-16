@@ -1,16 +1,14 @@
 function reportError(err, state, action = '') {
-  if (!Newton) {
-    const errorObject = Newton.SimpleObject.fromJSONObject({ // send to crash reporting tool
-      extra: {
-        state, // dump application state
-        action,
-        err: JSON.stringify(err),
-      }
+  if (window.Newton) {
+    const errorObject = Newton.SimpleObject.fromJSONObject({
+      action,
+      url: window.document.location.href,
+      err: JSON.stringify({ ...err })
     });
     let NewtonInstance = Newton.getSharedInstance();
-    NewtonInstance.sendEvent('SDK_ERROR', errorObject);
+    NewtonInstance.sendEvent('GENERIC_ERROR', errorObject);
   }
-  console.error('Caught an exception!', err, store.getState());
+  console.error('Caught an exception!', err, state);
 }
 
 window.onerror = function(message, source, lineno, colno, error) {
