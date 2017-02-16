@@ -17,11 +17,11 @@
     "build:hybrid": "webpack --config webpack.config.hybrid.js",
     "build": "npm run build:prod && npm run build:preprod",
     "preversion": "npm run test",
-    "version": "sh .getrevision.sh && npm run build && git add -A src/ dist/",
+    "version": "sh .getrevision.sh && npm run build && git add -fA src/ dist/",
     "docs": "./node_modules/documentation/bin/documentation.js build src/SDK.js -f html --shallow -o docs/$npm_package_version",
     "append:readme": "./node_modules/documentation/bin/documentation.js readme src/SDK.js --section=API --shallow",
     "upload114": "scp -r dist super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/",
-    "upload129": "scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r dist pasqualemangialavori@super@192.168.124.129@10.255.246.25:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/"    
+    "upload129": "scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r dist pasqualemangialavori@super@192.168.124.129@10.255.246.25:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/"
   },
   "author": "eatsjobs",
   "license": "ISC",
