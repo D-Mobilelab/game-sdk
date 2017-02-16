@@ -48,7 +48,6 @@ function onDomLoaded(event) {
     );
 }
 
-window.__GAME_REPORT__ = [];
 window.document.addEventListener("DOMContentLoaded", onDomLoaded);
 
 let aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];

@@ -2,27 +2,97 @@
 <p>This is the how-to for game developers for integrating GamifiveSDK into their games.</p>
 
 <b>Note:</b> the SDK was previously called GamefiveSDK, now it has been aliased as GamifiveSDK so both names can be used.
+All the aliases:'GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'
 
-<h1>Instructions</h1>
+## Develop - Debug Environment
 
-<h2>1) Including GamifiveSDK</h2>
+The debug environment is a simple static server that serve the 'sample' folder.
+To run the environment you need to have installed: 
+1) git 2.x, (or you can download directly from github)
+2) node v5.x, npm 3.x or superior
 
-### Debug (use it while developing or to test the implementation on your own)
-```html
-<script src="//static.newton.pm/js/v2.2.3/newton.min.js"></script> 
-<script src="http://s.motime.com/js/wl/webstore_html5game/gfsdk/2.x.x/debug/gfsdk.js"></script>
-```
-(See https://github.com/BuongiornoMIP/GamifiveSDK/wiki/Debug-mode for further details;)
+If you already have this on your machine go ahead. Otherwise go to section [Install NodeJS and NPM in your system](#install-nodejs-and-npm-in-your-system)
 
-### Prod (before sending us the package remove newton and switch to the production build)
-Include the minified sdk within a SCRIPT tag with id <i>'gfsdk'</i>, inside HEAD tag of your HTML code game before sending us the package:
+### Clone the repo.
 
-```html
-<script id="gfsdk" src="http://s.motime.com/js/wl/webstore_html5game/gfsdk/dist/gfsdk.min.js"></script>
+```javascript
+git clone git@github.com:D-Mobilelab/game-sdk.git
 ```
 
-<h2>2) Initializing the SDK</h2>
-    
+### Install npm dependencies
+
+```javascript
+cd game-sdk && npm install
+```
+
+### Debug (testing on local)
+
+Copy your game in game-sdk/sample/game-folder/
+and in your index.html paste this lines
+
+```javascript
+    <!-- CSS Needed if you want to see the gameover. not mandatory. Remember to remove it before sending us the package -->
+    <link rel="stylesheet" href="http://s.motime.com/tbr/less.css?file=app-gameover.less&country=ww-appsworld&t=20170111153950" />
+    <script src="http://static.newton.pm/js/v2.2.3/newton.min.js"></script>
+    <!-- Don't worry will be there.-->
+    <script type="text/javascript" src="../gfsdk.js"></script> 
+```
+
+### Run the server
+
+```javascript
+npm run dev
+```
+
+and go to <http://local.appsworld.gamifive-app.com:8080/webpack-dev-server/setup.html>
+with your browser
+
+### Set some variables
+
+Here <http://local.appsworld.gamifive-app.com:8080/webpack-dev-server/setup.html>
+you should see a page where you can set:
+
+1.  game_id: 
+    if you already have your game in our server you can put it here otherwise leave the default
+2.  user_id: 
+    if you already have a user_id our server you can put it here otherwise leave the default
+3.  user_type: premium | guest (unlogged) | free (facebook)
+
+Click on Set button and go to <http://local.appsworld.gamifive-app.com:8080/webpack-dev-server/game-folder/index.html>
+
+# Install NodeJS and NPM in your system
+
+-   Mac Users can follow this guide: <http://blog.teamtreehouse.com/install-node-js-npm-mac>
+-   Windows Users can follow this one: <http://blog.teamtreehouse.com/install-node-js-npm-windows>
+    (Some other of billions guides on the web anyway will be ok)
+
+### Edit your hosts file
+
+Add this line
+
+```javascript
+   127.0.0.1 local.appsworld.gamifive-app.com
+```
+
+into your hosts file
+
+```javascript
+/private/etc/hosts file (Mac)
+C:\Windows\System32\drivers\etc\hosts (Windows)
+```
+
+On Mac you can simply append this line at the end of the file in this way:
+
+```javascript
+sudo -i # Enter the password
+sudo echo '127.0.0.1 local.appsworld.gamifive-app.com' >> /private/etc/hosts;
+exit
+```
+
+(Guide to edit hosts file on any platform <http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/>)
+
+## Initializing the SDK
+
 The SDK can be initialized calling its <i>init</i> method with a <i>param</i> object as a configuration parameter. Here's a brief description of the accepted configuration variables:
 
 <ul>
@@ -33,7 +103,8 @@ The SDK can be initialized calling its <i>init</i> method with a <i>param</i> ob
         <i><b>moreGamesButtonStyle</b></i> (object): defines the css style of the "more games" button. If present, the button will be displayed (you can pass an empty object for using the default style). If not present, the button won't be displayed.
     </li>
 </ul>
-<h3> Example </h3>
+
+### Example
 
 ```javascript
 GamifiveSDK.init({ 
@@ -41,23 +112,24 @@ GamifiveSDK.init({
 	moreGamesButtonStyle: { } // shows more games button with default style
 });
 ```
-The <i>init</i> method will store the configuration parameters into the module and perform the operations needed for properly initializing the SDK (if you are not using the lite version). 
+
+The <i>GamifiveSDK.init</i> method will store the configuration parameters into the module and perform the operations needed for properly initializing the SDK (if you are not using the lite version). 
 
 Please note that the <i>init</i> method will not create a new instance of <i>GamifiveSDK</i>, but it will just reset its configuration; in fact you can have only one instance of <i>GamifiveSDK</i> because it's implemented as a singleton. 
 
- 
-<h2>3) Starting a session</h2>
+## 2) Starting a session
+
 A session is a continued user activity like a game match. 
 Ideally a session begins everytime the player starts playing a new game and his score is set to zero.
 
-<h3> Lite Mode</h3>
+### Lite Mode
 
 For starting a session  in lite mode you just have to call <i>GamifiveSDK.startSession()</i>.
 
-
-<h3> Normal (non-lite) Mode</h3>
+### Normal (non-lite) Mode
 
 For starting a session you have to:
+
 <ol>
 	<li>move the start of the game into <i>GamifiveSDK.onStartSession()</i> method</li>
 	<li>call <i>GamifiveSDK.startSession()</i> method to start the game</li>
@@ -66,16 +138,19 @@ For starting a session you have to:
 Here's an example:
 
 <b>Before, without GamifiveSDK</b>
+
 ```javascript
 // your method to start a game match
 function startMatch(){ /* ... */ }
 ```
+
 ```html
 <!-- button to start a game match -->
 <button onclick="startMatch()">START MATCH</button>
 ```
 
 <b>After, with GamifiveSDK</b>
+
 ```javascript
 // your method to start a game match 
 // (don't change it)
@@ -100,11 +175,12 @@ function playGame(){
 Here's a simple schema:
 <img src="http://s2.motime.com/js/wl/webstore_html5game/gfsdk/manual/start_flow.png" width="100%" />
 
-<h2>4) Ending a session</h2>
+## 4) Ending a session
+
 Ideally a session ends when the player cannot go on with his match and must play again from the beginning. 
 Usually - but not necessarily - endSession occurs in the 'Game Over' state. 
 
-<h3>Lite Mode</h3>
+### Lite Mode
 
 To end a session in lite mode, you have to:
 
@@ -125,14 +201,12 @@ To end a session in lite mode, you have to:
 Here's a simple schema of the flow you have to follow for saving and retrieving the level reached by the player.
 <img src="http://s2.motime.com/js/wl/webstore_html5game/gfsdk/manual/levelsaving.png" width="100%" />
 
-
-		 
 <h3>Normal (non-lite) Mode</h3>
 
 To end a session in non-lite mode, you have to:
 
 <ol>
-	<li>call <i>GamifiveSDK.endSession()</i> method.
+	<li>call <i>GamifiveSDK.endSession</i> method.
 		You should call it passing an object as parameter - this object can contain:
 	   <ul> 
     	   <li> an attribute <b>score</b>, which is the score realized by the player during the game session. This value must be a number (not string). 
@@ -145,44 +219,44 @@ To end a session in non-lite mode, you have to:
 	</li>
 </ol>
 
-
 ```javascript
 // call this method when a user ends a game session
 var scoreGame = 7888;
 GamifiveSDK.endSession({
-	score: scoreGame
+    score: scoreGame
 });
 ```
 
-<h1>Other methods</h1>
+# Other methods
 
-<h2>saveUserData</h2>
+## saveUserData
+
 Saves an Object containing the player's progress.
 
 ```javascript
 // the structure of this object is just an example
-var playerProgress = { 
-    level1: { 
-        unlocked: true, 
+var playerProgress = {
+    level1: {
+        unlocked: true,
         stars: 3
-    }, 
+    },
     level2: {
-        unlocked: false, 
+        unlocked: false,
         stars: 0
-    } 
+    }
 };
-  
+
 // saves the object containing the player's progress
 GamifiveSDK.saveUserData(playerProgress); 
 ```
 
 GamifiveSDK.saveUserData internally uses JSON.stringify and actually saves the object as a string, but this is an internal procedure and **you MUST pass an object**, not a JSON string, as a parameter to GamifiveSDK.saveUserData.
 
+## loadUserData
 
-<h2>loadUserData</h2>  
 Retrieves the JSON string containing the player's progress and returns it as a JavaScript Object.
 This method make a call to our server and **must be called AFTER GamifiveSDK.init();**
-  
+
 ```javascript
 // returns an object containing the player's progress
 
@@ -197,45 +271,46 @@ GamifiveSDK.loadUserData(function(userProgressSaved){
 });
 ```
 
-<h2>clearUserData</h2>
+## clearUserData
+
 Deletes the player's progress.
 
-  
 ```javascript
 // the previously saved progress is deleted
-GamifiveSDK.clearUserData(); 
+GamifiveSDK.clearUserData();
 ```
 
-<h2>showMoreGamesButton</h2>
+## showMoreGamesButton
 
 Shows a built-in more games button. If no parameters are passed, the button is created with default style, otherwise the object passed as parameter will be used as a custom style.
 
 ```javascript
 // display the button with default style:
-GamifiveSDK.showMoreGamesButton(); 
+GamifiveSDK.showMoreGamesButton();
 
 // display the button with custom style:
-GamifiveSDK.showMoreGamesButton({left: '2px', height: '44px'}); 
+GamifiveSDK.showMoreGamesButton({left: '2px', height: '44px'});
 ```
 
-<h2>hideMoreGamesButton</h2>
+## hideMoreGamesButton
 
 Hides the more games button (if it was previously shown).
 
 ```javascript
-GamifiveSDK.hideMoreGamesButton(); 
+GamifiveSDK.hideMoreGamesButton();
 ```
-<h2>goToHome</h2>
-  
+
+\## goToHome
+
 Redirects to Gamifive's Homepage. Call this function when your more games button is clicked.
 
 ```javascript
 // perform a redirect to the homepage
 
-GamifiveSDK.goToHome(); 
+GamifiveSDK.goToHome();
 ```
 
-<h2>getAvatar</h2>
+\## getAvatar
 You can get the user's avatar by calling <i>GamifiveSDK.getAvatar()</i>.
 
 ```javascript
@@ -243,13 +318,14 @@ var avatar = GamifiveSDK.getAvatar();
 ```
 
 It returns an object containing two fields:
+
 <ul>
 	<li><b>src</b>: base64 of avatar</li>
 	<li><b>name</b>: name of avatar file</li>
 </ul>
 We recommend using a <i>src</i> field for showing the avatar in the game.
 
-<h2>getNickname</h2>
+\## getNickname
 You can get the user's nickname by calling <i>GamifiveSDK.getNickname()</i>.
 
 ```javascript
@@ -258,9 +334,7 @@ var avatar = GamifiveSDK.getNickname();
 
 It returns a string equal to the nickname of the user.
 
-
 <h1>Migrating apps featuring older versions of the SDK to v0.4</h1>
-
 
 <h2>Migrating app using v0.3 to v0.4 of the SDK</h2>
 
@@ -276,23 +350,21 @@ Previously, the <i>init</i> method was called implicitly, now it must be called 
 
 Moreover, since the functionalities implemented in v0.1 correspond to the "lite" version of v0.4, you must declare <i>lite: true</i> in the configuration parameters passed to the <i>init</i> method. 
 
-<h3> Example </h3>
+### Example
 
 ```javascript
-GamifiveSDK.init({ 
-	lite: true
+GamifiveSDK.init({
+    lite: true
 });
 ```
 
-<h2>Lite Mode</h2>
+## Lite Mode
 
 We remind you that in order to use GamifiveSDK in lite mode, you have to call <i>Gamifive.init</i> with <i>lite: true</i> in the configuration argument.
 
+### GamifiveSDK.init
 
-<h3>GamifiveSDK.init</h3>
-
-
-<h3>GamifiveSDK.onStartSession</h3>
+### GamifiveSDK.onStartSession
 
 Register a callback function any time a session start
 
@@ -300,7 +372,7 @@ GamifiveSDK.onStartSession(function yourFunction(){
     //do things everytime a session start
 });
 
-<h3>GamifiveSDK.startSession</h3>
+### GamifiveSDK.startSession
 
 If <i>GamifiveSDK.init</i> function was called before calling <i>GamifiveSDK.endSession</i>, then the following debug message is displayed: 
 
@@ -335,30 +407,32 @@ If the <i>score</i> was passed in the proper way, then the following debug messa
 ```
 
 Otherwise, the following error message is displayed:
+
 ```javascript
     GamifiveSDK,ERROR,missing score value
 ```
 
+## Normal (non-lite) mode
 
-<h2>Normal (non-lite) mode</h2>
-
-<h3>GamifiveSDK.init</h3>
+\### GamifiveSDK.init
 
 No debug messages are displayed when calling <i>GamifiveSDK.init</i>.
 
-<h3>GamifiveSDK.onStartSession</h3>
+### GamifiveSDK.onStartSession
 
 If the variable passed to <i>onStartSession</i> as an argument is a function, then the following debug message is displayed:
+
 ```javascript
      ["GamifiveSDK", "OK", "callback function has been set correctly"]
 ```
 
 If such argument is not passed or it is not a function, then the following error message is displayed:
+
 ```javascript
     GamifiveSDK,ERROR,missing or illegal value for callback function
 ```
 
-<h3>GamifiveSDK.startSession</h3>
+\### GamifiveSDK.startSession
 
 If <i>init</i> and <i>onStartSession</i> were called before calling <i>GamifiveSDK.startSession</i>, then the SDK is now correctly configured to start a session and following debug messages are displayed: 
 
@@ -374,12 +448,14 @@ if <i>init</i> was not called, the following error message is displayed:
 ```javascript
     GamifiveSDK,ERROR,init has not been called
 ```
+
 if <i>onStartSession</i> was not called, the following error message is displayed:
+
 ```javascript
     GamifiveSDK,ERROR,onStartSession has not been called
 ```
 
-<h3>GamifiveSDK.endSession</h3>
+### GamifiveSDK.endSession
 
 If the <i>startSession</i> function has been called before calling <i>GamifiveSDK.endSession</i>, then the following debug message is displayed: 
 
@@ -400,13 +476,14 @@ If the <i>score</i> was passed in the proper way, then the following debug messa
 ```
 
 Otherwise, the following error message is displayed:
+
 ```javascript
     GamifiveSDK,ERROR,missing score value
 ```
 
 ## Full implementation example
-```javascript
 
+```javascript
 GamifiveSDK.onStartSession(function(){
     // do somenthing everytime a session starts
 });
@@ -454,74 +531,133 @@ GamifiveSDK.saveUserData({
 });
 
 GamifiveSDK.endSession({ score: 300, level: 1 });
-
-```
-# Set the debug environment
-
-1. Include the debug SDK version in your index.html *do not forget to change debug with dist in the script tag before send the package*
-
-### Debug (while testing on local)
-```javascript
-    <script src="http://static.newton.pm/js/v2.2.3/newton.min.js"></script> 
-    <script src="http://s.motime.com/js/wl/webstore_html5game/gfsdk/2.x.x/debug/gfsdk.js"></script>
 ```
 
-### Prod (Before sending us the package) without Newton script
-```javascript 
-    <script src="http://s.motime.com/js/wl/webstore_html5game/gfsdk/dist/gfsdk.min.js"></script>
-```
+### API
 
-2. Serve statically the game folder with appsworld.gamifive-app.com as origin
+<!-- Generated by documentation.js. Update this documentation by updating the source code. -->
 
-For the second point you need:
+#### onLoadUserDataCb
 
-### 2.1 Install NodeJS and NPM in your system.
+Called when the data, saved with saveUserData,
+has been loaded from server
 
-- Mac Users can follow this guide: http://blog.teamtreehouse.com/install-node-js-npm-mac
-- Windows Users can follow this one: http://blog.teamtreehouse.com/install-node-js-npm-windows
-(Some other of billions guides on the web anyway will be ok)
+Type: [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)
 
-### 2.2  Install http-server npm package globally
+**Parameters**
 
-```javascript
-    npm install http-server -g
-```
+-   `userProgress` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) | null)** 
 
-### 2.3 Edit your hosts file
+#### init
 
-Add this line
-```javascript
-   127.0.0.1 local.appsworld.gamifive-app.com
-```
+Initialize the sdk
 
-into your hosts file
+**Parameters**
 
- ```javascript
-/private/etc/hosts file (Mac)
-C:\Windows\System32\drivers\etc\hosts (Windows)
-```  
+-   `initConfig` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `initConfig.lite` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if should show the gameover
+    -   `initConfig.moreGamesButtonStyle` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a custom styles to pass to moregames button
 
+#### getConfig
 
-On Mac you can simply append this line at the end of the file in this way:
- ```javascript
-sudo -i # Enter the password
-sudo echo '127.0.0.1 local.appsworld.gamifive-app.com' >> /private/etc/hosts;
-exit
-```
+Returns the whole state!
 
-(Guide to edit hosts file on any platform http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/)
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-### 2.4 Serve the gamepath
+#### getLevel
 
-Serve the gamepath in this way from the cmd line
-```javascript
-   http-server <myAwesomeGameFolder> -p 5050 -a local.appsworld.gamifive-app.com
-```
+Returns the number of the last level reached by user
 
-Then open the browser to
-```javascript
-    http://local.appsworld.gamifive-app.com:5050/index.html
-``` 
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-That's it! Now you can test your implementation of the SDK. 
-Open a issue on github if you encounter any issues
+#### showMoreGamesButton
+
+Shows the menu|moregames button.
+call this function when in pause
+
+#### hideMoreGamesButton
+
+Hides the menu | moregames button
+call this function when on pause exit
+
+#### loadUserData
+
+Loads the arbitrary data from our server.
+Returns somenthing only for retrocompatibility.
+Since version >=2 must be called with the callback signature
+
+**Parameters**
+
+-   `onLoadUserDataCb` **SDK~onLoadUserData** The callback that handles the response.
+-   `onLoadUserData`  
+
+Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined))** 
+
+#### saveUserData
+
+Save an arbitrary object on server and on local
+
+**Parameters**
+
+-   `userDataInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+#### clearUserData
+
+Clear the user data saved on local and on server.
+Use this function only under explicit user input
+
+#### goToHome
+
+Redirect the browser to the game portal
+
+#### getAvatar
+
+Get the user avatar if any.
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** avatarObj
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** avatarObj.src - the url of the avatar object
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** avatarObj.nickname - the name of the user
+
+#### getNickname
+
+Get the userNickName if any. otherwise undefined
+
+Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined))** 
+
+#### onStartSession
+
+Register a function that will be called
+on each startSession call
+
+**Parameters**
+
+-   `onStartSessionCallback` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+#### startSession
+
+Starts a session. If the init it's still in pending
+the session will start on init finished
+
+#### endSession
+
+Ends a session and calculate the session time.
+This function can be called without params.
+In this case only the session time is calculated. 
+It can be called also with just the score and in this case the level is implicitly 1
+this is useful for games without levels.
+
+**Parameters**
+
+-   `scoreAndLevel` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?**  (optional, default `{score:0,level:1}`)
+
+#### getVersion
+
+Get the version object
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** version
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** version.version - The commit string in semantic version syntax
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** version.build - The hash of the commit version refers

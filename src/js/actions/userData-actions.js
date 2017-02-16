@@ -1,4 +1,5 @@
 import { Utils } from 'stargatejs';
+import reporter from '../lib/Reporter';
 import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
 import { storage } from '../lib/Storage';
@@ -75,7 +76,8 @@ function setUserDataOnServer(newInfo) {
     }
 
     if (!user.userData._id || user.userData._id === '') {
-      Logger.warn('GamifiveSDK', 'You must call loadUserData first!');
+      // first time
+      // Logger.warn('GamifiveSDK', 'You must call loadUserData first!');
       // return Promise.resolve();
     }
 
@@ -218,31 +220,20 @@ function syncUserData(results) {
 export function saveUserData(newInfo) {
   return (dispatch, getState) => {
     if (getState().generic.initPending) {
-      // cannot save while initialize
+    // cannot save while initialize
     } else if (getState().generic.initialized &&
               !getState().user.isSaving &&
               !getState().user.isFetching) {
       
-      if (typeof newInfo === 'string') {
-        
-        const warn = { type: 'warn', message: '' };
-        let message = 'saveUserData: the data to be saved should be an object! got a string';
-        warn.message = message;
-        console.warn(message);
-
+      if (typeof newInfo === 'string') {        
+        reporter('warn', 'saveUserData: the data to be saved should be an object! got a string');
         try {
           console.warn('GamifiveSDK: try to parse the string');
           newInfo = JSON.parse(newInfo);
         } catch (e) {
-          message = 'saveUserData:could not save the data: not even json parseable';
-          warn.type = 'error';
-          warn.message = message;
-
-          console.error(message, newInfo);
+          reporter('error', 'saveUserData: could not save the data: not even json parseable');
           newInfo = null;
         }
-
-        window.__GAME_REPORT__.push(warn);
         return Promise.resolve();
       }
       /**
