@@ -1,4 +1,7 @@
 node_modules/
+bower_modules/
+docs/
+coverage/
 platforms/
 plugins/
 .vscode/
