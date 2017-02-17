@@ -1,6 +1,7 @@
 import Stargate from 'stargatejs';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
+import { generateReport } from '../lib/Reporter';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -103,8 +104,18 @@ function redirectOnStore() {
   };
 }
 
+function generateReportAction() {
+  const reportCsv = generateReport();
+  return {
+    type: 'GENERATE_REPORT',
+    payload: reportCsv,
+  };
+}
+
+
 export const Actions = {
   init,
+  generateReportAction,
   redirectOnStore,
   ...sessionActions,
   ...userActions,
@@ -114,4 +125,5 @@ export const Actions = {
   ...gameinfoActions,
   ...bannerActions,
   ...sharerActions,
+
 };
