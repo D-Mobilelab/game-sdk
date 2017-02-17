@@ -6280,7 +6280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        game_info = _getState3.game_info;
 	
 	    var isFavourite = user.favourites.some(function (favourite) {
-	      return favourite.content_id === game_info.content_id;
+	      return favourite.id === game_info.id;
 	    });
 	    var contentId = game_info.content_id;
 	    if (isFavourite) {
@@ -22201,7 +22201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this2 = this;
 	
 	            return this.props.user.favourites.some(function (favourite) {
-	                return favourite.content_id === _this2.props.game_info.content_id || favourite.id === _this2.props.game_info.id;
+	                return favourite.id === _this2.props.game_info.id;
 	            });
 	        }
 	    }, {
@@ -23854,7 +23854,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	
-	module.exports = { "version": "2.2.0", "build": "v2.1.1-2-g057715b" };
+	module.exports = { "version": "2.2.1", "build": "v2.2.0-2-gc43f538" };
 
 /***/ },
 /* 370 */
