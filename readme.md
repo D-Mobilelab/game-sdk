@@ -34,7 +34,7 @@ and in your index.html paste this lines
     <!-- CSS Needed if you want to see the gameover. not mandatory. Remember to remove it before sending us the package -->
     <link rel="stylesheet" href="http://s.motime.com/tbr/less.css?file=app-gameover.less&country=ww-appsworld&t=20170111153950" />
     <script src="http://static.newton.pm/js/v2.2.3/newton.min.js"></script>
-    <!-- Don't worry will be there.-->
+    <!-- Don\'t worry will be there.-->
     <script type="text/javascript" src="../gfsdk.js"></script> 
 ```
 
@@ -59,6 +59,16 @@ you should see a page where you can set:
 3.  user_type: premium | guest (unlogged) | free (facebook)
 
 Click on Set button and go to <http://local.appsworld.gamifive-app.com:8080/webpack-dev-server/game-folder/index.html>
+
+# Sending the package
+
+Before sending us the package remember to remove the debug lines and just leaves this
+```javscript
+<!-- CSS Needed if you want to see the gameover. not mandatory. Remember to remove it before sending us the package -->
+<!-- link rel="stylesheet" href="http://s.motime.com/tbr/less.css?file=app-gameover.less&country=ww-appsworld&t=20170111153950" /-->
+<!-- script src="http://static.newton.pm/js/v2.2.3/newton.min.js"></script -->
+<script id="gfsdk" src="http://s.motime.com/js/wl/webstore_html5game/gfsdk/dist/gfsdk.min.js"></script>
+```
 
 # Install NodeJS and NPM in your system
 
