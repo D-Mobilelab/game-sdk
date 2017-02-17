@@ -154,9 +154,7 @@ export function toggleGameLike() {
     const { user } = getState();
     const { game_info } = getState();
 
-    const isFavourite = user.favourites.some((favourite) => {
-      return (favourite.content_id === game_info.content_id);
-    });
+    const isFavourite = user.favourites.some(favourite => (favourite.id === game_info.id));
     const contentId = game_info.content_id;
     if (isFavourite) {
       return dispatch(removeGameLike(contentId));
