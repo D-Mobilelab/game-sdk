@@ -204,6 +204,11 @@ export class SDK {
   getVersion() {
     return version;
   }
+
+  generateReport() {
+    const { store } = privates.get(this);
+    return store.dispatch(Actions.generateReportAction());
+  }
 }
 /**
  * Called when the data, saved with saveUserData,
