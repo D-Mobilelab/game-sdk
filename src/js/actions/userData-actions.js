@@ -1,5 +1,5 @@
 import { Utils } from 'stargatejs';
-import reporter from '../lib/Reporter';
+import Reporter from '../lib/Reporter';
 import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
 import { storage } from '../lib/Storage';
@@ -58,6 +58,7 @@ function getUserDataFromServer() {
           })
           .catch((reason) => {
             dispatch({ type: 'LOAD_USER_DATA_SERVER_ERROR', payload: reason });
+            Reporter.add('error', 'error trying to retrieve user data from server. Are you serving your game from local.appsworld.gamifive-app.com origin?');
             return reason;
           });
   };
@@ -125,10 +126,12 @@ function setUserDataOnServer(newInfo) {
               } else {
                 Logger.warn('GamifiveSDK', 'NEWTON', 'userData FAIL to be set on server', data.response);
                 dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: data.response });
+                Reporter.add('error', 'error trying to save user data on server. newton error.');
               }
             }).catch((reason) => {
               Logger.warn('GamifiveSDK', 'PHP', 'userData FAIL to be set on server', reason);
               dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: reason });
+              Reporter.add('error', 'error trying to save user data on server. php error.');
             });
   };
 }
@@ -145,6 +148,7 @@ function setUserDataOnLocal(newInfo) {
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_END', payload: newUserData });
     }).catch((reason) => {
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_ERROR', payload: reason });
+      Reporter.add('error', 'error trying to save user data on local.');
     });
   };
 }
@@ -166,6 +170,7 @@ function getUserDataFromLocal() {
           })
           .catch((reason) => {
             dispatch({ type: 'LOAD_USER_DATA_LOCAL_ERROR', payload: reason });
+            Reporter.add('error', 'error getting user data from local.');
           });
   };
 }
@@ -226,12 +231,12 @@ export function saveUserData(newInfo) {
               !getState().user.isFetching) {
       
       if (typeof newInfo === 'string') {        
-        reporter('warn', 'saveUserData: the data to be saved should be an object! got a string');
+        Reporter.add('warn', 'saveUserData: the data to be saved should be an object! got a string');
         try {
           console.warn('GamifiveSDK: try to parse the string');
           newInfo = JSON.parse(newInfo);
         } catch (e) {
-          reporter('error', 'saveUserData: could not save the data: not even json parseable');
+          Reporter.add('error', 'saveUserData: could not save the data: not even json parseable');
           newInfo = null;
         }
         return Promise.resolve();
@@ -244,6 +249,7 @@ export function saveUserData(newInfo) {
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_START' });
       if (getUserType(user) === 'guest') {
         const message = 'User type guest cannot save their data';
+        Reporter.add('warn', `${message}. Are you set up user_type: premium on setup.html?`);
         console.warn('GamifiveSDK: User not logged cannot save userData', message);
         dispatch({ type: 'SAVE_USER_DATA_LOCAL_END', payload: { message, info: newInfo, UpdatedAt: new Date().toISOString() } });
         return Promise.resolve();

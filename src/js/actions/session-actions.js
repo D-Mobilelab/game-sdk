@@ -1,4 +1,4 @@
-import reporter from '../lib/Reporter';
+import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import { isAndroid } from '../lib/Platform';
 import Constants from '../lib/Constants';
@@ -19,7 +19,7 @@ function doStartSession() {
        * report an error in debug env
        */
             
-      reporter('warn', 'Trying to start a session when one is already opened');
+      Reporter.add('warn', 'Trying to start a session when one is already opened');
       console.warn('Cannot start a new session before closing the current one. Session reset');
     }
 
@@ -55,7 +55,7 @@ export function startSession() {
      * report an error in debug env
      */
       
-      reporter('error', 'start session before init!');
+      Reporter.add('error', 'start session before init!');
       console.log('You should call init before startSession!');
     } else if (getState().user.canPlay || getState().user.canDownload) {
       dispatch(hideMenu());
@@ -83,7 +83,7 @@ export function setMissingGameInfoPart(gameInfo) {
 
 export function endSession(data = { score: 0, level: 1 }) {
   if (!data.level) {
-    reporter('warn', 'end session called without level. Is Your game without levels?');
+    Reporter.add('warn', 'end session called without level. Is Your game without levels?');
     data.level = 1;
   }
   return (dispatch, getState) => {
@@ -94,7 +94,7 @@ export function endSession(data = { score: 0, level: 1 }) {
        * endSession before init
        * report an error in debug env
        */
-      reporter('error', 'endSession before init!');
+      Reporter.add('error', 'endSession before init!');
       console.log('Cannot end a session before initialized');
       return;
     }
@@ -152,7 +152,7 @@ export function endSession(data = { score: 0, level: 1 }) {
        * endSession before startSession
        * report an error in debug env
        */
-      reporter('error', 'endSession before startSession!');
+      Reporter.add('error', 'endSession before startSession!');
       console.log('No session started!');
   };
 }
