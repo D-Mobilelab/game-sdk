@@ -9,7 +9,6 @@ prodConfiguration.output.publicPath = ROOT_DIRECTORY;
 prodConfiguration.output.path = path.resolve(__dirname, 'dist');
 prodConfiguration.devtool = 'source-map';
 prodConfiguration.plugins = [
-  new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('preprod') }),
   // new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }),
 ];

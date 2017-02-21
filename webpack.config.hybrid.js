@@ -9,7 +9,6 @@ prodConfiguration.output.publicPath = ROOT_DIRECTORY;
 prodConfiguration.output.path = path.resolve(__dirname, 'hybrid');
 prodConfiguration.devtool = 'source-map';
 prodConfiguration.plugins = [
-  new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.DefinePlugin({ 
     'process.env.NODE_ENV': JSON.stringify('production'),
     'process.env.APP_ENV': JSON.stringify('hybrid')
