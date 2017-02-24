@@ -33,8 +33,8 @@ export class Gameover extends React.Component{
         this.props.actions.toggleGameLike();
     }
 
-    handleOnClickRelated(item){
-        console.log("Handle on click related", item);
+    handleOnClickRelated(related){
+        window.location.href = related.url_play;
     }
 
     render(){
