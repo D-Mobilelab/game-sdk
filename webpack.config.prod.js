@@ -8,9 +8,15 @@ prodConfiguration.output.filename = 'gfsdk.min.js';
 prodConfiguration.output.publicPath = ROOT_DIRECTORY;
 prodConfiguration.devtool = 'source-map';
 prodConfiguration.plugins = [
-  new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-  new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }),
+  new webpack.optimize.UglifyJsPlugin({
+    minimize: true,
+    output: {
+      comments: false,
+    },
+    sourceMap: true,
+    compress: { warnings: false, screw_ie8: true },
+  }),
 ];
 
 module.exports = prodConfiguration;

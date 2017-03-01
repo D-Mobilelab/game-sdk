@@ -126,7 +126,7 @@ const GamifiveRelatedItem = (props) => {
     let imgWidth = Math.round(window.innerWidth / 3);
     let imgSrc = props.item.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', imgWidth);
     return (
-    <div className="box-grid">
+    <div className="box-grid" style={{margin: '1px'}}>
         <div className="content-boxgrid">
             <a onClick={props.onClick}>
                 <img src={imgSrc} className="img-responsive" />

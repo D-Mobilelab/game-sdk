@@ -36,11 +36,11 @@ class Reporter {
       if (document.createEvent) {
         let evt = document.createEvent('MouseEvents');
         evt.initEvent('click', true, false);
-        a.dispatchEvent(evt);    
+        a.dispatchEvent(evt);
       } else if (document.createEventObject) {
-          a.fireEvent('onclick') ; 
-      } else if (typeof node.onclick == 'function') {
-          a.onclick(); 
+          a.fireEvent('onclick');
+      } else if (typeof a.onclick == 'function') {
+          a.onclick();
       }
       // window.document.body.appendChild(a);
     }
