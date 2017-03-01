@@ -29,8 +29,58 @@ const vhostKeys = [
   'INSTALL_HYBRID_VISIBLE',
 ];
 
+/*function hashHandler(event, dispatch) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+  const { oldURL, newURL } = event;
+  if (oldURL.indexOf('gameplay') > -1 && newURL.indexOf('index') > -1) {
+    dispatch({ type: 'BACK_CLICKED', payload: event });
+    dispatch(menuActions.goToHome());
+    return false;
+  }
+  return false;
+}
+*/
+
+function historyHandler(event, dispatch) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+  const { state } = event;
+  if (state.location === 'step1') {
+    console.log('back clicked!');
+    dispatch({ type: 'BACK_CLICKED' });
+    return false;
+  } else if (state.location === 'step0') {
+    dispatch({ type: 'BACK_CLICKED' });
+    dispatch(menuActions.goToHome());
+    return false;
+  }
+}
+
+function wrapHandler(fn, dispatch) {
+  return function realHandler(event) {
+    return fn.call(null, event, dispatch);
+  };
+}
+
+/*
+* window.location.hash = '#index';
+* window.location.hash = '#gameplay';
+*/
+
+window.history.replaceState({ location: 'step0' }, document.title, `${window.location.pathname}#0`);
+window.history.pushState({ location: 'step1' }, document.title, `${window.location.pathname}#1`);
+window.history.pushState({ location: 'step2' }, document.title, `${window.location.pathname}#2`);
+/** registering state change */    
+
 function init(initConfig) {
   return (dispatch, getState) => {
+    window.addEventListener('popstate', wrapHandler(historyHandler, dispatch));
+    /** registering hash change */
+    /* window.onhashchange = wrapHandler(hashHandler, dispatch);*/
+    
     dispatch({ type: 'SET_IS_HYBRID', hybrid: Stargate.isHybrid() });
     if (getState().generic.initialized) {
       return Promise.resolve();
