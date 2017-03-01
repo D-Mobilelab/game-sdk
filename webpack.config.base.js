@@ -2,7 +2,9 @@ var path = require('path');
 
 // loader: 'style-loader!css-loader?modules=true&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!postcss-loader',
 var devConfiguration = {
-  entry: ['./src/index.js'],
+  entry: [
+    './src/index.js',
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -16,7 +18,7 @@ var devConfiguration = {
         {
           test: /\.js$/,
           exclude: /(bower_components|node_modules)/,
-          loader: 'babel-loader',
+          loader: ["react-hot-loader", "babel-loader"],
         },
         {
           test: /\.css$/,
