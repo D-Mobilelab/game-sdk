@@ -1,13 +1,9 @@
 import { Utils } from 'stargatejs';
 import localStorage from './LocalStorage';
+import windowConf from './windowConf';
 
 let theWindow = {};
-const isProduction = () => process.env.NODE_ENV === 'production';
-const isPreprod = () => process.env.NODE_ENV === 'preprod';
-
-if (!isProduction() && !isPreprod()) {
-  const windowConf = require('./windowConf');
-
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'preprod') {
   const GAME_ID = localStorage.getItem('gfsdk-debug-game_id');
   const HOST = localStorage.getItem('gfsdk-debug-host');
   const params = {};

@@ -56,4 +56,8 @@ aliases.map((alias) => {
     window[alias] = instance;
 });
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 export default instance

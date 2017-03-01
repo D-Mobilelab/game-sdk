@@ -17,7 +17,7 @@ export function menu(state = {
       case 'SET_UP_POSITION':
         return Object.assign({}, state, { active: action.active, pointerUpPosition: action.position });
       case 'SET_POSITION':
-        const newStyle = { style: { ...state.style, left: `${(action.position.x - 30)}px`, top: `${(action.position.y - 15)}px` } };
+        const newStyle = { style: { ...state.style, left: `${(action.position.x - 30)}px`, top: `${(action.position.y - 30)}px` } };
         return Object.assign({}, state, newStyle);
       default:
         return state;

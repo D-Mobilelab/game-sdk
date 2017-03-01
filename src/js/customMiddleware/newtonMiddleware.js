@@ -107,6 +107,16 @@ export const newtonMiddleware = store => next => (action) => {
         },
       });
       break;
+    case 'BACK_CLICKED':
+      NewtonAdapter.trackEvent({
+        name: 'BACK_CLICKED',
+        properties: {
+          action: 'Yes',
+          category: 'Behavior',
+          valuable: 'No',
+        },
+      });
+      break;
     default:
       break;
   }

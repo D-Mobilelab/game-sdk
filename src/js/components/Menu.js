@@ -62,29 +62,34 @@ export class Menu extends React.Component{
     }
 
     onPointerStart(event){
-        let position = {x : event.pageX, y: event.pageY};
+        let position = {x : Math.round(event.pageX), y: Math.round(event.pageY)};
         this.props.actions.setDownPosition({active: true, position });
     }
 
     onPointerEnd(event){
-        if(this.props.pointerDownPosition.x === event.pageX && this.props.pointerDownPosition.y === event.pageY){
-            //it's a click/tap
+        let endX = Math.round(event.pageX);
+        let endY = Math.round(event.pageY);
+        let OFFSET = 15;
+        if((this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET) && 
+           (this.props.pointerDownPosition.y >= endY - OFFSET && this.props.pointerDownPosition.y <= endY + OFFSET)
+          ) {
+            // It's a click/tap
             // window.alert("it's a T(r)ap!");
             // open the menu?
             this.props.actions.goToHome();
-        
         } else {
             // was dragged. put in the closer angle?
             // window.alert("drag");
             console.log('Drag menu');
         }
-        let position = {x : event.pageX, y: event.pageY};
+        console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY);
+        let position = { x : endX, y: endY };
         this.props.actions.setUpPosition({active: false, position });
     }
 
     onPointerMove(event){
         if(this.props.active){
-            let position = {x : event.pageX, y: event.pageY};
+            let position = {x : Math.round(event.pageX), y: Math.round(event.pageY)};
             this.props.actions.setPosition({position});
         }
     }
