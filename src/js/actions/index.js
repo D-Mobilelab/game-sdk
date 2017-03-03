@@ -136,21 +136,24 @@ function init(initConfig) {
 }
 
 function redirectOnStore() {
-  let mfp_url = [Location.getOrigin(), '/#!/mfp'].join('');
-  mfp_url = Utils.queryfy(mfp_url, {
-    returnurl: `${Location.getCurrentHref()}`,
+  let mfpUrl = [Location.getOrigin(), '/#!/mfp'].join('');
+  mfpUrl = Utils.queryfy(mfpUrl, {
+    return_url: `${Location.getCurrentHref()}`,
     title: '',
   });
 
+  /**
+   * TODO:
+   * fix with a 'GOOGLEPLAY_STORE_URL' took from the vhost
+   */
+  const packageID = 'com.docomodigital.gameasy.ww';
+  mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/&af_sub1=<af_sub1>`;
   if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'preprod') {
-    setTimeout(() => {
-      window.location.href = mfp_url;
-    }, 500);
+    window.location.href = mfpUrl;
   }
-
   return {
     type: 'REDIRECT_ON_STORE',
-    payload: mfp_url,
+    payload: mfpUrl,
   };
 }
 
