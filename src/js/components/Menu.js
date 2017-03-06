@@ -70,7 +70,7 @@ export class Menu extends React.Component{
         let endX = Math.round(event.pageX);
         let endY = Math.round(event.pageY);
         let OFFSET = 15;
-        if((this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET) && 
+        /*if((this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET) && 
            (this.props.pointerDownPosition.y >= endY - OFFSET && this.props.pointerDownPosition.y <= endY + OFFSET)
           ) {
             // It's a click/tap
@@ -81,16 +81,24 @@ export class Menu extends React.Component{
             // was dragged. put in the closer angle?
             // window.alert("drag");
             console.log('Drag menu');
+        }*/
+        if (!this.props.drag) {
+            this.props.actions.goToHome();
         }
-        console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY);
         let position = { x : endX, y: endY };
         this.props.actions.setUpPosition({active: false, position });
+        console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY, this.props.drag);
+        this.props.actions.setDrag(false);
     }
 
-    onPointerMove(event){
+    onPointerMove(event) {
+        if(!this.props.drag) {
+          this.props.actions.setDrag(true);
+        }
+        
         if(this.props.active){
             let position = {x : Math.round(event.pageX), y: Math.round(event.pageY)};
-            this.props.actions.setPosition({position});
+            this.props.actions.setPosition({ position });
         }
     }
 
