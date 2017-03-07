@@ -1,7 +1,8 @@
 export function menu(state = {
   show: false,
-  style: { bottom: '2%', right: '2%' },
   active: false,
+  drag: false,
+  style: { bottom: '2%', right: '2%' },
   pointerDownPosition: { x: 0, y: 0 },
   pointerUpPosition: { x: 0, y: 0 },
 }, action) {
@@ -19,6 +20,8 @@ export function menu(state = {
       case 'SET_POSITION':
         const newStyle = { style: { ...state.style, left: `${(action.position.x - 30)}px`, top: `${(action.position.y - 30)}px` } };
         return Object.assign({}, state, newStyle);
+      case 'SET_DRAG':
+        return Object.assign({}, state, { drag: action.payload.drag });
       default:
         return state;
   }

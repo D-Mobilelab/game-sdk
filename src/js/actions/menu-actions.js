@@ -45,6 +45,13 @@ export function setPosition(data) {
   };
 }
 
+export function setDrag(isDragging) {
+  return {
+    type: 'SET_DRAG',
+    payload: { drag: isDragging },
+  };
+}
+
 export function hideMenu() {
   return {
     type: 'HIDE_MENU',

@@ -10,8 +10,12 @@ export function setRelated(related) {
   };
 }
 
-function normalizeGameInfo(gameInfo) {
-  const newGameInfo = JSON.parse(JSON.stringify(gameInfo));
+export function normalizeGameInfo(gameInfo) {
+  let newGameInfo = JSON.parse(JSON.stringify(gameInfo));
+  if (newGameInfo.game) {
+    newGameInfo = { ...newGameInfo, ...gameInfo.game };
+    delete newGameInfo.game;
+  }
   newGameInfo.content_id = newGameInfo.content_id || newGameInfo.contentId || newGameInfo.id;
   return newGameInfo;
 }
