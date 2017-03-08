@@ -20,7 +20,7 @@ module.exports = function (config) {
 
     // The entry point for our test suite
     basePath: '',
-    autoWatch: false,
+    autoWatch: true,
     files: [
       'tests.webpack.js',
     ],
