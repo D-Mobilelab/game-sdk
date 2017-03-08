@@ -4,6 +4,11 @@ var webpack = require('webpack');
 
 var envPlugin = new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('test') } });
 webpackConfig.plugins.push(envPlugin);
+webpackConfig.externals = {
+  'react/addons': true,
+  'react/lib/ExecutionEnvironment': true,
+  'react/lib/ReactContext': true
+};
 
 module.exports = function (config) {
   config.set({

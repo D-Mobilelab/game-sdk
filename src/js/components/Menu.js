@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { isTouch } from '../lib/TouchDetector';
 import menuStyles from '../../css/menu.base.css';
 
@@ -17,8 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class Menu extends React.Component{
+export class Menu extends Component {
     constructor(props){
         super(props);
         this.onTouchEnd = this.onTouchEnd.bind(this);         
@@ -87,7 +86,7 @@ export class Menu extends React.Component{
         }
         let position = { x : endX, y: endY };
         this.props.actions.setUpPosition({active: false, position });
-        console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY, this.props.drag);
+        //console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY, this.props.drag);
         this.props.actions.setDrag(false);
     }
 
@@ -142,3 +141,5 @@ export class Menu extends React.Component{
         );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu)
