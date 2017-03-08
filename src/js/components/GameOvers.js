@@ -147,7 +147,7 @@ export class GamifiveGameover extends Gameover {
     }
 
     render(){
-        const showAndHideStyle = this.props.show ? { display: 'block', position: 'absolute', top:'0', width: '100%' } : { display: 'none' };
+        const showAndHideStyle = this.props.show ? { display: 'block', zIndex: '10', position: 'fixed' } : { display: 'none' };
         const imgWidth = (Math.round(window.innerWidth / 100) * 100);
 
         let imgHeight = (Math.round(innerWidth / 2));
@@ -170,9 +170,8 @@ export class GamifiveGameover extends Gameover {
             WEBAPP_GAME_OVER,
         } = this.props.dictionary;
 
-        return (
-            <div style={showAndHideStyle}>
-                <div className="container game-over" style={{position:'fixed', zIndex: '10'}}>
+        return (            
+                <div className="container game-over" style={showAndHideStyle}>
                     <a onClick={this.goToHome}>
                         <p className="logo-b"></p>
                     </a>
@@ -239,31 +238,8 @@ export class GamifiveGameover extends Gameover {
                                 })
                             }
                         </div>
-
-                        <div id="messages" className="mask mask--gameover hide">
-                            <div className="box box-game-over">
-                                <div className="box__inner">
-                                    <div className="box__hd box__hd--messages h3">
-                                        <div className="box__avatar--center">
-                                            <img src="http://s.motime.com/img/wl/webstore_html5game/images/avatar/big/virgilio.png?v=20170111153950" className="img-avatar-abs" title="virgilio" alt="virgilio" />
-                                        </div>
-                                        <span className="alerthsuccess"></span>
-                                        <span className="alertherror"></span>
-                                    </div>
-                                    <div className="box__bd box__bd--default">
-                                        <h4 id="message-title" className="message-type"></h4>
-                                        <p id="message-text" className="message-text"></p>
-                                        <a onClick={(evt)=>evt} className="btn btn--messages" type="button"></a>
-                                    </div>
-                                    <div className="box__ft box__ft--default">
-                                        <div>&nbsp;</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
         );
     }
 }
