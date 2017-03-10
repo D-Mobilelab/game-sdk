@@ -13,7 +13,7 @@ const privates = new WeakMap();
  * @export
  * @class SDK
  */
-export class SDK {
+export default class SDK {
 
   constructor(store) {
     privates.set(this, { store });

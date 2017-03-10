@@ -21,7 +21,7 @@ const Gameovers = {
     gameasy: GameasyGameover
 }
 
-import { SDK } from './SDK';
+import SDK from './SDK';
 class App extends React.Component {
     
     constructor(props){

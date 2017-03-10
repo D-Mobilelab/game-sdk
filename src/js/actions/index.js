@@ -73,7 +73,7 @@ function wrapHandler(fn, dispatch) {
 window.history.replaceState({ location: 'step0' }, document.title, `${window.location.pathname}#0`);
 window.history.pushState({ location: 'step1' }, document.title, `${window.location.pathname}#1`);
 window.history.pushState({ location: 'step2' }, document.title, `${window.location.pathname}#2`);
-/** registering state change */    
+/** registering state change */
 
 function init(initConfig) {
   return (dispatch, getState) => {
@@ -178,5 +178,4 @@ export const Actions = {
   ...gameinfoActions,
   ...bannerActions,
   ...sharerActions,
-
 };

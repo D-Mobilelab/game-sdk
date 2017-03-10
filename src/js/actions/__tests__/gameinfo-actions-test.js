@@ -103,4 +103,11 @@ describe('Gameinfo tests', function() {
     expect(result.title).toEqual('Fruit Slicer');
     expect(result.content_id).toEqual('4de756a55ac71f45c5b7b4211b71219e');
   });
+
+  it('handle when gaminfo is null', function() {
+    let result = normalizeGameInfo(null);
+    expect(result.game).toBeUndefined();
+    expect(result.title).toBeUndefined();
+    expect(result.content_id).toBeUndefined();
+  });
 });

@@ -3,7 +3,7 @@ import { Gameover } from './Gameover';
 
 /** My Components */
 import { MaterialButton } from './MaterialButton';
-import { Related } from './Related';
+import RelatedList from './RelatedList';
 import { Image } from './Image';
 import { LikeButton } from './LikeButton';
 import { ShareButton } from './ShareButton';
@@ -113,8 +113,8 @@ export class GameasyGameover extends Gameover {
                         }} />
                     </div>
                     
-                </div>
-                <Related related={this.props.game_info.related} title={WEBAPP_RELATED_TITLE}/>
+                </div>                
+                    <RelatedList items={this.props.game_info.related} title={WEBAPP_RELATED_TITLE} />
                 </div>
             </div>
         );

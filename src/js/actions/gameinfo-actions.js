@@ -11,7 +11,7 @@ export function setRelated(related) {
 }
 
 export function normalizeGameInfo(gameInfo) {
-  let newGameInfo = JSON.parse(JSON.stringify(gameInfo));
+  let newGameInfo = JSON.parse(JSON.stringify(gameInfo || {}));
   if (newGameInfo.game) {
     newGameInfo = { ...newGameInfo, ...gameInfo.game };
     delete newGameInfo.game;
