@@ -27,9 +27,6 @@
 }
 
 .scoreContainer {
-    position: absolute;
-    right: 0;
-    width: 33%; 
     height: 100%;
 }
 
