@@ -117,6 +117,17 @@ export const newtonMiddleware = store => next => (action) => {
         },
       });
       break;
+    case 'RELATED_CLICK':
+      NewtonAdapter.trackEvent({
+        name: 'GameClickOnRelated',
+        properties: {
+          action: 'Yes',
+          category: 'Behavior',
+          valuable: 'No',
+          gameTitle: action.payload.title
+        },
+      });
+      break;
     default:
       break;
   }

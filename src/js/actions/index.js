@@ -29,7 +29,8 @@ const vhostKeys = [
   'INSTALL_HYBRID_VISIBLE',
 ];
 
-/*function hashHandler(event, dispatch) {
+/*
+function hashHandler(event, dispatch) {
   event.preventDefault();
   event.stopPropagation();
   event.stopImmediatePropagation();
@@ -165,11 +166,22 @@ function generateReportAction() {
   };
 }
 
+function goToRelated(related) {
+  setTimeout(() => {
+    window.location.href = related.url_play;
+  }, 300);
+
+  return {
+    type: 'RELATED_CLICKED',
+    payload: related
+  };
+}
 
 export const Actions = {
   init,
   generateReportAction,
   redirectOnStore,
+  goToRelated,
   ...sessionActions,
   ...userActions,
   ...menuActions,

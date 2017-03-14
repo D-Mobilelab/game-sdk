@@ -38,7 +38,8 @@ export class Gameover extends React.Component{
          * TODO:
          * make it as action and track the GameClickOnRelated
          */
-        window.location.href = related.url_play;
+        this.props.actions.goToRelated(related);
+        //window.location.href = related.url_play;
     }
 
     render(){
