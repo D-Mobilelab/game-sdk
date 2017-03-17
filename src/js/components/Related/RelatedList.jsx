@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import RelatedItem from './RelatedListItem';
-import { Row, Column } from '../Layout/index';
 export default class RelatedList extends Component {
 
     constructor(props){
@@ -18,10 +17,10 @@ export default class RelatedList extends Component {
         return(
             <div>          
                 <h2 style={{marginBottom:'2%'}}>{this.props.title}</h2>
-                <ul style={{textAlign:'center'}}>
+                <ul style={{textAlign:'center', margin:'0', padding:'0'}}>
                     {this.props.children}
                 </ul>
-            </div>            
+            </div>
         )
     }
 }
