@@ -77,10 +77,30 @@
     width: 100%;
 }
 
+.offset_1 {
+    margin-left: 6.86666666667%;
+}
+
 .offset_2 {
     margin-left: 15.3333333333%;
 }
 
+.offset_3 {
+    margin-left: 23.8%;
+}
+
 .offset_4 {
     margin-left: 32.2666666667%;
+}
+
+.offset_5 {
+    margin-left: 40.7333333333%;
+}
+
+.offset_6 {
+    margin-left: 49.2%;
+}
+
+.offset_10 {
+    margin-left: 83.0666666667%;
 }
