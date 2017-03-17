@@ -91,7 +91,7 @@ export class Menu extends Component {
     }
 
     onPointerMove(event) {
-        if(!this.props.drag) {
+        if(!this.props.drag && this.props.active) {
           this.props.actions.setDrag(true);
         }
         
