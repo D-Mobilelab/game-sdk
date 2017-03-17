@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import Menu from './js/components/Menu';
-import { Banner } from './js/components/Banner';
+import { Banner } from './js/components/Banner/Banner';
 import { 
     GameasyGameover, 
     GamifiveGameover
