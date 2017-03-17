@@ -16,7 +16,7 @@ var devConfiguration = {
     noParse: /node_modules\/localforage\/dist\/localforage.js/,
     rules: [
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           exclude: /(bower_components|node_modules)/,
           loader: ["react-hot-loader", "babel-loader"],
         },

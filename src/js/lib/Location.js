@@ -24,7 +24,7 @@ class Location {
     const isGameasyRegex = new RegExp(/http:\/\/www2?\.gameasy\.com\/([a-zA-Z0-9-_]*)/);
     const isGameasyMatch = theWindow.location.href.match(isGameasyRegex);
 
-    let gameasyCountryCode = '', 
+    let gameasyCountryCode = '',
         toJoin = [];
     if (isGameasyMatch !== null) {
       gameasyCountryCode = isGameasyMatch[1];

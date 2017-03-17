@@ -1,7 +1,7 @@
 import React from 'react';
-import { MaterialButton } from './MaterialButton';
-import genericStyle from '../../css/generic.css';
-import bannerStyle from '../../css/banner.css';
+import { MaterialButton } from '../MaterialButton';
+import { Row, Column, Grid } from '../Layout/index';
+import bannerStyle from './style.css';
 
 /** Connect to redux store */
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ WEBAPP_HYBRIDINSTALL_APPINFOSMALL
 WEBAPP_BANNER_BUTTON
 */
 /** TODO: import only needed actions */
-import { Actions } from '../actions/index';
+import { Actions } from '../../actions/index';
 const mapStateToProps = (state) => {
   return {
     ...state.banner,
@@ -58,33 +58,32 @@ export class Banner extends React.Component {
         return (            
             <div className={contanierClass}>
                 <div className={bannerStyle.banner}>
-
-                    <div className={genericStyle.grid}>
-                        
-                        <div className={genericStyle.col + ' ' + genericStyle._10_12}></div>
-                        <div className={genericStyle.col + ' ' + genericStyle._2_12}>
-                             <button className={bannerStyle.closeButton} onClick={this.handleClose}>
-                                <span></span>
-                            </button>
-                        </div>
-                        <div className={genericStyle.col + ' ' + genericStyle._1_12}></div>
-
-                            <div className={genericStyle.col + ' ' + genericStyle._2_12} style={{marginTop:'10px'}}>
+                    <Grid>
+                        <Row>
+                            <Column cols={2} offset={10}>
+                                <button className={bannerStyle.closeButton} onClick={this.handleClose}>
+                                    <span></span>
+                                </button>
+                            </Column>
+                        </Row>
+                        <Row>
+                            <Column cols={2} offset={1} style={{marginTop:'10px'}}>
                                 <div className={bannerStyle.appIcon}></div>
-                            </div>
-                            <div className={genericStyle.col + ' ' + genericStyle._9_12} style={{marginTop:'10px'}}>
+                            </Column>
+                            <Column cols={9} style={{marginTop:'10px'}}>
                                 <h2 className={bannerStyle.title}>{WEBAPP_HYBRIDINSTALL_TXT}</h2>
                                 <p className={bannerStyle.appDescription}>
                                     {WEBAPP_HYBRIDINSTALL_APPINFO}
                                     {WEBAPP_HYBRIDINSTALL_APPINFOSMALL}
                                 </p>
-                            </div>
-                        <div className={genericStyle.col + ' ' + genericStyle._3_12}></div>
-                        <div className={genericStyle.col + ' ' + genericStyle._6_12} style={{padding:'0',marginTop:'25px'}}>
-                            <MaterialButton text={WEBAPP_BANNER_BUTTON} style={{fontSize: '15px', width:'100%'}} onClick={this.handleGetAppButton}/>
-                        </div>
-                        <div className={genericStyle.col + ' ' + genericStyle._3_12}></div>
-                    </div>                    
+                            </Column>
+                        </Row>
+                        <Row>
+                            <Column cols={6} offset={3} style={{marginTop:'10px'}}>
+                                <MaterialButton text={WEBAPP_BANNER_BUTTON} style={{fontSize: '15px', width:'100%'}} onClick={this.handleGetAppButton}/>
+                            </Column>
+                        </Row>
+                    </Grid>                    
                 </div>
             </div>
         )

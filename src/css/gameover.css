@@ -27,9 +27,6 @@
 }
 
 .scoreContainer {
-    position: absolute;
-    right: 0;
-    width: 33%; 
     height: 100%;
 }
 
@@ -70,6 +67,10 @@
     color:foreground_white;
     clear: both;
     vertical-align: middle;
+}
+
+.gameover h1,h2,h3{
+    margin:0;
 }
 
 .header h1 {
