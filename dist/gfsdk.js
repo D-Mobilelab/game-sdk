@@ -823,22 +823,6 @@ exports.default = function () {
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var store      = __webpack_require__(159)('wks')
-  , uid        = __webpack_require__(120)
-  , Symbol     = __webpack_require__(23).Symbol
-  , USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function(name){
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -863,6 +847,22 @@ exports.default = _assign2.default || function (target) {
 
   return target;
 };
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store      = __webpack_require__(159)('wks')
+  , uid        = __webpack_require__(120)
+  , Symbol     = __webpack_require__(23).Symbol
+  , USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function(name){
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
 
 /***/ }),
 /* 22 */
@@ -6186,7 +6186,7 @@ module.exports = function(bitmap, value){
 
 var def = __webpack_require__(46).f
   , has = __webpack_require__(61)
-  , TAG = __webpack_require__(20)('toStringTag');
+  , TAG = __webpack_require__(21)('toStringTag');
 
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
@@ -6223,7 +6223,7 @@ __webpack_require__(387);
 var global        = __webpack_require__(23)
   , hide          = __webpack_require__(62)
   , Iterators     = __webpack_require__(87)
-  , TO_STRING_TAG = __webpack_require__(20)('toStringTag');
+  , TO_STRING_TAG = __webpack_require__(21)('toStringTag');
 
 for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
   var NAME       = collections[i]
@@ -8618,11 +8618,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = __webpack_require__(20);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _stringify = __webpack_require__(115);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
 exports.setRelated = setRelated;
+exports.normalizeGameInfo = normalizeGameInfo;
 exports.getContentId = getContentId;
 exports.getGameInfo = getGameInfo;
 
@@ -8651,6 +8656,10 @@ function setRelated(related) {
 
 function normalizeGameInfo(gameInfo) {
   var newGameInfo = JSON.parse((0, _stringify2.default)(gameInfo));
+  if (newGameInfo.game) {
+    newGameInfo = (0, _extends3.default)({}, newGameInfo, gameInfo.game);
+    delete newGameInfo.game;
+  }
   newGameInfo.content_id = newGameInfo.content_id || newGameInfo.contentId || newGameInfo.id;
   return newGameInfo;
 }
@@ -8724,7 +8733,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Actions = undefined;
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -8907,21 +8916,24 @@ function init(initConfig) {
 }
 
 function redirectOnStore() {
-  var mfp_url = [_Location2.default.getOrigin(), '/#!/mfp'].join('');
-  mfp_url = Utils.queryfy(mfp_url, {
-    returnurl: '' + _Location2.default.getCurrentHref(),
+  var mfpUrl = [_Location2.default.getOrigin(), '/#!/mfp'].join('');
+  mfpUrl = Utils.queryfy(mfpUrl, {
+    return_url: '' + _Location2.default.getCurrentHref(),
     title: ''
   });
 
+  /**
+   * TODO:
+   * fix with a 'GOOGLEPLAY_STORE_URL' took from the vhost
+   */
+  var packageID = 'com.docomodigital.gameasy.ww';
+  mfpUrl = 'https://app.appsflyer.com/' + packageID + '?pid=Webapp&c=/&af_sub1=<af_sub1>';
   if (true) {
-    setTimeout(function () {
-      window.location.href = mfp_url;
-    }, 500);
+    window.location.href = mfpUrl;
   }
-
   return {
     type: 'REDIRECT_ON_STORE',
-    payload: mfp_url
+    payload: mfpUrl
   };
 }
 
@@ -9271,7 +9283,7 @@ module.exports = function(TYPE, $create){
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(100)
-  , TAG = __webpack_require__(20)('toStringTag')
+  , TAG = __webpack_require__(21)('toStringTag')
   // ES3 wrong here
   , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 
@@ -9502,14 +9514,14 @@ module.exports = function(name){
 /* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(20);
+exports.f = __webpack_require__(21);
 
 /***/ }),
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof   = __webpack_require__(148)
-  , ITERATOR  = __webpack_require__(20)('iterator')
+  , ITERATOR  = __webpack_require__(21)('iterator')
   , Iterators = __webpack_require__(87);
 module.exports = __webpack_require__(14).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
@@ -13102,7 +13114,7 @@ module.exports = !__webpack_require__(55) && !__webpack_require__(71)(function()
 
 // check on default Array iterator
 var Iterators  = __webpack_require__(87)
-  , ITERATOR   = __webpack_require__(20)('iterator')
+  , ITERATOR   = __webpack_require__(21)('iterator')
   , ArrayProto = Array.prototype;
 
 module.exports = function(it){
@@ -13151,7 +13163,7 @@ var LIBRARY        = __webpack_require__(116)
   , $iterCreate    = __webpack_require__(373)
   , setToStringTag = __webpack_require__(102)
   , getPrototypeOf = __webpack_require__(235)
-  , ITERATOR       = __webpack_require__(20)('iterator')
+  , ITERATOR       = __webpack_require__(21)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
   , FF_ITERATOR    = '@@iterator'
   , KEYS           = 'keys'
@@ -13216,7 +13228,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 /* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR     = __webpack_require__(20)('iterator')
+var ITERATOR     = __webpack_require__(21)('iterator')
   , SAFE_CLOSING = false;
 
 try {
@@ -18073,7 +18085,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -18082,6 +18094,7 @@ exports.showMenu = showMenu;
 exports.setDownPosition = setDownPosition;
 exports.setUpPosition = setUpPosition;
 exports.setPosition = setPosition;
+exports.setDrag = setDrag;
 exports.hideMenu = hideMenu;
 
 var _stargatejs = __webpack_require__(86);
@@ -18137,6 +18150,13 @@ function setPosition(data) {
   }, data);
 }
 
+function setDrag(isDragging) {
+  return {
+    type: 'SET_DRAG',
+    payload: { drag: isDragging }
+  };
+}
+
 function hideMenu() {
   return {
     type: 'HIDE_MENU'
@@ -18158,7 +18178,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Image = undefined;
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -18248,7 +18268,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MaterialButton = undefined;
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -21153,7 +21173,7 @@ module.exports = function(IS_INCLUDES){
 
 var isObject = __webpack_require__(45)
   , isArray  = __webpack_require__(228)
-  , SPECIES  = __webpack_require__(20)('species');
+  , SPECIES  = __webpack_require__(21)('species');
 
 module.exports = function(original){
   var C;
@@ -21400,7 +21420,7 @@ var create         = __webpack_require__(154)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(62)(IteratorPrototype, __webpack_require__(20)('iterator'), function(){ return this; });
+__webpack_require__(62)(IteratorPrototype, __webpack_require__(21)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -21586,7 +21606,7 @@ var global      = __webpack_require__(23)
   , core        = __webpack_require__(14)
   , dP          = __webpack_require__(46)
   , DESCRIPTORS = __webpack_require__(55)
-  , SPECIES     = __webpack_require__(20)('species');
+  , SPECIES     = __webpack_require__(21)('species');
 
 module.exports = function(KEY){
   var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
@@ -21603,7 +21623,7 @@ module.exports = function(KEY){
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject  = __webpack_require__(43)
   , aFunction = __webpack_require__(145)
-  , SPECIES   = __webpack_require__(20)('species');
+  , SPECIES   = __webpack_require__(21)('species');
 module.exports = function(O, D){
   var C = anObject(O).constructor, S;
   return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
@@ -21660,7 +21680,7 @@ module.exports = __webpack_require__(14).getIterator = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof   = __webpack_require__(148)
-  , ITERATOR  = __webpack_require__(20)('iterator')
+  , ITERATOR  = __webpack_require__(21)('iterator')
   , Iterators = __webpack_require__(87);
 module.exports = __webpack_require__(14).isIterable = function(it){
   var O = Object(it);
@@ -21845,7 +21865,7 @@ var USE_NATIVE = !!function(){
   try {
     // correct subclassing with @@species support
     var promise     = $Promise.resolve(1)
-      , FakePromise = (promise.constructor = {})[__webpack_require__(20)('species')] = function(exec){ exec(empty, empty); };
+      , FakePromise = (promise.constructor = {})[__webpack_require__(21)('species')] = function(exec){ exec(empty, empty); };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
     return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
   } catch(e){ /* empty */ }
@@ -22136,7 +22156,7 @@ var global         = __webpack_require__(23)
   , shared         = __webpack_require__(159)
   , setToStringTag = __webpack_require__(102)
   , uid            = __webpack_require__(120)
-  , wks            = __webpack_require__(20)
+  , wks            = __webpack_require__(21)
   , wksExt         = __webpack_require__(163)
   , wksDefine      = __webpack_require__(162)
   , keyOf          = __webpack_require__(375)
@@ -43024,7 +43044,7 @@ var _slicedToArray2 = __webpack_require__(224);
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -43456,7 +43476,7 @@ var _inherits2 = __webpack_require__(41);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -44278,7 +44298,7 @@ var _inherits2 = __webpack_require__(41);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -44383,7 +44403,9 @@ var Menu = exports.Menu = (_dec = (0, _reactRedux.connect)(mapStateToProps, mapD
             var endX = Math.round(event.pageX);
             var endY = Math.round(event.pageY);
             var OFFSET = 15;
-            if (this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET && this.props.pointerDownPosition.y >= endY - OFFSET && this.props.pointerDownPosition.y <= endY + OFFSET) {
+            /*if((this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET) && 
+               (this.props.pointerDownPosition.y >= endY - OFFSET && this.props.pointerDownPosition.y <= endY + OFFSET)
+              ) {
                 // It's a click/tap
                 // window.alert("it's a T(r)ap!");
                 // open the menu?
@@ -44392,14 +44414,22 @@ var Menu = exports.Menu = (_dec = (0, _reactRedux.connect)(mapStateToProps, mapD
                 // was dragged. put in the closer angle?
                 // window.alert("drag");
                 console.log('Drag menu');
+            }*/
+            if (!this.props.drag) {
+                this.props.actions.goToHome();
             }
-            console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY);
             var position = { x: endX, y: endY };
             this.props.actions.setUpPosition({ active: false, position: position });
+            console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY, this.props.drag);
+            this.props.actions.setDrag(false);
         }
     }, {
         key: 'onPointerMove',
         value: function onPointerMove(event) {
+            if (!this.props.drag) {
+                this.props.actions.setDrag(true);
+            }
+
             if (this.props.active) {
                 var position = { x: Math.round(event.pageX), y: Math.round(event.pageY) };
                 this.props.actions.setPosition({ position: position });
@@ -44640,13 +44670,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.crashReporter = undefined;
 
-var _extends2 = __webpack_require__(21);
-
-var _extends3 = _interopRequireDefault(_extends2);
-
 var _stringify = __webpack_require__(115);
 
 var _stringify2 = _interopRequireDefault(_stringify);
+
+var _extends2 = __webpack_require__(20);
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44654,18 +44684,23 @@ function reportError(err, state) {
   var action = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
   if (window.Newton) {
-    var errorObject = Newton.SimpleObject.fromJSONObject({
+    var errorObject = (0, _extends3.default)({
       action: action,
-      url: window.document.location.href,
-      err: (0, _stringify2.default)((0, _extends3.default)({}, err))
-    });
-    var NewtonInstance = Newton.getSharedInstance();
-    NewtonInstance.sendEvent('GENERIC_ERROR', errorObject);
+      state: (0, _stringify2.default)(state),
+      url: window.document.location.href
+    }, err);
+
+    try {
+      var NewtonInstance = Newton.getSharedInstance();
+      NewtonInstance.sendEvent('GENERIC_ERROR', Newton.SimpleObject.fromJSONObject(errorObject));
+    } catch (e) {
+      console.warn('Fail to report an error', errorObject);
+    }
   }
   console.error('Caught an exception!', err, state);
 }
 
-window.onerror = function (message, source, lineno, colno, error) {
+window.onerror = function errorReporter(message, source, lineno, colno, error) {
   var errorObject = {
     message: message,
     source: source,
@@ -45300,7 +45335,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45395,7 +45430,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45530,7 +45565,7 @@ var _assign = __webpack_require__(54);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45541,8 +45576,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function menu() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     show: false,
-    style: { bottom: '2%', right: '2%' },
     active: false,
+    drag: false,
+    style: { bottom: '2%', right: '2%' },
     pointerDownPosition: { x: 0, y: 0 },
     pointerUpPosition: { x: 0, y: 0 }
   };
@@ -45562,6 +45598,8 @@ function menu() {
     case 'SET_POSITION':
       var newStyle = { style: (0, _extends3.default)({}, state.style, { left: action.position.x - 30 + 'px', top: action.position.y - 30 + 'px' }) };
       return (0, _assign2.default)({}, state, newStyle);
+    case 'SET_DRAG':
+      return (0, _assign2.default)({}, state, { drag: action.payload.drag });
     default:
       return state;
   }
@@ -45581,7 +45619,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45627,7 +45665,7 @@ var _toConsumableArray2 = __webpack_require__(347);
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45761,7 +45799,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(20);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45850,7 +45888,7 @@ module.exports = exports['default'];
 
 "use strict";
 
-module.exports = { "version": "2.2.2", "build": "v2.2.1-13-g1db6201" };
+module.exports = { "version": "2.2.3", "build": "v2.2.2-7-gbeb4e0c" };
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/pasqualemangialavori/projects/game-sdk-react/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "version.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 

@@ -29,7 +29,8 @@ const vhostKeys = [
   'INSTALL_HYBRID_VISIBLE',
 ];
 
-/*function hashHandler(event, dispatch) {
+/*
+function hashHandler(event, dispatch) {
   event.preventDefault();
   event.stopPropagation();
   event.stopImmediatePropagation();
@@ -73,7 +74,7 @@ function wrapHandler(fn, dispatch) {
 window.history.replaceState({ location: 'step0' }, document.title, `${window.location.pathname}#0`);
 window.history.pushState({ location: 'step1' }, document.title, `${window.location.pathname}#1`);
 window.history.pushState({ location: 'step2' }, document.title, `${window.location.pathname}#2`);
-/** registering state change */    
+/** registering state change */
 
 function init(initConfig) {
   return (dispatch, getState) => {
@@ -165,11 +166,22 @@ function generateReportAction() {
   };
 }
 
+function goToRelated(related) {
+  setTimeout(() => {
+    window.location.href = related.url_play;
+  }, 300);
+
+  return {
+    type: 'RELATED_CLICKED',
+    payload: related
+  };
+}
 
 export const Actions = {
   init,
   generateReportAction,
   redirectOnStore,
+  goToRelated,
   ...sessionActions,
   ...userActions,
   ...menuActions,
@@ -178,5 +190,4 @@ export const Actions = {
   ...gameinfoActions,
   ...bannerActions,
   ...sharerActions,
-
 };

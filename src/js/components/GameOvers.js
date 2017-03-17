@@ -3,10 +3,12 @@ import { Gameover } from './Gameover';
 
 /** My Components */
 import { MaterialButton } from './MaterialButton';
-import { Related } from './Related';
+import { RelatedList, RelatedListItem } from './Related/index';
 import { Image } from './Image';
 import { LikeButton } from './LikeButton';
 import { ShareButton } from './ShareButton';
+
+import { Grid, Column, Row } from './Layout/index';
 
 /** The styles */
 import genericStyle from '../../css/generic.css';
@@ -69,54 +71,68 @@ export class GameasyGameover extends Gameover {
             WEBAPP_RELATED_TITLE
         } = this.props.dictionary;
         return(
+        <Grid>
            <div className={classes}>
-                <header className={gameasyStyle.header}>
-                    <h1>{this.props.game_info.title}</h1>
-                </header>
-                <div className={gameasyStyle.box}>
-                <div className={genericStyle.grid} style={{position: 'relative'}}>
-                    
-                    <div className={genericStyle.col + ' ' + genericStyle._2_3} style={{position:'relative', paddingRight:'0'}}>
-                        <Image srcSet={imgSrcSet} />
-                        <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
-                    </div>
-                    
-                    <div className={gameasyStyle.scoreContainer}>
-                        <div>
-                            <div style={{textAlign:'center'}}>
-                                <span className={iconStyles.icon + ' ' + iconStyles.iconCoppa}></span>
-                                <h3>{WEBAPP_CONGRATULATIONS_SCORE}</h3>
-                                <h2>{this.props.score}</h2> 
+                    <Row>
+                      <Column cols={12}>
+                        <header className={gameasyStyle.header}>
+                          <h1>{this.props.game_info.title}</h1>
+                        </header>
+                      </Column>
+                    </Row>
+                <div style={{maxWidth:'768px', margin:'0 auto'}}>
+                    {/* This position relative is needed for vertical align the score and the rank */}
+                    <Row style={{position:'relative'}}>
+                        <Column cols={8}>
+                            <Image srcSet={imgSrcSet} />
+                            <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
+                        </Column>
+                        {/* custom styles needed for vertical align rank and score */}
+                        <Column cols={4} style={{position:'absolute', right:'0', height: '100%'}}>
+                            <div className={gameasyStyle.scoreContainer}>
+                                <div>
+                                    <div style={{textAlign:'center'}}>
+                                        <span className={iconStyles.icon + ' ' + iconStyles.iconCoppa}></span>
+                                        <h3>{WEBAPP_CONGRATULATIONS_SCORE}</h3>
+                                        <h2>{this.props.score}</h2> 
+                                    </div>
+                                </div>
+                                <hr className={genericStyle.divider} />
+                                <div>
+                                    <div style={{textAlign:'center'}}>
+                                        <span className={iconStyles.icon + ' ' + iconStyles.iconRank}></span>
+                                        <h3>{WEBAPP_YOUR_POSITION_TITLE}</h3>
+                                        <h2>{this.props.rank}</h2>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <hr className={genericStyle.divider} />
-                        <div>
-                            <div style={{textAlign:'center'}}>
-                                <span className={iconStyles.icon + ' ' + iconStyles.iconRank}></span>
-                                <h3>{WEBAPP_YOUR_POSITION_TITLE}</h3>
-                                <h2>{this.props.rank}</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={genericStyle.grid} style={{marginTop:'20px', marginBottom:'20px'}}>
-                    <div className={genericStyle.col + ' ' + genericStyle._2_12}></div>
-                    <div className={genericStyle.col + ' ' + genericStyle._4_12}>
-                        <LikeButton onClick={this.handleFavourites} full={this.isGameFavourite() ? true : false} />
-                    </div>
-                    
-                    <div className={genericStyle.col + ' ' + genericStyle._4_12}>
-                        <ShareButton onClick={(evt) => {
-                            evt.preventDefault();
-                            this.handleShare(this.props.game_info.url_share);
-                        }} />
-                    </div>
-                    
-                </div>
-                <Related related={this.props.game_info.related} title={WEBAPP_RELATED_TITLE}/>
+                        </Column>
+                    </Row>
+                    <Row style={{margin:'20px 0 20px 0'}}>
+                        <Column cols={4} offset={2}>
+                            <LikeButton onClick={this.handleFavourites} full={this.isGameFavourite() ? true : false} />
+                        </Column>
+                        <Column cols={4}>
+                            <ShareButton onClick={(evt) => {
+                                evt.preventDefault();
+                                this.handleShare(this.props.game_info.url_share);
+                            }} />
+                        </Column>
+                    </Row>
+                    <Row>
+                      <RelatedList title={WEBAPP_RELATED_TITLE}>
+                          {
+                               this.props.game_info.related.map((item, index) => (
+                                   <Column cols={4} key={index}>
+                                        <RelatedListItem item={item} onClick={this.handleOnClickRelated.bind(this, item)} />
+                                   </Column>
+                                ))
+                          }
+                      </RelatedList>  
+                    </Row>                    
                 </div>
             </div>
+        </Grid>                
         );
     }
 }
@@ -147,7 +163,7 @@ export class GamifiveGameover extends Gameover {
     }
 
     render(){
-        const showAndHideStyle = this.props.show ? { display: 'block', position: 'absolute', top:'0', width: '100%' } : { display: 'none' };
+        const showAndHideStyle = this.props.show ? { display: 'block', zIndex: '10', position: 'fixed' } : { display: 'none' };
         const imgWidth = (Math.round(window.innerWidth / 100) * 100);
 
         let imgHeight = (Math.round(innerWidth / 2));
@@ -170,9 +186,8 @@ export class GamifiveGameover extends Gameover {
             WEBAPP_GAME_OVER,
         } = this.props.dictionary;
 
-        return (
-            <div style={showAndHideStyle}>
-                <div className="container game-over" style={{position:'fixed', zIndex: '10'}}>
+        return (            
+                <div className="container game-over" style={showAndHideStyle}>
                     <a onClick={this.goToHome}>
                         <p className="logo-b"></p>
                     </a>
@@ -239,31 +254,8 @@ export class GamifiveGameover extends Gameover {
                                 })
                             }
                         </div>
-
-                        <div id="messages" className="mask mask--gameover hide">
-                            <div className="box box-game-over">
-                                <div className="box__inner">
-                                    <div className="box__hd box__hd--messages h3">
-                                        <div className="box__avatar--center">
-                                            <img src="http://s.motime.com/img/wl/webstore_html5game/images/avatar/big/virgilio.png?v=20170111153950" className="img-avatar-abs" title="virgilio" alt="virgilio" />
-                                        </div>
-                                        <span className="alerthsuccess"></span>
-                                        <span className="alertherror"></span>
-                                    </div>
-                                    <div className="box__bd box__bd--default">
-                                        <h4 id="message-title" className="message-type"></h4>
-                                        <p id="message-text" className="message-text"></p>
-                                        <a onClick={(evt)=>evt} className="btn btn--messages" type="button"></a>
-                                    </div>
-                                    <div className="box__ft box__ft--default">
-                                        <div>&nbsp;</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
         );
     }
 }

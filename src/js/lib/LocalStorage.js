@@ -1,26 +1,55 @@
-class LocalStorage {
+export class LocalStorage {
 
   constructor() {
-    this._storage = {};
+    this.storage = {};
+    this.isSupported();
   }
 
   setItem(key, obj) {
-    this._storage[key] = obj.toString();
+    if (this.supported) {
+      return window.localStorage.setItem(key, obj);
+    }
+    return this.storage[key] = obj.toString();
   }
 
   getItem(key) {
-    return this._storage[key];
+    if (this.supported) {
+      return window.localStorage.getItem(key);
+    }
+    return this.storage[key];
   }
 
   clear() {
-    this._storage = {};
+    if (this.supported) {
+      return window.localStorage.clear();
+    }
+    this.storage = {};
+    return this.storage;
   }
 
   removeItem(key) {
-      delete this._storage[key];
+    if (this.supported) {
+      window.localStorage.removeItem(key);
+    }
+    delete this.storage[key];
+  }
+
+  isSupported() {
+    const global = arguments[0] ? arguments[0] : window;  
+    try {
+      if (!global.localStorage) {
+        this.supported = false;      
+      }
+      global.localStorage.setItem('__test__', 1);
+      global.localStorage.getItem('__test__');
+      global.localStorage.removeItem('__test__');
+      this.supported = true;
+    } catch (e) {
+      this.supported = false;    
+    }
+    return this.supported;
   }
 }
 
-const localStorageInstance = window.localStorage || new LocalStorage();
-
+const localStorageInstance = new LocalStorage();
 export default localStorageInstance;

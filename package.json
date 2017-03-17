@@ -1,6 +1,6 @@
 {
   "name": "game-sdk",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Buongiorno Game SDK - JS Library",
   "main": "dist/gfsdk.js",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "NODE_ENV=test && karma start",
-    "test:watch": "NODE_ENV=test && karma start --auto-watch",
+    "test:watch": "NODE_ENV=test && karma start --no-single-run",
     "build:dev": "NODE_ENV=development && webpack --config webpack.config.dev.js",
     "build:prod": "NODE_ENV=production && webpack --config webpack.config.prod.js -p",
     "build:preprod": "NODE_ENV=preprod && webpack --config webpack.config.pre.prod.js",

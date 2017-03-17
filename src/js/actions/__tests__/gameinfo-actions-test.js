@@ -99,9 +99,15 @@ describe('Gameinfo tests', function() {
 
   it('should normalize gameinfo response', function() {
     let result = normalizeGameInfo(gameInfoResponse200.game_info);
-    console.log(result);
     expect(result.game).toBeUndefined();
     expect(result.title).toEqual('Fruit Slicer');
     expect(result.content_id).toEqual('4de756a55ac71f45c5b7b4211b71219e');
+  });
+
+  it('handle when gaminfo is null', function() {
+    let result = normalizeGameInfo(null);
+    expect(result.game).toBeUndefined();
+    expect(result.title).toBeUndefined();
+    expect(result.content_id).toBeUndefined();
   });
 });

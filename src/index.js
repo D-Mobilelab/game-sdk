@@ -5,16 +5,23 @@ import Location from './js/lib/Location';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import { Menu } from './js/components/Menu';
-import { Banner } from './js/components/Banner';
-import { GameasyGameover, GamifiveGameover} from './js/components/GameOvers';
+import Menu from './js/components/Menu';
+import { Banner } from './js/components/Banner/Banner';
+import { 
+    GameasyGameover, 
+    GamifiveGameover
+} from './js/components/GameOvers';
+
+if (module.hot) {
+  module.hot.accept();
+}
 
 const Gameovers = { 
     gamifive: GamifiveGameover,
     gameasy: GameasyGameover
 }
 
-import { SDK } from './SDK';
+import SDK from './SDK';
 class App extends React.Component {
     
     constructor(props){
@@ -55,9 +62,4 @@ const instance = new SDK(store);
 aliases.map((alias) => {
     window[alias] = instance;
 });
-
-if (module.hot) {
-  module.hot.accept();
-}
-
 export default instance
