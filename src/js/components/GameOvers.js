@@ -220,14 +220,11 @@ export class GamifiveGameover extends Gameover {
                                     </button>
                                 </div>
 
-                                <div className="img-game">
-                                    <img className="center-block img-responsive" src={imgSrc} />
-                                    
-                                    <div className="col-xs-8 col-xs-offset-2 container-absolute-btn">
-                                        <button className="btn btn--play fa fa-repeat" onClick={this.handleReplay}>
-                                            <span className="line-btn">{WEBAPP_REPLAY}</span>
-                                        </button>
-                                    </div>
+                                <div>
+                                    <Image src={imgSrc} width={imgWidth} height={imgHeight} />
+                                    <button className="btn btn--play fa fa-repeat" style={{width:'80%', marginLeft:'10%', marginTop:'-10px'}} onClick={this.handleReplay}>
+                                        <span className="line-btn">{WEBAPP_REPLAY}</span>
+                                    </button>
                                 </div>
 
                                 <div className="center-block like-btn">
