@@ -44084,7 +44084,7 @@ var GamifiveGameover = exports.GamifiveGameover = (_dec2 = (0, _reactRedux.conne
         value: function render() {
             var _this4 = this;
 
-            var showAndHideStyle = this.props.show ? { display: 'block', zIndex: '10', position: 'fixed' } : { display: 'none' };
+            var showAndHideStyle = this.props.show ? { display: 'block', zIndex: '10', position: 'absolute' } : { display: 'none' };
             var imgWidth = Math.round(window.innerWidth / 100) * 100;
 
             var imgHeight = Math.round(innerWidth / 2);
@@ -46174,7 +46174,7 @@ module.exports = exports['default'];
 
 "use strict";
 
-module.exports = { "version": "2.2.5", "build": "v2.2.4-1-g2ff45b9" };
+module.exports = { "version": "2.2.6", "build": "v2.2.5-2-g63f8b96" };
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/pasqualemangialavori/projects/game-sdk-react/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "version.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
