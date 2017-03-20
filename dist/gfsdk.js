@@ -833,6 +833,22 @@ module.exports = function(it){
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var store      = __webpack_require__(159)('wks')
+  , uid        = __webpack_require__(120)
+  , Symbol     = __webpack_require__(24).Symbol
+  , USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function(name){
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -857,22 +873,6 @@ exports.default = _assign2.default || function (target) {
 
   return target;
 };
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store      = __webpack_require__(159)('wks')
-  , uid        = __webpack_require__(120)
-  , Symbol     = __webpack_require__(24).Symbol
-  , USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function(name){
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
 
 /***/ }),
 /* 23 */
@@ -6186,7 +6186,7 @@ module.exports = function(bitmap, value){
 
 var def = __webpack_require__(47).f
   , has = __webpack_require__(62)
-  , TAG = __webpack_require__(22)('toStringTag');
+  , TAG = __webpack_require__(21)('toStringTag');
 
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
@@ -6223,7 +6223,7 @@ __webpack_require__(389);
 var global        = __webpack_require__(24)
   , hide          = __webpack_require__(63)
   , Iterators     = __webpack_require__(87)
-  , TO_STRING_TAG = __webpack_require__(22)('toStringTag');
+  , TO_STRING_TAG = __webpack_require__(21)('toStringTag');
 
 for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
   var NAME       = collections[i]
@@ -8618,7 +8618,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -8733,7 +8733,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Actions = undefined;
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -9296,7 +9296,7 @@ module.exports = function(TYPE, $create){
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(100)
-  , TAG = __webpack_require__(22)('toStringTag')
+  , TAG = __webpack_require__(21)('toStringTag')
   // ES3 wrong here
   , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 
@@ -9527,14 +9527,14 @@ module.exports = function(name){
 /* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(22);
+exports.f = __webpack_require__(21);
 
 /***/ }),
 /* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof   = __webpack_require__(148)
-  , ITERATOR  = __webpack_require__(22)('iterator')
+  , ITERATOR  = __webpack_require__(21)('iterator')
   , Iterators = __webpack_require__(87);
 module.exports = __webpack_require__(14).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
@@ -13157,7 +13157,7 @@ module.exports = !__webpack_require__(55) && !__webpack_require__(71)(function()
 
 // check on default Array iterator
 var Iterators  = __webpack_require__(87)
-  , ITERATOR   = __webpack_require__(22)('iterator')
+  , ITERATOR   = __webpack_require__(21)('iterator')
   , ArrayProto = Array.prototype;
 
 module.exports = function(it){
@@ -13206,7 +13206,7 @@ var LIBRARY        = __webpack_require__(116)
   , $iterCreate    = __webpack_require__(375)
   , setToStringTag = __webpack_require__(102)
   , getPrototypeOf = __webpack_require__(235)
-  , ITERATOR       = __webpack_require__(22)('iterator')
+  , ITERATOR       = __webpack_require__(21)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
   , FF_ITERATOR    = '@@iterator'
   , KEYS           = 'keys'
@@ -13271,7 +13271,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 /* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR     = __webpack_require__(22)('iterator')
+var ITERATOR     = __webpack_require__(21)('iterator')
   , SAFE_CLOSING = false;
 
 try {
@@ -18128,7 +18128,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -18221,10 +18221,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Image = undefined;
 
-var _extends2 = __webpack_require__(21);
-
-var _extends3 = _interopRequireDefault(_extends2);
-
 var _getPrototypeOf = __webpack_require__(35);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -18282,14 +18278,28 @@ var Image = exports.Image = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var className = this.state.loaded ? _image2.default.imgLoaded : '';
+
+            var imageClasses = [];
+            var loaded = this.state.loaded ? _image2.default.imgLoaded : '';
+            imageClasses = imageClasses.concat([loaded]);
+
+            /**
+             * Padding bottom image is a trick to calculate the space
+             * that the image will cover in document
+             * http://davidecalignano.it/lazy-loading-with-responsive-images-and-unknown-height/
+             */
+            var paddingBottom = { paddingBottom: '100%' };
+            if (this.props.height && this.props.width) {
+                paddingBottom = { paddingBottom: this.props.height / this.props.width * 100 + '%' };
+            }
             return _react2.default.createElement(
                 'div',
-                { className: _image2.default.lazyContainer },
-                _react2.default.createElement('img', (0, _extends3.default)({ className: className,
+                { className: _image2.default.lazyContainer, style: paddingBottom },
+                _react2.default.createElement('img', { className: imageClasses.join(' '),
                     onLoad: this.onImgLoad,
-                    onError: this.onImgError
-                }, this.props))
+                    onError: this.onImgError,
+                    style: this.props.style,
+                    src: this.props.src })
             );
         }
     }]);
@@ -18346,7 +18356,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MaterialButton = undefined;
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -21323,7 +21333,7 @@ module.exports = function(IS_INCLUDES){
 
 var isObject = __webpack_require__(46)
   , isArray  = __webpack_require__(228)
-  , SPECIES  = __webpack_require__(22)('species');
+  , SPECIES  = __webpack_require__(21)('species');
 
 module.exports = function(original){
   var C;
@@ -21570,7 +21580,7 @@ var create         = __webpack_require__(154)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(63)(IteratorPrototype, __webpack_require__(22)('iterator'), function(){ return this; });
+__webpack_require__(63)(IteratorPrototype, __webpack_require__(21)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -21756,7 +21766,7 @@ var global      = __webpack_require__(24)
   , core        = __webpack_require__(14)
   , dP          = __webpack_require__(47)
   , DESCRIPTORS = __webpack_require__(55)
-  , SPECIES     = __webpack_require__(22)('species');
+  , SPECIES     = __webpack_require__(21)('species');
 
 module.exports = function(KEY){
   var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
@@ -21773,7 +21783,7 @@ module.exports = function(KEY){
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject  = __webpack_require__(44)
   , aFunction = __webpack_require__(145)
-  , SPECIES   = __webpack_require__(22)('species');
+  , SPECIES   = __webpack_require__(21)('species');
 module.exports = function(O, D){
   var C = anObject(O).constructor, S;
   return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
@@ -21830,7 +21840,7 @@ module.exports = __webpack_require__(14).getIterator = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof   = __webpack_require__(148)
-  , ITERATOR  = __webpack_require__(22)('iterator')
+  , ITERATOR  = __webpack_require__(21)('iterator')
   , Iterators = __webpack_require__(87);
 module.exports = __webpack_require__(14).isIterable = function(it){
   var O = Object(it);
@@ -22015,7 +22025,7 @@ var USE_NATIVE = !!function(){
   try {
     // correct subclassing with @@species support
     var promise     = $Promise.resolve(1)
-      , FakePromise = (promise.constructor = {})[__webpack_require__(22)('species')] = function(exec){ exec(empty, empty); };
+      , FakePromise = (promise.constructor = {})[__webpack_require__(21)('species')] = function(exec){ exec(empty, empty); };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
     return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
   } catch(e){ /* empty */ }
@@ -22306,7 +22316,7 @@ var global         = __webpack_require__(24)
   , shared         = __webpack_require__(159)
   , setToStringTag = __webpack_require__(102)
   , uid            = __webpack_require__(120)
-  , wks            = __webpack_require__(22)
+  , wks            = __webpack_require__(21)
   , wksExt         = __webpack_require__(163)
   , wksDefine      = __webpack_require__(162)
   , keyOf          = __webpack_require__(377)
@@ -43190,7 +43200,7 @@ var _slicedToArray2 = __webpack_require__(224);
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -43622,7 +43632,7 @@ var _inherits2 = __webpack_require__(36);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -44165,19 +44175,15 @@ var GamifiveGameover = exports.GamifiveGameover = (_dec2 = (0, _reactRedux.conne
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'img-game' },
-                                _react2.default.createElement('img', { className: 'center-block img-responsive', src: imgSrc }),
+                                null,
+                                _react2.default.createElement(_Image.Image, { src: imgSrc, width: imgWidth, height: imgHeight }),
                                 _react2.default.createElement(
-                                    'div',
-                                    { className: 'col-xs-8 col-xs-offset-2 container-absolute-btn' },
+                                    'button',
+                                    { className: 'btn btn--play fa fa-repeat', style: { width: '80%', marginLeft: '10%', marginTop: '-10px' }, onClick: this.handleReplay },
                                     _react2.default.createElement(
-                                        'button',
-                                        { className: 'btn btn--play fa fa-repeat', onClick: this.handleReplay },
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'line-btn' },
-                                            WEBAPP_REPLAY
-                                        )
+                                        'span',
+                                        { className: 'line-btn' },
+                                        WEBAPP_REPLAY
                                     )
                                 )
                             ),
@@ -44553,7 +44559,7 @@ var _inherits2 = __webpack_require__(36);
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -44949,7 +44955,7 @@ var _stringify = __webpack_require__(115);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45621,7 +45627,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45716,7 +45722,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45851,7 +45857,7 @@ var _assign = __webpack_require__(54);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45905,7 +45911,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -45951,7 +45957,7 @@ var _toConsumableArray2 = __webpack_require__(349);
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -46085,7 +46091,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = __webpack_require__(21);
+var _extends2 = __webpack_require__(22);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -46174,7 +46180,7 @@ module.exports = exports['default'];
 
 "use strict";
 
-module.exports = { "version": "2.2.6", "build": "v2.2.5-2-g63f8b96" };
+module.exports = { "version": "2.2.7", "build": "v2.2.6-2-ga3cb770" };
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/pasqualemangialavori/projects/game-sdk-react/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "version.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
