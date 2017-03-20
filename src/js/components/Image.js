@@ -18,13 +18,27 @@ export class Image extends React.Component {
     }
 
     render(){
-        let className = this.state.loaded ? imageStyle.imgLoaded : '';
+        
+        let imageClasses = [];
+        let loaded = this.state.loaded ? imageStyle.imgLoaded : '';
+        imageClasses = imageClasses.concat([loaded]);
+        
+        /**
+         * Padding bottom image is a trick to calculate the space
+         * that the image will cover in document
+         * http://davidecalignano.it/lazy-loading-with-responsive-images-and-unknown-height/
+         */
+        let paddingBottom = {paddingBottom: '100%'};
+        if(this.props.height && this.props.width) {
+            paddingBottom = { paddingBottom: `${(this.props.height / this.props.width) * 100}%` }
+        }
         return (
-            <div className={imageStyle.lazyContainer}>
-                <img className={className}
-                    onLoad={this.onImgLoad} 
-                    onError={this.onImgError} 
-                    {...this.props} />
+            <div className={imageStyle.lazyContainer} style={paddingBottom}>
+                <img className={imageClasses.join(' ')}
+                     onLoad={this.onImgLoad} 
+                     onError={this.onImgError} 
+                     style={this.props.style} 
+                     src={this.props.src}/>
             </div>
         )
     }
