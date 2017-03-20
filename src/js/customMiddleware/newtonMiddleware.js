@@ -117,9 +117,9 @@ export const newtonMiddleware = store => next => (action) => {
         },
       });
       break;
-    case 'RELATED_CLICK':
+    case 'RELATED_CLICKED':
       NewtonAdapter.trackEvent({
-        name: 'GameClickOnRelated',
+        name: 'GameOverRelated',
         properties: {
           action: 'Yes',
           category: 'Behavior',

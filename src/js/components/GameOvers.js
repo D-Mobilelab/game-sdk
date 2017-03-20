@@ -163,7 +163,7 @@ export class GamifiveGameover extends Gameover {
     }
 
     render(){
-        const showAndHideStyle = this.props.show ? { display: 'block', zIndex: '10', position: 'fixed' } : { display: 'none' };
+        const showAndHideStyle = this.props.show ? { display: 'block', zIndex: '10', position: 'absolute' } : { display: 'none' };
         const imgWidth = (Math.round(window.innerWidth / 100) * 100);
 
         let imgHeight = (Math.round(innerWidth / 2));
