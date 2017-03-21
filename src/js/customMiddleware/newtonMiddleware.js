@@ -108,8 +108,9 @@ export const newtonMiddleware = store => next => (action) => {
       });
       break;
     case 'BACK_CLICKED':
+      const name = qs.trackExecutionKey ? 'FirstBackClicked' : 'BackClicked';
       NewtonAdapter.trackEvent({
-        name: 'BACK_CLICKED',
+        name,
         properties: {
           action: 'Yes',
           category: 'Behavior',

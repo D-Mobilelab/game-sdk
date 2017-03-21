@@ -2,6 +2,7 @@ import Stargate from 'stargatejs';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
+import HistoryGame from '../lib/HistoryGame';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -50,14 +51,28 @@ function historyHandler(event, dispatch) {
   event.stopImmediatePropagation();
   const { state } = event;
   if (state.location === 'step1') {
-    console.log('back clicked!');
+    /* * 
+     * This means the user have clicked back and 
+     * coming from a related game
+     * */
     dispatch({ type: 'BACK_CLICKED' });
+    
+    const lastHistoryGame = HistoryGame.pop();
+    if (lastHistoryGame) {
+      window.location.href = lastHistoryGame;
+      return false;
+    }
+
+    dispatch(menuActions.goToHome());
     return false;
-  } else if (state.location === 'step0') {
+  } 
+  /*
+  else if (state.location === 'step0') {
     dispatch({ type: 'BACK_CLICKED' });
     dispatch(menuActions.goToHome());
     return false;
   }
+  */
 }
 
 function wrapHandler(fn, dispatch) {
@@ -74,8 +89,8 @@ function wrapHandler(fn, dispatch) {
 window.history.replaceState({ location: 'step0' }, document.title, `${window.location.pathname}#0`);
 window.history.pushState({ location: 'step1' }, document.title, `${window.location.pathname}#1`);
 window.history.pushState({ location: 'step2' }, document.title, `${window.location.pathname}#2`);
-/** registering state change */
 
+/** registering state change */
 function init(initConfig) {
   return (dispatch, getState) => {
     window.addEventListener('popstate', wrapHandler(historyHandler, dispatch));
@@ -168,6 +183,7 @@ function generateReportAction() {
 
 function goToRelated(related) {
   setTimeout(() => {
+    HistoryGame.push(`${window.location.origin}${window.location.pathname}`);
     window.location.href = related.url_play;
   }, 300);
 
