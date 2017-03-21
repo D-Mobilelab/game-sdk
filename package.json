@@ -1,6 +1,6 @@
 {
   "name": "game-sdk",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "description": "Buongiorno Game SDK - JS Library",
   "main": "dist/gfsdk.js",
   "repository": {

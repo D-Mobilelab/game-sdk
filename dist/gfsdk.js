@@ -43919,7 +43919,7 @@ var GameasyGameover = exports.GameasyGameover = (_dec = (0, _reactRedux.connect)
             var innerWidth = Math.round(window.innerWidth / 100) * 100;
             var percentage = Math.round(window.innerWidth * 60 / 100);
             var imgSrc = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
-            var imgSrcSet = imgSrc + ', ' + innerWidth + 'w';
+
             var _props$dictionary = this.props.dictionary,
                 WEBAPP_CONGRATULATIONS_SCORE = _props$dictionary.WEBAPP_CONGRATULATIONS_SCORE,
                 WEBAPP_YOUR_POSITION_TITLE = _props$dictionary.WEBAPP_YOUR_POSITION_TITLE,
@@ -43958,7 +43958,7 @@ var GameasyGameover = exports.GameasyGameover = (_dec = (0, _reactRedux.connect)
                             _react2.default.createElement(
                                 _index2.Column,
                                 { cols: 8 },
-                                _react2.default.createElement(_Image.Image, { srcSet: imgSrcSet }),
+                                _react2.default.createElement(_Image.Image, { src: imgSrc }),
                                 _react2.default.createElement(_MaterialButton.MaterialButton, { text: WEBAPP_CANVAS_BUTTON_PLAY, onClick: this.handleReplay, center: 'true', style: { width: '50%' } })
                             ),
                             _react2.default.createElement(
@@ -46180,7 +46180,7 @@ module.exports = exports['default'];
 
 "use strict";
 
-module.exports = { "version": "2.2.7", "build": "v2.2.6-2-ga3cb770" };
+module.exports = { "version": "2.2.8", "build": "v2.2.7-1-ga6598bd" };
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/pasqualemangialavori/projects/game-sdk-react/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "version.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
