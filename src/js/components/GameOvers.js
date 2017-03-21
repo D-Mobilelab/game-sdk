@@ -63,7 +63,7 @@ export class GameasyGameover extends Gameover {
         let innerWidth = (Math.round(window.innerWidth / 100) * 100);
         let percentage = Math.round(window.innerWidth * 60 / 100);
         let imgSrc = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
-        let imgSrcSet = `${imgSrc}, ${innerWidth}w`;
+
         let { 
             WEBAPP_CONGRATULATIONS_SCORE, 
             WEBAPP_YOUR_POSITION_TITLE, 
@@ -84,7 +84,7 @@ export class GameasyGameover extends Gameover {
                     {/* This position relative is needed for vertical align the score and the rank */}
                     <Row style={{position:'relative'}}>
                         <Column cols={8}>
-                            <Image srcSet={imgSrcSet} />
+                            <Image src={imgSrc} />
                             <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
                         </Column>
                         {/* custom styles needed for vertical align rank and score */}
