@@ -44,11 +44,11 @@ class Location {
   }
 
   getQueryStringKey(key) {
-    return Utils.dequeryfy(theWindow.location.href)[key];
+    return Utils.dequeryfy(theWindow.location.search)[key];
   }
 
   getQueryString() {
-    return Utils.dequeryfy(theWindow.location.href);
+    return Utils.dequeryfy(theWindow.location.search);
   }
 
   /**
@@ -65,10 +65,10 @@ class Location {
     return domainLevels.some(level => level.indexOf('gameasy') > -1);
   }
 
-    /**
-     * isGamifive
-     * @returns {Boolean} - return if the hostname it's a gamifive whitelabel
-     */
+  /**
+   * isGamifive
+   * @returns {Boolean} - return if the hostname it's a gamifive whitelabel
+   */
   isGamifive() {
     return !this.isGameasy();
   }

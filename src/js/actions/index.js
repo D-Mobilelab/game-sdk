@@ -50,7 +50,7 @@ function historyHandler(event, dispatch) {
   event.stopPropagation();
   event.stopImmediatePropagation();
   const { state } = event;
-  if (state.location === 'step1') {
+  if (state && state.location === 'step1') {
     /* * 
      * This means the user have clicked back and 
      * coming from a related game
@@ -59,7 +59,7 @@ function historyHandler(event, dispatch) {
     
     const lastHistoryGame = HistoryGame.pop();
     if (lastHistoryGame) {
-      window.location.href = lastHistoryGame;
+      window.location.replace(lastHistoryGame);
       return false;
     }
 
@@ -86,9 +86,10 @@ function wrapHandler(fn, dispatch) {
 * window.location.hash = '#gameplay';
 */
 
-window.history.replaceState({ location: 'step0' }, document.title, `${window.location.pathname}#0`);
-window.history.pushState({ location: 'step1' }, document.title, `${window.location.pathname}#1`);
-window.history.pushState({ location: 'step2' }, document.title, `${window.location.pathname}#2`);
+const addressBar = `${window.location.pathname}${window.location.search}`;
+window.history.replaceState({ location: 'step0' }, document.title, `${addressBar}#0`);
+window.history.pushState({ location: 'step1' }, document.title, `${addressBar}#1`);
+window.history.pushState({ location: 'step2' }, document.title, `${addressBar}#2`);
 
 /** registering state change */
 function init(initConfig) {
@@ -183,13 +184,15 @@ function generateReportAction() {
 
 function goToRelated(related) {
   setTimeout(() => {
+    if (related.format && related.format !== 'androidapplications') {
     HistoryGame.push(`${window.location.origin}${window.location.pathname}`);
-    window.location.href = related.url_play;
-  }, 300);
+    }
+    window.location.replace(related.url_play);
+  }, 100);
 
   return {
     type: 'RELATED_CLICKED',
-    payload: related
+    payload: related,
   };
 }
 
