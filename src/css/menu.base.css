@@ -1,23 +1,16 @@
-@keyframes pop-in {
-    0% { opacity: 0; transform: scale(0.5); }
-    100% { opacity: 1; -webkit-transform: scale(1); }
-}
-
-@keyframes pop-out {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0);}
-}
+@value width: 60px;
+@value borderRadius: 30px;
 
 .menu {
-    background-position: -5px -475px;
-    margin-top: -22px;
     z-index: 10;
     position: fixed;    
-    cursor:pointer;
-    width: 60px; 
-    height: 60px;
+    cursor: pointer;
+    width: width; 
+    height: width;
     transform: scale(0);
     transition: transform 100ms;
+    overflow: hidden;
+    border-radius: borderRadius;
 }
 
 .menu.show {
@@ -33,11 +26,13 @@
 }
 
 .menu_g5 {
-  composes: menu;
-  background-image: url('../img/sprite_g5.png');
+    composes: menu;
+    background-image: url('../img/sprite_g5.png');
+    background-image: url('../img/sprite_g5.svg');
 }
 
 .menu_gameasy {
-  composes: menu;
-  background-image: url('../img/sprite_gameasy.png');
+    composes: menu;
+    background-image: url('../img/sprite_gameasy.png');
+    background-image: url('../img/sprite_gameasy.svg');
 }

@@ -79,7 +79,7 @@ export class Banner extends React.Component {
                             </Column>
                         </Row>
                         <Row>
-                            <Column cols={6} offset={3} style={{marginTop:'10px'}}>
+                            <Column cols={6} offset={3} style={{marginTop:'10%'}}>
                                 <MaterialButton text={WEBAPP_BANNER_BUTTON} style={{fontSize: '15px', width:'100%'}} onClick={this.handleGetAppButton}/>
                             </Column>
                         </Row>

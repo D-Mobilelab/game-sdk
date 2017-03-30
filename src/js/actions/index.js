@@ -2,6 +2,7 @@ import Stargate from 'stargatejs';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
+import HistoryGame from '../lib/HistoryGame';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -19,7 +20,8 @@ const vhostKeys = [
   'CONTENT_RANKING',
     // "GAMEOVER_LIKE_CLASS_TO_TOGGLE",
     // "GAMEOVER_LIKE_SELECTOR",
-  'IMAGES_SPRITE_GAME',
+  'SPRITE_GAME_PNG',
+  'SPRITE_GAME_SVG',
   'MOA_API_APPLICATION_OBJECTS_GET',
   'MOA_API_APPLICATION_OBJECTS_SET',
     // "MOA_API_USER_CHECK",
@@ -49,15 +51,29 @@ function historyHandler(event, dispatch) {
   event.stopPropagation();
   event.stopImmediatePropagation();
   const { state } = event;
-  if (state.location === 'step1') {
-    console.log('back clicked!');
+  if (state && state.location === 'step1') {
+    /* * 
+     * This means the user have clicked back and 
+     * coming from a related game
+     * */
     dispatch({ type: 'BACK_CLICKED' });
+    
+    const lastHistoryGame = HistoryGame.pop();
+    if (lastHistoryGame) {
+      window.location.replace(lastHistoryGame);
+      return false;
+    }
+
+    dispatch(menuActions.goToHome());
     return false;
-  } else if (state.location === 'step0') {
+  } 
+  /*
+  else if (state.location === 'step0') {
     dispatch({ type: 'BACK_CLICKED' });
     dispatch(menuActions.goToHome());
     return false;
   }
+  */
 }
 
 function wrapHandler(fn, dispatch) {
@@ -71,11 +87,12 @@ function wrapHandler(fn, dispatch) {
 * window.location.hash = '#gameplay';
 */
 
-window.history.replaceState({ location: 'step0' }, document.title, `${window.location.pathname}#0`);
-window.history.pushState({ location: 'step1' }, document.title, `${window.location.pathname}#1`);
-window.history.pushState({ location: 'step2' }, document.title, `${window.location.pathname}#2`);
-/** registering state change */
+const addressBar = `${window.location.pathname}${window.location.search}`;
+window.history.replaceState({ location: 'step0' }, document.title, `${addressBar}#0`);
+window.history.pushState({ location: 'step1' }, document.title, `${addressBar}#1`);
+window.history.pushState({ location: 'step2' }, document.title, `${addressBar}#2`);
 
+/** registering state change */
 function init(initConfig) {
   return (dispatch, getState) => {
     window.addEventListener('popstate', wrapHandler(historyHandler, dispatch));
@@ -111,8 +128,8 @@ function init(initConfig) {
         })
         .then(() => {
           const menuStyle = {};
-          if (getState().vhost.IMAGES_SPRITE_GAME && getState().vhost.IMAGES_SPRITE_GAME !== '') {
-          //  menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
+          if (getState().vhost.SPRITE_GAME_SVG && getState().vhost.SPRITE_GAME_SVG !== '') {
+            menuStyle.backgroundImage = `url("${getState().vhost.SPRITE_GAME_SVG}")`;
           }
 
           dispatch(menuActions.showMenu(menuStyle));
@@ -168,12 +185,15 @@ function generateReportAction() {
 
 function goToRelated(related) {
   setTimeout(() => {
-    window.location.href = related.url_play;
-  }, 300);
+    if (related.format && related.format !== 'androidapplications') {
+    HistoryGame.push(`${window.location.origin}${window.location.pathname}`);
+    }
+    window.location.replace(related.url_play);
+  }, 100);
 
   return {
     type: 'RELATED_CLICKED',
-    payload: related
+    payload: related,
   };
 }
 
