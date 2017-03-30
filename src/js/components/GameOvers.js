@@ -198,7 +198,7 @@ export class GamifiveGameover extends Gameover {
                             
                             <div className="game-over-data">
                                 
-                                <div className="score score--noChallenge">
+                                <div className="score score--noChallenge" style={{ marginTop: '1%' }}>
                                     <h2 className="title-game">
                                         {WEBAPP_CONGRATULATIONS_SCORE}
                                     </h2>
