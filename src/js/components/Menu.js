@@ -61,43 +61,35 @@ export class Menu extends Component {
     }
 
     onPointerStart(event){
-        let position = {x : Math.round(event.pageX), y: Math.round(event.pageY)};
-        this.props.actions.setDownPosition({active: true, position });
+        let position = {x : Math.round(event.clientX), y: Math.round(event.clientY)};        
+        this.props.actions.setDownPosition({ active: true, position });        
     }
 
     onPointerEnd(event){
-        let endX = Math.round(event.pageX);
-        let endY = Math.round(event.pageY);
-        let OFFSET = 15;
-        /*if((this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET) && 
+        let endX = Math.round(event.clientX);
+        let endY = Math.round(event.clientY);
+        let position = { x : endX, y: endY };
+        const OFFSET = 9;
+        if((this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET) && 
            (this.props.pointerDownPosition.y >= endY - OFFSET && this.props.pointerDownPosition.y <= endY + OFFSET)
           ) {
             // It's a click/tap
-            // window.alert("it's a T(r)ap!");
-            // open the menu?
-            this.props.actions.goToHome();
-        } else {
-            // was dragged. put in the closer angle?
-            // window.alert("drag");
-            console.log('Drag menu');
-        }*/
-        if (!this.props.drag) {
-            this.props.actions.goToHome();
+            // window.alert("it's a T(r)ap!");   
+            this.props.actions.goToHome();        
         }
-        let position = { x : endX, y: endY };
-        this.props.actions.setUpPosition({active: false, position });
+        
+        this.props.actions.setUpPosition({ active: false, position });
         //console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY, this.props.drag);
-        this.props.actions.setDrag(false);
+        if(this.props.drag){
+          this.props.actions.setDrag(false);
+        }
     }
 
     onPointerMove(event) {
-        if(!this.props.drag && this.props.active) {
-          this.props.actions.setDrag(true);
-        }
-        
-        if(this.props.active){
-            let position = {x : Math.round(event.pageX), y: Math.round(event.pageY)};
-            this.props.actions.setPosition({ position });
+        let position = {x : Math.round(event.clientX), y: Math.round(event.clientY)};
+        this.props.actions.setDrag(true);
+        if(this.props.active) {          
+          this.props.actions.setPosition({ position });
         }
     }
 
@@ -135,7 +127,7 @@ export class Menu extends Component {
         let menu = this.props.white_label === 'gamifive' ? menuStyles.menu_g5 : menuStyles.menu_gameasy;
         let classNames = [menu];
         classNames.push(this.props.show ? menuStyles.show : menuStyles.hide);
-        classNames.push(this.props.active ? menuStyles.active : '');        
+        classNames.push(this.props.active ? menuStyles.active : '');
         return(
             <div ref='menu' className={classNames.join(' ')} style={this.props.style}></div>
         );

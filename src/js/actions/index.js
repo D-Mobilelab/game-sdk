@@ -20,7 +20,8 @@ const vhostKeys = [
   'CONTENT_RANKING',
     // "GAMEOVER_LIKE_CLASS_TO_TOGGLE",
     // "GAMEOVER_LIKE_SELECTOR",
-  'IMAGES_SPRITE_GAME',
+  'SPRITE_GAME_PNG',
+  'SPRITE_GAME_SVG',
   'MOA_API_APPLICATION_OBJECTS_GET',
   'MOA_API_APPLICATION_OBJECTS_SET',
     // "MOA_API_USER_CHECK",
@@ -127,8 +128,8 @@ function init(initConfig) {
         })
         .then(() => {
           const menuStyle = {};
-          if (getState().vhost.IMAGES_SPRITE_GAME && getState().vhost.IMAGES_SPRITE_GAME !== '') {
-          //  menuStyle.backgroundImage = `url("${getState().vhost.IMAGES_SPRITE_GAME}")`;
+          if (getState().vhost.SPRITE_GAME_SVG && getState().vhost.SPRITE_GAME_SVG !== '') {
+            menuStyle.backgroundImage = `url("${getState().vhost.SPRITE_GAME_SVG}")`;
           }
 
           dispatch(menuActions.showMenu(menuStyle));
