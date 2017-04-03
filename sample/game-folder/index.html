@@ -10,15 +10,11 @@
     <title>Game SDK Debug/Dev Environment</title>
 </head>
   <body>
-   
-    <div class='container_console'>
-        <h1>Game SDK console</h1>
-        <pre class='console'>
 
-        </pre>        
-    </div>
     <script>
-        GamifiveSDK.init({ lite: false });
+        GamifiveSDK.init({ lite: false }).then(function afterInit(){
+          console.log("Do things afterinit");
+        });
     </script>
   </body>
 </html>

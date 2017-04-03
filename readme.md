@@ -110,7 +110,8 @@ The SDK can be initialized calling its <i>init</i> method with a <i>param</i> ob
         <i><b>lite</b></i> (boolean): toggles lite mode, if <i>true</i> a reduced set of functionalities is used, in particular the GameOver screen is not loaded. Lite mode is useful for integrating the SDK into level-based games, so that the game's flow won't get interrupted by the gameover screen. Normal (non-lite) mode, instead, is meant to be used for other kind of games, i.e. those that feature an endless gameplay experience;
     </li>
     <li> 
-        <i><b>moreGamesButtonStyle</b></i> (object): defines the css style of the "more games" button. If present, the button will be displayed (you can pass an empty object for using the default style). If not present, the button won't be displayed.
+        !!DEPRECATED!!
+        <i><b>moreGamesButtonStyle</b></i> (object): defines the css style of the "more games" button. If present, the button will be displayed (you can pass an empty object for using the default style).
     </li>
 </ul>
 
@@ -118,8 +119,7 @@ The SDK can be initialized calling its <i>init</i> method with a <i>param</i> ob
 
 ```javascript
 GamifiveSDK.init({ 
-	lite: false,
-	moreGamesButtonStyle: { } // shows more games button with default style
+	lite: false	//With our gameover
 });
 ```
 
@@ -195,11 +195,11 @@ Usually - but not necessarily - endSession occurs in the 'Game Over' state.
 To end a session in lite mode, you have to:
 
 <ol>
-	<li>call <i>GamifiveSDK.endSession()</i> method.
+	<li>call <i>GamifiveSDK.endSession({ score: Number, level: Number })</i> method.
 		You should call it passing an object as parameter - this object can contain:
 	   <ul> 
 	       <li> an attribute <b>score</b>, which is the score realized by the player during the game session. This value must be a number (not string). </li>
-    	   <li> an attribute <b>level</b>, which is the level reached by the player during the game session. This value must be a number and it will be saved for later use in the sdk configuration (you can retrieve it into <b>GamifiveSDK.getConfig().user.level</b>).
+    	   <li> an attribute <b>level</b>, which is the level reached by the player during the game session. This value must be a number and it will be saved for later use in the sdk configuration (you can retrieve it into <b>GamifiveSDK.getConfig().user.level or GamifiveSDK.getLevel() starting from version v2.3.x</b>).
     	   </li>
     	   <li>
     	   No attributes at all: in this case the SDK will only save the game session (starting and ending time).
@@ -298,8 +298,12 @@ Shows a built-in more games button. If no parameters are passed, the button is c
 // display the button with default style:
 GamifiveSDK.showMoreGamesButton();
 
+!!Deprecated!!
 // display the button with custom style:
 GamifiveSDK.showMoreGamesButton({left: '2px', height: '44px'});
+
+//Use this instead
+GamifiveSDK.showMoreGamesButton();
 ```
 
 ## hideMoreGamesButton
@@ -342,24 +346,6 @@ You can get the user's nickname by calling <i>GamifiveSDK.getNickname()</i>.
 var avatar = GamifiveSDK.getNickname();
 ```
 
-It returns a string equal to the nickname of the user.
-
-<h1>Migrating apps featuring older versions of the SDK to v0.4</h1>
-
-<h2>Migrating app using v0.3 to v0.4 of the SDK</h2>
-
-Apps featuring v0.3 of the SDK can be migrated to v0.4 by explicitly adding a call to the <i>Gamifive.init</i> method before using any of the module's features.
-
-Previously, the <i>init</i> method was called implicitly, now it must be called by the game developer for correctly configuring the SDK by passing a config object with the desired parameters.
-
-<h2>Migrating app using v0.1 to v0.4 of the SDK</h2>
-
-Apps featuring v0.1 of the SDK can be migrated to v0.4 by explicitly adding a call to the <i>Gamifive.init</i> method before using any of the module's features.
-
-Previously, the <i>init</i> method was called implicitly, now it must be called by the game developer for correctly configuring the SDK by passing a config object with the desired parameters.
-
-Moreover, since the functionalities implemented in v0.1 correspond to the "lite" version of v0.4, you must declare <i>lite: true</i> in the configuration parameters passed to the <i>init</i> method. 
-
 ### Example
 
 ```javascript
@@ -382,115 +368,6 @@ GamifiveSDK.onStartSession(function yourFunction(){
     //do things everytime a session start
 });
 
-### GamifiveSDK.startSession
-
-If <i>GamifiveSDK.init</i> function was called before calling <i>GamifiveSDK.endSession</i>, then the following debug message is displayed: 
-
-```javascript
-    ["GamifiveSDK", "OK", "init has been called correctly"]
-```
-
-Otherwise, the following error message is displayed, specifying that the error was due to a missing or unsuccessful call to <i>init</i>.
-
-```javascript
-    GamifiveSDK,ERROR,init has not been called
-```
-
-<h3>GamifiveSDK.endSession</h3>
-
-If <i>GamifiveSDK.startSession</i> function has been called before calling <i>GamifiveSDK.endSession</i>, then the following debug message is displayed: 
-
-```javascript
-    ["GamifiveSDK", "OK", "startSession has been called correctly"]
-```
-
-Otherwise, the following error message is displayed, specifying that the error was due to a missing or unsuccessful call to <i>GamifiveSDK.startSession</i>.
-
-```javascript
-    GamifiveSDK,ERROR,startSession has not been called
-```
-
-If the <i>score</i> was passed in the proper way, then the following debug message is displayed: 
-
-```javascript
-    ["GamifiveSDK", "OK", "score has been set correctly"]
-```
-
-Otherwise, the following error message is displayed:
-
-```javascript
-    GamifiveSDK,ERROR,missing score value
-```
-
-## Normal (non-lite) mode
-
-\### GamifiveSDK.init
-
-No debug messages are displayed when calling <i>GamifiveSDK.init</i>.
-
-### GamifiveSDK.onStartSession
-
-If the variable passed to <i>onStartSession</i> as an argument is a function, then the following debug message is displayed:
-
-```javascript
-     ["GamifiveSDK", "OK", "callback function has been set correctly"]
-```
-
-If such argument is not passed or it is not a function, then the following error message is displayed:
-
-```javascript
-    GamifiveSDK,ERROR,missing or illegal value for callback function
-```
-
-\### GamifiveSDK.startSession
-
-If <i>init</i> and <i>onStartSession</i> were called before calling <i>GamifiveSDK.startSession</i>, then the SDK is now correctly configured to start a session and following debug messages are displayed: 
-
-```javascript
-    ["GamifiveSDK", "OK", "init has been called correctly"]
-    ["GamifiveSDK", "OK", "onStartSession has been called correctly"]
-```
-
-Otherwise: 
-
-if <i>init</i> was not called, the following error message is displayed:
-
-```javascript
-    GamifiveSDK,ERROR,init has not been called
-```
-
-if <i>onStartSession</i> was not called, the following error message is displayed:
-
-```javascript
-    GamifiveSDK,ERROR,onStartSession has not been called
-```
-
-### GamifiveSDK.endSession
-
-If the <i>startSession</i> function has been called before calling <i>GamifiveSDK.endSession</i>, then the following debug message is displayed: 
-
-```javascript
-    ["GamifiveSDK", "OK", "startSession has been called correctly"]
-```
-
-Otherwise, the following error message is displayed, specifying that the error was due to a missing or unsuccessful call to <i>startSession</i>.
-
-```javascript
-    GamifiveSDK,ERROR,startSession has not been called
-```
-
-If the <i>score</i> was passed in the proper way, then the following debug message is displayed: 
-
-```javascript
-    ["GamifiveSDK", "OK", "score has been set correctly"]
-```
-
-Otherwise, the following error message is displayed:
-
-```javascript
-    GamifiveSDK,ERROR,missing score value
-```
-
 ## Full implementation example
 
 ```javascript
@@ -499,7 +376,8 @@ GamifiveSDK.onStartSession(function(){
 });
 
 // You can run this on body onload event or on document content load or as soon as you can
-GamifiveSDK.init({ lite: true }); // could be an empty object: default lite = false
+// could be an empty object: default lite = false
+GamifiveSDK.init({ lite: true });
 
 // your userData empty structure
 var emptyStructure = {
@@ -527,7 +405,7 @@ GamifiveSDK.loadUserData(function(userProgressSaved){
 GamifiveSDK.startSession();
 
 // Persist user data when somenthing happens. Change in settings or end of the level
-GamifiveSDK.saveUserData({ 
+GamifiveSDK.saveUserData({
     level1: { 
         unlocked: true, 
         stars: 2,

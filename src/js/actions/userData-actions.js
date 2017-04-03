@@ -290,3 +290,9 @@ export function loadUserData(callback = onUserDataCallback) {
     }
   };
 }
+
+export function clearUserData() {
+  return (dispatch, getState) => {
+    return dispatch(saveUserData(null));
+  }
+}
