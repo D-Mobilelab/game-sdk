@@ -21,14 +21,15 @@ export default class SDK {
 
   /**
    * Initialize the sdk
+   * @memberOf SDK
    * @param {Object}  initConfig
    * @param {Boolean} initConfig.lite - true if should show the gameover
    * @param {Object}  initConfig.moreGamesButtonStyle - a custom styles to pass to moregames button
-   * @memberOf SDK
+   * @returns {Promise}
    */
   init(initConfig) {
     const { store } = privates.get(this);
-    store.dispatch(Actions.init(initConfig));
+    return store.dispatch(Actions.init(initConfig));
   }
 
   /**
