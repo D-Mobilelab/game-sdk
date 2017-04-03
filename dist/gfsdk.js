@@ -42554,10 +42554,11 @@ var SDK = function () {
 
   /**
    * Initialize the sdk
+   * @memberOf SDK
    * @param {Object}  initConfig
    * @param {Boolean} initConfig.lite - true if should show the gameover
    * @param {Object}  initConfig.moreGamesButtonStyle - a custom styles to pass to moregames button
-   * @memberOf SDK
+   * @returns {Promise}
    */
 
 
@@ -42567,7 +42568,7 @@ var SDK = function () {
       var _privates$get = privates.get(this),
           store = _privates$get.store;
 
-      store.dispatch(_index.Actions.init(initConfig));
+      return store.dispatch(_index.Actions.init(initConfig));
     }
 
     /**
@@ -43252,6 +43253,7 @@ var _promise2 = _interopRequireDefault(_promise);
 
 exports.saveUserData = saveUserData;
 exports.loadUserData = loadUserData;
+exports.clearUserData = clearUserData;
 
 var _stargatejs = __webpack_require__(86);
 
@@ -43555,6 +43557,12 @@ function loadUserData() {
         return onUserDataCallback(getState().user.userData.info);
       });
     }
+  };
+}
+
+function clearUserData() {
+  return function (dispatch, getState) {
+    return dispatch(saveUserData(null));
   };
 }
 
@@ -46283,7 +46291,7 @@ module.exports = exports['default'];
 
 "use strict";
 
-module.exports = { "version": "2.3.1", "build": "v2.3.0-2-g318060d" };
+module.exports = { "version": "2.3.2", "build": "v2.3.1-4-g802ec83" };
 
 /* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/pasqualemangialavori/projects/game-sdk-react/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot apply hot update to " + "version.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
