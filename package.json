@@ -24,7 +24,7 @@
     "upload129": "scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r dist pasqualemangialavori@super@192.168.124.129@10.255.246.25:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/"
   },
   "author": "eatsjobs",
-  "license": "ISC",
+  "license": "BSD",
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "babel-cli": "^6.14.0",
