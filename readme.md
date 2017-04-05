@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/D-Mobilelab/game-sdk.svg?branch=master)](https://travis-ci.org/D-Mobilelab/game-sdk)
+
 <h1>GamifiveSDK 2.x.x</h1>
 <p>This is the how-to for game developers for integrating GamifiveSDK into their games.</p>
 
