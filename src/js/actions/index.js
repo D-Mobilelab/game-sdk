@@ -52,12 +52,12 @@ function historyHandler(event, dispatch) {
   event.stopImmediatePropagation();
   const { state } = event;
   if (state && state.location === 'step1') {
-    /* * 
-     * This means the user have clicked back and 
+    /* *
+     * This means the user have clicked back and
      * coming from a related game
      * */
     dispatch({ type: 'BACK_CLICKED' });
-    
+
     const lastHistoryGame = HistoryGame.pop();
     if (lastHistoryGame) {
       window.location.replace(lastHistoryGame);
@@ -66,7 +66,7 @@ function historyHandler(event, dispatch) {
 
     dispatch(menuActions.goToHome());
     return false;
-  } 
+  }
   /*
   else if (state.location === 'step0') {
     dispatch({ type: 'BACK_CLICKED' });
@@ -98,8 +98,8 @@ function init(initConfig) {
     window.addEventListener('popstate', wrapHandler(historyHandler, dispatch));
     /** registering hash change */
     /* window.onhashchange = wrapHandler(hashHandler, dispatch);*/
-    
-    dispatch({ type: 'SET_IS_HYBRID', hybrid: Stargate.isHybrid() });
+
+    // dispatch({ type: 'SET_IS_HYBRID', hybrid: Stargate.isHybrid() });
     if (getState().generic.initialized) {
       return Promise.resolve();
     }
@@ -186,7 +186,7 @@ function generateReportAction() {
 function goToRelated(related) {
   setTimeout(() => {
     if (related.format && related.format !== 'androidapplications') {
-    HistoryGame.push(`${window.location.origin}${window.location.pathname}`);
+      HistoryGame.push(`${window.location.origin}${window.location.pathname}`);
     }
     window.location.replace(related.url_play);
   }, 100);
