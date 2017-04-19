@@ -106,13 +106,7 @@ function init(initConfig) {
 
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
 
-    return Stargate.initialize()
-        .then(() => {
-          dispatch({ type: 'SET_CONNECTION_STATE', connectionState: Stargate.checkConnection() });
-          Stargate.addListener('connectionchange', (connState) => {
-            dispatch({ type: 'SET_CONNECTION_STATE', connectionState: connState });
-          });
-        })
+    return Promise.resolve()
         .then(() => {
           const dictURL = [Location.getOrigin(), Constants.DICTIONARY_API_URL].join('');
           return dispatch(vhostActions.dictLoad(dictURL));
