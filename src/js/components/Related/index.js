@@ -1,7 +1,7 @@
-import RelatedList from './RelatedList';
-import RelatedListItem from './RelatedListItem';
+import List from './List';
+import ListItem from './ListItem';
 
-export default {
-    RelatedList,
-    RelatedListItem,
+export {
+    List,
+    ListItem,
 }

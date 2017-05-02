@@ -17,7 +17,7 @@ var devConfiguration = {
         {
           test: /\.jsx?$/,
           exclude: /(bower_components|node_modules)/,
-          loader: ["react-hot-loader", "babel-loader"],
+          loader: ["babel-loader"], //["react-hot-loader", "babel-loader"]
         },
         {
           test: /\.css$/,

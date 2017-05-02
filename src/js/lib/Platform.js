@@ -2,7 +2,7 @@ import platform from 'platform';
 
 let _platform = platform;
 let setMock = () => {};
-const isTesting = () => process.env.NODE_ENV === 'testing';
+const isTesting = () => process.env.NODE_ENV === 'test';
 if (isTesting()) {
   setMock = (UAString) => {
     _platform = platform.parse(UAString);

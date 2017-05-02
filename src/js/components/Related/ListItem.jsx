@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image } from '../Image';
 
-export default class RelatedListItem extends Component {
+export default class ListItem extends Component {
 
     constructor(props){
         super(props);        

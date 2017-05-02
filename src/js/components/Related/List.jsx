@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import RelatedItem from './RelatedListItem';
-export default class RelatedList extends Component {
+
+export default class List extends Component {
 
     constructor(props){
         super(props);

@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 
   PAYWALL_ELEMENT_ID: 'paywall',
   MAX_RECORDED_SESSIONS_NUMBER: 2,
