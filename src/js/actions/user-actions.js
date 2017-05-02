@@ -62,13 +62,12 @@ export function getUser() {
     dispatch({ type: 'USER_CHECK_LOAD_START' });
     const { generic } = getState();
     const query = {};
-    if (generic.hybrid) { query.hybrid = 1; }
+    if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
     return AxiosInstance.get(Constants.USER_CHECK, { params: query })
         .then((userResponse) => {
           const user = userResponse.data;
 
-          if (process.env.NODE_ENV === 'development' &&
-              process.env.NODE_ENV !== 'preprod') {
+          if (process.env.NODE_ENV === 'development') {
             const userType = localStorage.getItem('gfsdk-debug-user_type');
             if (userType === 'guest') {
               user.user = null;

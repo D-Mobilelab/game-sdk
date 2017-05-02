@@ -9,6 +9,7 @@ import { getContentId, setRelated } from './gameinfo-actions';
 import { showBanner } from './banner-actions';
 
 let onStartCallback = () => {};
+const hybrid = process.env.APP_ENV === 'HYBRID';
 
 function doStartSession() {
   return (dispatch, getState) => {
@@ -102,7 +103,7 @@ export function endSession(data = { score: 0, level: 1 }) {
     const { user, generic, vhost } = getState();
     const bannerCondition = [
       (user.matchPlayed % 3 === 0),
-      !generic.hybrid,
+      !hybrid,
       isAndroid(),
       vhost.INSTALL_HYBRID_VISIBLE,
     ].every(condition => condition === true);
