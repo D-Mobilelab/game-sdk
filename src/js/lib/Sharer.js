@@ -1,10 +1,9 @@
-import Stargate from 'stargatejs';
+import Utils from 'docomo-utils';
 import {
     FB_SDK_VERSION,
-    FB_SDK_URL } from './Constants';
+    FB_SDK_URL 
+} from './Constants';
 import Location from './Location';
-
-const { Utils } = Stargate;
 
 class FacebookInterface {
   constructor(config) {
@@ -14,7 +13,7 @@ class FacebookInterface {
   }
 
   init(config) {
-    if (Stargate.isHybrid()) {
+    if (process.env.APP_ENV === 'HYBRID') {
       return;
     }
     this.config = config;
@@ -47,19 +46,33 @@ class FacebookInterface {
     }
   }
 
+  /**
+   * share
+   * 
+   * @param {String} url 
+   * @returns {Promise}
+   * 
+   * @memberOf FacebookInterface
+   */
   share(url) {
-    if (Stargate.isHybrid()) {
-      return Stargate.facebookShare(url);
+    const shareParams = {
+      method: 'share',
+      href: url,
+    };
+
+    if (process.env.APP_ENV === 'HYBRID') {
+      // return Stargate.facebookShare(url);
+      /*global facebookConnectPlugin*/
+      if (typeof window.facebookConnectPlugin !== 'undefined') {
+        return new Promise((resolve, reject) => {
+          facebookConnectPlugin.showDialog(shareParams, resolve, reject);
+        });
+      }
     }
 
     if (!this.initialized) {
       return Promise.resolve(false);
     }
-
-    const shareParams = {
-      method: 'share',
-      href: url,
-    };
 
     return new Promise((resolve) => {
       window.FB.ui(shareParams, (response) => {

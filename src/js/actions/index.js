@@ -1,4 +1,4 @@
-import Stargate from 'stargatejs';
+import Utils from 'docomo-utils';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
@@ -15,7 +15,6 @@ import * as newtonActions from './newton-actions';
 import * as bannerActions from './banner-actions';
 import * as sharerActions from './sharer-actions';
 
-const { Utils } = Stargate;
 const vhostKeys = [
   'CONTENT_RANKING',
     // "GAMEOVER_LIKE_CLASS_TO_TOGGLE",

@@ -1,12 +1,11 @@
 var path = require('path');
 
-// loader: 'style-loader!css-loader?modules=true&importLoaders=1&localIdentName=[name]_[local]_[hash:base64:5]!postcss-loader',
 var devConfiguration = {
   entry: [
     './src/index.js',
   ],
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve('dist'),
     publicPath: '/',
     filename: 'gfsdk.js',
     libraryTarget: 'umd',
@@ -54,7 +53,7 @@ var devConfiguration = {
     // module end
   resolve: {
     extensions: ['.js', '.es6', '.jsx'],
-  },
+  }
 };
 
 module.exports = devConfiguration;

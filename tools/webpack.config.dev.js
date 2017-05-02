@@ -5,7 +5,10 @@ var baseConfiguration = require('./webpack.config.base');
 var devConfiguration = Object.create(baseConfiguration);
 
 var hotPlugin = new webpack.HotModuleReplacementPlugin();
-var envPlugin = new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('development') } });
+var envPlugin = new webpack.DefinePlugin({
+    'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV),
+    'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
+});
 
 var HOSTNAME = 'local.appsworld.gamifive-app.com';
 // var HOSTNAME = '0.0.0.0';

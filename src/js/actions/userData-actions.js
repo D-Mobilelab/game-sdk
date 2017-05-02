@@ -1,4 +1,4 @@
-import { Utils } from 'stargatejs';
+import Utils from 'docomo-utils';
 import Reporter from '../lib/Reporter';
 import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
