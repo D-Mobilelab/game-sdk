@@ -9,7 +9,7 @@ export function canPlay() {
     return AxiosInstance.get(url, {
       params: { cors_compliant: 1 },
     }).then((response) => {
-      if (process.env.NODE_ENV === 'debug' || process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development' || process.env.APP_ENV === 'HYBRID') {
         response.data.canDownload = true;
       }
       dispatch({ type: 'SET_CAN_PLAY', canPlay: response.data.canDownload });

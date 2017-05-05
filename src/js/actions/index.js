@@ -107,8 +107,7 @@ function init(initConfig) {
 
     return Promise.resolve()
         .then(() => {
-          const dictURL = [Location.getOrigin(), Constants.DICTIONARY_API_URL].join('');
-          return dispatch(vhostActions.dictLoad(dictURL));
+          return dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL));
         })
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))

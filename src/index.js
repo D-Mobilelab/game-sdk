@@ -15,6 +15,10 @@ import GamifiveOver from './js/components/GamifiveOver';
   module.hot.accept();
 }*/
 
+if (process.env.APP_ENV === 'HYBRID') {
+    __webpack_public_path__ = RUNTIME_PUBLIC_PATH;
+}
+
 const Gameovers = { 
     gamifive: GamifiveOver,
     gameasy: GameasyOver

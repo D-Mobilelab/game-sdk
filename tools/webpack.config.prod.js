@@ -1,14 +1,19 @@
 var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
-var ROOT_DIRECTORY = JSON.stringify(process.env.ROOT_DIRECTORY);
 
 var FILENAME = 'gfsdk.min.js';
 var FILENAME_HYBRID = 'gfsdk.hybrid.min.js';
 
 var prodConfiguration = Object.create(baseConfiguration);
+var ROOT_DIRECTORY = null;
+
+if(process.env.ROOT_DIRECTORY) {
+  ROOT_DIRECTORY = JSON.stringify(process.env.ROOT_DIRECTORY);
+  prodConfiguration.output.publicPath = ROOT_DIRECTORY;
+}
+
 prodConfiguration.output.filename = process.env.APP_ENV === "WEB" ? FILENAME : FILENAME_HYBRID;
-prodConfiguration.output.publicPath = ROOT_DIRECTORY;
 prodConfiguration.devtool = 'source-map';
 
 prodConfiguration.plugins = [

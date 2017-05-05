@@ -1,6 +1,13 @@
 import axios from 'axios';
 import Location from './Location';
 
-export const AxiosInstance = axios.create({
-  // baseURL: window.location.origin //Location.getOrigin()
-});
+let AxiosInstance;
+if (window.ORIGIN) {
+  AxiosInstance = axios.create({
+    baseURL: window.ORIGIN
+  });
+} else {
+  AxiosInstance = axios.create();
+}
+
+export { AxiosInstance };
