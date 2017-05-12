@@ -1,27 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import SDK from './SDK';
 import Location from './js/lib/Location';
 import { Provider } from 'react-redux';
 import store from './store';
 
 import Menu from './js/components/Menu';
-import { Banner } from './js/components/Banner/Banner';
-import { 
-    GameasyGameover, 
-    GamifiveGameover
-} from './js/components/GameOvers';
+import Banner from './js/components/Banner/Banner';
+import GameasyOver from './js/components/GameasyOver';
+import GamifiveOver from './js/components/GamifiveOver';
 
-if (module.hot) {
+/*if (module.hot) {
   module.hot.accept();
+}*/
+
+if (process.env.APP_ENV === 'HYBRID') {
+    __webpack_public_path__ = RUNTIME_PUBLIC_PATH;
 }
 
 const Gameovers = { 
-    gamifive: GamifiveGameover,
-    gameasy: GameasyGameover
+    gamifive: GamifiveOver,
+    gameasy: GameasyOver
 }
 
-import SDK from './SDK';
 class App extends React.Component {
     
     constructor(props){
@@ -32,7 +34,7 @@ class App extends React.Component {
         let TheGameover = Gameovers[this.props.label];
         return (
             <div>
-                <TheGameover />
+                <TheGameover />    
                 <Banner />
                 <Menu white_label={this.props.label}/>
             </div>
@@ -46,7 +48,6 @@ function onDomLoaded(event) {
     window.document.body.appendChild(ROOT_ELEMENT);
 
     let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
-    
     ReactDOM.render(
         <Provider store={store}>
             <App label={WHITE_LABEL} />
@@ -62,4 +63,5 @@ const instance = new SDK(store);
 aliases.map((alias) => {
     window[alias] = instance;
 });
-export default instance
+
+module.exports = instance;

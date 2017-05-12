@@ -1,14 +1,17 @@
-import Stargate from 'stargatejs';
 import Location from '../lib/Location';
 
 export function goToHome() {
   return (dispatch, getState) => {
     const { generic } = getState();
-    if (generic.hybrid) {
+    if (process.env.APP_ENV === 'HYBRID') {
       if (window.webview) {
         window.webview.Close();
       } else {
-        Stargate.goToLocalIndex();
+        /**
+         * TODO: go to local index to be implemented
+         */
+        console.warn("Go to local index to be implemented");
+        // Stargate.goToLocalIndex();
       }
     } else {
       window.location.href = Location.getOrigin();

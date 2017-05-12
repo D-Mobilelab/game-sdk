@@ -7,7 +7,7 @@ import bannerStyle from './style.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-/*			
+/*
 WEBAPP_HYBRIDINSTALL_TXT
 WEBAPP_HYBRIDINSTALL_APPINFO
 WEBAPP_HYBRIDINSTALL_APPINFOSMALL
@@ -26,8 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class Banner extends React.Component {
+class Banner extends React.Component {
 
     constructor(props){
         super(props);
@@ -89,3 +88,5 @@ export class Banner extends React.Component {
         )
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Banner)

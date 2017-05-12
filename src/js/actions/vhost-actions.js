@@ -40,7 +40,7 @@ export function dictLoad(DICTIONARY_API) {
         action.payload = response.data;
         dispatch(action);
       }).catch((reason) => {
-        dispatch({type: 'DICTIONARY_LOAD_ERROR', payload: reason });
+        dispatch({ type: 'DICTIONARY_LOAD_ERROR', payload: reason });
       });
     }
   };

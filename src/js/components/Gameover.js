@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class Gameover extends React.Component{
+export default class Gameover extends React.Component{
     constructor(props){
         super(props);
         this.handleReplay = this.handleReplay.bind(this);

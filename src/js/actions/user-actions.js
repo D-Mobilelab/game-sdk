@@ -1,4 +1,3 @@
-import Stargate from 'stargatejs';
 import Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getContentId } from './gameinfo-actions';
@@ -10,7 +9,7 @@ export function canPlay() {
     return AxiosInstance.get(url, {
       params: { cors_compliant: 1 },
     }).then((response) => {
-      if (process.env.NODE_ENV === 'debug' || process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development' || process.env.APP_ENV === 'HYBRID') {
         response.data.canDownload = true;
       }
       dispatch({ type: 'SET_CAN_PLAY', canPlay: response.data.canDownload });
@@ -20,7 +19,8 @@ export function canPlay() {
 
 /**
  * Get the user type: guest(unlogged) free(facebook) or premium(subscribed)
- * @returns {String}
+ * @param {Object} userInfo - user check returned object
+ * @returns {String} return the type of the user
  */
 export function getUserType(userInfo) {
   if (!userInfo.user) {
@@ -42,9 +42,7 @@ export function getUserFavourites() {
           user_id: getState().user.user, // userID
           size: 51,
         },
-        validateStatus: (status) => {
-          return status === 200 || status === 404;
-        },
+        validateStatus: status => status === 200 || status === 404,
       });
     } else {
       getFavPromise = Promise.resolve({ data: [] });
@@ -64,20 +62,17 @@ export function getUser() {
     dispatch({ type: 'USER_CHECK_LOAD_START' });
     const { generic } = getState();
     const query = {};
-    if (generic.hybrid) { query.hybrid = 1; }
-
-    if (generic.connectionState.online) {
-      return AxiosInstance.get(Constants.USER_CHECK, { params: query })
+    if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
+    return AxiosInstance.get(Constants.USER_CHECK, { params: query })
         .then((userResponse) => {
           const user = userResponse.data;
 
-          if (process.env.NODE_ENV === 'development' && 
-              process.env.NODE_ENV !== 'preprod') {
+          if (process.env.NODE_ENV === 'development') {
             const userType = localStorage.getItem('gfsdk-debug-user_type');
             if (userType === 'guest') {
               user.user = null;
               user.subscribed = false;
-            } else if (userType === 'free') {              
+            } else if (userType === 'free') {
               user.user = decodeURIComponent(localStorage.getItem('gfsdk-debug-user_id'));
               user.subscribed = false;
             } else {
@@ -95,17 +90,6 @@ export function getUser() {
         .catch((reason) => {
           dispatch({ type: 'USER_CHECK_LOAD_FAIL', reason });
         });
-    }
-    if (generic.hybrid) {
-      const filePath = [Stargate.file.BASE_DIR, Constants.USER_JSON_FILENAME].join('');
-      return Stargate.file.readFileAsJSON(filePath)
-          .then((responseData) => {
-            dispatch({ type: 'USER_CHECK_LOAD_END', user: responseData });
-          })
-          .catch((reason) => {
-            dispatch({ type: 'USER_CHECK_LOAD_FAIL', reason });
-          });
-    }
   };
 }
 

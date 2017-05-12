@@ -1,4 +1,4 @@
-import { Utils } from 'stargatejs';
+import Utils from 'docomo-utils';
 import localStorage from './LocalStorage';
 import windowConf from './windowConf';
 

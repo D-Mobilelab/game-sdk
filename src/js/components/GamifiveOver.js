@@ -1,9 +1,7 @@
 import React from 'react';
-import { Gameover } from './Gameover';
+import Gameover from './Gameover';
 
 /** My Components */
-import { MaterialButton } from './MaterialButton';
-import { RelatedList, RelatedListItem } from './Related/index';
 import { Image } from './Image';
 import { LikeButton } from './LikeButton';
 import { ShareButton } from './ShareButton';
@@ -48,116 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
     WEBAPP_CHALLENGE_INVITE
     WEBAPP_SHARE_FACEBOOK
  * */
-
-@connect(mapStateToProps, mapDispatchToProps)
-export class GameasyGameover extends Gameover {
-    constructor(props){
-        super(props);
-    }
-
-    render(){
-        let classNames = [gameasyStyle.gameover];
-        classNames.push(this.props.show ? gameasyStyle.show : gameasyStyle.hide);
-
-        let classes = classNames.join(" ");
-        let innerWidth = (Math.round(window.innerWidth / 100) * 100);
-        let percentage = Math.round(window.innerWidth * 60 / 100);
-        let imgSrc = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
-
-        let { 
-            WEBAPP_CONGRATULATIONS_SCORE, 
-            WEBAPP_YOUR_POSITION_TITLE, 
-            WEBAPP_CANVAS_BUTTON_PLAY,
-            WEBAPP_RELATED_TITLE
-        } = this.props.dictionary;
-        return(
-        <Grid>
-           <div className={classes}>
-                    <Row>
-                      <Column cols={12}>
-                        <header className={gameasyStyle.header}>
-                          <h1>{this.props.game_info.title}</h1>
-                        </header>
-                      </Column>
-                    </Row>
-                <div style={{maxWidth:'768px', margin:'0 auto'}}>
-                    {/* This position relative is needed for vertical align the score and the rank */}
-                    <Row style={{position:'relative'}}>
-                        <Column cols={8}>
-                            <Image src={imgSrc} />
-                            <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
-                        </Column>
-                        {/* custom styles needed for vertical align rank and score */}
-                        <Column cols={4} style={{position:'absolute', right:'0', height: '100%'}}>
-                            <div className={gameasyStyle.scoreContainer}>
-                                <div>
-                                    <div style={{textAlign:'center'}}>
-                                        <span className={iconStyles.icon + ' ' + iconStyles.iconCoppa}></span>
-                                        <h3>{WEBAPP_CONGRATULATIONS_SCORE}</h3>
-                                        <h2>{this.props.score}</h2> 
-                                    </div>
-                                </div>
-                                <hr className={genericStyle.divider} />
-                                <div>
-                                    <div style={{textAlign:'center'}}>
-                                        <span className={iconStyles.icon + ' ' + iconStyles.iconRank}></span>
-                                        <h3>{WEBAPP_YOUR_POSITION_TITLE}</h3>
-                                        <h2>{this.props.rank}</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </Column>
-                    </Row>
-                    <Row style={{margin:'20px 0 20px 0'}}>
-                        <Column cols={4} offset={2}>
-                            <LikeButton onClick={this.handleFavourites} full={this.isGameFavourite() ? true : false} />
-                        </Column>
-                        <Column cols={4}>
-                            <ShareButton onClick={(evt) => {
-                                evt.preventDefault();
-                                this.handleShare(this.props.game_info.url_share);
-                            }} />
-                        </Column>
-                    </Row>
-                    <Row>
-                      <RelatedList title={WEBAPP_RELATED_TITLE}>
-                          {
-                               this.props.game_info.related.map((item, index) => (
-                                   <Column cols={4} key={index}>
-                                        <RelatedListItem item={item} onClick={this.handleOnClickRelated.bind(this, item)} />
-                                   </Column>
-                                ))
-                          }
-                      </RelatedList>  
-                    </Row>                    
-                </div>
-            </div>
-        </Grid>                
-        );
-    }
-}
-
-
-const GamifiveRelatedItem = (props) => {
-    let imgWidth = Math.round(window.innerWidth / 3);
-    let imgSrc = props.item.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', imgWidth);
-    return (
-    <div className="box-grid" style={{margin: '1px'}}>
-        <div className="content-boxgrid">
-            <a onClick={props.onClick}>
-                <img src={imgSrc} className="img-responsive" />
-            </a>
-            <div className="button-grid-center">
-                <a onClick={props.onClick} className="bt bt--play bt--small">
-                    <span className="bt__textLight">{props.PLAY_TEXT}</span>
-                </a>
-            </div>
-        </div>
-    </div>);
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
-export class GamifiveGameover extends Gameover {
+class GamifiveGameover extends Gameover {
     constructor(props){
         super(props);
     }
@@ -256,3 +145,23 @@ export class GamifiveGameover extends Gameover {
         );
     }
 }
+
+const GamifiveRelatedItem = (props) => {
+    let imgWidth = Math.round(window.innerWidth / 3);
+    let imgSrc = props.item.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', imgWidth);
+    return (
+    <div className="box-grid" style={{margin: '1px'}}>
+        <div className="content-boxgrid">
+            <a onClick={props.onClick}>
+                <img src={imgSrc} className="img-responsive" />
+            </a>
+            <div className="button-grid-center">
+                <a onClick={props.onClick} className="bt bt--play bt--small">
+                    <span className="bt__textLight">{props.PLAY_TEXT}</span>
+                </a>
+            </div>
+        </div>
+    </div>);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GamifiveGameover);

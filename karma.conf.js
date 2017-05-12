@@ -1,8 +1,10 @@
-var webpackConfig = require('./webpack.config.base.js');
+var webpackConfig = require('./tools/webpack.config.base.js');
 var path = require('path');
 var webpack = require('webpack');
 
-var envPlugin = new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('test') } });
+var envPlugin = new webpack.DefinePlugin({ 
+  'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
+});
 webpackConfig.plugins.push(envPlugin);
 webpackConfig.externals = {
   'react/addons': true,

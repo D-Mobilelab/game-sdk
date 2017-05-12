@@ -3,8 +3,7 @@ import Location from '../lib/Location';
 import { getUserType } from './user-actions';
 import { NEWTON_DEBUG_SECRET } from '../lib/Constants';
 
-const isProduction = () => process.env.NODE_ENV === 'production';
-const isPreProd = () => process.env.NODE_ENV === 'preprod';
+const hybrid = process.env.APP_ENV === 'HYBRID';
 
 export function init() {
   return (dispatch, getState) => {
@@ -20,7 +19,7 @@ export function init() {
       enable: true,    // enable newton
       waitLogin: true, // wait for login to have been completed (async)
       properties: {
-        environment: (currentState.generic.hybrid ? 'hybrid' : 'webapp'),
+        environment: (hybrid ? 'hybrid' : 'webapp'),
         white_label_id: currentState.game_info.label || 'it-gameasy',
       },
     });

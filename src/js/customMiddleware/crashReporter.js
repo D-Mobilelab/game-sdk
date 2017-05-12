@@ -18,6 +18,10 @@ function reportError(err, state, action = '') {
 }
 
 window.onerror = function errorReporter(message, source, lineno, colno, error) {
+  if (error === null || source === '') {
+    return false;
+  }
+
   const errorObject = {
     message,
     source,
@@ -26,7 +30,7 @@ window.onerror = function errorReporter(message, source, lineno, colno, error) {
   };
   // a:1 otherwise SimpleObject raise an error -.-'
   reportError(errorObject, { a: 1 });
-  // When the function returns true, this prevents the firing of the default event handler.
+  // If the function returns true prevents the default event handler to fire
   return false;
 };
 
