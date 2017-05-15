@@ -1,9 +1,10 @@
-import Utils from 'docomo-utils';
+import { dequeryfy } from 'docomo-utils';
 import localStorage from './LocalStorage';
 import windowConf from './windowConf';
 
 let theWindow = {};
-if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'preprod') {
+if (process.env.LOCAL_DEV == true) {
+  console.warn("LOCAL_DEV");
   const GAME_ID = localStorage.getItem('gfsdk-debug-game_id');
   const HOST = localStorage.getItem('gfsdk-debug-host');
   const params = {};
@@ -44,11 +45,11 @@ class Location {
   }
 
   getQueryStringKey(key) {
-    return Utils.dequeryfy(theWindow.location.search)[key];
+    return dequeryfy(theWindow.location.search)[key];
   }
 
   getQueryString() {
-    return Utils.dequeryfy(theWindow.location.search);
+    return dequeryfy(theWindow.location.search);
   }
 
   /**
