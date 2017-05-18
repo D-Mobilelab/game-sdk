@@ -2,19 +2,33 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
     <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://s.motime.com/tbr/less.css?file=app-gameover.less&country=ww-appsworld&t=20170111153950" />
-    <script src="http://static.newton.pm/js/v2.2.3/newton.min.js"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <script src="http://static.newton.pm/js/v2.x/newton.min.js"></script> 
     <script type="text/javascript" src="../gfsdk.js"></script>
-    <title>Game SDK Debug/Dev Environment</title>
+    <title>Game SDK Debug/Dev Environment</title>    
+    
 </head>
   <body>
-
+    <h1 id="loading">Loading...</h1>
     <script>
-        GamifiveSDK.init({ lite: false }).then(function afterInit(){
-          console.log("Do things afterinit");
-        });
+        var start = Date.now();
+        var end = 0;
+        GamifiveSDK.init({ lite: false })
+          .then(function afterInit(){
+            end = Date.now();
+            var initTime = end - start;
+            document.querySelector('#loading').innerHTML = 'Init finished: ' + (initTime / 1000) + 's';
+          });
     </script>
+    <form style="width:80%;margin: 0 auto;">
+      <button type="button" class="btn btn-default">startSession</button>
+      <button type="button" class="btn btn-default">endSession</button>      
+    </form>    
   </body>
 </html>
