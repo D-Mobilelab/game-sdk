@@ -1,4 +1,4 @@
-import Utils from 'docomo-utils';
+import { queryfy } from 'docomo-utils';
 import {
     FB_SDK_VERSION,
     FB_SDK_URL 
@@ -87,7 +87,7 @@ class FacebookInterface {
     }
 
     if (this.isMobile) {
-      const targetURL = Utils.queryfy('http://www.facebook.com/dialog/send', {
+      const targetURL = queryfy('http://www.facebook.com/dialog/send', {
         app_id: this.config.fbAppId,
         link: url,
         redirect_uri: Location.getOrigin(),
