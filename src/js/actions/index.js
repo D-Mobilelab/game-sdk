@@ -1,4 +1,4 @@
-import Utils from 'docomo-utils';
+import { queryfy } from 'docomo-utils';
 import Location from '../lib/Location';
 import Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
@@ -14,6 +14,7 @@ import * as vhostActions from './vhost-actions';
 import * as newtonActions from './newton-actions';
 import * as bannerActions from './banner-actions';
 import * as sharerActions from './sharer-actions';
+import * as interstitialActions from './interstitial-actions';
 
 const vhostKeys = [
   'CONTENT_RANKING',
@@ -106,11 +107,15 @@ function init(initConfig) {
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
 
     return Promise.resolve()
-        .then(() => {
-          return dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL));
-        })
+        .then(() => dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL)))
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))
+        .then(() => {
+          const { user } = getState();
+          if (!user.subscribed) {
+            return dispatch(interstitialActions.show());
+          }
+        })
         .then(() => dispatch(gameinfoActions.getGameInfo()))
         .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().game_info.fbAppId })))
         .then(() => {
@@ -147,7 +152,7 @@ function init(initConfig) {
 
 function redirectOnStore() {
   let mfpUrl = [Location.getOrigin(), '/#!/mfp'].join('');
-  mfpUrl = Utils.queryfy(mfpUrl, {
+  mfpUrl = queryfy(mfpUrl, {
     return_url: `${Location.getCurrentHref()}`,
     title: '',
   });
@@ -157,10 +162,9 @@ function redirectOnStore() {
    * fix with a 'GOOGLEPLAY_STORE_URL' took from the vhost
    */
   const packageID = 'com.docomodigital.gameasy.ww';
-  mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/&af_sub1=<af_sub1>`;
-  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'preprod') {
-    window.location.href = mfpUrl;
-  }
+  // mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/&af_sub1=<af_sub1>`;
+
+  window.location.href = mfpUrl;
   return {
     type: 'REDIRECT_ON_STORE',
     payload: mfpUrl,

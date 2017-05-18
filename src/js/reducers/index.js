@@ -8,6 +8,7 @@ import { vhost } from './vhost';
 import { menu } from './menu';
 import { game_over } from './game_over';
 import { banner } from './banner';
+import { interstitial } from './interstitial';
 
 export default combineReducers({
   banner,
@@ -17,5 +18,6 @@ export default combineReducers({
   game_info,
   game_over,
   menu,
-  vhost
+  vhost,
+  interstitial,
 })
