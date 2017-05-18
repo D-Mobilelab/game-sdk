@@ -32,6 +32,7 @@ devConfiguration.devServer = {
   hot: true,
   contentBase: 'sample/',
   host: HOSTNAME, // 0.0.0.0 to test on device. then add <ip>:8080/webpack-dev-server/
+  disableHostCheck: true,
   proxy: {
     '/v01/**': {
       target: 'http://appsworld.gamifive-app.com',
