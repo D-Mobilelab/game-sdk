@@ -2,7 +2,7 @@
 @value borderRadius: 30px;
 
 .menu {
-    z-index: 10;
+    z-index: 999;
     position: fixed;    
     cursor: pointer;
     width: width; 
