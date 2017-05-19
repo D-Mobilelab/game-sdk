@@ -17,18 +17,16 @@ import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 
 const vhostKeys = [
-  'CONTENT_RANKING',
-    // "GAMEOVER_LIKE_CLASS_TO_TOGGLE",
-    // "GAMEOVER_LIKE_SELECTOR",
+  'CONTENT_RANKING',    
   'SPRITE_GAME_PNG',
   'SPRITE_GAME_SVG',
   'MOA_API_APPLICATION_OBJECTS_GET',
-  'MOA_API_APPLICATION_OBJECTS_SET',
-    // "MOA_API_USER_CHECK",
+  'MOA_API_APPLICATION_OBJECTS_SET',    
   'NEWTON_SECRETID',
   'TLD',
   'NT_REAL_COUNTRY',
   'INSTALL_HYBRID_VISIBLE',
+  'SHOW_INGAME_ADS'
 ];
 
 /*
@@ -112,9 +110,13 @@ function init(initConfig) {
         .then(() => dispatch(userActions.getUser()))
         .then(() => {
           const { user } = getState();
-          if (!user.subscribed) {
-            return dispatch(interstitialActions.show());
-          }
+          const { vhost } = getState();
+          const userType = userActions.getUserType(user);
+          /** User is not premium and ads enabled in configuration => show interstitial */
+          const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
+          //const condition = [true, true].every(elem => elem);
+          if (condition) { dispatch(interstitialActions.show()); }
+          return true;
         })
         .then(() => dispatch(gameinfoActions.getGameInfo()))
         .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().game_info.fbAppId })))

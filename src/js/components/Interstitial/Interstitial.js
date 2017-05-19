@@ -50,7 +50,7 @@ export class Interstitial extends React.Component {
         return (
             <div className={styles}>
                 <button type='button' className={style.close} onClick={this.close} onTouchEnd={this.close}>X</button>
-                <iframe ref='iframeAd' src={this.props.src}></iframe>
+                <iframe ref='iframeAd' src={this.props.src} srcDoc={this.props.srcDoc}></iframe>
             </div>
         )
     }
