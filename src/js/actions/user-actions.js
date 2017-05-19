@@ -75,7 +75,7 @@ export function getUser() {
             } else if (userType === 'free') {
               user.user = decodeURIComponent(localStorage.getItem('gfsdk-debug-user_id'));
               user.subscribed = false;
-            } else {
+            } else if (userType === 'premium') {
               user.user = localStorage.getItem('gfsdk-debug-user_id');
               user.subscribed = true;
             }
