@@ -1,4 +1,7 @@
-export function interstitial(state = { show: false }, action) {
+export function interstitial(state = { 
+  show: false,
+  dismissableAfter: 5
+}, action) {
   switch (action.type) {
     case 'SHOW_INTERSTITIAL':
       return Object.assign({}, state, action.payload);
