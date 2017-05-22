@@ -1,7 +1,7 @@
 import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import { isAndroid } from '../lib/Platform';
-import Constants from '../lib/Constants';
+import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, showGameOver } from './gameover-actions';
