@@ -1,3 +1,4 @@
+import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -63,5 +64,8 @@ const instance = new SDK(store);
 aliases.map((alias) => {
     window[alias] = instance;
 });
-
+/**
+ * Needed otherwise will export GamifiveSDK.default
+ * https://github.com/webpack/webpack/issues/3929
+ */
 module.exports = instance;
