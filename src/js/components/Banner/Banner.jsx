@@ -41,7 +41,7 @@ class Banner extends React.Component {
 
     handleGetAppButton(evt){
         evt.preventDefault();
-        this.props.actions.redirectOnStore();
+        this.props.actions.redirectOnStore('gameover');
     }
 
     render(){

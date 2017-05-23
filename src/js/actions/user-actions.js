@@ -63,6 +63,8 @@ export function getUser() {
     const { generic } = getState();
     const query = {};
     if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
+    /** needed to get the pony */
+    query.hybrid = 1;
     return AxiosInstance.get(Constants.USER_CHECK, { params: query })
         .then((userResponse) => {
           const user = userResponse.data;

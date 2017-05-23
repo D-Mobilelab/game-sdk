@@ -152,25 +152,17 @@ function init(initConfig) {
   };
 }
 
-function redirectOnStore() {
-  let mfpUrl = [Location.getOrigin(), '/#!/mfp'].join('');
-  mfpUrl = queryfy(mfpUrl, {
-    return_url: `${Location.getCurrentHref()}`,
-    title: '',
-  });
-
-  /**
-   * TODO:
-   * fix with a 'GOOGLEPLAY_STORE_URL' took from the vhost
-   */
-  const packageID = 'com.docomodigital.gameasy.ww';
-  // mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/&af_sub1=<af_sub1>`;
-
-  window.location.href = mfpUrl;
-  return {
-    type: 'REDIRECT_ON_STORE',
-    payload: mfpUrl,
-  };
+function redirectOnStore(fromPage) {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    /** _PONY=13-a564aab4ea5a082435de87f725d57644000119192.168.124.083q1bKzEvLjy8tSc0rSVWyyivNydFRSklMScxLLSktTi2CCYFVJafm5EAEagE%3DEND */  
+    const PONY = user.ponyUrl.split('&')[1];
+    const packageID = 'com.docomodigital.gameasy.ww';
+    const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/${fromPage}&af_sub1=${PONY}`;
+    dispatch({ type: 'REDIRECT_ON_STORE', payload: mfpUrl });
+    /** This will launch the play store activity */
+    window.location.href = mfpUrl;
+  }
 }
 
 function generateReportAction() {
