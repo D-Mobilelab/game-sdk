@@ -1,11 +1,6 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import { Interstitial } from '../Interstitial/Interstitial';
-
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
 
 describe('Interstitial Component tests',function(){  
 
