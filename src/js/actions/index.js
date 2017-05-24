@@ -21,7 +21,7 @@ const vhostKeys = [
   'SPRITE_GAME_PNG',
   'SPRITE_GAME_SVG',
   'MOA_API_APPLICATION_OBJECTS_GET',
-  'MOA_API_APPLICATION_OBJECTS_SET',    
+  'MOA_API_APPLICATION_OBJECTS_SET',  
   'NEWTON_SECRETID',
   'TLD',
   'NT_REAL_COUNTRY',
@@ -154,15 +154,20 @@ function init(initConfig) {
 
 function redirectOnStore(fromPage) {
   return (dispatch, getState) => {
+    /*
     const { user } = getState();
-    /** _PONY=13-a564aab4ea5a082435de87f725d57644000119192.168.124.083q1bKzEvLjy8tSc0rSVWyyivNydFRSklMScxLLSktTi2CCYFVJafm5EAEagE%3DEND */  
     const PONY = user.ponyUrl.split('&')[1];
     const packageID = 'com.docomodigital.gameasy.ww';
     const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/${fromPage}&af_sub1=${PONY}`;
+    */
+    const mfpUrl = [Location.getOrigin(), '#!/mfp'].join('');
+
+    const newWindow = window.open(mfpUrl, '_blank');
+    newWindow.onbeforeunload = function() {
+      dispatch({ type: 'HIDE_BANNER' });
+    };
     dispatch({ type: 'REDIRECT_ON_STORE', payload: mfpUrl });
-    /** This will launch the play store activity */
-    window.location.href = mfpUrl;
-  }
+  };
 }
 
 function generateReportAction() {
