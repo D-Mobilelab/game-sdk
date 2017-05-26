@@ -152,7 +152,7 @@ function init(initConfig) {
   };
 }
 
-function redirectOnStore(fromPage) {
+function redirectOnStore() {
   return (dispatch, getState) => {
     /*
     const { user } = getState();
@@ -160,13 +160,13 @@ function redirectOnStore(fromPage) {
     const packageID = 'com.docomodigital.gameasy.ww';
     const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/${fromPage}&af_sub1=${PONY}`;
     */
+    const { game_info } = getState();
     const mfpUrl = [Location.getOrigin(), '#!/mfp'].join('');
+    const redirectUrl = queryfy(mfpUrl, { returnurl: game_info.url_zoom });
 
-    const newWindow = window.open(mfpUrl, '_blank');
-    newWindow.onbeforeunload = function() {
-      dispatch({ type: 'HIDE_BANNER' });
-    };
-    dispatch({ type: 'REDIRECT_ON_STORE', payload: mfpUrl });
+    const newWindow = window.open(redirectUrl, '_blank');
+    newWindow.onbeforeunload = () => dispatch({ type: 'HIDE_BANNER' });
+    dispatch({ type: 'REDIRECT_ON_STORE', payload: redirectUrl });
   };
 }
 
