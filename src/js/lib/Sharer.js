@@ -60,15 +60,12 @@ class FacebookInterface {
       href: url,
     };
 
-    if (process.env.APP_ENV === 'HYBRID') {
-      // return Stargate.facebookShare(url);
-      /*global facebookConnectPlugin*/
-      if (typeof window.facebookConnectPlugin !== 'undefined') {
-        return new Promise((resolve, reject) => {
-          facebookConnectPlugin.showDialog(shareParams, resolve, reject);
-        });
-      }
-    }
+    /*global facebookConnectPlugin*/
+    if (typeof window.facebookConnectPlugin !== 'undefined') {
+      return new Promise((resolve, reject) => {
+        facebookConnectPlugin.showDialog(shareParams, resolve, reject);
+      });
+    }   
 
     if (!this.initialized) {
       return Promise.resolve(false);
