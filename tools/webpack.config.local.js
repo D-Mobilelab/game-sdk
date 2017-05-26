@@ -28,6 +28,7 @@ var HOSTNAME = 'local.appsworld.gamifive-app.com';
 
 
 devConfiguration.devServer = {
+  open: true,
   inline: true,
   hot: true,
   contentBase: 'sample/',
