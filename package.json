@@ -14,7 +14,7 @@
     "build:hybrid:prod": "$(npm bin)/env-cmd hybrid-production webpack --config tools/webpack.config.prod.js -p",
     "build:dev": "$(npm bin)/env-cmd development webpack --config tools/webpack.config.dev.js",
     "build:prod": "$(npm bin)/env-cmd production webpack --config tools/webpack.config.prod.js -p",
-    "dev": "$(npm bin)/env-cmd development webpack-dev-server --config tools/webpack.config.dev.js",
+    "dev": "$(npm bin)/env-cmd development webpack-dev-server --config tools/webpack.config.local.js",
     "build": "npm run build:prod && npm run build:dev && npm run build:hybrid:prod",
     "preversion": "npm run test",
     "version": "sh .getrevision.sh && npm run build && git add -fA src/ dist/",

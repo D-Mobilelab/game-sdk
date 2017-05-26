@@ -1,4 +1,4 @@
-import Utils from 'docomo-utils';
+import { queryfy } from 'docomo-utils';
 import {
     FB_SDK_VERSION,
     FB_SDK_URL 
@@ -60,15 +60,12 @@ class FacebookInterface {
       href: url,
     };
 
-    if (process.env.APP_ENV === 'HYBRID') {
-      // return Stargate.facebookShare(url);
-      /*global facebookConnectPlugin*/
-      if (typeof window.facebookConnectPlugin !== 'undefined') {
-        return new Promise((resolve, reject) => {
-          facebookConnectPlugin.showDialog(shareParams, resolve, reject);
-        });
-      }
-    }
+    /*global facebookConnectPlugin*/
+    if (typeof window.facebookConnectPlugin !== 'undefined') {
+      return new Promise((resolve, reject) => {
+        facebookConnectPlugin.showDialog(shareParams, resolve, reject);
+      });
+    }   
 
     if (!this.initialized) {
       return Promise.resolve(false);
@@ -87,7 +84,7 @@ class FacebookInterface {
     }
 
     if (this.isMobile) {
-      const targetURL = Utils.queryfy('http://www.facebook.com/dialog/send', {
+      const targetURL = queryfy('http://www.facebook.com/dialog/send', {
         app_id: this.config.fbAppId,
         link: url,
         redirect_uri: Location.getOrigin(),

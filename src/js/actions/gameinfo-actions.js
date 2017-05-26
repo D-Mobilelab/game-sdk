@@ -1,4 +1,4 @@
-import Constants from '../lib/Constants';
+import * as Constants from '../lib/Constants';
 import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
 

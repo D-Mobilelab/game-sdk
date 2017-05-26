@@ -1,3 +1,4 @@
+import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -10,10 +11,9 @@ import Menu from './js/components/Menu';
 import Banner from './js/components/Banner/Banner';
 import GameasyOver from './js/components/GameasyOver';
 import GamifiveOver from './js/components/GamifiveOver';
+import Interstitial from './js/components/Interstitial/Interstitial';
 
-/*if (module.hot) {
-  module.hot.accept();
-}*/
+if (module.hot) { module.hot.accept(); }
 
 if (process.env.APP_ENV === 'HYBRID') {
     __webpack_public_path__ = RUNTIME_PUBLIC_PATH;
@@ -34,6 +34,7 @@ class App extends React.Component {
         let TheGameover = Gameovers[this.props.label];
         return (
             <div>
+                <Interstitial />
                 <TheGameover />    
                 <Banner />
                 <Menu white_label={this.props.label}/>
@@ -63,5 +64,8 @@ const instance = new SDK(store);
 aliases.map((alias) => {
     window[alias] = instance;
 });
-
+/**
+ * Needed otherwise will export GamifiveSDK.default
+ * https://github.com/webpack/webpack/issues/3929
+ */
 module.exports = instance;

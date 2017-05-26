@@ -1,6 +1,6 @@
-import Utils from 'docomo-utils';
+import { queryfy } from 'docomo-utils';
 import Location from '../lib/Location';
-import Constants from '../lib/Constants';
+import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import HistoryGame from '../lib/HistoryGame';
 
@@ -14,20 +14,19 @@ import * as vhostActions from './vhost-actions';
 import * as newtonActions from './newton-actions';
 import * as bannerActions from './banner-actions';
 import * as sharerActions from './sharer-actions';
+import * as interstitialActions from './interstitial-actions';
 
 const vhostKeys = [
-  'CONTENT_RANKING',
-    // "GAMEOVER_LIKE_CLASS_TO_TOGGLE",
-    // "GAMEOVER_LIKE_SELECTOR",
+  'CONTENT_RANKING',    
   'SPRITE_GAME_PNG',
   'SPRITE_GAME_SVG',
   'MOA_API_APPLICATION_OBJECTS_GET',
-  'MOA_API_APPLICATION_OBJECTS_SET',
-    // "MOA_API_USER_CHECK",
+  'MOA_API_APPLICATION_OBJECTS_SET',  
   'NEWTON_SECRETID',
   'TLD',
   'NT_REAL_COUNTRY',
   'INSTALL_HYBRID_VISIBLE',
+  'SHOW_INGAME_ADS'
 ];
 
 /*
@@ -106,11 +105,19 @@ function init(initConfig) {
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
 
     return Promise.resolve()
-        .then(() => {
-          return dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL));
-        })
+        .then(() => dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL)))
         .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
         .then(() => dispatch(userActions.getUser()))
+        .then(() => {
+          const { user } = getState();
+          const { vhost } = getState();
+          const userType = userActions.getUserType(user);
+          /** User is not premium and ads enabled in configuration => show interstitial */
+          const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
+          //const condition = [true, true].every(elem => elem);
+          if (condition) { dispatch(interstitialActions.show()); }
+          return true;
+        })
         .then(() => dispatch(gameinfoActions.getGameInfo()))
         .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().game_info.fbAppId })))
         .then(() => {
@@ -146,24 +153,20 @@ function init(initConfig) {
 }
 
 function redirectOnStore() {
-  let mfpUrl = [Location.getOrigin(), '/#!/mfp'].join('');
-  mfpUrl = Utils.queryfy(mfpUrl, {
-    return_url: `${Location.getCurrentHref()}`,
-    title: '',
-  });
+  return (dispatch, getState) => {
+    /*
+    const { user } = getState();
+    const PONY = user.ponyUrl.split('&')[1];
+    const packageID = 'com.docomodigital.gameasy.ww';
+    const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/${fromPage}&af_sub1=${PONY}`;
+    */
+    const { game_info } = getState();
+    const mfpUrl = [Location.getOrigin(), '#!/mfp'].join('');
+    const redirectUrl = queryfy(mfpUrl, { returnurl: game_info.url_zoom });
 
-  /**
-   * TODO:
-   * fix with a 'GOOGLEPLAY_STORE_URL' took from the vhost
-   */
-  const packageID = 'com.docomodigital.gameasy.ww';
-  mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/&af_sub1=<af_sub1>`;
-  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'preprod') {
-    window.location.href = mfpUrl;
-  }
-  return {
-    type: 'REDIRECT_ON_STORE',
-    payload: mfpUrl,
+    const newWindow = window.open(redirectUrl, '_blank');
+    newWindow.onbeforeunload = () => dispatch({ type: 'HIDE_BANNER' });
+    dispatch({ type: 'REDIRECT_ON_STORE', payload: redirectUrl });
   };
 }
 

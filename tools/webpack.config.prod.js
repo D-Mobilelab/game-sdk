@@ -9,7 +9,8 @@ var prodConfiguration = Object.create(baseConfiguration);
 var ROOT_DIRECTORY = null;
 
 if(process.env.ROOT_DIRECTORY) {
-  ROOT_DIRECTORY = JSON.stringify(process.env.ROOT_DIRECTORY);
+  console.log("ROOT DIRECTORY", process.env.ROOT_DIRECTORY);
+  ROOT_DIRECTORY = process.env.ROOT_DIRECTORY;
   prodConfiguration.output.publicPath = ROOT_DIRECTORY;
 }
 

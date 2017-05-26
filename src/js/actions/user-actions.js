@@ -1,4 +1,4 @@
-import Constants from '../lib/Constants';
+import * as Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getContentId } from './gameinfo-actions';
 import localStorage from '../lib/LocalStorage';
@@ -63,6 +63,8 @@ export function getUser() {
     const { generic } = getState();
     const query = {};
     if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
+    /** needed to get the pony */
+    query.hybrid = 1;
     return AxiosInstance.get(Constants.USER_CHECK, { params: query })
         .then((userResponse) => {
           const user = userResponse.data;
@@ -75,7 +77,7 @@ export function getUser() {
             } else if (userType === 'free') {
               user.user = decodeURIComponent(localStorage.getItem('gfsdk-debug-user_id'));
               user.subscribed = false;
-            } else {
+            } else if (userType === 'premium') {
               user.user = localStorage.getItem('gfsdk-debug-user_id');
               user.subscribed = true;
             }

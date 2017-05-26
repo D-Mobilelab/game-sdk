@@ -35,9 +35,9 @@ and in your index.html paste this lines
 ```javascript
     <!-- CSS Needed if you want to see the gameover. not mandatory. Remember to remove it before sending us the package -->
     <link rel="stylesheet" href="http://s.motime.com/tbr/less.css?file=app-gameover.less&country=ww-appsworld&t=20170111153950" />
-    <script src="http://static.newton.pm/js/v2.2.3/newton.min.js"></script>
+    <script src="http://static.newton.pm/js/v2.x/newton.min.js"></script>
     <!-- Don\'t worry will be there.-->
-    <script type="text/javascript" src="../gfsdk.js"></script> 
+    <script type="text/javascript" src="../gfsdk.js"></script>
 ```
 
 ### Run the server
