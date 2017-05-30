@@ -114,8 +114,8 @@ function init(initConfig) {
           const userType = userActions.getUserType(user);
           /** User is not premium and ads enabled in configuration => show interstitial */
           const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
-          //const condition = [true, true].every(elem => elem);
           if (condition) { dispatch(interstitialActions.show()); }
+          if (process.env.NODE_ENV === 'development') { dispatch(interstitialActions.show()); }
           return true;
         })
         .then(() => dispatch(gameinfoActions.getGameInfo()))
