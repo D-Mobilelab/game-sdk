@@ -1,5 +1,3 @@
-import { queryfy } from 'docomo-utils';
-import Location from '../lib/Location';
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import HistoryGame from '../lib/HistoryGame';
@@ -26,7 +24,10 @@ const vhostKeys = [
   'TLD',
   'NT_REAL_COUNTRY',
   'INSTALL_HYBRID_VISIBLE',
-  'SHOW_INGAME_ADS'
+  'SHOW_INGAME_ADS',
+  'GOOGLEPLAY_STORE_URL',
+  'MFP_API_URL',
+  'MOA_API_CREATEPONY',
 ];
 
 /*
@@ -157,16 +158,18 @@ function redirectOnStore() {
     /*
     const { user } = getState();
     const PONY = user.ponyUrl.split('&')[1];
-    const packageID = 'com.docomodigital.gameasy.ww';
-    const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/${fromPage}&af_sub1=${PONY}`;
     */
     const { game_info } = getState();
-    const mfpUrl = [Location.getOrigin(), '#!/mfp'].join('');
-    const redirectUrl = queryfy(mfpUrl, { returnurl: game_info.url_zoom });
+    // const redirectUrl = [Location.getOrigin(), '#!/mfp', `?returnurl=${game_info.url_zoom}`].join('');
 
+    const packageID = 'com.docomodigital.gameasy.ww';
+    const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=gameover_banner`;
+    dispatch({ type: 'REDIRECT_ON_STORE', payload: mfpUrl });
+    window.location.href = mfpUrl;
+    /*
     const newWindow = window.open(redirectUrl, '_blank');
     newWindow.onbeforeunload = () => dispatch({ type: 'HIDE_BANNER' });
-    dispatch({ type: 'REDIRECT_ON_STORE', payload: redirectUrl });
+    */
   };
 }
 
