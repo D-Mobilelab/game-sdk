@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Location from './Location';
 
 let AxiosInstance;
 if (window.ORIGIN) {

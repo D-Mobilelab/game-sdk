@@ -1,6 +1,7 @@
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import HistoryGame from '../lib/HistoryGame';
+import { generateToken } from '../lib/PonyToken';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -15,19 +16,7 @@ import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 
 const vhostKeys = [
-  'CONTENT_RANKING',    
-  'SPRITE_GAME_PNG',
-  'SPRITE_GAME_SVG',
-  'MOA_API_APPLICATION_OBJECTS_GET',
-  'MOA_API_APPLICATION_OBJECTS_SET',  
-  'NEWTON_SECRETID',
-  'TLD',
-  'NT_REAL_COUNTRY',
-  'INSTALL_HYBRID_VISIBLE',
-  'SHOW_INGAME_ADS',
-  'GOOGLEPLAY_STORE_URL',
-  'MFP_API_URL',
-  'MOA_API_CREATEPONY',
+  'poggioacaiano'
 ];
 
 /*
@@ -153,19 +142,21 @@ function init(initConfig) {
   };
 }
 
-function redirectOnStore() {
+function redirectOnStore(fromPage) {
   return (dispatch, getState) => {
-    /*
-    const { user } = getState();
-    const PONY = user.ponyUrl.split('&')[1];
-    */
-    const { game_info } = getState();
-    // const redirectUrl = [Location.getOrigin(), '#!/mfp', `?returnurl=${game_info.url_zoom}`].join('');
 
-    const packageID = 'com.docomodigital.gameasy.ww';
-    const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=gameover_banner`;
-    dispatch({ type: 'REDIRECT_ON_STORE', payload: mfpUrl });
-    window.location.href = mfpUrl;
+    const { game_info, vhost } = getState();
+    // const redirectUrl = [Location.getOrigin(), '#!/mfp', `?returnurl=${game_info.url_zoom}`].join('');
+    generateToken(vhost, { return_url: game_info.url_zoom })
+      .then((pony) => {
+        // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
+        const finalStoreUrl = vhost.GOOGLEPLAY_STORE_URL
+          .replace('<page>', fromPage)
+          .replace('<af_sub1>', pony);
+        window.location.href = finalStoreUrl;
+        return dispatch({ type: 'REDIRECT_ON_STORE', payload: mfpUrl });
+      });   
+    
     /*
     const newWindow = window.open(redirectUrl, '_blank');
     newWindow.onbeforeunload = () => dispatch({ type: 'HIDE_BANNER' });
