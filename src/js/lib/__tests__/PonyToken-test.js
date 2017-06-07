@@ -1,6 +1,10 @@
 import Cookies from 'js-cookie';
 
 import MockAdapter from 'axios-mock-adapter';
+/**
+ * Use rewire to mock dependencies inside a module (exclude this babel plugin when build for production)
+ * https://github.com/speedskater/babel-plugin-rewire
+ * **/
 import { generatePony, setFingerPrint, __RewireAPI__ as PonyTokenRewire } from '../PonyToken';
 import FakeConfig from './FakeConfig';
 import { AxiosInstance } from '../AxiosService';
