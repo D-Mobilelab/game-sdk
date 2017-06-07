@@ -8,9 +8,7 @@ import { AxiosInstance } from '../AxiosService';
 describe('PonyToken tests', function() {
 
   const createponyResponse = {
-    data: {
-      ponyUrl: '&_PONY=12-1776e43daf199f3a0f5360616b969517999999END',
-    },
+    ponyUrl: '&_PONY=12-1776e43daf199f3a0f5360616b969517999999END'
   };
 
   let mock;
@@ -42,7 +40,7 @@ describe('PonyToken tests', function() {
 
     generatePony(FakeConfig, { return_url: 'http://www.gameasy.com' })
       .then((pony) => {
-        expect(pony).toEqual(createponyResponse.data.ponyUrl.replace('&',''));
+        expect(pony).toEqual(createponyResponse.ponyUrl.replace('&',''));
         done();
       }).catch(done.fail);
   });

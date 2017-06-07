@@ -76,7 +76,7 @@ export function generatePony(Config, options = { return_url: '' }) {
   return AxiosInstance.get(MOA_API_CREATEPONY, configRequest)
         .then((response) => {
           console.log('Pony created:OK', MOA_API_CREATEPONY, encodedParams, response);
-          let pony = checkObject(response, 'data.data.ponyUrl');
+          let pony = checkObject(response, 'data.ponyUrl');
           if (pony) { pony = pony.replace('&', ''); }
           return Promise.all([pony, setFingerPrint(Config, pony, options.return_url)]);
         })
