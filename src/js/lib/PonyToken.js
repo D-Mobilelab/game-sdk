@@ -1,6 +1,7 @@
 import { JSONPRequest, checkObject, queryfy } from 'docomo-utils';
-import Cookies from 'js-cookie';
 import { AxiosInstance } from './AxiosService';
+
+import readCookies from './readCookies';
 
 /**
  * setFingerPrint
@@ -35,8 +36,8 @@ export function setFingerPrint(Config, pony, returnUrl) {
 
   const url = queryfy(MFP_API_URL, mfpParams);
   const request = new JSONPRequest(url);
-  return request.then((response) => {
-    console.log('setFingerPrint:', response);
+  return request.prom.then((response) => {
+    console.log('setFingerPrint:OK', response);
     return response;
   });
 }
@@ -63,19 +64,21 @@ export function generatePony(Config, options = { return_url: '' }) {
   /**
    * Add cookie key-value pairs
    */
+  const cookiesAsObject = readCookies(document.cookie);
   MFP_COOKIE_LIST.split(',').map((key) => {
-    ponyParams.data.cookieData[key] = Cookies.get(key);
+    ponyParams.data.cookieData[key] = cookiesAsObject[key];
     return ponyParams;
   });
 
   const encodedParams = encodeURIComponent(JSON.stringify(ponyParams));
   const configRequest = { params: { data: encodedParams }, withCredentials: true };
 
-  console.log(MOA_API_CREATEPONY, 'Param to send', encodedParams);
   return AxiosInstance.get(MOA_API_CREATEPONY, configRequest)
         .then((response) => {
+          console.log('Pony created:OK', MOA_API_CREATEPONY, encodedParams, response);
           let pony = checkObject(response, 'data.data.ponyUrl');
           if (pony) { pony = pony.replace('&', ''); }
-          return [setFingerPrint(Config, pony, options.return_url), pony];
-        }).then(results => results[1]);
+          return Promise.all([pony, setFingerPrint(Config, pony, options.return_url)]);
+        })
+        .then(results => results[0]);
 }

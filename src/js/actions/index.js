@@ -1,7 +1,7 @@
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import HistoryGame from '../lib/HistoryGame';
-import { generateToken } from '../lib/PonyToken';
+import { generatePony } from '../lib/PonyToken';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -16,7 +16,7 @@ import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 
 const vhostKeys = [
-  'poggioacaiano'
+  'poggioacaiano',
 ];
 
 /*
@@ -104,8 +104,7 @@ function init(initConfig) {
           const userType = userActions.getUserType(user);
           /** User is not premium and ads enabled in configuration => show interstitial */
           const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
-          if (condition) { dispatch(interstitialActions.show()); }
-          if (process.env.NODE_ENV === 'development') { dispatch(interstitialActions.show()); }
+          if (condition) { dispatch(interstitialActions.show()); }          
           return true;
         })
         .then(() => dispatch(gameinfoActions.getGameInfo()))
@@ -147,20 +146,15 @@ function redirectOnStore(fromPage) {
 
     const { game_info, vhost } = getState();
     // const redirectUrl = [Location.getOrigin(), '#!/mfp', `?returnurl=${game_info.url_zoom}`].join('');
-    generateToken(vhost, { return_url: game_info.url_zoom })
+    generatePony(vhost, { return_url: game_info.url_zoom })
       .then((pony) => {
         // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
         const finalStoreUrl = vhost.GOOGLEPLAY_STORE_URL
           .replace('<page>', fromPage)
           .replace('<af_sub1>', pony);
         window.location.href = finalStoreUrl;
-        return dispatch({ type: 'REDIRECT_ON_STORE', payload: mfpUrl });
-      });   
-    
-    /*
-    const newWindow = window.open(redirectUrl, '_blank');
-    newWindow.onbeforeunload = () => dispatch({ type: 'HIDE_BANNER' });
-    */
+        return dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
+      });
   };
 }
 
