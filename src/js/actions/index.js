@@ -144,16 +144,18 @@ function init(initConfig) {
 function redirectOnStore(fromPage) {
   return (dispatch, getState) => {
 
-    const { game_info, vhost } = getState();
-    // const redirectUrl = [Location.getOrigin(), '#!/mfp', `?returnurl=${game_info.url_zoom}`].join('');
+    const { game_info, vhost } = getState();    
     generatePony(vhost, { return_url: game_info.url_zoom })
       .then((pony) => {
         // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
         const finalStoreUrl = vhost.GOOGLEPLAY_STORE_URL
           .replace('<page>', fromPage)
           .replace('<af_sub1>', pony);
-        window.location.href = finalStoreUrl;
-        return dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
+
+        dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
+        setTimeout(() => {
+          window.location.href = finalStoreUrl;
+        }, 0);
       });
   };
 }
