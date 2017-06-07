@@ -66,7 +66,7 @@ export function generatePony(Config, options = { return_url: '' }) {
    */
   const cookiesAsObject = readCookies(document.cookie);
   MFP_COOKIE_LIST.split(',').map((key) => {
-    ponyParams.data.cookieData[key] = cookiesAsObject[key];
+    ponyParams.data.cookieData.cookie[key] = cookiesAsObject[key];
     return ponyParams;
   });
 

@@ -1,7 +1,6 @@
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import HistoryGame from '../lib/HistoryGame';
-import { generatePony } from '../lib/PonyToken';
 
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -141,24 +140,7 @@ function init(initConfig) {
   };
 }
 
-function redirectOnStore(fromPage) {
-  return (dispatch, getState) => {
 
-    const { game_info, vhost } = getState();    
-    generatePony(vhost, { return_url: game_info.url_zoom })
-      .then((pony) => {
-        // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
-        const finalStoreUrl = vhost.GOOGLEPLAY_STORE_URL
-          .replace('<page>', fromPage)
-          .replace('<af_sub1>', pony);
-
-        dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
-        setTimeout(() => {
-          window.location.href = finalStoreUrl;
-        }, 0);
-      });
-  };
-}
 
 function generateReportAction() {
   const reportCsv = Reporter.generateReport();
@@ -185,7 +167,6 @@ function goToRelated(related) {
 export const Actions = {
   init,
   generateReportAction,
-  redirectOnStore,
   goToRelated,
   ...sessionActions,
   ...userActions,
