@@ -142,11 +142,8 @@ export default class SDK {
    */
   getAvatar() {
     const { store } = privates.get(this);
-    const { user } = store.getState();
-    return {
-      src: user.avatar || '',
-      name: user.nickname || '',
-    };
+    const { user } = store.getState();    
+    return user.avatar;
   }
 
   /**
