@@ -65,7 +65,8 @@ export class MaterialButton extends React.Component {
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
                 className={classNames} 
-                style={{...this.props.style}}>
+                style={{...this.props.style}} 
+                disabled={this.props.disabled}>                
                 {this.props.text}
                 <div ref='ripple' className={rippleClass} style={this.state.ripplePosition}></div>
             </button>
