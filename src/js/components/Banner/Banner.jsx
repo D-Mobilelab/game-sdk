@@ -41,7 +41,7 @@ class Banner extends React.Component {
 
     handleGetAppButton(evt){
         evt.preventDefault();
-        this.props.actions.redirectOnStore('gameover');
+        this.props.actions.redirectOnStore('gameover_banner');
     }
 
     render(){
@@ -79,7 +79,7 @@ class Banner extends React.Component {
                         </Row>
                         <Row>
                             <Column cols={6} offset={3} style={{marginTop:'10%'}}>
-                                <MaterialButton text={WEBAPP_BANNER_BUTTON} style={{fontSize: '15px', width:'100%'}} onClick={this.handleGetAppButton}/>
+                                <MaterialButton text={this.props.isLoading ? '...' : WEBAPP_BANNER_BUTTON} style={{fontSize: '15px', width:'100%'}} onClick={this.handleGetAppButton} disabled={this.props.isLoading ? true : false}/>
                             </Column>
                         </Row>
                     </Grid>                    

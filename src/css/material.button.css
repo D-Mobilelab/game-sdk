@@ -18,6 +18,14 @@
   width: 100px;
   text-transform: uppercase;
   z-index: 2;
+  transition: background-color 0.5s ease;
+}
+
+.btn:disabled {
+  pointer-events: none;
+  background-color: #666666;
+  background-color:rgba(102, 102, 102, .5);
+  color: #cccccc;  
 }
 
 .centerBtn {

@@ -1,5 +1,15 @@
 var path = require('path');
 
+var babelLoader = {
+  test: /\.jsx?$/,
+  exclude: /(bower_components|node_modules)/,
+  loader: 'babel-loader'
+}
+
+if(process.env.NODE_ENV === 'test') {  
+  babelLoader.options = { plugins: 'rewire' };
+}
+
 var devConfiguration = {
   entry: [
     './src/index.js',
@@ -14,11 +24,7 @@ var devConfiguration = {
   module: {
     noParse: /node_modules\/localforage\/dist\/localforage.js/,
     rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /(bower_components|node_modules)/,
-          loader: ["babel-loader"], //["react-hot-loader", "babel-loader"]
-        },
+        babelLoader,
         {
           test: /\.css$/,
           exclude: /(bower_components|node_modules)/,

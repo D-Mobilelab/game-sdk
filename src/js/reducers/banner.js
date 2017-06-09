@@ -10,6 +10,8 @@ export function banner(state = {
       return Object.assign({}, state, { show: false });
     case 'REDIRECT_ON_STORE':
       return Object.assign({}, state, { installBannerClicked: true });
+    case 'SET_IS_LOADING':
+      return Object.assign({}, state, { isLoading: action.payload.loading });
     default:
       return state;
   }

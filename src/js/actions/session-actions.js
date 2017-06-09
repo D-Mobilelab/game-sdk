@@ -32,6 +32,8 @@ function doStartSession() {
       level: undefined,
     };
     dispatch({ type: 'START_SESSION', session });
+    /** put timestamp on start session for test */
+    window._START_SESSION_TIMESTAMP_ = session.startTime.getTime();
     onStartCallback();
     return Promise.resolve();
   };

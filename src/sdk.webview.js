@@ -4,19 +4,52 @@
  * All Rights Reserved
  * Released under the Modified BSD License
  */
-import { Actions } from './js/actions/index';
-import version from './version';
 
-const privates = new WeakMap();
 /*
  * SDK
  * @export
  * @class SDK
  */
-export default class SDK {
+class SDK {
 
-  constructor(store) {
-    privates.set(this, { store });
+  constructor() {
+    this.state = {
+      user: {
+        user: null,
+        level: 0,
+        score: 0,
+        userData: {
+          CreatedAt: new Date(0).toISOString(),
+          UpdatedAt: new Date(0).toISOString(),
+          ProductId: null,
+          contentId: null,
+          domain: null,
+          Creator: null,
+          _id: null,
+          info: null,
+        },
+        logged: false,
+        favourites: [],
+      },
+      game_info: {},
+    };
+
+    this.onLoadUserData = function(){};
+
+    const regex = /bundles\/(\w+)\//gi;
+    const results = regex.exec(location.href);
+    this.ID = '';
+    try {
+      this.ID = `::${results[1].toLowerCase()}`;
+    } catch (e) {
+      this.ID = location.href;
+      console.warn('Error finding ID in', location.href);
+    }
+
+    const loadedState = localStorage.getItem(`${this.ID}`);
+    if (loadedState) {
+      this.state = JSON.parse(loadedState);
+    }
   }
 
   /**
@@ -28,8 +61,9 @@ export default class SDK {
    * @returns {Promise}
    */
   init(initConfig) {
-    const { store } = privates.get(this);
-    return store.dispatch(Actions.init(initConfig));
+    console.log('Init');
+    this.onLoadUserData(this.state.user.userData);
+    return Promise.resolve();
   }
 
   /**
@@ -38,8 +72,8 @@ export default class SDK {
    * @memberOf SDK
    */
   getConfig() {
-    const { store } = privates.get(this);
-    return store.getState();
+    console.log('getConfig');
+    return this.state;
   }
 
   /**
@@ -48,9 +82,8 @@ export default class SDK {
    * @memberOf SDK
    */
   getLevel() {
-    const { store } = privates.get(this);
-    const { user } = store.getState();
-    return user.level;
+    console.log('getLevel');
+    return this.state.user.level;
   }
 
   /**
@@ -59,8 +92,7 @@ export default class SDK {
    * @memberOf SDK
    */
   showMoreGamesButton() {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.showMenu());
+    console.log('showMoreGamesButton');
   }
 
   /**
@@ -69,8 +101,7 @@ export default class SDK {
    * @memberOf SDK
    */
   hideMoreGamesButton() {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.hideMenu());
+    console.log('hideMoreGamesButton');
   }
 
   /**
@@ -83,25 +114,8 @@ export default class SDK {
    */
   loadUserData(onLoadUserData) {
     // retro compatibility
-    const { store } = privates.get(this);
-    store.dispatch(Actions.loadUserData(onLoadUserData));
-    if (window.GamifiveInfo && window.GamifiveInfo.user) {
-      console.info('GamifiveSDK: Load userInfo from in page data');
-      const userInfoCloned = JSON.parse(JSON.stringify(window.GamifiveInfo.user));
-
-      if (!userInfoCloned.gameInfo) {
-        userInfoCloned.gameInfo = { info: null };
-      }
-
-      if (typeof userInfoCloned.gameInfo.info === 'string') {
-        try {
-          userInfoCloned.gameInfo.info = JSON.parse(userInfoCloned.gameInfo.info);
-        } catch (e) {
-          userInfoCloned.gameInfo.info = null;
-        }
-      }
-      return userInfoCloned.gameInfo.info;
-    }
+    console.log('loadUserData');
+    this.onLoadUserData = onLoadUserData;
   }
 
   /**
@@ -110,8 +124,8 @@ export default class SDK {
    * @memberOf SDK
    */
   saveUserData(userDataInfo) {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.saveUserData(userDataInfo));
+    console.log('saveUserData');
+    this.state.user.userData.info = userDataInfo;
   }
 
   /**
@@ -120,8 +134,8 @@ export default class SDK {
    * @memberOf SDK
    */
   clearUserData() {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.clearUserData());
+    console.log('clearUserData');
+    this.state.user.userData.info = null;
   }
 
   /**
@@ -129,8 +143,8 @@ export default class SDK {
    * @memberOf SDK
    */
   goToHome() {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.goToHome());
+    console.log('goToHome');
+    localStorage.setItem(`${this.ID}`, JSON.stringify(this.state));
   }
 
   /**
@@ -141,9 +155,11 @@ export default class SDK {
    * @memberOf SDK
    */
   getAvatar() {
-    const { store } = privates.get(this);
-    const { user } = store.getState();    
-    return user.avatar;
+    console.log('getAvatar');
+    return {
+      src: '',
+      nickname: '',
+    };
   }
 
   /**
@@ -152,9 +168,8 @@ export default class SDK {
    * @memberOf SDK
    */
   getNickname() {
-    const { store } = privates.get(this);
-    const { user } = store.getState();
-    return user.nickname;
+    console.log('getNickname');
+    return '';
   }
 
   /**
@@ -163,9 +178,9 @@ export default class SDK {
    * @param {Function} onStartSessionCallback
    * @memberOf SDK
    */
-  onStartSession(onStartSessionCallback) {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.registerOnStartCallback(onStartSessionCallback));
+  onStartSession(onStartSessionCallback = function(){}) {
+    console.log('onStartSession');
+    this.onStartSessionCallback = onStartSessionCallback;
   }
 
   /**
@@ -174,22 +189,23 @@ export default class SDK {
    * @memberOf SDK
    */
   startSession() {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.startSession());
+    console.log('startSession');
+    this.onStartSessionCallback();
   }
 
   /**
    * Ends a session and calculate the session time.
    * This function can be called without params.
-   * In this case only the session time is calculated. 
+   * In this case only the session time is calculated.
    * It can be called also with just the score and in this case the level is implicitly 1
    * this is useful for games without levels.
    * @param {Object} [scoreAndLevel={score:0, level:1}]
    * @memberOf SDK
    */
   endSession(scoreAndLevel) {
-    const { store } = privates.get(this);
-    store.dispatch(Actions.endSession(scoreAndLevel));
+    console.log('endSession');
+    this.state.user.level = scoreAndLevel.level ? scoreAndLevel.level : 1;
+    this.state.user.score = scoreAndLevel.score;
   }
 
   /**
@@ -200,12 +216,11 @@ export default class SDK {
    * @memberOf SDK
    */
   getVersion() {
-    return version;
+    console.log('getVersion');
   }
 
   generateReport() {
-    const { store } = privates.get(this);
-    return store.dispatch(Actions.generateReportAction());
+    console.log('generateReport');
   }
 }
 /**
@@ -214,3 +229,5 @@ export default class SDK {
  * @callback onLoadUserDataCb
  * @param {Object|null} userProgress
  */
+const sdkInstance = new SDK();
+module.exports = sdkInstance;

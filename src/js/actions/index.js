@@ -1,5 +1,3 @@
-import { queryfy } from 'docomo-utils';
-import Location from '../lib/Location';
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import HistoryGame from '../lib/HistoryGame';
@@ -17,16 +15,7 @@ import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 
 const vhostKeys = [
-  'CONTENT_RANKING',    
-  'SPRITE_GAME_PNG',
-  'SPRITE_GAME_SVG',
-  'MOA_API_APPLICATION_OBJECTS_GET',
-  'MOA_API_APPLICATION_OBJECTS_SET',  
-  'NEWTON_SECRETID',
-  'TLD',
-  'NT_REAL_COUNTRY',
-  'INSTALL_HYBRID_VISIBLE',
-  'SHOW_INGAME_ADS'
+  'poggioacaiano',
 ];
 
 /*
@@ -114,8 +103,7 @@ function init(initConfig) {
           const userType = userActions.getUserType(user);
           /** User is not premium and ads enabled in configuration => show interstitial */
           const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
-          //const condition = [true, true].every(elem => elem);
-          if (condition) { dispatch(interstitialActions.show()); }
+          if (condition) { dispatch(interstitialActions.show()); }          
           return true;
         })
         .then(() => dispatch(gameinfoActions.getGameInfo()))
@@ -152,23 +140,7 @@ function init(initConfig) {
   };
 }
 
-function redirectOnStore() {
-  return (dispatch, getState) => {
-    /*
-    const { user } = getState();
-    const PONY = user.ponyUrl.split('&')[1];
-    const packageID = 'com.docomodigital.gameasy.ww';
-    const mfpUrl = `https://app.appsflyer.com/${packageID}?pid=Webapp&c=/${fromPage}&af_sub1=${PONY}`;
-    */
-    const { game_info } = getState();
-    const mfpUrl = [Location.getOrigin(), '#!/mfp'].join('');
-    const redirectUrl = queryfy(mfpUrl, { returnurl: game_info.url_zoom });
 
-    const newWindow = window.open(redirectUrl, '_blank');
-    newWindow.onbeforeunload = () => dispatch({ type: 'HIDE_BANNER' });
-    dispatch({ type: 'REDIRECT_ON_STORE', payload: redirectUrl });
-  };
-}
 
 function generateReportAction() {
   const reportCsv = Reporter.generateReport();
@@ -195,7 +167,6 @@ function goToRelated(related) {
 export const Actions = {
   init,
   generateReportAction,
-  redirectOnStore,
   goToRelated,
   ...sessionActions,
   ...userActions,
