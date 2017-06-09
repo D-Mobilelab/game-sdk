@@ -6,7 +6,7 @@ import readCookies from './readCookies';
 /**
  * setFingerPrint
  * @export
- * @param {object} Config
+ * @param {object} Config - the vhost configuration
  * @param {string} pony - the token of the logged user
  * @param {string} returnUrl - the url where to return once relogged
  * @returns {Promise}
@@ -45,7 +45,7 @@ export function setFingerPrint(Config, pony, returnUrl) {
 /**
  * generatePony
  * @export
- * @param {object} Config - the vhost config
+ * @param {object} Config - the vhost configuration
  * @param {object} options -
  * @param {object} options.return_url -
  * @returns {Promise<String>} the pony string
@@ -75,7 +75,7 @@ export function generatePony(Config, options = { return_url: '' }) {
 
   return AxiosInstance.get(MOA_API_CREATEPONY, configRequest)
         .then((response) => {
-          console.log('Pony created:OK', MOA_API_CREATEPONY, encodedParams, response);
+          console.log('Pony created:OK', MOA_API_CREATEPONY);
           let pony = checkObject(response, 'data.ponyUrl');
           if (pony) { pony = pony.replace('&', ''); }
           return Promise.all([pony, setFingerPrint(Config, pony, options.return_url)]);
