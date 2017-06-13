@@ -35,8 +35,9 @@ class SDK {
     };
 
     this.onLoadUserData = function(){};
+    this.onStartSessionCallback = function(){};
 
-    const regex = /bundles\/(\w+)\//gi;
+    const regex = /games\/data\/(\w+)\//gi;
     const results = regex.exec(location.href);
     this.ID = '';
     try {
