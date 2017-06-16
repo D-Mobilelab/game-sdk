@@ -16,8 +16,10 @@
 
 ### Setup debug environment
 
-The debug environment is simply a server running on localhost. To make a full test of save and load user data progress you need to register a domain in your hosts file compatibile with our service.
-In order to avoid a QA rejection we suggest to use it the local server on day one (and help us to improve it with your feedback)
+The debug environment is simply a server running on localhost. Register an alias in your hosts file is needed to make work newton and the save
+and load user data progress. In this way you can test your game with load, save, gameover and you will
+avoid a QA rejection. 
+We recommend to use the local server to test your game before send us the package (and help us to improve it with your feedback)
 
 #### Install node and npm
 Probably you already have this installed in your PC/Mac but just in case here are the tutorial to setting up in environment for development:
@@ -102,10 +104,11 @@ GamifiveSDK.endSession( { score: 123456789, level: 1 } );
 // N.B. The object is just an example. You can structure it however you want
 GamifiveSDK.saveUserData({ level1: { score: 123456789, unlocked: true } });
 
-// on enter pause
+// The more games button is a floating action button that once clicked redirect the user
+// to our portal. It's needed to show this button in your pause event
 GamifiveSDK.showMoreGamesButton();
 
-// on exit pause
+// On exit pause hide the more games button
 GamifiveSDK.hideMoreGamesButton();
 ```
 
