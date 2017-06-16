@@ -11,6 +11,7 @@
   - [Copy the game in sample > mygamefolder](#copy-the-game-in-sample-mygamefolder)
   - [Run the local server](#run-the-local-server)
 + [An implementation example](#an-implementation-example)
++ [Before sending](#before-sending)
 + [Aliases](#aliases)
 
 ### Setup debug environment
@@ -43,9 +44,7 @@ Copy and paste these two scripts in the head tag of your html
 
 ```javascript
 <script src="http://static.newton.pm/js/v2.x/newton.min.js"></script>
-<!-- Do not worry. Will be there when you will copy the folder in sample folder -->
 <script type="text/javascript" src="../gfsdk.js"></script>
-
 ```
 __Optional__
 If you want to see the gameover with the style add this optional css tag into your head
@@ -108,6 +107,14 @@ GamifiveSDK.showMoreGamesButton();
 
 // on exit pause
 GamifiveSDK.hideMoreGamesButton();
+```
+
+# Before sending
+Before sending the package just remove newton and css from the index.html
+and include only this tag in your head
+
+```javascript
+<script id="gfsdk" src="http://s.motime.com/js/wl/webstore_html5game/gfsdk/dist/gfsdk.min.js"></script>
 ```
 
 # Aliases
