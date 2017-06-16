@@ -84,7 +84,7 @@
                 playButtonElement.addEventListener('click', function(evt){
                     evt.preventDefault();
                     var redirect_url = urlToLaunchElement.value;
-                    window.open([window.location.origin, redirect_url].join(''), '_blank');
+                    window.open([window.location.origin, redirect_url].join(''), '_self');
                 }, false);
 
                 clearButtonElement.addEventListener('click', function(evt){
