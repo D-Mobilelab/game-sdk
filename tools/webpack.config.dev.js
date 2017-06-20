@@ -4,12 +4,14 @@ var baseConfiguration = require('./webpack.config.base');
 
 var devConfiguration = Object.create(baseConfiguration);
 
-var FILENAME = 'gfsdk.js';
-var FILENAME_HYBRID = 'gfsdk.hybrid.js';
+var FILENAME = '[name].js';
+var FILENAME_HYBRID = '[name].hybrid.js';
 
-var envPlugin = new webpack.DefinePlugin({
-    'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV),
-    'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
+var envPlugin = new webpack.DefinePlugin({    
+    'process.env': {
+      'APP_ENV': JSON.stringify(process.env.APP_ENV),
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV) 
+    }
 });
 
 var ROOT_DIRECTORY = null;

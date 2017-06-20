@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 var babelLoader = {
   test: /\.jsx?$/,
@@ -11,13 +12,23 @@ if(process.env.NODE_ENV === 'test') {
 }
 
 var devConfiguration = {
-  entry: [
-    './src/index.js',
-  ],
+  entry: {
+    gfsdk: './src/index.js',
+    vendor: [
+      'react',
+      'react-dom',
+      'redux',
+      'react-redux',
+      'axios',
+      'docomo-utils',
+      'redux-thunk',
+      'localforage'
+    ]
+  },
   output: {
     path: path.resolve('dist'),
     publicPath: '/',
-    filename: 'gfsdk.js',
+    filename: '[name].js',
     libraryTarget: 'umd',
     library: 'GamifiveSDK',
   },
@@ -55,7 +66,22 @@ var devConfiguration = {
         },
       ],
   },
-  plugins: [],
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      // (the commons chunk name)
+
+      
+      // (the filename of the commons chunk)
+
+      // minChunks: 3,
+      // (Modules must be shared between 3 entries)
+
+      // chunks: ["pageA", "pageB"],
+      // (Only use these entries)
+      minChunks: Infinity,
+    })
+  ],
     // module end
   resolve: {
     extensions: ['.js', '.es6', '.jsx'],
