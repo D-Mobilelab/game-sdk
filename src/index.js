@@ -8,9 +8,13 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import Menu from './js/components/Menu';
+/*
+Lazily loaded :) ^_^ (:
 import Banner from './js/components/Banner/Banner';
 import GameasyOver from './js/components/GameasyOver';
 import GamifiveOver from './js/components/GamifiveOver';
+*/
+import LazilyLoad, { importLazy } from './LazilyLoad';
 import Interstitial from './js/components/Interstitial/Interstitial';
 
 if (module.hot) { module.hot.accept(); }
@@ -19,24 +23,39 @@ if (process.env.APP_ENV === 'HYBRID') {
     __webpack_public_path__ = RUNTIME_PUBLIC_PATH;
 }
 
-const Gameovers = { 
-    gamifive: GamifiveOver,
-    gameasy: GameasyOver
-}
-
 class App extends React.Component {
     
     constructor(props){
-        super(props);
+        super(props);        
     }
 
     render(){
-        let TheGameover = Gameovers[this.props.label];
         return (
             <div>
                 <Interstitial />
-                <TheGameover />    
-                <Banner />
+                <LazilyLoad modules={{
+                  Gameover: () => {
+                    if (this.props.label === 'gameasy') {
+                      return importLazy(System.import('./js/components/GameasyOver'))
+                    }
+                    return importLazy(System.import('./js/components/GamifiveOver'))
+                  },
+                  Banner: () => {
+                    if (this.props.label === 'gameasy') {
+                      return importLazy(System.import('./js/components/Banner/Banner'))
+                    }
+                    return function Noop(){ return null };
+                  }
+                }}>
+                  {({ Gameover, Banner }) => {
+                      return (
+                        <div>
+                          <Gameover />
+                          <Banner />
+                        </div>)
+                    }
+                  }
+                </LazilyLoad>                
                 <Menu white_label={this.props.label}/>
             </div>
         )
