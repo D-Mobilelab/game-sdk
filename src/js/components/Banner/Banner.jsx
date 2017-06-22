@@ -79,7 +79,11 @@ class Banner extends React.Component {
                         </Row>
                         <Row>
                             <Column cols={6} offset={3} style={{marginTop:'10%'}}>
-                                <MaterialButton text={this.props.isLoading ? '...' : WEBAPP_BANNER_BUTTON} style={{fontSize: '15px', width:'100%'}} onClick={this.handleGetAppButton} disabled={this.props.isLoading ? true : false}/>
+                                <MaterialButton style={{fontSize: '15px', width:'100%'}} 
+                                                onClick={this.handleGetAppButton} 
+                                                disabled={this.props.isLoading ? true : false}>
+                                {this.props.isLoading ? '...' : WEBAPP_BANNER_BUTTON}
+                                </MaterialButton>
                             </Column>
                         </Row>
                     </Grid>                    

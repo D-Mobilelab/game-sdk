@@ -9,7 +9,7 @@
   font-size: 22px;
   line-height: 38px;
   outline: none;
-  font-family: 'montserratultra_light';
+  font-family: 'montserratultra_light', Verdana, Geneva, sans-serif;  
   border: 0;
   margin: 0;
   overflow: hidden;
@@ -19,13 +19,15 @@
   text-transform: uppercase;
   z-index: 2;
   transition: background-color 0.5s ease;
+  white-space: nowrap;
+  text-overflow: ellipsis;  
 }
 
 .btn:disabled {
   pointer-events: none;
   background-color: #666666;
   background-color:rgba(102, 102, 102, .5);
-  color: #cccccc;  
+  color: #cccccc;
 }
 
 .centerBtn {

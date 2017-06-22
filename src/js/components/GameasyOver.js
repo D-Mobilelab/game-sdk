@@ -84,7 +84,7 @@ class GameasyGameover extends Gameover {
                     <Row style={{position:'relative'}}>
                         <Column cols={8}>
                             <Image src={imgSrc} />
-                            <MaterialButton text={WEBAPP_CANVAS_BUTTON_PLAY} onClick={this.handleReplay} center='true' style={{width:'50%'}} />
+                            <MaterialButton onClick={this.handleReplay} center='true' style={{width:'50%'}}>{WEBAPP_CANVAS_BUTTON_PLAY}</MaterialButton>
                         </Column>
                         {/* custom styles needed for vertical align rank and score */}
                         <Column cols={4} style={{position:'absolute', right:'0', height: '100%'}}>
