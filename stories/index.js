@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import { MaterialButton } from '../src/js/components/MaterialButton';
+import { MaterialButton } from '../src/js/components/MaterialButton/MaterialButton';
 
 /*
 import Button from '@storybook/components/dist/demo/Button';

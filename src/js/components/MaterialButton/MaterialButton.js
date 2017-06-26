@@ -1,5 +1,5 @@
 import React from 'react';
-import buttonStyle from '../../css/material.button.css';
+import buttonStyle from './material.button.css';
 
 export class MaterialButton extends React.Component {
     constructor(props){

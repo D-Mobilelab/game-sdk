@@ -63,6 +63,7 @@ class SDK {
    */
   init(initConfig) {
     console.log('Init');
+    this.state.initConfig = initConfig;
     this.onLoadUserData(this.state.user.userData);
     return Promise.resolve();
   }
@@ -117,6 +118,7 @@ class SDK {
     // retro compatibility
     console.log('loadUserData');
     this.onLoadUserData = onLoadUserData;
+    return null;
   }
 
   /**
@@ -207,6 +209,11 @@ class SDK {
     console.log('endSession');
     this.state.user.level = scoreAndLevel.level ? scoreAndLevel.level : 1;
     this.state.user.score = scoreAndLevel.score;
+    if (!this.state.initConfig.lite) {
+      setTimeout(() => {
+        this.startSession();
+      }, 1000); 
+    }
   }
 
   /**
@@ -231,4 +238,8 @@ class SDK {
  * @param {Object|null} userProgress
  */
 const sdkInstance = new SDK();
+let aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
+aliases.map((alias) => {
+    window[alias] = sdkInstance;
+});
 module.exports = sdkInstance;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MaterialButton } from '../MaterialButton';
+import { MaterialButton } from '../MaterialButton/MaterialButton';
 import { Row, Column, Grid } from '../Layout/index';
 import bannerStyle from './style.css';
 

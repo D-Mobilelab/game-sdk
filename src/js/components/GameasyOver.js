@@ -2,7 +2,7 @@ import React from 'react';
 import Gameover from './Gameover';
 
 /** My Components */
-import { MaterialButton } from './MaterialButton';
+import { MaterialButton } from './MaterialButton/MaterialButton';
 import RelatedList from './Related/List';
 import RelatedListItem from './Related/ListItem';
 import { Image } from './Image';
