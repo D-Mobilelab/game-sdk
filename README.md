@@ -78,7 +78,7 @@ Then you can simply click "Set" and "Launch". This will redirect you to[http://l
 ```javascript
 // mygamefolder/index.html
 // It's better to put the initialization in your index.html as soon as possible
-GamfiveSDK.init({ lite: true }); // lite false means without gameover
+GamifiveSDK.init({ lite: true }); // lite false means without gameover
 GamifiveSDK.loadUserData(function(userData) {
     // UserData is null the first time or after a clearUserData() call
     // The userData is associated with userid-gameid combination
@@ -96,7 +96,7 @@ GamifiveSDK.onStartSession(function(){
 })
 
 // When the user play:
-GamfiveSDK.startSession();
+GamifiveSDK.startSession();
 
 // When the user finish to play
 GamifiveSDK.endSession( { score: 123456789, level: 1 } );
