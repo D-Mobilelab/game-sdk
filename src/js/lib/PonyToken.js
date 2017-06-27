@@ -23,7 +23,7 @@ export function setFingerPrint(Config, pony, returnUrl) {
       fpnamespace: Config.MFP_NAMESPACE ? Config.MFP_NAMESPACE : Config.SITE_PROFILE,
       extData: {
         domain: Config.DEST_DOMAIN,
-        return_url: returnUrl,
+        return_url: encodeURIComponent(returnUrl),
         ponyUrl: pony,
       },
     },
@@ -31,10 +31,17 @@ export function setFingerPrint(Config, pony, returnUrl) {
     expire: Config.MFP_EXPIRE || 300,
   };
 
+  /*
+  ponyUrl = data.data.ponyUrl ? data.data.ponyUrl.replace('&','') : '';
+  mfpParams.contents_inapp.extData.ponyUrl = ponyUrl;
+  mfpParams.contents_inapp.extData.return_url = encodeURIComponent(ponyParams.return_url);
+  mfpParams.contents_inapp = JSON.stringify(mfpParams.contents_inapp);
+  api_url = api_url + decodeURIComponent(_this.serializeObj(mfpParams));
+  */
+
   /** God forgive them because they don't know what they do */
   mfpParams.contents_inapp = JSON.stringify(mfpParams.contents_inapp);
-
-  const url = queryfy(MFP_API_URL, mfpParams);
+  const url = MFP_API_URL + decodeURIComponent(queryfy('', mfpParams));
   const request = new JSONPRequest(url);
   return request.prom.then((response) => {
     console.log('setFingerPrint:OK', response);
@@ -71,11 +78,10 @@ export function generatePony(Config, options = { return_url: '' }) {
   });
 
   const encodedParams = encodeURIComponent(JSON.stringify(ponyParams));
-  const configRequest = { params: { data: encodedParams }, withCredentials: true };
-
-  return AxiosInstance.get(MOA_API_CREATEPONY, configRequest)
+  const finalURL = MOA_API_CREATEPONY + '?data=' + encodedParams;
+  return AxiosInstance.get(finalURL, { withCredentials: true })
         .then((response) => {
-          console.log('Pony created:OK', MOA_API_CREATEPONY);
+          console.log('Pony created:OK', finalURL);
           let pony = checkObject(response, 'data.ponyUrl');
           if (pony) { pony = pony.replace('&', ''); }
           return Promise.all([pony, setFingerPrint(Config, pony, options.return_url)]);

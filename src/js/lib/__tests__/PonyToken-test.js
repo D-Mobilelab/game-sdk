@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-
 import MockAdapter from 'axios-mock-adapter';
+import fingerPrintURLForTest from './fingerPrintURL';
 /**
  * Use rewire to mock dependencies inside a module (exclude this babel plugin when build for production)
  * https://github.com/speedskater/babel-plugin-rewire
@@ -19,13 +19,13 @@ describe('PonyToken tests', function() {
 
   beforeEach(function() {
     mock = new MockAdapter(AxiosInstance);
-    mock.onGet(FakeConfig.MOA_API_CREATEPONY)
+    
+    mock.onGet(/\/v01\/createpony/)
         .reply(200, createponyResponse);
     const cookieList = FakeConfig.MFP_COOKIE_LIST.split(',');
     cookieList.forEach((value) => {
       Cookies.set(value, `mocked-${value}`);
     });
-    mock.onGet(FakeConfig.MOA_API_CREATEPONY).reply(200, createponyResponse);
   });
 
   afterEach(function(){
@@ -65,6 +65,11 @@ describe('PonyToken tests', function() {
         expect(spyJSONPRequest).toHaveBeenCalled();
         expect(spyJSONPRequest).toHaveBeenCalledTimes(1);
         expect(result).toContain(FakeConfig.MFP_API_URL);
+
+        const urlToHaveBeenCalled = fingerPrintURLForTest(FakeConfig, '_PONY_1234567890END', 'http://www.gameasy.com');
+        console.log(urlToHaveBeenCalled);
+        expect(spyJSONPRequest).toHaveBeenCalledWith(urlToHaveBeenCalled);
+
         done();
       }).catch(done.fail);
   });
