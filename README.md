@@ -46,6 +46,7 @@ Copy and paste these two scripts in the head tag of your html
 
 ```javascript
 <script src="http://static.newton.pm/js/v2.x/newton.min.js"></script>
+<script type="text/javascript" src="../vendor.js"></script>
 <script type="text/javascript" src="../gfsdk.js"></script>
 ```
 __Optional__
