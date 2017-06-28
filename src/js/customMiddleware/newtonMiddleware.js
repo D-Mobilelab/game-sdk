@@ -13,7 +13,7 @@ export const newtonMiddleware = store => next => (action) => {
   switch (action.type) {
     case 'INIT_FINISHED':
       NewtonAdapter.trackEvent({
-        name: 'GameLoad',
+        name: 'InitFinished',
         properties: {
           action: 'Yes',
           category: 'Play',
