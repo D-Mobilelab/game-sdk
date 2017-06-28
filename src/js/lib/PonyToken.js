@@ -30,18 +30,11 @@ export function setFingerPrint(Config, pony, returnUrl) {
     country: Config.MFP_TLD ? Config.MFP_TLD : Config.TLD,
     expire: Config.MFP_EXPIRE || 300,
   };
-
-  /*
-  ponyUrl = data.data.ponyUrl ? data.data.ponyUrl.replace('&','') : '';
-  mfpParams.contents_inapp.extData.ponyUrl = ponyUrl;
-  mfpParams.contents_inapp.extData.return_url = encodeURIComponent(ponyParams.return_url);
-  mfpParams.contents_inapp = JSON.stringify(mfpParams.contents_inapp);
-  api_url = api_url + decodeURIComponent(_this.serializeObj(mfpParams));
-  */
-
   /** God forgive them because they don't know what they do */
+  // use this otherwise will not work (shame)
   mfpParams.contents_inapp = JSON.stringify(mfpParams.contents_inapp);
   const url = MFP_API_URL + decodeURIComponent(queryfy('', mfpParams));
+
   const request = new JSONPRequest(url);
   return request.prom.then((response) => {
     console.log('setFingerPrint:OK', response);

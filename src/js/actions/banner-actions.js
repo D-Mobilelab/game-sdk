@@ -29,17 +29,17 @@ export function redirectOnStore(fromPage) {
         // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
         const finalStoreUrl = vhost.GOOGLEPLAY_STORE_URL
           .replace('<page>', fromPage)
-          .replace('<af_sub1>', pony);
+          .replace('<af_sub1>', encodeURIComponent(pony));
 
         setTimeout(() => {
           /**
            * TODO: make a single call to redux store
            */
           dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
-          dispatch(isLoading(false));
-          dispatch(hideBanner());
           window.location.href = finalStoreUrl;
-        }, 200);
+          dispatch(hideBanner());
+          dispatch(isLoading(false));
+        }, 10);
       }).catch((reason) => {
         console.warn(reason);
         dispatch(hideBanner());
