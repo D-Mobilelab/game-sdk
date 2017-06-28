@@ -21,7 +21,9 @@
     "docs": "$(npm bin)/documentation build src/SDK.js -f html --shallow -o docs/$npm_package_version",
     "append:readme": "$(npm bin)/documentation readme src/SDK.js --section=API --shallow",
     "upload114": "scp -r dist super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/",
-    "upload129": "scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r dist pasqualemangialavori@super@192.168.124.129@10.255.246.25:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/"
+    "upload129": "scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r dist pasqualemangialavori@super@192.168.124.129@10.255.246.25:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "eatsjobs",
   "license": "BSD",
@@ -78,7 +80,8 @@
     "redux-thunk": "^2.1.0",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "^2.4.1",
+    "@storybook/react": "^3.1.3"
   },
   "dependencies": {
     "axios": "^0.15.2",

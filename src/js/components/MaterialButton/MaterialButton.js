@@ -1,5 +1,5 @@
 import React from 'react';
-import buttonStyle from '../../css/material.button.css';
+import buttonStyle from './material.button.css';
 
 export class MaterialButton extends React.Component {
     constructor(props){
@@ -39,15 +39,16 @@ export class MaterialButton extends React.Component {
         const maxDimHalf = maxDim / 2;
         let buttonRect = this.refs.button.getBoundingClientRect();
         
+        // console.log(["halfBtnHeight",halfBtnHeight,"halfBtnWidth",halfBtnWidth, "maxDim", maxDim, "maxDimHalf", maxDimHalf].join(":"));
         let ripplePosition = {
-            top: `${(y - maxDimHalf - buttonRect.top)}px`,
-            left: `${(x - maxDimHalf - buttonRect.left)}px`,
-            width: `${maxDim}px`,
-            height: `${maxDim}px`,
+            top: `${(y - buttonRect.top - (maxDimHalf / 2))}px`,
+            left: `${(x - buttonRect.left - (maxDimHalf / 2))}px`,
+            width: `${maxDimHalf}px`,
+            height: `${maxDimHalf}px`,
             position:'absolute'
         }
         this.setState({ active: true, ripplePosition });
-    }
+    }    
 
     render() {        
         let buttonClasses = [buttonStyle.btn, this.props.center ? buttonStyle.centerBtn : ''];
@@ -67,8 +68,8 @@ export class MaterialButton extends React.Component {
                 className={classNames} 
                 style={{...this.props.style}} 
                 disabled={this.props.disabled}>                
-                {this.props.text}
-                <div ref='ripple' className={rippleClass} style={this.state.ripplePosition}></div>
+                {this.props.children}
+                <div ref='ripple' className={rippleClass} style={this.state.ripplePosition}></div>                
             </button>
         )
     }
