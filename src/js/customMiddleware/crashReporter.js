@@ -18,7 +18,7 @@ function reportError(err, state, action = '') {
 }
 
 window.onerror = function errorReporter(message, source, lineno, colno, error) {
-  if (error === null || source === '') {
+  if (error === null || source === '' || error === '{}') {
     return false;
   }
 
