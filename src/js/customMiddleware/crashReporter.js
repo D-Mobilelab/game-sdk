@@ -18,7 +18,7 @@ function reportError(err, state, action = '') {
 }
 
 window.onerror = function errorReporter(message, source, lineno, colno, error) {
-  if (error === null || source === '') {
+  if (error === null || source === '' || error === '{}') {
     return false;
   }
 
@@ -26,7 +26,7 @@ window.onerror = function errorReporter(message, source, lineno, colno, error) {
     message,
     source,
     lineno,
-    error: JSON.stringify(error),
+    error: error.toString(),
   };
   // a:1 otherwise SimpleObject raise an error -.-'
   reportError(errorObject, { a: 1 });
