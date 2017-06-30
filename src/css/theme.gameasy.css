@@ -1,8 +1,0 @@
-@value colors: './colors.css';
-@value foreground_white, purple_gameasy from colors;
-
-.btn {
-    background: purple_gameasy;
-    color: foreground_white;
-    border-radius: 20px;
-}

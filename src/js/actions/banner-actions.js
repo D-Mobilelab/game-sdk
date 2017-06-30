@@ -6,9 +6,10 @@ export function showBanner() {
   };
 }
 
-export function hideBanner() {
+export function hideBanner(loading = false) {
   return {
     type: 'HIDE_BANNER',
+    payload: { loading },
   };
 }
 
@@ -31,19 +32,11 @@ export function redirectOnStore(fromPage) {
           .replace('<page>', fromPage)
           .replace('<af_sub1>', encodeURIComponent(pony));
 
-        setTimeout(() => {
-          /**
-           * TODO: make a single call to redux store
-           */
-          dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
-          window.location.href = finalStoreUrl;
-          dispatch(hideBanner());
-          dispatch(isLoading(false));
-        }, 10);
+        dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
+        window.location.href = finalStoreUrl;
+        setTimeout(() => dispatch(hideBanner()), 1000);
       }).catch((reason) => {
         console.warn(reason);
-        dispatch(hideBanner());
-        /*dispatch(isLoading(false));*/
       });
   };
 }

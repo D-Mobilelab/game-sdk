@@ -1,0 +1,76 @@
+.btn {
+  position: relative;
+  cursor: pointer;  
+  user-select: none;
+  width: 120px;
+  min-height: 40px;
+  border: 0;
+  margin: 0;
+  outline: none;
+  font-size: 20px;
+  font-family: Verdana, Geneva, sans-serif;  
+  transition: background-color 0.5s ease;
+  /** To theme */
+  color: white;
+  background:#337ab7;
+  text-transform: uppercase;
+  
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.btn:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  filter: alpha(opacity=65);
+  box-shadow: none;
+  opacity: .65;
+}
+
+.centerBtn {
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-left: -25%;
+}
+
+.rippleActive {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255,255,255, 0.4);
+  z-index: 1;
+  animation: ripple 0.25s ease-out;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+.loadingSpinner {
+  border: 5px solid #FFF;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: -10px;
+  margin-left: -10px;
+  top: 50%;
+  left: 50%;
+  animation: loadingSpinner 0.7s infinite linear;
+}
+
+@keyframes loadingSpinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

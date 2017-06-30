@@ -5,6 +5,12 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { MaterialButton } from '../src/js/components/MaterialButton/MaterialButton';
+import withTheme from '../src/js/components/MaterialButton/withTheme';
+import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
+import standard from '../src/js/components/MaterialButton/theme/default.css';
+
+const MyButton = withTheme(MaterialButton, gameasy);
+const StandardButton = withTheme(MaterialButton, standard);
 
 /*
 import Button from '@storybook/components/dist/demo/Button';
@@ -18,6 +24,15 @@ storiesOf('Button', module)
 */
 
 storiesOf('MaterialButton', module)
-  .add('standard', () => (<MaterialButton onClick={action('clicked')}>Prova</MaterialButton>))
-  .add('with long text', () => (<MaterialButton onClick={action('clicked')}>Some very very long texxxxxxxxxxxxxxxxxxt</MaterialButton>))
-  .add('disabled', () => (<MaterialButton disabled>Prova</MaterialButton>));
+  .add('standard', () => (<StandardButton onClick={action('clicked')}>Prova</StandardButton>))
+  .add('with long text', () => (<StandardButton onClick={action('clicked')}>Some very very long texxxxxxxxxxxxxxxxxxt</StandardButton>))
+  .add('disabled', () => (<StandardButton disabled>Prova</StandardButton>))
+  .add('disabled isLoading', () => (<StandardButton disabled isLoading>Prova</StandardButton>))
+  .add('isLoading', () => (<StandardButton isLoading={true}>Prova</StandardButton>));
+
+storiesOf('MaterialButton theme', module)
+  .add('standard', () => (<MyButton onClick={action('clicked')}>Prova</MyButton>))
+  .add('with long text', () => (<MyButton onClick={action('clicked')}>Some very very long texxxxxxxxxxxxxxxxxxt</MyButton>))
+  .add('disabled', () => (<MyButton disabled>Prova</MyButton>))
+  .add('disabled isLoading', () => (<MyButton disabled isLoading>Prova</MyButton>))
+  .add('isLoading', () => (<MyButton isLoading={true}>Prova</MyButton>));

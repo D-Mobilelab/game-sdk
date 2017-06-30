@@ -2,7 +2,11 @@ import React from 'react';
 import Gameover from './Gameover';
 
 /** My Components */
+import gameasyButtonTheme from './MaterialButton/theme/gameasy.css';
+import withTheme from './MaterialButton/withTheme';
 import { MaterialButton } from './MaterialButton/MaterialButton';
+const GameasyButton = withTheme(MaterialButton, gameasyButtonTheme);
+
 import RelatedList from './Related/List';
 import RelatedListItem from './Related/ListItem';
 import { Image } from './Image';
@@ -84,7 +88,7 @@ class GameasyGameover extends Gameover {
                     <Row style={{position:'relative'}}>
                         <Column cols={8}>
                             <Image src={imgSrc} />
-                            <MaterialButton onClick={this.handleReplay} center='true' style={{width:'50%'}}>{WEBAPP_CANVAS_BUTTON_PLAY}</MaterialButton>
+                            <GameasyButton onClick={this.handleReplay} center='true' style={{width:'50%'}}>{WEBAPP_CANVAS_BUTTON_PLAY}</GameasyButton>
                         </Column>
                         {/* custom styles needed for vertical align rank and score */}
                         <Column cols={4} style={{position:'absolute', right:'0', height: '100%'}}>

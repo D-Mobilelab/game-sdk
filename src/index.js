@@ -68,6 +68,7 @@ function onDomLoaded(event) {
     window.document.body.appendChild(ROOT_ELEMENT);
 
     let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
+    WHITE_LABEL = 'gameasy';
     ReactDOM.render(
         <Provider store={store}>
             <App label={WHITE_LABEL} />

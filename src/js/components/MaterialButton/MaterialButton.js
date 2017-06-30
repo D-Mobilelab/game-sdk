@@ -1,5 +1,4 @@
 import React from 'react';
-import buttonStyle from './material.button.css';
 
 export class MaterialButton extends React.Component {
     constructor(props){
@@ -21,7 +20,7 @@ export class MaterialButton extends React.Component {
 
     handleMouseUp(evt){
         this.setState({...this.state, active: false});
-        this.props.onClick(evt);
+        if(typeof this.props.onClick === 'function'){ this.props.onClick(evt); }
     }
 
     handleTouchStart(evt){
@@ -31,7 +30,7 @@ export class MaterialButton extends React.Component {
 
     handleTouchEnd(evt){
         this.setState({...this.state, active: false});
-        this.props.onClick(evt);
+        if(typeof this.props.onClick === 'function'){ this.props.onClick(evt); }
     }
 
     handle(evt, {x, y}){
@@ -50,12 +49,9 @@ export class MaterialButton extends React.Component {
         this.setState({ active: true, ripplePosition });
     }    
 
-    render() {        
-        let buttonClasses = [buttonStyle.btn, this.props.center ? buttonStyle.centerBtn : ''];
-        let rippleClass = buttonStyle.ripple;
-        if(this.state.active){ 
-            buttonClasses.push(buttonStyle.active);
-        }
+    render() {
+        const { theme } = this.props;
+        let buttonClasses = [theme.btn, this.props.center ? theme.centerBtn : ''];
 
         let classNames = buttonClasses.join(' ');
         return(
@@ -65,11 +61,14 @@ export class MaterialButton extends React.Component {
                 onTouchEnd={this.handleTouchEnd}
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
-                className={classNames} 
+                className={classNames}
                 style={{...this.props.style}} 
-                disabled={this.props.disabled}>                
+                disabled={this.props.disabled}>
+                
+                <span className={this.props.isLoading ? theme.loadingSpinner : ''}></span>
+                
                 {this.props.children}
-                <div ref='ripple' className={rippleClass} style={this.state.ripplePosition}></div>                
+                <div className={this.state.active ? theme.rippleActive : ''} style={this.state.ripplePosition}></div>
             </button>
         )
     }
