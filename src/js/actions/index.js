@@ -146,7 +146,7 @@ function init(initConfig) {
         })
         .catch((reason) => {
           dispatch({
-            type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, error: reason,
+            type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, error: JSON.stringify(reason),
           });
         });
   };
