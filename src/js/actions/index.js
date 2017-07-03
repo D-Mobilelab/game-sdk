@@ -17,16 +17,7 @@ import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 
 const vhostKeys = [
-  'CONTENT_RANKING',    
-  'SPRITE_GAME_PNG',
-  'SPRITE_GAME_SVG',
-  'MOA_API_APPLICATION_OBJECTS_GET',
-  'MOA_API_APPLICATION_OBJECTS_SET',  
-  'NEWTON_SECRETID',
-  'TLD',
-  'NT_REAL_COUNTRY',
-  'INSTALL_HYBRID_VISIBLE',
-  'SHOW_INGAME_ADS'
+  'poggioacaiano'
 ];
 
 /*
