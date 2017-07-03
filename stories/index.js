@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { MaterialButton } from '../src/js/components/MaterialButton/MaterialButton';
-import withTheme from '../src/js/components/MaterialButton/withTheme';
+import withTheme from '../src/js/components/withTheme';
 import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
 import standard from '../src/js/components/MaterialButton/theme/default.css';
 

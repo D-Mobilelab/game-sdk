@@ -3,7 +3,7 @@ import Gameover from './Gameover';
 
 /** My Components */
 import gameasyButtonTheme from './MaterialButton/theme/gameasy.css';
-import withTheme from './MaterialButton/withTheme';
+import withTheme from './withTheme';
 import { MaterialButton } from './MaterialButton/MaterialButton';
 const GameasyButton = withTheme(MaterialButton, gameasyButtonTheme);
 
