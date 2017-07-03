@@ -1,4 +1,4 @@
-function reportError(err, state, action = '') {
+function reportError(err, state = { a: 1 }, action = '') {
   if (window.Newton) {
     const errorObject = {
       action,
@@ -26,10 +26,10 @@ window.onerror = function errorReporter(message, source, lineno, colno, error) {
     message,
     source,
     lineno,
-    error: JSON.stringify(error),
+    error: error.toString ? error.toString() : JSON.stringify(error),
   };
   // a:1 otherwise SimpleObject raise an error -.-'
-  reportError(errorObject, { a: 1 });
+  reportError(errorObject);
   // If the function returns true prevents the default event handler to fire
   return false;
 };
