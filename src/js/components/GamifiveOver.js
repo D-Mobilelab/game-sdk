@@ -26,7 +26,8 @@ const mapStateToProps = (state) => {
     user: state.user,
     score: state.session.score,
     rank: state.session.rank,
-    dictionary: state.generic.dictionary
+    dictionary: state.generic.dictionary,
+    vhost: state.vhost
   }
 };
 
@@ -75,6 +76,10 @@ class GamifiveGameover extends Gameover {
             WEBAPP_GAME_OVER,
         } = this.props.dictionary;
 
+        const { SHOW_BLOCK_FBSHARE } = this.props.vhost;
+        let showOrHide = (SHOW_BLOCK_FBSHARE == 1 || SHOW_BLOCK_FBSHARE === true);
+        let showFbStyle = {display: showOrHide ? 'block' : 'none'};
+        
         return (            
                 <div className="container game-over" style={showAndHideStyle}>
                     <a onClick={this.goToHome}>
@@ -99,7 +104,7 @@ class GamifiveGameover extends Gameover {
                                     </h2>
                                 </div>
 
-                                <div className="row score__info">
+                                <div className="row score__info" style={showFbStyle}>
                                     <h4></h4>
                                     <button className="btn-mini btn--fb fa-facebook-official" id="fb-challenge-button" onClick={(evt) => {
                                         evt.preventDefault();
