@@ -7,7 +7,7 @@ export function banner(state = {
     case 'SHOW_BANNER':
       return Object.assign({}, state, { show: true });
     case 'HIDE_BANNER':
-      return Object.assign({}, state, { show: false });
+      return Object.assign({}, state, { show: false, isLoading: action.payload.loading });
     case 'REDIRECT_ON_STORE':
       return Object.assign({}, state, { installBannerClicked: true });
     case 'SET_IS_LOADING':
