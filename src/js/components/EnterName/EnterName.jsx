@@ -1,4 +1,5 @@
 import React from 'react';
+import { Grid, Row, Column } from '../Layout';
 import css from './style.css';
 
 export default class EnterName extends React.Component {
@@ -60,27 +61,43 @@ export default class EnterName extends React.Component {
 
   render() {
     return (
-      <div className={css.container}>
-        <div className={css.title}>{this.props.title}</div>
-        <form onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
-          {
-            this.state.letters.map((letter, i) => {
-              return (
-              <input onFocus={this.onFocus}
-                className={css.inputLetter}
-                id={`input_${i}`} 
-                key={i} 
-                ref={(ref) => { this[`input${i}`] = ref; }} 
-                type="text" 
-                maxLength="1" 
-                autoComplete="off"
-                placeholder={letter}
-              />)
-            })
-          }
-          <button ref='submitButton' type="submit">{this.props.buttonLabel}</button>
-        </form>
-      </div>
+      <Grid>      
+        <div className={css.container}>
+          <Row>
+            <Column cols={12}>
+              <div className={css.title}>{this.props.title}</div>
+            </Column>
+          </Row>
+
+          <Row>            
+            <form onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
+              <Column cols={6}>
+                <div className={css.inputBlock}>
+                {
+                  this.state.letters.map((letter, i) => {
+                    return (
+                    <input onFocus={this.onFocus}
+                      className={css.inputLetter}
+                      id={`input_${i}`} 
+                      key={i} 
+                      ref={(ref) => { this[`input${i}`] = ref; }} 
+                      type="text" 
+                      maxLength="1" 
+                      autoComplete="off"
+                      placeholder={letter}
+                    />)
+                  })
+                }
+                </div>
+                </Column>
+                <Column cols={6}>
+                  <button ref='submitButton' type="submit">{this.props.buttonLabel}</button>
+                </Column>
+            </form>
+          
+          </Row>
+        </div>
+      </Grid>
     )
   }
 }

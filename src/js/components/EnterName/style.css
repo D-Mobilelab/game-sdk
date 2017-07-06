@@ -1,11 +1,19 @@
-.container {
-    width: 80%;
-    background: black;
+.container {    
+    background: black;    
+    border: solid 2px orangered;
+    width: 95%;
+    height: 33%;
+    margin: 0 auto;
 }
 
 .title {
     color: orangered;
     text-transform: uppercase;
+    text-align: center;
+}
+
+.inputBlock {
+    text-align: center;
 }
 
 .inputLetter {
@@ -13,7 +21,7 @@
     margin: 0;
     padding: 0;
     border: 0;
-    width: 50px;
+    width: 25px; /** relative? */
     appearance: none;
     box-shadow: none;
     border-radius: none;
@@ -22,6 +30,7 @@
     font-size: 25px;
     background: black;
     color:white;
+    border-bottom: solid 2px transparent;
 }
 
 .inputLetter::placeholder {
@@ -37,7 +46,7 @@
 .inputLetter:focus {
     outline: none;
     border-bottom: solid 2px #969696;
-    animation: blink .3s step-end infinite alternate;
+    animation: blink .2s step-end infinite alternate;
 }
 
 
