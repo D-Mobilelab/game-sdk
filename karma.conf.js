@@ -5,6 +5,8 @@ var webpack = require('webpack');
 var envPlugin = new webpack.DefinePlugin({ 
   'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
 });
+/** do not use commons chunk plugin */
+webpackConfig.plugins = [];
 webpackConfig.plugins.push(envPlugin);
 webpackConfig.externals = {
   'react/addons': true,

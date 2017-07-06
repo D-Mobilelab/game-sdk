@@ -1,0 +1,43 @@
+.container {
+    width: 80%;
+    background: black;
+}
+
+.title {
+    color: orangered;
+    text-transform: uppercase;
+}
+
+.inputLetter {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 50px;
+    appearance: none;
+    box-shadow: none;
+    border-radius: none;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 25px;
+    background: black;
+    color:white;
+}
+
+.inputLetter::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+@keyframes blink { 
+   50% { border-color: white; } 
+}
+
+.inputLetter.focus,
+.inputLetter:focus {
+    outline: none;
+    border-bottom: solid 2px #969696;
+    animation: blink .3s step-end infinite alternate;
+}
+
+

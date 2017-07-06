@@ -5,6 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { MaterialButton } from '../src/js/components/MaterialButton/MaterialButton';
+import EnterName from '../src/js/components/EnterName/EnterName';
 import withTheme from '../src/js/components/withTheme';
 import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
 import standard from '../src/js/components/MaterialButton/theme/default.css';
@@ -36,3 +37,11 @@ storiesOf('MaterialButton theme', module)
   .add('disabled', () => (<MyButton disabled>Prova</MyButton>))
   .add('disabled isLoading', () => (<MyButton disabled isLoading>Prova</MyButton>))
   .add('isLoading', () => (<MyButton isLoading={true}>Prova</MyButton>));
+
+
+  storiesOf('EnterName without theme', module)
+    .add('standard', () => { 
+      return (<div style={{width: '640px'}}>
+        <EnterName title='Enter your initials' buttonLabel='Enter' />
+      </div>)
+    })
