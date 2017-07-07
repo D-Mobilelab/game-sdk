@@ -8,7 +8,7 @@
     width: width; 
     height: width;
     transform: scale(0);
-    transition: transform 150ms ease-in-out;
+    transition: transform 150ms linear;
     overflow: hidden;
     border-radius: borderRadius;
 }
