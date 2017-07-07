@@ -7,9 +7,9 @@ import Location from './js/lib/Location';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import Menu from './js/components/Menu';
 /*
 Lazily loaded :) ^_^ (:
+import Menu from './js/components/Menu/Menu';
 import Banner from './js/components/Banner/Banner';
 import GameasyOver from './js/components/GameasyOver';
 import GamifiveOver from './js/components/GamifiveOver';
@@ -45,18 +45,27 @@ class App extends React.Component {
                       return importLazy(System.import('./js/components/Banner/Banner'))
                     }
                     return function Noop(){ return null };
+                  },
+                  Menu: () => {
+                      if (this.props.label === 'gameasy') {
+                        return importLazy(System.import('./js/components/Menu/MenuGameasy'));
+                      } else if(this.props.label === 'gamifive') {
+                        return importLazy(System.import('./js/components/Menu/MenuGamifive'));
+                      } else if(this.props.label === 'bandai'){                        
+                        return importLazy(System.import('./js/components/Menu/MenuBandai'));
+                      }
                   }
                 }}>
-                  {({ Gameover, Banner }) => {
+                  {({ Gameover, Banner, Menu }) => {
                       return (
                         <div>
                           <Gameover />
                           <Banner />
+                          <Menu />
                         </div>)
                     }
                   }
                 </LazilyLoad>                
-                <Menu white_label={this.props.label}/>
             </div>
         )
     }

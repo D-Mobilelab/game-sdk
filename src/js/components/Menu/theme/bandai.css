@@ -1,0 +1,17 @@
+.menu {
+    composes: menu from './default.css';
+    /*background-image: url('../img/sprite_gameasy.png');*/
+    background-image: url('./sprite_bandai.svg');
+}
+
+.show {
+    composes: show from './default.css';
+}
+
+.active{
+    composes: active from './default.css';
+}
+
+.hide {
+    composes: hide from './default.css';
+}

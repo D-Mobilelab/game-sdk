@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { isTouch } from '../lib/TouchDetector';
-import menuStyles from '../../css/menu.base.css';
+import { isTouch } from '../../lib/TouchDetector';
 
 /** Connect to redux store */
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 /** TODO: import only needed actions */
-import { Actions } from '../actions/index';
+import { Actions } from '../../actions/index';
 
 const mapStateToProps = (state) => {
   return {...state.menu}
@@ -123,11 +122,11 @@ export class Menu extends Component {
       this.onPointerMove(evt);
     }
 
-    render(){
-        let menu = this.props.white_label === 'gamifive' ? menuStyles.menu_g5 : menuStyles.menu_gameasy;
-        let classNames = [menu];
-        classNames.push(this.props.show ? menuStyles.show : menuStyles.hide);
-        classNames.push(this.props.active ? menuStyles.active : '');
+    render() {
+        const { theme } = this.props;        
+        let classNames = [theme.menu];
+        classNames.push(this.props.show ? theme.show : theme.hide);
+        classNames.push(this.props.active ? theme.active : '');
         return(
             <div ref='menu' className={classNames.join(' ')} style={this.props.style}></div>
         );

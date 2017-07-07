@@ -1,0 +1,26 @@
+@value width: 60px;
+@value borderRadius: 30px;
+
+.menu {
+    z-index: 1000;
+    position: fixed;
+    cursor: pointer;
+    width: width; 
+    height: width;
+    transform: scale(0);
+    transition: transform 150ms ease-in-out;
+    overflow: hidden;
+    border-radius: borderRadius;
+}
+
+.show {
+    transform: scale(1.0);
+}
+
+.active{
+    transform: scale(0.9);
+}
+
+.hide {
+    transform: scale(0);
+}
