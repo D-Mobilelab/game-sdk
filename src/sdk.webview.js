@@ -209,10 +209,13 @@ class SDK {
     console.log('endSession');
     this.state.user.level = scoreAndLevel.level ? scoreAndLevel.level : 1;
     this.state.user.score = scoreAndLevel.score;
+    
+    console.log('Saving', JSON.stringify(this.state));
+    localStorage.setItem(`${this.ID}`, JSON.stringify(this.state));
     if (!this.state.initConfig.lite) {
       setTimeout(() => {
         this.startSession();
-      }, 1000); 
+      }, 1000);
     }
   }
 
