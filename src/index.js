@@ -76,8 +76,7 @@ function onDomLoaded(event) {
     ROOT_ELEMENT.id = 'gfsdk_root_new';
     window.document.body.appendChild(ROOT_ELEMENT);
 
-    let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
-    WHITE_LABEL = 'gameasy';
+    let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';    
     ReactDOM.render(
         <Provider store={store}>
             <App label={WHITE_LABEL} />
