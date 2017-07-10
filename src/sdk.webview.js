@@ -13,6 +13,8 @@
 class SDK {
 
   constructor() {
+    this.initFinished = false;
+    this.startAfterInit = false;
     this.state = {
       user: {
         user: null,
@@ -64,7 +66,10 @@ class SDK {
   init(initConfig) {
     console.log('Init');
     this.state.initConfig = initConfig;
-    this.onLoadUserData(this.state.user.userData);
+    this.initFinished = true;
+    if (this.startAfterInit) {
+      this.startSession();
+    }
     return Promise.resolve();
   }
 
@@ -117,8 +122,8 @@ class SDK {
   loadUserData(onLoadUserData) {
     // retro compatibility
     console.log('loadUserData');
-    this.onLoadUserData = onLoadUserData;
-    return null;
+    onLoadUserData(this.state.user.userData.info);
+    return this.state.user.userData.info;
   }
 
   /**
@@ -192,6 +197,11 @@ class SDK {
    * @memberOf SDK
    */
   startSession() {
+    if (!this.initFinished) {
+      console.log('startSession wiil start after init');
+      this.startAfterInit = true;
+      return;
+    }
     console.log('startSession');
     this.onStartSessionCallback();
   }
