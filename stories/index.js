@@ -41,7 +41,5 @@ storiesOf('MaterialButton theme', module)
 
   storiesOf('EnterName without theme', module)
     .add('standard', () => { 
-      return (<div style={{width: '640px'}}>
-        <EnterName title='Enter your initials' buttonLabel='Enter' />
-      </div>)
+      return (<EnterName title='Enter your initials' buttonLabel='Enter' onSubmit={action('alias sent')} show={true} />)
     })

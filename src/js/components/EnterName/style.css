@@ -1,9 +1,15 @@
-.container {    
+.container {
+    position: fixed;
+    width: 100%;    
     background: black;    
-    border: solid 2px orangered;
-    width: 95%;
-    height: 33%;
+    border: solid 2px orangered;    
     margin: 0 auto;
+    transform: translate3d(0,-100%, 0);
+}
+
+.container.show {
+    transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform: translate3d(0,0%, 0);
 }
 
 .title {
@@ -38,7 +44,7 @@
   opacity: 0.5;
 }
 
-@keyframes blink { 
+@keyframes blink {
    50% { border-color: white; } 
 }
 
