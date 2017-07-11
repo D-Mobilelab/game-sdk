@@ -1,25 +1,29 @@
+@value height: 120px;
+@value width: 450px;
+
 .container {
     position: fixed;
-    width: 100%;    
+    width: width;
+    height: height;
     background: black;    
-    border: solid 2px orangered;    
     margin: 0 auto;
-    transform: translate3d(0,-100%, 0);
-}
-
-.container.show {
-    transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    transform: translate3d(0,0%, 0);
 }
 
 .title {
     color: orangered;
     text-transform: uppercase;
+    text-align: center;   
+}
+
+.element {
+    width: 50%;
+    display: inline-block;
+    line-height: height;
     text-align: center;
 }
 
 .inputBlock {
-    text-align: center;
+    display: inline-block;
 }
 
 .inputLetter {

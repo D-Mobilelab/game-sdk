@@ -1,6 +1,8 @@
 import React from 'react';
-import { Grid, Row, Column } from '../Layout';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 import css from './style.css';
+import transitions from './transitions.css';
 
 export default class EnterName extends React.Component {
   constructor(props) {
@@ -10,14 +12,14 @@ export default class EnterName extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.state = {
       focusOn: 0,
-      letters: ['a','a','a', 'a'],
+      letters: ['a','a','a'],
       placeholder: 'a'
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.input0.focus();
-  }
+  }  
 
   onSubmit(e) {
     e.preventDefault();
@@ -40,7 +42,7 @@ export default class EnterName extends React.Component {
       if (this.state.focusOn > 0) {
         this.setState({ ...this.state, focusOn: this.state.focusOn - 1 }, () => {
           // Switch focus to previous input
-          console.log("previous focus", this.state);
+          //console.log("previous focus", this.state);
           this[`input${this.state.focusOn}`].focus();
         });
       }
@@ -49,7 +51,7 @@ export default class EnterName extends React.Component {
       if (this.state.focusOn < this.state.letters.length - 1) {
         this.setState({ ...this.state, focusOn: this.state.focusOn + 1 }, () => { 
           // Switch focus to next input
-          console.log("next focus", this.state);
+          // console.log("next focus", this.state);
           this[`input${this.state.focusOn}`].focus();
         });
       } else {
@@ -59,52 +61,56 @@ export default class EnterName extends React.Component {
   }
 
   onInputFocus(e) {
-    try {      
+    try {
+      e.target.value = '';   
       const inputOnFocusNumber = parseInt(e.target.id.split('_')[1]);
       this.setState({ ...this.state, focusOn: inputOnFocusNumber });
     } catch(e) { }
   }
 
-  render() {
-    const classes = [css.container, this.props.show ? css.show : ''].join(' ');
-    
-    return (     
-        <div className={classes}>
-          <Grid>
-              <Row>
-                <Column cols={12}>
-                  <div className={css.title}>{this.props.title}</div>
-                </Column>
-              </Row>
+  returnComponent() {
+    return (
+      <div className={css.container}>
+              <div className={css.title}>{this.props.title}</div>
+                <div className={css.formContainer}>
+                  <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
+                      <div className={css.element}>
+                        <div className={css.inputBlock}>
+                        {
+                          this.state.letters.map((letter, i) => {
+                            return (
+                              <input onFocus={this.onInputFocus}
+                                className={css.inputLetter}
+                                id={`input_${i}`} 
+                                key={i} 
+                                ref={(ref) => { this[`input${i}`] = ref; }} 
+                                type='text'
+                                maxLength='1'
+                                autoComplete='off'
+                                placeholder={this.state.placeholder}                                       
+                              />)
+                          })
+                        }
+                        </div>                      
+                      </div>
+                      <div className={css.element}>
+                        <button ref='submitButton' type="submit">{this.props.buttonLabel.toUpperCase()}</button>                    
+                      </div>
+                  </form>
+                </div>                
+      </div>);
+  }
 
-              <Row>            
-                <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
-                  <Column cols={6}>
-                    <div className={css.inputBlock}>
-                    {
-                      this.state.letters.map((letter, i) => {
-                        return (
-                          <input onFocus={this.onInputFocus}
-                            className={css.inputLetter}
-                            id={`input_${i}`} 
-                            key={i} 
-                            ref={(ref) => { this[`input${i}`] = ref; }} 
-                            type='text'
-                            maxLength='1'
-                            autoComplete='off'
-                            placeholder={this.state.placeholder}                                       
-                          />)
-                      })
-                    }
-                    </div>
-                    </Column>
-                    <Column cols={6}>
-                      <button ref='submitButton' type="submit">{this.props.buttonLabel}</button>
-                    </Column>
-                </form>          
-              </Row>        
-          </Grid>
-        </div>
+  render() {
+    return (
+      <ReactCSSTransitionGroup
+        transitionAppear={true}
+        transitionAppearTimeout={400}
+        transitionEnterTimeout={400}
+        transitionLeaveTimeout={600}
+        transitionName={transitions}>
+        {this.props.show ? this.returnComponent() : null}
+      </ReactCSSTransitionGroup>
     )
   }
 }
