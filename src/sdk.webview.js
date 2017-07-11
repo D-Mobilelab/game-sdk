@@ -36,7 +36,6 @@ class SDK {
       game_info: {},
     };
 
-    this.onLoadUserData = function(){};
     this.onStartSessionCallback = function(){};
 
     const regex = /games\/data\/(\w+)\//gi;
@@ -52,6 +51,7 @@ class SDK {
     const loadedState = localStorage.getItem(`${this.ID}`);
     if (loadedState) {
       this.state = JSON.parse(loadedState);
+      console.log('Loading saved state', this.state);
     }
   }
 
@@ -119,7 +119,7 @@ class SDK {
    * @returns {Object|undefined}
    * @memberOf SDK
    */
-  loadUserData(onLoadUserData) {
+  loadUserData(onLoadUserData = function() {}) {
     // retro compatibility
     console.log('loadUserData');
     onLoadUserData(this.state.user.userData.info);
@@ -134,6 +134,7 @@ class SDK {
   saveUserData(userDataInfo) {
     console.log('saveUserData');
     this.state.user.userData.info = userDataInfo;
+    this.__save();
   }
 
   /**
@@ -144,6 +145,7 @@ class SDK {
   clearUserData() {
     console.log('clearUserData');
     this.state.user.userData.info = null;
+    this.__save();
   }
 
   /**
@@ -152,9 +154,13 @@ class SDK {
    */
   goToHome() {
     console.log('goToHome');
-    localStorage.setItem(`${this.ID}`, JSON.stringify(this.state));
+    this.__save();
   }
 
+  __save() {
+    console.log('__save', JSON.stringify(this.state));
+    localStorage.setItem(`${this.ID}`, JSON.stringify(this.state));
+  }
   /**
    * Get the user avatar if any.
    * @returns {Object} avatarObj
@@ -219,9 +225,7 @@ class SDK {
     console.log('endSession');
     this.state.user.level = scoreAndLevel.level ? scoreAndLevel.level : 1;
     this.state.user.score = scoreAndLevel.score;
-    
-    console.log('Saving', JSON.stringify(this.state));
-    localStorage.setItem(`${this.ID}`, JSON.stringify(this.state));
+    this.__save();
     if (!this.state.initConfig.lite) {
       setTimeout(() => {
         this.startSession();
