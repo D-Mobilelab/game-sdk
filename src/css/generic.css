@@ -5,6 +5,14 @@
     font-weight: normal;font-style: normal;
 }
 
+@font-face {    
+    font-family: 'pixel_emulatorregular';    
+    src: url('./font/pixel_emulator-webfont.eot');    
+    src: url('./font/pixel_emulator-webfont.eot?#iefix') format('embedded-opentype'), url('./font/pixel_emulator-webfont.woff') format('woff'), url('./font/pixel_emulator-webfont.ttf') format('truetype'), url('./font/pixel_emulator-webfont.svg#pixel_emulatorregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @font-face{
     font-family: 'icomoon';
     src: url('./font/icomoon.eot');
