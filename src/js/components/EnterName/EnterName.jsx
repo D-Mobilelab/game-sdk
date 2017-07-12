@@ -71,33 +71,33 @@ export default class EnterName extends React.Component {
   returnComponent() {
     return (
       <div className={css.container}>
-              <div className={css.title}>{this.props.title}</div>
-                <div className={css.formContainer}>
-                  <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
-                      <div className={css.element}>
-                        <div className={css.inputBlock}>
-                        {
-                          this.state.letters.map((letter, i) => {
-                            return (
-                              <input onFocus={this.onInputFocus}
-                                className={css.inputLetter}
-                                id={`input_${i}`} 
-                                key={i} 
-                                ref={(ref) => { this[`input${i}`] = ref; }} 
-                                type='text'
-                                maxLength='1'
-                                autoComplete='off'
-                                placeholder={this.state.placeholder}                                       
-                              />)
-                          })
-                        }
-                        </div>                      
-                      </div>
-                      <div className={css.element}>
-                        <button ref='submitButton' type="submit">{this.props.buttonLabel.toUpperCase()}</button>                    
-                      </div>
-                  </form>
-                </div>                
+        <div className={css.title}>{this.props.title}</div>
+          <div className={css.formContainer}>
+            <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
+                <div className={css.element}>
+                  <div className={css.inputBlock}>
+                  {
+                    this.state.letters.map((letter, i) => {
+                      return (
+                        <input onFocus={this.onInputFocus}
+                          className={css.inputLetter}
+                          id={`input_${i}`} 
+                          key={i} 
+                          ref={(ref) => { this[`input${i}`] = ref; }} 
+                          type='text'
+                          maxLength='1'
+                          autoComplete='off'
+                          placeholder={this.state.placeholder}                                       
+                        />)
+                    })
+                  }
+                  </div>                      
+                </div>
+                <div className={css.element}>
+                  <button ref='submitButton' type="submit">{this.props.buttonLabel.toUpperCase()}</button>                    
+                </div>
+            </form>
+          </div>
       </div>);
   }
 
