@@ -22,5 +22,5 @@
 
 .leave.leaveActive {
   transform: translateY(1000%);
-  transition: transform 600ms ease-out;
+  transition: transform 1000ms ease-out;
 }
