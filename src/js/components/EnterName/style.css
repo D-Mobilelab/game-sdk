@@ -7,6 +7,10 @@
     height: height;
     background: black;    
     margin: 0 auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .title {
@@ -17,8 +21,7 @@
 
 .element {
     width: 50%;
-    display: inline-block;
-    line-height: height;
+    display: inline-block;    
     text-align: center;
 }
 
