@@ -1,19 +1,43 @@
 @value height: 120px;
-@value width: 450px;
+@value width: 320px;
 
-.container {
-    position: fixed;
+.main {
+    position:fixed;
+    width:  100%;
+    top: 0;
+    height: 0;
+    background-color : transparent;
+    transition: background 300ms;
+}
+
+.main.show {
+    display: block;    
+    background-color : transparent;
+    height: 100%;
+}
+
+.container {    
+    position:relative;
     width: width;
     height: height;
-    background: black;    
-    margin: 0 auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    background: black;
+    margin: 6% auto 0 auto;
+    border: 5px solid#FE9326;
+}
+
+.formContainer {
+    display: table;
+    height: 100px;
+    width: 100%;
+}
+
+.form {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .title {
+    font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;
     color: orangered;
     text-transform: uppercase;
     text-align: center;   
@@ -30,17 +54,20 @@
 }
 
 .inputLetter {
+    font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;
     display: inline-block;
     margin: 0;
     padding: 0;
     border: 0;
-    width: 25px; /** relative? */
+    width: 30px; /** relative? */
     appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
     box-shadow: none;
     border-radius: none;
     text-transform: uppercase;
     text-align: center;
-    font-size: 25px;
+    font-size: 35px;
     background: black;
     color:white;
     border-bottom: solid 2px transparent;
@@ -61,5 +88,3 @@
     border-bottom: solid 2px #969696;
     animation: blink .2s step-end infinite alternate;
 }
-
-

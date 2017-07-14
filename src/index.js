@@ -36,9 +36,10 @@ class App extends React.Component {
                 <LazilyLoad modules={{
                   Gameover: () => {
                     if (this.props.label === 'gameasy') {
-                      return importLazy(System.import('./js/components/GameasyOver'))
-                    }
-                    return importLazy(System.import('./js/components/GamifiveOver'))
+                      return importLazy(System.import('./js/components/GameasyOver'));
+                    } else {
+                      return importLazy(System.import('./js/components/GamifiveOver'));                        
+                    }                    
                   },
                   Banner: () => {
                     if (this.props.label === 'gameasy') {
@@ -48,17 +49,24 @@ class App extends React.Component {
                   },
                   Menu: () => {
                       if (this.props.label === 'gameasy') {
-                        return importLazy(System.import('./js/components/Menu/MenuGameasy'));
-                      } else if(this.props.label === 'gamifive') {
-                        return importLazy(System.import('./js/components/Menu/MenuGamifive'));
+                        return importLazy(System.import('./js/components/Menu/MenuGameasy'));                      
                       } else if(this.props.label === 'bandai'){                        
                         return importLazy(System.import('./js/components/Menu/MenuBandai'));
+                      } else {
+                        return importLazy(System.import('./js/components/Menu/MenuGamifive'));
                       }
+                  }, 
+                  EnterNameContainer: () => {
+                      if (this.props.label === 'bandai') {
+                        return importLazy(System.import('./js/components/EnterName/EnterNameContainer'));
+                      }
+                      return function Noop(){ return null; }
                   }
                 }}>
-                  {({ Gameover, Banner, Menu }) => {
+                  {({ Gameover, Banner, Menu, EnterNameContainer }) => {
                       return (
                         <div>
+                          <EnterNameContainer />
                           <Gameover />
                           <Banner />
                           <Menu />
@@ -76,7 +84,17 @@ function onDomLoaded(event) {
     ROOT_ELEMENT.id = 'gfsdk_root_new';
     window.document.body.appendChild(ROOT_ELEMENT);
 
-    let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';    
+    let WHITE_LABEL = (window.GamifiveInfo && window.GamifiveInfo.label) ? GamifiveInfo.label : 'gamifive';
+    // let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
+    if (WHITE_LABEL.indexOf('gameasy') > -1) {
+        WHITE_LABEL = 'gameasy';
+    } else if (WHITE_LABEL.indexOf('bandai') > -1) {
+        WHITE_LABEL = 'bandai';
+    }
+    /** overwrite with localStorage if any */
+    const label = localStorage.getItem('__label__');
+    if(label) { WHITE_LABEL = label; }
+
     ReactDOM.render(
         <Provider store={store}>
             <App label={WHITE_LABEL} />

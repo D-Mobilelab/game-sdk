@@ -1,0 +1,23 @@
+@value background_cyan: #FE9326;
+@value shadow_cyan: #FE9326;
+
+.btn {
+    composes: btn from './default.css';
+    background: background_cyan;
+    color: white;
+    font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;
+    box-shadow: 0px 0.5px 0px 1px shadow_cyan;
+    border-color: background_cyan;    
+}
+
+.loadingSpinner {
+    composes: loadingSpinner from './default.css';
+}
+
+.rippleActive {
+    composes: rippleActive from './default.css';
+}
+
+.centerBtn {
+    composes: centerBtn from './default.css';
+}

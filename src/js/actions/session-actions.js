@@ -4,7 +4,7 @@ import { isAndroid } from '../lib/Platform';
 import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
-import { hideGameOver, showGameOver } from './gameover-actions';
+import { hideGameOver, showGameOver, showEnterNameModal } from './gameover-actions';
 import { getContentId, setRelated } from './gameinfo-actions';
 import { showBanner } from './banner-actions';
 
@@ -102,7 +102,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       return;
     }
 
-    const { user, generic, vhost } = getState();
+    const { user, vhost } = getState();
     const bannerCondition = [
       (user.matchPlayed % 3 === 0),
       !hybrid,
@@ -124,10 +124,13 @@ export function endSession(data = { score: 0, level: 1 }) {
       dispatch(showMenu());
 
       const lastSession = getState().session;
-          // Lite only leaderboard
+      // Lite only leaderboard
       if (!getState().generic.initConfig.lite) {
         dispatch(showGameOver());
       }
+
+      dispatch(showEnterNameModal(true));
+
       const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
       const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
         params: {

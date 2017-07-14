@@ -9,9 +9,11 @@ import EnterName from '../src/js/components/EnterName/EnterName';
 import withTheme from '../src/js/components/withTheme';
 import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
 import standard from '../src/js/components/MaterialButton/theme/default.css';
+import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
 
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
+const BandaiButton = withTheme(MaterialButton, bandai);
 
 /*
 import Button from '@storybook/components/dist/demo/Button';
@@ -39,7 +41,33 @@ storiesOf('MaterialButton theme', module)
   .add('isLoading', () => (<MyButton isLoading={true}>Prova</MyButton>));
 
 
+storiesOf('BandaiButton theme', module)
+  .add('standard', () => (<BandaiButton onClick={action('clicked')}>Prova</BandaiButton>))
+  .add('with long text', () => (<BandaiButton onClick={action('clicked')}>Some very very long texxxxxxxxxxxxxxxxxxt</BandaiButton>))
+  .add('disabled', () => (<BandaiButton disabled>Prova</BandaiButton>))
+  .add('disabled isLoading', () => (<BandaiButton disabled isLoading>Prova</BandaiButton>))
+  .add('isLoading', () => (<BandaiButton isLoading={true}>Prova</BandaiButton>));
+
   storiesOf('EnterName without theme', module)
-    .add('standard', () => { 
-      return (<EnterName title='Enter your initials' buttonLabel='Enter' onSubmit={action('alias sent')} show={true} />)
+    .add('standard', () => {
+      class Container extends React.Component{
+        constructor(props){
+          super(props);
+          this.close = this.close.bind(this);
+          this.state = {
+            isOpen: true
+          };
+        }
+
+        close(){
+          this.setState({ isOpen: false})
+        }
+
+        render(){
+          return (<EnterName show={this.state.isOpen} onDismiss={() => this.close()}/>)
+        }
+      }
+
+      return (<Container />)
+      
     })

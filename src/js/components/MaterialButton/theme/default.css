@@ -10,6 +10,7 @@
   font-size: 20px;
   font-family: Verdana, Geneva, sans-serif;  
   transition: background-color 0.5s ease;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   /** To theme */
   color: white;
   background:#337ab7;
