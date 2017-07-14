@@ -1,7 +1,6 @@
 .menu {
     composes: menu from './default.css';
-    /*background-image: url('../img/sprite_gameasy.png');*/
-    transition: transform 350ms cubic-bezier(0.68, -0.55, 0.265, 1.55); /** easeOutElastic */
+    transition: transform 350ms cubic-bezier(.67,1.99,.64,.6); /** easeOutElastic */
     background-image: url('./sprite_bandai.svg');
 }
 
@@ -9,7 +8,7 @@
     composes: show from './default.css';
 }
 
-.active{
+.active {
     composes: active from './default.css';
 }
 

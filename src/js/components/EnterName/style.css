@@ -1,5 +1,5 @@
 @value height: 120px;
-@value width: 320px;
+@value width: 280px;
 
 .main {
     position:fixed;
@@ -40,7 +40,8 @@
     font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;
     color: orangered;
     text-transform: uppercase;
-    text-align: center;   
+    text-align: center;
+    padding-top: 10px;
 }
 
 .element {

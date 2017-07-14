@@ -38,7 +38,6 @@ export default class EnterName extends React.Component {
 
   onDismiss(e) {
     e.preventDefault();    
-    console.log("Dismissed");
     this.setState({ ...this.state, dismiss: true });
     this.props.onDismiss(...arguments);
   }
