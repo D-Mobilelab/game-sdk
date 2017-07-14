@@ -1,8 +1,9 @@
 @value height: 120px;
 @value width: 280px;
+@value background_orange: #FE9326;
 
 .main {
-    position:fixed;
+    position: fixed;
     width:  100%;
     top: 0;
     height: 0;
@@ -12,7 +13,7 @@
 
 .main.show {
     display: block;    
-    background-color : transparent;
+    background-color: transparent;
     height: 100%;
 }
 
@@ -20,9 +21,35 @@
     position:relative;
     width: width;
     height: height;
-    background: black;
     margin: 6% auto 0 auto;
-    border: 5px solid#FE9326;
+    background: #000; 
+    background:  linear-gradient(135deg, background_orange 3px, #000 0) top left,
+                 linear-gradient(225deg, background_orange 3px, #000 0) top right,
+                 linear-gradient(315deg, background_orange 3px, #000 0) bottom right,
+                 linear-gradient(45deg,  background_orange 3px, #000 0) bottom left;
+    background-size: 50% 50%; 
+    background-repeat: no-repeat;
+    border-radius: 12px;
+    border:5px solid background_orange;
+}
+
+/** TODO: do better media queries */
+@media (width >= 0px) and (width <= 320px) {
+  .container {
+      width: 280px;
+  }
+}
+
+@media (width >= 350px) and (width <= 480px) {
+  .container {
+      width: 320px;
+  }
+}
+
+@media (width >= 480px) {
+  .container {
+      width: 400px;
+  }
 }
 
 .formContainer {
