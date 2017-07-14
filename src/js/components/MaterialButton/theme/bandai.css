@@ -1,13 +1,17 @@
-@value background_cyan: #FE9326;
-@value shadow_cyan: #FE9326;
+@value background: #FE9326;
 
 .btn {
-    composes: btn from './default.css';
-    background: background_cyan;
+    composes: btn from './default.css';    
     color: white;
-    font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;
-    box-shadow: 0px 0.5px 0px 1px shadow_cyan;
-    border-color: background_cyan;    
+    font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;    
+    border-color: background;
+    background: background;
+    background:  linear-gradient(135deg, transparent 2px, background 0) top left, 
+                 linear-gradient(225deg, transparent 2px, background 0) top right,
+                 linear-gradient(315deg, transparent 2px, background 0) bottom right,  
+                 linear-gradient(45deg,  transparent 2px, background 0) bottom left; 
+    background-size: 50% 50%; 
+    background-repeat: no-repeat;
 }
 
 .loadingSpinner {
