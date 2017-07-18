@@ -1,4 +1,4 @@
-@value background: #FE9326;
+@value background: #FF9900;
 
 .btn {
     composes: btn from './default.css';    

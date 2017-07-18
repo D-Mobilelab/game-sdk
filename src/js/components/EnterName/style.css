@@ -1,6 +1,6 @@
 @value height: 120px;
 @value width: 280px;
-@value background_orange: #FE9326;
+@value background_orange: #FF9900;
 
 .main {
     position: fixed;
@@ -22,15 +22,14 @@
     width: width;
     height: height;
     margin: 6% auto 0 auto;
-    background: #000; 
-    background:  linear-gradient(135deg, background_orange 3px, #000 0) top left,
-                 linear-gradient(225deg, background_orange 3px, #000 0) top right,
-                 linear-gradient(315deg, background_orange 3px, #000 0) bottom right,
-                 linear-gradient(45deg,  background_orange 3px, #000 0) bottom left;
-    background-size: 50% 50%; 
-    background-repeat: no-repeat;
-    border-radius: 12px;
-    border:5px solid background_orange;
+    background: #000;
+    background:  linear-gradient(135deg, #000 1px, #000 0) top left,
+                 linear-gradient(225deg, #000 1px, #000 0) top right,
+                 linear-gradient(315deg, #000 1px, #000 0) bottom right,
+                 linear-gradient(45deg,  #000 1px, #000 0) bottom left;
+    background-repeat: no-repeat; 
+    border: 10px solid transparent;
+    border-image: url('./border.png') 20 round;
 }
 
 /** TODO: do better media queries */
@@ -42,7 +41,7 @@
 
 @media (width >= 350px) and (width <= 480px) {
   .container {
-      width: 320px;
+      width: 300px;
   }
 }
 
@@ -65,7 +64,7 @@
 
 .title {
     font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;
-    color: orangered;
+    color: background_orange;
     text-transform: uppercase;
     text-align: center;
     padding-top: 10px;

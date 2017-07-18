@@ -25,6 +25,17 @@ let cssLoader = {
   ]
 }
 
+let fileLoader = {
+  test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+  exclude: /node_modules/,
+  use: [
+    {
+      loader: 'file-loader',
+      options: { name: 'assets/[name].[ext]' }
+    }
+  ]          
+}
+
 module.exports = {
   plugins: [
     // your custom plugins
@@ -32,7 +43,8 @@ module.exports = {
   module: {
     rules: [
       // add your custom loaders.
-      cssLoader
+      cssLoader,
+      fileLoader
     ],
   },
 };
