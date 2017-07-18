@@ -69,7 +69,7 @@
 }
 
 .appIcon:before {
-    background: url('../../../img/apple-touch-icon-60x60.png') center left no-repeat;
+    background: url('./apple-touch-icon-60x60.png') center left no-repeat;
     background-size: 40px;
     content: ' ';
     display: block;
