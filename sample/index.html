@@ -41,7 +41,17 @@
                     </select>
                 </label>
             </div>
-            
+            <div class="form-group">
+                <label>
+                    Service label
+                    <select name="gfsdk-debug-label" id="gfsdk-debug-label" class="form-control">
+                        <option selected="selected">bandai</option>
+                        <option>gameasy</option>
+                        <option>gamifive</option>
+                    </select>
+                </label>
+            </div>
+
             <button type="submit" class="btn btn-primary">Set</button>
             <button id="clear_setting" class="btn btn-default">Clear Setting</button>
             <div class="form-group">
@@ -55,12 +65,20 @@
             </div>
         </form>
         <script type="text/javascript">
-            function onDomLoaded(){
+
+            var mapServiceToNumber = {
+                bandai: 0,
+                gameasy: 1,
+                gamifive: 2
+            };
+            function onDomLoaded() {
                 var loadedGameId = localStorage.getItem('gfsdk-debug-game_id') || 'c2701133414427fee732e051abdfe3e8';
                 var loadedUserId = localStorage.getItem('gfsdk-debug-user_id') || '93f3f8eea67011e69ae3005056b60716';
                 var userIdField = document.querySelectorAll('#gfsdk-debug-user_id')[0];
                 var gameIdField = document.querySelectorAll('#gfsdk-debug-game_id')[0];
-                
+                var serviceField = document.querySelectorAll('#gfsdk-debug-label')[0];                
+                serviceField[mapServiceToNumber[localStorage.getItem('gfsdk-debug-label')]].selected = 'selected';
+                                
                 userIdField.value = decodeURIComponent(loadedUserId);
                 gameIdField.value = loadedGameId;
 
