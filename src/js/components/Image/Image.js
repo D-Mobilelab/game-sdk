@@ -1,7 +1,7 @@
 import React from 'react';
-import imageStyle from '../../css/image.css';
+import imageStyle from './image.css';
 
-export class Image extends React.Component {
+export default class Image extends React.Component {
     constructor(props){
         super(props);
         this.onImgLoad = this.onImgLoad.bind(this);
@@ -10,11 +10,11 @@ export class Image extends React.Component {
     }
 
     onImgLoad(){
-        this.setState({loaded: true});
+        this.setState({ loaded: true });
     }
 
     onImgError(){
-        this.setState({loaded: false});
+        this.setState({ loaded: false });
     }
 
     render(){

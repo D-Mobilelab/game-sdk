@@ -9,7 +9,7 @@ const GameasyButton = withTheme(MaterialButton, gameasyButtonTheme);
 
 import RelatedList from './Related/List';
 import RelatedListItem from './Related/ListItem';
-import { Image } from './Image';
+import Image from './Image/Image';
 import { LikeButton } from './LikeButton';
 import { ShareButton } from './ShareButton';
 

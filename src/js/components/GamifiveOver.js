@@ -2,7 +2,7 @@ import React from 'react';
 import Gameover from './Gameover';
 
 /** My Components */
-import { Image } from './Image';
+import Image from './Image/Image';
 import { LikeButton } from './LikeButton';
 import { ShareButton } from './ShareButton';
 
