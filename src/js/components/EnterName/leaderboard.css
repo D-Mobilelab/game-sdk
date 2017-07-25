@@ -1,0 +1,90 @@
+.container {
+    composes: bandaiBorder from "./bandaiBorder.css";
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 6%;
+    width: 85%;
+    max-width: 480px;
+    min-height: 120px;
+    color: white;
+    font-size: 1.5em;    
+}
+
+.title {
+    text-align: center;
+    color: orangered;
+    margin: 5px 0 5px 0;
+    text-transform: uppercase;
+    font-size: .7em;
+}
+
+.score {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.message {
+    padding:25px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: .7em;
+    color: orange;
+}
+
+.closeButton {
+    position: absolute;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    border: 0;
+    background: transparent;    
+    background-image: url('./closeButton.svg');
+    background-repeat: no-repeat;
+}
+
+.table {
+    width: 95%;
+    margin: 0 auto;
+    color: yellow;
+}
+
+.table tr td {
+    width: 25%;    
+}
+
+.table tr td:nth-child(2) {
+    width: 50%;
+}
+
+.table tr:nth-child(1) {
+    color: orange;
+}
+
+.table tr {
+    text-align: center;
+}
+
+.arrow {
+    height: 10px;
+    display: inline-block;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-image: url('./arrow.svg');
+    vertical-align: middle;    
+}
+
+.arrow.top {
+    transform: rotate(-90deg);
+}
+
+.arrow.horizontalRight {
+    transform: rotate(0deg);
+}
+
+.arrow.horizontalLeft {    
+    transform: rotate(180deg);    
+}

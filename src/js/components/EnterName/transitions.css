@@ -4,7 +4,7 @@
 
 .enter.enterActive {
   transform: translateY(0%);
-  transition: transform 400ms cubic-bezier(.67,1.99,.64,.6);
+  transition: transform 600ms cubic-bezier(.67,1.99,.64,.6);
 }
 
 .appear {
@@ -13,7 +13,7 @@
 
 .appear.appearActive {
   transform: translateY(0%);
-  transition: transform 400ms cubic-bezier(.67,1.99,.64,.6);
+  transition: transform 600ms cubic-bezier(.67,1.99,.64,.6);
 }
 
 .leave {
@@ -21,6 +21,6 @@
 }
 
 .leave.leaveActive {
-  transform: translateY(1000%);
-  transition: transform 1000ms ease-out;
+  transform: translateY(1500px);
+  transition: transform 1200ms ease-out;
 }

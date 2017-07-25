@@ -7,8 +7,8 @@ import withTheme from '../withTheme';
 
 const BandaiButton = withTheme(MaterialButton, bandaiTheme);
 
-import css from './style.css';
 import transitions from './transitions.css';
+import css from './enterName.css';
 
 export default class EnterName extends React.Component {
   constructor(props) {
@@ -16,7 +16,6 @@ export default class EnterName extends React.Component {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onDismiss = this.onDismiss.bind(this);
     this.state = {
       dismiss: false,
       focusOn: 0,
@@ -34,12 +33,6 @@ export default class EnterName extends React.Component {
         .map((element) => element.value === '' ? this.state.placeholder : element.value)
         .join('');
     this.props.onSubmit(alias);
-  }
-
-  onDismiss(e) {
-    e.preventDefault();    
-    this.setState({ ...this.state, dismiss: true });
-    this.props.onDismiss(...arguments);
   }
 
   onKeyUp(e) {
@@ -105,32 +98,24 @@ export default class EnterName extends React.Component {
                     </div>                      
                   </div>
                   <div className={css.element}>
-                    <BandaiButton ref='submitButton' type="submit">{this.props.buttonLabel.toUpperCase()}</BandaiButton>
+                    <BandaiButton ref='submitButton' type="submit" isLoading={this.props.loading} disabled={this.props.loading}>{this.props.buttonLabel.toUpperCase()}</BandaiButton>
                   </div>
               </form>
             </div>
         </div>
     );
-  }
+  }  
 
   render() {
-
-    const classes = [
-      css.main,
-      (this.props.show) ? css.show : ''
-    ].join(' ');
-
-    return (
-      <div className={classes} onClick={this.onDismiss}>
-        <ReactCSSTransitionGroup
-          transitionAppear={true}
-          transitionAppearTimeout={400}
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={600}
-          transitionName={transitions}>
-          {(this.props.show) ? this.returnComponent() : null}
-        </ReactCSSTransitionGroup>
-      </div>
+    return (      
+      <ReactCSSTransitionGroup
+        transitionAppear={true}
+        transitionAppearTimeout={600}
+        transitionEnterTimeout={600}
+        transitionLeaveTimeout={1200}
+        transitionName={transitions}>
+        {(this.props.show) ? this.returnComponent() : null}
+      </ReactCSSTransitionGroup>      
     )
   }
 }
@@ -141,4 +126,5 @@ EnterName.defaultProps = {
   onSubmit: function(){},
   onDismiss: function(){},
   show: false,
+  loading: false
 }

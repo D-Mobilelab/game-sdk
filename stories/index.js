@@ -6,7 +6,9 @@ import { linkTo } from '@storybook/addon-links';
 
 import { MaterialButton } from '../src/js/components/MaterialButton/MaterialButton';
 import EnterName from '../src/js/components/EnterName/EnterName';
+import Leaderboard from '../src/js/components/EnterName/Leaderboard';
 import withTheme from '../src/js/components/withTheme';
+
 import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
 import standard from '../src/js/components/MaterialButton/theme/default.css';
 import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
@@ -14,17 +16,6 @@ import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
-
-/*
-import Button from '@storybook/components/dist/demo/Button';
-import Welcome from '@storybook/components/dist/demo/Welcome';
-
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
-
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
-*/
 
 storiesOf('MaterialButton', module)
   .add('standard', () => (<StandardButton onClick={action('clicked')}>Prova</StandardButton>))
@@ -64,10 +55,39 @@ storiesOf('BandaiButton theme', module)
         }
 
         render(){
-          return (<EnterName show={this.state.isOpen} onDismiss={() => this.close()}/>)
+          return (
+            <div style={{position: 'fixed', width: '100%', top: '0' }}>
+              <EnterName show={this.state.isOpen} onDismiss={() => this.close()}/>
+            </div>
+          )
         }
       }
 
       return (<Container />)
       
     })
+    .add('loading', () => {
+      return (
+        <div style={{position: 'fixed', width: '100%', top:'0' }}>
+          <EnterName show={true} onDismiss={action('close')} loading={true} />
+        </div>)
+    });
+
+storiesOf('LeaderBoard Bandai theme', module)
+  .add('Leaderboard', () => {
+        
+    return (
+      <div style={{position: 'fixed', width: '100%', top:'0' }}>
+        <Leaderboard title={'High Score'} 
+                     score={975} 
+                     onClose={action('close clicked')}
+                     show={true}
+                     leaderboard={[
+                       { points: 2398, position: 1, alias: "ALE"},
+                       { points: 2005, position: 2, alias: "JOE"},
+                       { points: 1560, position: 3,alias: "ROY"}
+                    ]}
+        />
+      </div>
+    );
+  })
