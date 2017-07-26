@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Menu } from '../Menu';
+import { Menu } from '../Menu/Menu';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -23,7 +23,7 @@ describe('Menu Component tests',function(){
   it('should render in the correct way', function(){
     spyOn(Menu.prototype, 'componentDidMount');
     const wrapper = mount(
-      <Menu />
+      <Menu theme={{show:'', hide:'', active:''}}/>
     );
     expect(Menu.prototype.componentDidMount).toHaveBeenCalledTimes(1);
     expect(wrapper).toBeDefined();
