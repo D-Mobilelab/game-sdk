@@ -35,7 +35,7 @@ HOSTNAME = '0.0.0.0';
 // devConfiguration.entry.push('webpack-dev-server/client?http://' + HOSTNAME + ':8080');
 
 devConfiguration.devServer = {
-  open: true,
+  open: false,
   inline: true,
   hot: true,
   contentBase: 'sample/',
@@ -46,9 +46,25 @@ devConfiguration.devServer = {
       onProxyReq: function(proxyReq, req, res) { 
         console.log('Request:', proxyReq.path);
         // proxyReq.setHeader('X-Special-Proxy-Header', 'foobar');
+
       },
       onProxyRes: function(proxyRes, req, res) {
-               
+        /*if(req.path === '/ww-it/v01/config.getvars') {
+          var _write = res.write;
+          var output;
+          var body = "";
+          proxyRes.on('data', function(data) {
+              data = data.toString('utf-8');
+              body += data;
+          });
+          res.write = function (data) {
+            try {
+              output = eval("output=" + body);
+              console.log("Yay!", output);
+              _write.call(res, JSON.stringify(output));
+            } catch (err) {}
+          }
+        }*/
       },
       target: PROTOCOL + BANDAI_SERVICE,
       secure: false,
@@ -58,11 +74,11 @@ devConfiguration.devServer = {
       cookieDomainRewrite: {
         BANDAI_SERVICE: BANDAI_SERVICE        
       }
-    }
+    },    
   }
 }
 
-devConfiguration.devtool = 'eval';
+devConfiguration.devtool = 'eval-source-map';
 devConfiguration.plugins.push(envPlugin);
 devConfiguration.plugins.push(hotPlugin);
 

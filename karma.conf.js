@@ -1,3 +1,4 @@
+/* eslint-disable */
 var webpackConfig = require('./tools/webpack.config.base.js');
 var path = require('path');
 var webpack = require('webpack');
