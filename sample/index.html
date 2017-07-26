@@ -76,8 +76,9 @@
                 var loadedUserId = localStorage.getItem('gfsdk-debug-user_id') || '93f3f8eea67011e69ae3005056b60716';
                 var userIdField = document.querySelectorAll('#gfsdk-debug-user_id')[0];
                 var gameIdField = document.querySelectorAll('#gfsdk-debug-game_id')[0];
-                var serviceField = document.querySelectorAll('#gfsdk-debug-label')[0];                
-                serviceField[mapServiceToNumber[localStorage.getItem('gfsdk-debug-label')]].selected = 'selected';
+                var serviceField = document.querySelectorAll('#gfsdk-debug-label')[0];
+                var label = localStorage.getItem('gfsdk-debug-label');
+                serviceField[mapServiceToNumber[label ? label : 'bandai']].selected = 'selected';
                                 
                 userIdField.value = decodeURIComponent(loadedUserId);
                 gameIdField.value = loadedGameId;
