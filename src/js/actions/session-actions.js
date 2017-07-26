@@ -164,15 +164,16 @@ export function registerScore(alias) {
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();
+    const userToken = NewtonInstance.getUserToken();
     const params = {
       player_name: alias,
       score: lastSession.score,
       level: lastSession.level,
       gametime: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-      user_id: NewtonInstance.getUserToken(),
+      user_id: userToken,
       category_id: category.id_category,
       content_id,
-      session_id: 'fakesessionid1234',
+      session_id: userToken,
       white_label: vhost.WHITE_LABEL,
       country: vhost.REAL_COUNTRY,
     };
