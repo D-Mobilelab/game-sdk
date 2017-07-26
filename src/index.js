@@ -7,6 +7,8 @@ import Location from './js/lib/Location';
 import { Provider } from 'react-redux';
 import store from './store';
 
+import './css/generic.css';
+
 /*
 Lazily loaded :) ^_^ (:
 import Menu from './js/components/Menu/Menu';
@@ -37,9 +39,11 @@ class App extends React.Component {
                   Gameover: () => {
                     if (this.props.label === 'gameasy') {
                       return importLazy(System.import('./js/components/GameasyOver'));
+                    } else if(this.props.label === 'bandai') {
+                      return function Noop(){ return null; }  
                     } else {
                       return importLazy(System.import('./js/components/GamifiveOver'));                        
-                    }                    
+                    }
                   },
                   Banner: () => {
                     if (this.props.label === 'gameasy') {
@@ -58,7 +62,7 @@ class App extends React.Component {
                   }, 
                   EnterNameContainer: () => {
                       if (this.props.label === 'bandai') {
-                        return importLazy(System.import('./js/components/EnterName/EnterNameContainer'));
+                        return importLazy(System.import('./js/components/EnterName/Container'));
                       }
                       return function Noop(){ return null; }
                   }
@@ -92,7 +96,7 @@ function onDomLoaded(event) {
         WHITE_LABEL = 'bandai';
     }
     /** overwrite with localStorage if any */
-    const label = localStorage.getItem('__label__');
+    const label = localStorage.getItem('gfsdk-debug-label');
     if(label) { WHITE_LABEL = label; }
 
     ReactDOM.render(
