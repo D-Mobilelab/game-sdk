@@ -1,4 +1,4 @@
-import { generatePony } from '../lib/PonyToken';
+import { ponyToken as generatePony } from 'docomo-utils';
 
 export function showBanner() {
   return {
