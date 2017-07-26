@@ -440,13 +440,6 @@ axios@^0.15.2:
   dependencies:
     follow-redirects "1.0.0"
 
-axios@^0.16.2:
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
-  dependencies:
-    follow-redirects "^1.2.3"
-    is-buffer "^1.1.5"
-
 babel-cli@^6.14.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-cli/-/babel-cli-6.24.1.tgz#207cd705bba61489b2ea41b5312341cf6aca2283"
@@ -2404,7 +2397,7 @@ debug@2.6.7:
   dependencies:
     ms "2.0.0"
 
-debug@2.6.8, debug@^2.1.1, debug@^2.2.0, debug@^2.4.5, debug@^2.6.8, debug@~2.6.7:
+debug@2.6.8, debug@^2.1.1, debug@^2.2.0, debug@^2.6.8, debug@~2.6.7:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -2550,11 +2543,10 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docomo-utils@^1.2.0:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/docomo-utils/-/docomo-utils-1.2.3.tgz#6c9dcf24bd519a61d8a6d2a2f0c14e3023b02825"
+docomo-utils@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/docomo-utils/-/docomo-utils-1.2.4.tgz#807a418066453c726f8bccdbf5a58d540d8b1f70"
   dependencies:
-    axios "^0.16.2"
     babel-runtime "^6.20.0"
 
 doctrine-temporary-fork@2.0.0-alpha-allowarrayindex:
@@ -3452,12 +3444,6 @@ follow-redirects@1.0.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"
   dependencies:
     debug "^2.2.0"
-
-follow-redirects@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.2.3.tgz#01abaeca85e3609837d9fcda3167a7e42fdaca21"
-  dependencies:
-    debug "^2.4.5"
 
 for-in@^1.0.1:
   version "1.0.2"
