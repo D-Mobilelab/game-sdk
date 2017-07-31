@@ -2543,9 +2543,9 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docomo-utils@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/docomo-utils/-/docomo-utils-1.2.4.tgz#807a418066453c726f8bccdbf5a58d540d8b1f70"
+docomo-utils@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/docomo-utils/-/docomo-utils-1.2.6.tgz#526eb28f8def230f0b03d9d737ce3e8e9d8ec1f9"
   dependencies:
     babel-runtime "^6.20.0"
 
