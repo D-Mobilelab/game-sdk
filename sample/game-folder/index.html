@@ -8,7 +8,6 @@
     <!-- Latest compiled and minified CSS -->
     
     
-    
     <script src="http://static.newton.pm/js/v2.x/newton.min.js"></script>
     <script type="text/javascript" src="../vendor.js"></script>
     <script type="text/javascript" src="../gfsdk.js"></script>
@@ -46,7 +45,8 @@
           });
 
           endBtn.addEventListener('click', function(){
-            GamifiveSDK.endSession({ score: 50, level: 5 });
+            var randomScore = Math.floor(Math.random() * 1000);
+            GamifiveSDK.endSession({ score: randomScore, level: 5 });
             startBtn.disabled = false;
           });
     </script>

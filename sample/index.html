@@ -17,7 +17,16 @@
                 <label for="host">host:</label>
                 <input type="text" id="gfsdk-debug-host" name="gfsdk-debug-host" value="appsworld.gamifive-app.com"></input>  
             </div -->
-
+            <div class="form-group">
+                <label>
+                    Service label
+                    <select name="gfsdk-debug-label" id="gfsdk-debug-label" class="form-control">
+                        <option selected="selected">bandai</option>
+                        <option>gameasy</option>
+                        <option>gamifive</option>
+                    </select>
+                </label>
+            </div>
             <div class="form-group">
                 <h3>Game</h3>
                 <label for="game_id">game_id:</label>
@@ -41,19 +50,7 @@
                     </select>
                 </label>
             </div>
-            <div class="form-group">
-                <label>
-                    Service label
-                    <select name="gfsdk-debug-label" id="gfsdk-debug-label" class="form-control">
-                        <option selected="selected">bandai</option>
-                        <option>gameasy</option>
-                        <option>gamifive</option>
-                    </select>
-                </label>
-            </div>
 
-            <button type="submit" class="btn btn-primary">Set</button>
-            <button id="clear_setting" class="btn btn-default">Clear Setting</button>
             <div class="form-group">
                 <label for="url_to_launch">
                     URL to launch: should be inside debug folder example                    
@@ -63,58 +60,83 @@
                     <button id="launch_button" class="btn btn-primary">Play</button>
                 </label>
             </div>
+            <button id="clear_setting" class="btn btn-default">Clear Setting</button>
+            <button type="submit" class="btn btn-primary">Set</button>
         </form>
         <script type="text/javascript">
+            ;(function(root){
 
-            var mapServiceToNumber = {
-                bandai: 0,
-                gameasy: 1,
-                gamifive: 2
-            };
-            function onDomLoaded() {
-                var loadedGameId = localStorage.getItem('gfsdk-debug-game_id') || 'c2701133414427fee732e051abdfe3e8';
-                var loadedUserId = localStorage.getItem('gfsdk-debug-user_id') || '93f3f8eea67011e69ae3005056b60716';
-                var userIdField = document.querySelectorAll('#gfsdk-debug-user_id')[0];
-                var gameIdField = document.querySelectorAll('#gfsdk-debug-game_id')[0];
-                var serviceField = document.querySelectorAll('#gfsdk-debug-label')[0];
-                var label = localStorage.getItem('gfsdk-debug-label');
-                serviceField[mapServiceToNumber[label ? label : 'bandai']].selected = 'selected';
-                                
-                userIdField.value = decodeURIComponent(loadedUserId);
-                gameIdField.value = loadedGameId;
+                var mapServiceToNumber = {
+                    bandai: {
+                        game_id: "18e3c201cfc8c77e6b47222b607e1c38",
+                        user_id: "35a7361e379639d4d2482a6421e4a127",
+                        id: 0
+                    },
+                    gameasy: {
+                        game_id: "4de756a55ac71f45c5b7b4211b71219e",
+                        user_id: "998092f8fcde11e69430005056b60712",
+                        id: 1
+                    },
+                    gamifive: {
+                        game_id: "c2701133414427fee732e051abdfe3e8",
+                        user_id: "93f3f8eea67011e69ae3005056b60716",
+                        id: 2
+                    }
+                };
 
-                var formElement = document.querySelector('form#settings-form');
-                var clearButtonElement = document.querySelector('button#clear_setting');
-                var playButtonElement = document.querySelector('button#launch_button');
-                var urlToLaunchElement = document.querySelector('input#url_to_launch');
-                var formData;
-                function onSubmit(evt){
-                    evt.preventDefault();
-                    var currentForm = evt.target;
-                    var serialized = [].filter.call(currentForm.elements, function(node){
-                        return !node.disabled && node.value !== "" && node.name !== "";
-                    }).map(function(node){
-                        return [node.name, node.value].map(encodeURIComponent);
-                    }).map(function(setting){
-                        localStorage.setItem(setting[0], setting[1]);
+                function onDomLoaded() {
+                    var label = localStorage.getItem('gfsdk-debug-label');
+                    var serviceId = mapServiceToNumber[label ? label : 'bandai'].id;
+                    var serviceField = document.querySelectorAll('#gfsdk-debug-label')[0];
+                    serviceField[serviceId].selected = 'selected';
+
+                    var loadedGameId = localStorage.getItem('gfsdk-debug-game_id') || mapServiceToNumber[serviceField.value].game_id;
+                    var loadedUserId = localStorage.getItem('gfsdk-debug-user_id') || mapServiceToNumber[serviceField.value].user_id;
+                    var userIdField = document.querySelectorAll('#gfsdk-debug-user_id')[0];
+                    var gameIdField = document.querySelectorAll('#gfsdk-debug-game_id')[0];                    
+                                    
+                    userIdField.value = decodeURIComponent(loadedUserId);
+                    gameIdField.value = loadedGameId;
+
+                    var formElement = document.querySelector('form#settings-form');
+                    var clearButtonElement = document.querySelector('button#clear_setting');
+                    var playButtonElement = document.querySelector('button#launch_button');
+                    var urlToLaunchElement = document.querySelector('input#url_to_launch');
+                    var formData;
+                    function onSubmit(evt){
+                        evt.preventDefault();
+                        var currentForm = evt.target;
+                        var serialized = [].filter.call(currentForm.elements, function(node){
+                            return !node.disabled && node.value !== "" && node.name !== "";
+                        }).map(function(node){
+                            return [node.name, node.value].map(encodeURIComponent);
+                        }).map(function(setting){
+                            localStorage.setItem(setting[0], setting[1]);
+                        });
+                    }
+                    
+                    playButtonElement.addEventListener('click', function(evt){
+                        evt.preventDefault();
+                        var redirect_url = urlToLaunchElement.value;
+                        window.open([window.location.origin, redirect_url].join(''), '_self');
+                    }, false);
+
+                    clearButtonElement.addEventListener('click', function(evt){
+                        evt.preventDefault();
+                        localStorage.clear();
+                    }, false);
+
+                    formElement.addEventListener('submit', onSubmit, false);
+
+                    serviceField.addEventListener('change', function(e) {
+                        gameIdField.value = mapServiceToNumber[e.target.value].game_id;
+                        userIdField.value = mapServiceToNumber[e.target.value].user_id;
                     });
                 }
-                
-                playButtonElement.addEventListener('click', function(evt){
-                    evt.preventDefault();
-                    var redirect_url = urlToLaunchElement.value;
-                    window.open([window.location.origin, redirect_url].join(''), '_self');
-                }, false);
 
-                clearButtonElement.addEventListener('click', function(evt){
-                    evt.preventDefault();
-                    localStorage.clear();
-                }, false);
+                window.document.addEventListener("DOMContentLoaded", onDomLoaded);
+            })(this);
 
-                formElement.addEventListener('submit', onSubmit, false);
-            }
-
-            window.document.addEventListener("DOMContentLoaded", onDomLoaded);
         </script>
     </body>
 </html>

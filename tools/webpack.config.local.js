@@ -3,6 +3,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
+var modifyResponse = require('node-http-proxy-json');
+var localvhost = require('./local/vhost.json');
 
 var devConfiguration = Object.create(baseConfiguration);
 
@@ -49,22 +51,19 @@ devConfiguration.devServer = {
 
       },
       onProxyRes: function(proxyRes, req, res) {
-        /*if(req.path === '/ww-it/v01/config.getvars') {
-          var _write = res.write;
-          var output;
-          var body = "";
-          proxyRes.on('data', function(data) {
-              data = data.toString('utf-8');
-              body += data;
+        if(req.path === '/ww-it/v01/config.getvars') {
+          delete proxyRes.headers['content-length'];
+
+          modifyResponse(res, proxyRes.headers['content-encoding'], function (body) {
+            if (body) {
+              // replace some keys with locals
+              for(var key in localvhost) {
+                body[key] = localvhost[key];
+              }
+            }
+            return body;
           });
-          res.write = function (data) {
-            try {
-              output = eval("output=" + body);
-              console.log("Yay!", output);
-              _write.call(res, JSON.stringify(output));
-            } catch (err) {}
-          }
-        }*/
+        }
       },
       target: PROTOCOL + BANDAI_SERVICE,
       secure: false,
