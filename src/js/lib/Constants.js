@@ -5,13 +5,8 @@ export const CONTENT_ID_REGEX = '(html5gameplay|sdk_integration_test|games)\/([a
 // API
 let PREFIX = '';
 let STAGE = '';
-if (process.env.LOCAL_DEV) {
-  PREFIX = '/ww-it';
-}
-
-if (process.env.NODE_ENV === 'development') {
-  STAGE = '2';
-}
+if (process.env.LOCAL_DEV) { PREFIX = '/ww-it'; }
+if (process.env.NODE_ENV === 'development') { STAGE = '2'; }
 
 const LAPIS_END_POINT = `http://resources${STAGE}.buongiorno.com/lapis/apps`;
 

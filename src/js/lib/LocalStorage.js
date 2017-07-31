@@ -38,7 +38,7 @@ export class LocalStorage {
     const global = arguments[0] ? arguments[0] : window;  
     try {
       if (!global.localStorage) {
-        this.supported = false;      
+        this.supported = false;
       }
       global.localStorage.setItem('__test__', 1);
       global.localStorage.getItem('__test__');

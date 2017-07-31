@@ -23,7 +23,6 @@ export function isLoading(loading) {
 export function redirectOnStore(fromPage) {
   return (dispatch, getState) => {
     dispatch(isLoading(true));
-
     const { game_info, vhost } = getState();
     generatePony(vhost, { return_url: game_info.url_zoom })
       .then((pony) => {
