@@ -31,7 +31,6 @@ class EnterNameContainer extends Component {
       this.onDismiss = this.onDismiss.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
       this.onLeaderboardClose = this.onLeaderboardClose.bind(this);
-      console.log(props);
     }
 
     onDismiss(e) {
