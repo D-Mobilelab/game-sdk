@@ -35,7 +35,7 @@ export function getGameInfo() {
   return (dispatch, getState) => {
     dispatch({ type: 'GAME_INFO_LOAD_START' });
     const { vhost } = getState();
-    const query = dequeryfy(vhost.MOA_API_CONTENTS);
+    const query = dequeryfy(vhost.MOA_API_CONTENTS_GAMEINFO);
     const toRetain = ['country', 'fw', 'lang', 'real_customer_id', 'vh', 'white_label'];
     /** ... m(_ _)m ma perchè devo fare questo ... */
     const filteredQuery = Object.keys(query)
@@ -44,15 +44,15 @@ export function getGameInfo() {
                                   obj[key] = query[key];
                                   return obj;
                                 }, {});
-    const endPoint = vhost.MOA_API_CONTENTS.split('?')[0];
-    
+    const endPoint = vhost.MOA_API_CONTENTS_GAMEINFO.split('?')[0];
+
     return AxiosInstance.get(endPoint, { params: { content_id: getContentId(), ...filteredQuery } })
-    .then((response) => {
-      const gameInfo = normalizeGameInfo(response.data);
-      dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo });
-    })
-    .catch((reason) => {
-      dispatch({ type: 'GAME_INFO_LOAD_FAIL', error: reason });
-    });
+      .then((response) => {
+        const gameInfo = normalizeGameInfo(response.data);
+        dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo });
+      })
+      .catch((reason) => {
+        dispatch({ type: 'GAME_INFO_LOAD_FAIL', error: reason });
+      });
   };
 }
