@@ -1,5 +1,5 @@
 export function game_over(state = {
-  showLeaderdoard: false,
+  showLeaderboard: false,
   showEnterName: false,
   show: false,
   leaderboard: [],
