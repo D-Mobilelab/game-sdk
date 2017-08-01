@@ -86,6 +86,11 @@ var devConfiguration = {
     // module end
   resolve: {
     extensions: ['.js', '.es6', '.jsx'],
+  },
+  externals: {
+    // require("jquery") is external and available
+    //  on the global var jQuery
+    Newton: "Newton"
   }
 };
 

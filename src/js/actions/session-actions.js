@@ -1,3 +1,4 @@
+import Newton from 'Newton';
 import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import { isAndroid } from '../lib/Platform';
@@ -179,7 +180,7 @@ export function registerScore(alias) {
     };
 
     // set is loading: true
-    return AxiosInstance.post(Constants.MOA_API_LEADERBOARD_POST_SCORE, params)
+    return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params)
       .then((response) => {
         // set is loading false
         // showLeaderBoard(leaderboard)
