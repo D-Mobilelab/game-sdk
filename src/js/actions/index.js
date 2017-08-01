@@ -140,8 +140,6 @@ function init(initConfig) {
   };
 }
 
-
-
 function generateReportAction() {
   const reportCsv = Reporter.generateReport();
   return {
