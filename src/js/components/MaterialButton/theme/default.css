@@ -59,20 +59,10 @@
   width: 1em;
   height: 1em;
   opacity: 0.8;
-<<<<<<< 956f55d5ff0df83a9fb50224b044c680d043fa86
   border-radius: 50%;  
   left: calc(50% - (1em / 2));
   top: calc(50% - (1em / 2));
   animation: loadingSpinner 500ms infinite linear;
-=======
-  border-radius: 50%;
-  position: absolute;
-  margin-top: -15px;
-  margin-left: -15px;
-  top: 50%;
-  left: 50%;
-  animation: loadingSpinner 0.7s infinite linear;
->>>>>>> Fix loader spinner
 }
 
 @keyframes loadingSpinner {

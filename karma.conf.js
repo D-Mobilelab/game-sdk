@@ -3,13 +3,9 @@ var webpackConfig = require('./tools/webpack.config.base.js');
 var path = require('path');
 var webpack = require('webpack');
 
-var envPlugin = new webpack.DefinePlugin({ 
+var envPlugin = new webpack.DefinePlugin({
   'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
 });
-<<<<<<< 300b44dd2bf1b50f5d1d3f8a56c529d8b81f091c
-=======
-
->>>>>>> dirty fix karma.conf
 /** do not use commons chunk plugin */
 webpackConfig.plugins = [];
 webpackConfig.plugins.push(envPlugin);
