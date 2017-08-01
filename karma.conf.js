@@ -9,11 +9,6 @@ var envPlugin = new webpack.DefinePlugin({
 /** do not use commons chunk plugin */
 webpackConfig.plugins = [];
 webpackConfig.plugins.push(envPlugin);
-webpackConfig.externals = {
-  'react/addons': true,
-  'react/lib/ExecutionEnvironment': true,
-  'react/lib/ReactContext': true
-};
 
 module.exports = function (config) {
   config.set({
