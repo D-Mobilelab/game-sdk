@@ -16,7 +16,7 @@ export class LocalStorage {
     if (this.supported) {
       return window.localStorage.getItem(key);
     }
-    return this.storage[key];
+    return this.storage[key] ? this.storage[key] : null;
   }
 
   clear() {
@@ -35,7 +35,7 @@ export class LocalStorage {
   }
 
   isSupported() {
-    const global = arguments[0] ? arguments[0] : window;  
+    const global = arguments[0] ? arguments[0] : window;
     try {
       if (!global.localStorage) {
         this.supported = false;
@@ -45,7 +45,7 @@ export class LocalStorage {
       global.localStorage.removeItem('__test__');
       this.supported = true;
     } catch (e) {
-      this.supported = false;    
+      this.supported = false;
     }
     return this.supported;
   }
