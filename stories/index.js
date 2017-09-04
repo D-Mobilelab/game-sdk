@@ -13,9 +13,14 @@ import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
 import standard from '../src/js/components/MaterialButton/theme/default.css';
 import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
 
+import Menu from '../src/js/components/Menu/MenuComponent';
+import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
+
+
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
+const MenuBandai = withTheme(Menu, bandaiMenuTheme)
 
 storiesOf('MaterialButton', module)
   .add('standard', () => (<StandardButton onClick={action('clicked')}>Prova</StandardButton>))
@@ -39,55 +44,59 @@ storiesOf('BandaiButton theme', module)
   .add('disabled isLoading', () => (<BandaiButton disabled isLoading>Prova</BandaiButton>))
   .add('isLoading', () => (<BandaiButton isLoading={true}>Prova</BandaiButton>));
 
-  storiesOf('EnterName without theme', module)
-    .add('standard', () => {
-      class Container extends React.Component{
-        constructor(props){
-          super(props);
-          this.close = this.close.bind(this);
-          this.state = {
-            isOpen: true
-          };
-        }
-
-        close(){
-          this.setState({ isOpen: false})
-        }
-
-        render(){
-          return (
-            <div style={{position: 'fixed', width: '100%', top: '0' }}>
-              <EnterName show={this.state.isOpen} onDismiss={() => this.close()}/>
-            </div>
-          )
-        }
+storiesOf('EnterName without theme', module)
+  .add('standard', () => {
+    class Container extends React.Component {
+      constructor(props) {
+        super(props);
+        this.close = this.close.bind(this);
+        this.state = {
+          isOpen: true
+        };
       }
 
-      return (<Container />)
-      
-    })
-    .add('loading', () => {
-      return (
-        <div style={{position: 'fixed', width: '100%', top:'0' }}>
-          <EnterName show={true} onDismiss={action('close')} loading={true} />
-        </div>)
-    });
+      close() {
+        this.setState({ isOpen: false })
+      }
+
+      render() {
+        return (
+          <div style={{ position: 'fixed', width: '100%', top: '0' }}>
+            <EnterName show={this.state.isOpen} onDismiss={() => this.close()} />
+          </div>
+        )
+      }
+    }
+
+    return (<Container />)
+
+  })
+  .add('loading', () => {
+    return (
+      <div style={{ position: 'fixed', width: '100%', top: '0' }}>
+        <EnterName show={true} onDismiss={action('close')} loading={true} />
+      </div>)
+  });
 
 storiesOf('LeaderBoard Bandai theme', module)
   .add('Leaderboard', () => {
-        
+
     return (
-      <div style={{position: 'fixed', width: '100%', top:'0' }}>
-        <Leaderboard title={'High Score'} 
-                     score={975} 
-                     onClose={action('close clicked')}
-                     show={true}
-                     leaderboard={[
-                       { points: 2398, position: 1, alias: "ALE"},
-                       { points: 2005, position: 2, alias: "JOE"},
-                       { points: 1560, position: 3,alias: "ROY"}
-                    ]}
+      <div style={{ position: 'fixed', width: '100%', top: '0' }}>
+        <Leaderboard title={'High Score'}
+          score={975}
+          onClose={action('close clicked')}
+          show={true}
+          leaderboard={[
+            { points: 2398, position: 1, alias: "ALE" },
+            { points: 2005, position: 2, alias: "JOE" },
+            { points: 1560, position: 3, alias: "ROY" }
+          ]}
         />
       </div>
     );
+  });
+storiesOf('Menu', module)
+  .add('Menu Bandai', () => {
+    return (<MenuBandai show={true} position='LEFT_BOTTOM_CORNER' />)
   })
