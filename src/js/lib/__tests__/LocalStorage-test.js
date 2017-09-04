@@ -1,6 +1,10 @@
 import LocalStorageClass from '../LocalStorage';
 
-describe('LocalStorage class', function () {
+describe('#LocalStorage class', function () {
+  beforeEach(function () {
+    LocalStorageClass.storage = {};
+  });
+
   it('should import the class', function () {
     LocalStorageClass.setItem('key', 1);
     expect(JSON.parse(LocalStorageClass.getItem('key'))).toEqual(1);
@@ -24,7 +28,7 @@ describe('LocalStorage class', function () {
     expect(LocalStorageClass.supported).toEqual(false);
 
     expect(LocalStorageClass.storage).toEqual({});
-    expect(LocalStorageClass.getItem('chiave')).toBeNull();
+    expect(LocalStorageClass.getItem('notExists')).toBeNull();
 
     LocalStorageClass.clear();
     expect(LocalStorageClass.storage).toEqual({});
