@@ -2,6 +2,7 @@ import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import localStorage from './js/lib/LocalStorage';
 import SDK from './SDK';
 import Location from './js/lib/Location';
 import { Provider } from 'react-redux';
@@ -26,58 +27,58 @@ if (process.env.APP_ENV === 'HYBRID') {
 }
 
 class App extends React.Component {
-    
-    constructor(props){
-        super(props);        
+
+    constructor(props) {
+        super(props);
     }
 
-    render(){
+    render() {
         return (
             <div>
                 <Interstitial />
                 <LazilyLoad modules={{
-                  Gameover: () => {
-                    if (this.props.label === 'gameasy') {
-                      return importLazy(System.import('./js/components/GameasyOver'));
-                    } else if(this.props.label === 'bandai') {
-                      return function Noop(){ return null; }  
-                    } else {
-                      return importLazy(System.import('./js/components/GamifiveOver'));                        
+                    Gameover: () => {
+                        if (this.props.label === 'gameasy') {
+                            return importLazy(System.import('./js/components/GameasyOver'));
+                        } else if (this.props.label === 'bandai') {
+                            return function Noop() { return null; }
+                        } else {
+                            return importLazy(System.import('./js/components/GamifiveOver'));
+                        }
+                    },
+                    Banner: () => {
+                        if (this.props.label === 'gameasy') {
+                            return importLazy(System.import('./js/components/Banner/Banner'))
+                        }
+                        return function Noop() { return null };
+                    },
+                    Menu: () => {
+                        if (this.props.label === 'gameasy') {
+                            return importLazy(System.import('./js/components/Menu/MenuGameasy'));
+                        } else if (this.props.label === 'bandai') {
+                            return importLazy(System.import('./js/components/Menu/MenuBandai'));
+                        } else {
+                            return importLazy(System.import('./js/components/Menu/MenuGamifive'));
+                        }
+                    },
+                    EnterNameContainer: () => {
+                        if (this.props.label === 'bandai') {
+                            return importLazy(System.import('./js/components/EnterName/Container'));
+                        }
+                        return function Noop() { return null; }
                     }
-                  },
-                  Banner: () => {
-                    if (this.props.label === 'gameasy') {
-                      return importLazy(System.import('./js/components/Banner/Banner'))
-                    }
-                    return function Noop(){ return null };
-                  },
-                  Menu: () => {
-                      if (this.props.label === 'gameasy') {
-                        return importLazy(System.import('./js/components/Menu/MenuGameasy'));                      
-                      } else if(this.props.label === 'bandai'){                        
-                        return importLazy(System.import('./js/components/Menu/MenuBandai'));
-                      } else {
-                        return importLazy(System.import('./js/components/Menu/MenuGamifive'));
-                      }
-                  }, 
-                  EnterNameContainer: () => {
-                      if (this.props.label === 'bandai') {
-                        return importLazy(System.import('./js/components/EnterName/Container'));
-                      }
-                      return function Noop(){ return null; }
-                  }
                 }}>
-                  {({ Gameover, Banner, Menu, EnterNameContainer }) => {
-                      return (
-                        <div>
-                          <EnterNameContainer />
-                          <Gameover />
-                          <Banner />
-                          <Menu />
-                        </div>)
+                    {({ Gameover, Banner, Menu, EnterNameContainer }) => {
+                        return (
+                            <div>
+                                <EnterNameContainer />
+                                <Gameover />
+                                <Banner />
+                                <Menu />
+                            </div>)
                     }
-                  }
-                </LazilyLoad>                
+                    }
+                </LazilyLoad>
             </div>
         )
     }
@@ -97,7 +98,7 @@ function onDomLoaded(event) {
     }
     /** overwrite with localStorage if any */
     const label = localStorage.getItem('gfsdk-debug-label');
-    if(label) { WHITE_LABEL = label; }
+    if (label) { WHITE_LABEL = label; }
 
     ReactDOM.render(
         <Provider store={store}>
