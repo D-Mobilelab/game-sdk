@@ -1,4 +1,3 @@
-import Newton from 'Newton';
 import Utils from 'docomo-utils';
 import Reporter from '../lib/Reporter';
 import Location from '../lib/Location';
@@ -25,7 +24,7 @@ import { getUserType } from './user-actions';
  * SAVE_USER_DATA_LOCAL_ERROR
  */
 
-let onUserDataCallback = () => {};
+let onUserDataCallback = () => { };
 
 function getUserDataFromServer() {
   return (dispatch, getState) => {
@@ -37,31 +36,31 @@ function getUserDataFromServer() {
 
     const NewtonInstance = Newton.getSharedInstance();
     const userDataGetApi = vhost.MOA_API_APPLICATION_OBJECTS_GET
-                            .replace(':QUERY', JSON.stringify({ contentId: getContentId() }))
-                            .replace(':ID', user.userData._id || '')
-                            .replace(':ACCESS_TOKEN', NewtonInstance.getUserToken())
-                            .replace(':EXTERNAL_TOKEN', user.user) // userId
-                            .replace(':COLLECTION', 'gameInfo');
+      .replace(':QUERY', JSON.stringify({ contentId: getContentId() }))
+      .replace(':ID', user.userData._id || '')
+      .replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken()))
+      .replace(':EXTERNAL_TOKEN', user.user) // userId
+      .replace(':COLLECTION', 'gameInfo');
 
     dispatch({ type: 'LOAD_USER_DATA_SERVER_START' });
     return AxiosInstance.get(userDataGetApi)
-          .then((response) => {
-            const { data } = response;
-            const realResponseData = data.response.data;
-            let payload = null;
-            if (realResponseData &&
-                Array.isArray(realResponseData) &&
-                realResponseData.length > 0) {
-              payload = realResponseData[0]; // userData
-              payload.info = JSON.parse(payload.info);
-            }
-            dispatch({ type: 'LOAD_USER_DATA_SERVER_END', payload });
-          })
-          .catch((reason) => {
-            dispatch({ type: 'LOAD_USER_DATA_SERVER_ERROR', payload: reason });
-            Reporter.add('error', 'error trying to retrieve user data from server. Are you serving your game from local.appsworld.gamifive-app.com origin?');
-            return reason;
-          });
+      .then((response) => {
+        const { data } = response;
+        const realResponseData = data.response.data;
+        let payload = null;
+        if (realResponseData &&
+          Array.isArray(realResponseData) &&
+          realResponseData.length > 0) {
+          payload = realResponseData[0]; // userData
+          payload.info = JSON.parse(payload.info);
+        }
+        dispatch({ type: 'LOAD_USER_DATA_SERVER_END', payload });
+      })
+      .catch((reason) => {
+        dispatch({ type: 'LOAD_USER_DATA_SERVER_ERROR', payload: reason });
+        Reporter.add('error', 'error trying to retrieve user data from server. Are you serving your game from local.appsworld.gamifive-app.com origin?');
+        return reason;
+      });
   };
 }
 
@@ -119,21 +118,21 @@ function setUserDataOnServer(newInfo) {
 
     dispatch({ type: 'SAVE_USER_DATA_SERVER_START' });
     return AxiosInstance.post(APPLICATION_OBJECT_SET_END_POINT, newBody, config)
-            .then((response) => {
-              const { data } = response;
-              if (data.response.data) {
-                data.response.data.info = newInfo;
-                dispatch({ type: 'SAVE_USER_DATA_SERVER_END', payload: data.response.data });
-              } else {
-                Logger.warn('GamifiveSDK', 'NEWTON', 'userData FAIL to be set on server', data.response);
-                dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: data.response });
-                Reporter.add('error', 'error trying to save user data on server. newton error.');
-              }
-            }).catch((reason) => {
-              Logger.warn('GamifiveSDK', 'PHP', 'userData FAIL to be set on server', reason);
-              dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: reason });
-              Reporter.add('error', 'error trying to save user data on server. php error.');
-            });
+      .then((response) => {
+        const { data } = response;
+        if (data.response.data) {
+          data.response.data.info = newInfo;
+          dispatch({ type: 'SAVE_USER_DATA_SERVER_END', payload: data.response.data });
+        } else {
+          Logger.warn('GamifiveSDK', 'NEWTON', 'userData FAIL to be set on server', data.response);
+          dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: data.response });
+          Reporter.add('error', 'error trying to save user data on server. newton error.');
+        }
+      }).catch((reason) => {
+        Logger.warn('GamifiveSDK', 'PHP', 'userData FAIL to be set on server', reason);
+        dispatch({ type: 'SAVE_USER_DATA_SERVER_ERROR', payload: reason });
+        Reporter.add('error', 'error trying to save user data on server. php error.');
+      });
   };
 }
 
@@ -166,13 +165,13 @@ function getUserDataFromLocal() {
     const game_id = game_info.contentId || game_info.id;
     const key = `${user.user}-${game_id}`;
     return storage.getItem(key)
-          .then((localUserData) => {
-            dispatch({ type: 'LOAD_USER_DATA_LOCAL_END', payload: localUserData });
-          })
-          .catch((reason) => {
-            dispatch({ type: 'LOAD_USER_DATA_LOCAL_ERROR', payload: reason });
-            Reporter.add('error', 'error getting user data from local.');
-          });
+      .then((localUserData) => {
+        dispatch({ type: 'LOAD_USER_DATA_LOCAL_END', payload: localUserData });
+      })
+      .catch((reason) => {
+        dispatch({ type: 'LOAD_USER_DATA_LOCAL_ERROR', payload: reason });
+        Reporter.add('error', 'error getting user data from local.');
+      });
   };
 }
 
@@ -201,12 +200,12 @@ function syncUserData(results) {
      */
     localGameInfo._id = serverGameInfo._id;
 
-        // local is more relevant
+    // local is more relevant
     if (localUpdatedAt.getTime() > serverUpdatedAt.getTime()) {
       Logger.info('GamifiveSDK: sync userData', 'local > server', localUpdatedAt, serverUpdatedAt);
       return localGameInfo;
     } else if (localUpdatedAt.getTime() < serverUpdatedAt.getTime()) {
-       // server is more relevant
+      // server is more relevant
       Logger.info('GamifiveSDK: sync userData', 'local < server', localUpdatedAt, serverUpdatedAt);
       return serverGameInfo;
     } else if (localUpdatedAt.getTime() === serverUpdatedAt.getTime()) {
@@ -226,12 +225,12 @@ function syncUserData(results) {
 export function saveUserData(newInfo) {
   return (dispatch, getState) => {
     if (getState().generic.initPending) {
-    // cannot save while initialize
+      // cannot save while initialize
     } else if (getState().generic.initialized &&
-              !getState().user.isSaving &&
-              !getState().user.isFetching) {
-      
-      if (typeof newInfo === 'string') {        
+      !getState().user.isSaving &&
+      !getState().user.isFetching) {
+
+      if (typeof newInfo === 'string') {
         Reporter.add('warn', 'saveUserData: the data to be saved should be an object! got a string');
         try {
           console.warn('GamifiveSDK: try to parse the string');
@@ -260,9 +259,9 @@ export function saveUserData(newInfo) {
         dispatch(setUserDataOnServer(newInfo)),
         dispatch(setUserDataOnLocal(newInfo)),
       ])
-      .catch((reason) => {
-        dispatch({ type: 'SAVE_USER_DATA_ERROR', payload: reason });
-      });
+        .catch((reason) => {
+          dispatch({ type: 'SAVE_USER_DATA_ERROR', payload: reason });
+        });
     }
   };
 }
@@ -274,8 +273,8 @@ export function loadUserData(callback = onUserDataCallback) {
       // register this callback
       return dispatch({ type: 'REGISTER_ON_USER_DATA_CALLBACK', loadUserDataCalled: true });
     } else if (getState().generic.initialized &&
-              !getState().user.isSaving &&
-              !getState().user.isFetching) {
+      !getState().user.isSaving &&
+      !getState().user.isFetching) {
       return Promise.all([
         dispatch(getUserDataFromServer()),
         dispatch(getUserDataFromLocal()),

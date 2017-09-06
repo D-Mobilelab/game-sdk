@@ -8,7 +8,7 @@ var babelLoader = {
   loader: 'babel-loader'
 }
 
-if(process.env.NODE_ENV === 'test') {  
+if (process.env.NODE_ENV === 'test') {
   babelLoader.options = { plugins: 'rewire' };
 }
 
@@ -36,43 +36,43 @@ var devConfiguration = {
   module: {
     noParse: /node_modules\/localforage\/dist\/localforage.js/,
     rules: [
-        babelLoader,
-        {
-          test: /\.css$/,
-          exclude: /(bower_components|node_modules)/,
-          use:[
-            { loader: 'style-loader' },
-            { 
-              loader: 'css-loader', 
-              options: { 
-                modules: true,
-                importLoaders: 1,
-                localIdentName: '[name]_[local]_[hash:base64:5]',
-              }
-            },
-            {
-              loader: 'postcss-loader',
+      babelLoader,
+      {
+        test: /\.css$/,
+        exclude: /(bower_components|node_modules)/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]_[local]_[hash:base64:5]',
             }
-          ]
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: { name: 'assets/[name].[ext]' }
-            }
-          ]          
-        },
-      ],
+          },
+          {
+            loader: 'postcss-loader',
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: { name: 'assets/[name].[ext]' }
+          }
+        ]
+      },
+    ],
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       // (the commons chunk name)
 
-      
+
       // (the filename of the commons chunk)
 
       // minChunks: 3,
@@ -83,14 +83,9 @@ var devConfiguration = {
       minChunks: Infinity,
     })
   ],
-    // module end
+  // module end
   resolve: {
     extensions: ['.js', '.es6', '.jsx'],
-  },
-  externals: {
-    // require("jquery") is external and available
-    //  on the global var jQuery
-    Newton: "Newton"
   }
 };
 
