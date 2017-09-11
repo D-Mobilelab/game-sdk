@@ -13,14 +13,13 @@ import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
 import standard from '../src/js/components/MaterialButton/theme/default.css';
 import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
 
-import Menu from '../src/js/components/Menu/MenuComponent';
+import MenuComponent from '../src/js/components/Menu/MenuComponent';
 import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
-
 
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
-const MenuBandai = withTheme(Menu, bandaiMenuTheme)
+const BandaiMenu = withTheme(MenuComponent, bandaiMenuTheme);
 
 storiesOf('MaterialButton', module)
   .add('standard', () => (<StandardButton onClick={action('clicked')}>Prova</StandardButton>))
@@ -96,7 +95,8 @@ storiesOf('LeaderBoard Bandai theme', module)
       </div>
     );
   });
+
 storiesOf('Menu', module)
   .add('Menu Bandai', () => {
-    return (<MenuBandai show={true} position='LEFT_BOTTOM_CORNER' />)
+    return (<BandaiMenu show={true} position='LEFT_BOTTOM_CORNER' />)
   })
