@@ -9,9 +9,8 @@
   },
   "scripts": {
     "clean": "rm -rvf dist/*",
-    "test:jest": "jest --verbose",
-    "test": "$(npm bin)/env-cmd test karma start",
-    "test:watch": "$(npm bin)/env-cmd test karma start --no-single-run",
+    "test": "jest --verbose --coverage",
+    "test:watch": "jest --watch",
     "build:hybrid:dev": "$(npm bin)/env-cmd hybrid-development webpack --config tools/webpack.config.dev.js",
     "build:hybrid:prod": "$(npm bin)/env-cmd hybrid-production webpack --config tools/webpack.config.prod.js -p",
     "build:dev": "$(npm bin)/env-cmd development webpack --config tools/webpack.config.dev.js",
