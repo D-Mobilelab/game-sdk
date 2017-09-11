@@ -1,4 +1,4 @@
-import Newton from 'Newton';
+import Newton from 'newton';
 import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import { isAndroid } from '../lib/Platform';
@@ -9,7 +9,7 @@ import { hideGameOver, showGameOver, showEnterNameModal, showLeaderboard } from 
 import { getContentId, setRelated } from './gameinfo-actions';
 import { showBanner } from './banner-actions';
 
-let onStartCallback = () => {};
+let onStartCallback = () => { };
 const hybrid = process.env.APP_ENV === 'HYBRID';
 
 function doStartSession() {
@@ -48,16 +48,16 @@ export function registerOnStartCallback(callback) {
 
 export function startSession() {
   return (dispatch, getState) => {
-        // Not initialized but init called and pending
+    // Not initialized but init called and pending
     if (!getState().generic.initialized && getState().generic.initPending) {
       dispatch({ type: 'ADD_TO_AFTER_INIT', session_start_after_init: true });
       // Not initialized, not even called init
     } else if (!getState().generic.initialized && !getState().generic.initPending) {
-    /**
-     * TODO:
-     * Init not event called before startSession
-     * report an error in debug env
-     */
+      /**
+       * TODO:
+       * Init not event called before startSession
+       * report an error in debug env
+       */
 
       Reporter.add('error', 'start session before init!');
       console.log('You should call init before startSession!');
@@ -110,7 +110,7 @@ export function endSession(data = { score: 0, level: 1 }) {
 
     // and a session was started
     if (Object.keys(getState().session).length > 0
-            && getState().session.opened) {
+      && getState().session.opened) {
       const endTime = new Date();
       const session = { score: data.score, level: data.level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
@@ -139,21 +139,21 @@ export function endSession(data = { score: 0, level: 1 }) {
           cors_compliant: 1,
         },
       })
-      .then((response) => {
-        // get ranking?
-        // response.data.ranking
-        // response.data.gameInfo
-        // dispatch(setMissingGameInfoPart(response.data.gameInfo));
-        dispatch(setRank(response.data.rank));
-        dispatch(setRelated(response.data.related || []));
-      });
+        .then((response) => {
+          // get ranking?
+          // response.data.ranking
+          // response.data.gameInfo
+          // dispatch(setMissingGameInfoPart(response.data.gameInfo));
+          dispatch(setRank(response.data.rank));
+          dispatch(setRelated(response.data.related || []));
+        });
       return gameOverPromise;
     }
-      /**
-       * TODO:
-       * endSession before startSession
-       * report an error in debug env
-       */
+    /**
+     * TODO:
+     * endSession before startSession
+     * report an error in debug env
+     */
     Reporter.add('error', 'endSession before startSession!');
     console.log('No session started!');
   };
