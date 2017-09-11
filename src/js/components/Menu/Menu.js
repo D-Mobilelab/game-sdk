@@ -1,136 +1,34 @@
-import React, { Component } from 'react';
-import { isTouch } from '../../lib/TouchDetector';
-
 /** Connect to redux store */
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 /** TODO: import only needed actions */
 import { Actions } from '../../actions/index';
+import MenuComponent from './MenuComponent';
 
 const mapStateToProps = (state) => {
-  return {...state.menu}
+  return { menu: state.menu }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(Actions, dispatch)
+  actions: bindActionCreators(Actions, dispatch)
 });
 
-export class Menu extends Component {
-    constructor(props){
-        super(props);
-        this.onTouchEnd = this.onTouchEnd.bind(this);         
-        this.onTouchStart = this.onTouchStart.bind(this);
-        this.onMouseDown = this.onMouseDown.bind(this); 
-        this.onMouseUp = this.onMouseUp.bind(this);
-        this.onMouseMove = this.onMouseMove.bind(this);
-        this.onTouchMove = this.onTouchMove.bind(this);
-    }
+class MenuContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+  }
 
-    addEventsListener(){
-      if (isTouch()) {
-        this.refs.menu.addEventListener("touchstart", this.onTouchStart, false);
-        this.refs.menu.addEventListener("touchmove", this.onTouchMove, false);
-        this.refs.menu.addEventListener("touchend", this.onTouchEnd, false);
-      } else {
-        this.refs.menu.addEventListener("mousedown", this.onMouseDown, false);
-        this.refs.menu.addEventListener("mousemove", this.onMouseMove, false);
-        this.refs.menu.addEventListener("mouseup", this.onMouseUp, false);
-      }
-    }
-    
-    removeEventsListener(){
-      if (isTouch()) {
-        this.refs.menu.removeEventListener("touchstart", this.onTouchStart, false);
-        this.refs.menu.removeEventListener("touchmove", this.onTouchMove, false);
-        this.refs.menu.removeEventListener("touchend", this.onTouchEnd, false);
-      } else {
-        this.refs.menu.removeEventListener("mousedown", this.onMouseDown, false);
-        this.refs.menu.removeEventListener("mousemove", this.onMouseMove, false);
-        this.refs.menu.removeEventListener("mouseup", this.onMouseUp, false);
-      }
-    }
+  onClick() {
+    this.props.actions.goToHome();
+  }
 
-    componentDidMount() {
-      this.addEventsListener();
-    }
-
-    componentWillUnmount() {
-      this.removeEventsListener();
-    }
-
-    onPointerStart(event){
-        let position = {x : Math.round(event.clientX), y: Math.round(event.clientY)};        
-        this.props.actions.setDownPosition({ active: true, position });        
-    }
-
-    onPointerEnd(event){
-        let endX = Math.round(event.clientX);
-        let endY = Math.round(event.clientY);
-        let position = { x : endX, y: endY };
-        const OFFSET = 9;
-        if((this.props.pointerDownPosition.x >= endX - OFFSET && this.props.pointerDownPosition.x <= endX + OFFSET) && 
-           (this.props.pointerDownPosition.y >= endY - OFFSET && this.props.pointerDownPosition.y <= endY + OFFSET)
-          ) {
-            // It's a click/tap
-            // window.alert("it's a T(r)ap!");   
-            this.props.actions.goToHome();        
-        }
-        
-        this.props.actions.setUpPosition({ active: false, position });
-        //console.log('Start-End', this.props.pointerDownPosition.x, endX, this.props.pointerDownPosition.y, endY, this.props.drag);
-        if(this.props.drag){
-          this.props.actions.setDrag(false);
-        }
-    }
-
-    onPointerMove(event) {
-        let position = {x : Math.round(event.clientX), y: Math.round(event.clientY)};
-        this.props.actions.setDrag(true);
-        if(this.props.active) {          
-          this.props.actions.setPosition({ position });
-        }
-    }
-
-    onTouchStart(evt){
-        evt.preventDefault();
-        let touch = evt.touches[0];
-        this.onPointerStart(touch);
-    }
-
-    onTouchEnd(evt){
-        evt.preventDefault();
-        let touch = evt.changedTouches[0];
-        this.onPointerEnd(touch);
-    }
-
-    onTouchMove(evt){
-        evt.preventDefault();
-        let touch = evt.changedTouches[0]; // get one finger
-        this.onPointerMove(touch);
-    }
-    
-    onMouseDown(evt){
-      this.onPointerStart(evt);
-    }
-
-    onMouseUp(evt){
-      this.onPointerEnd(evt);
-    }
-
-    onMouseMove(evt){
-      this.onPointerMove(evt);
-    }
-
-    render() {
-        const { theme } = this.props;        
-        let classNames = [theme.menu];
-        classNames.push(this.props.show ? theme.show : theme.hide);
-        classNames.push(this.props.active ? theme.active : '');
-        return(
-            <div ref='menu' className={classNames.join(' ')} style={this.props.style}></div>
-        );
-    }
+  render() {
+    return (
+      <MenuComponent show={this.props.menu.show} position={this.props.menu.position} {...this.props} onClick={this.onClick} />
+    )
+  }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+export default connect(mapStateToProps, mapDispatchToProps)(MenuContainer);

@@ -8,10 +8,6 @@ var babelLoader = {
   loader: 'babel-loader'
 }
 
-if (process.env.NODE_ENV === 'test') {
-  babelLoader.options = { plugins: 'rewire' };
-}
-
 var devConfiguration = {
   entry: {
     gfsdk: './src/index.js',
@@ -86,6 +82,11 @@ var devConfiguration = {
   // module end
   resolve: {
     extensions: ['.js', '.es6', '.jsx'],
+  },
+  externals: {
+    // require("jquery") is external and available
+    //  on the global var jQuery
+    newton: "Newton"
   }
 };
 

@@ -1,3 +1,4 @@
+import Newton from 'newton';
 import Utils from 'docomo-utils';
 import Reporter from '../lib/Reporter';
 import Location from '../lib/Location';
