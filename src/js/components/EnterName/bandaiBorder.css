@@ -7,4 +7,5 @@
     background-repeat: no-repeat; 
     border: 10px solid transparent;
     border-image: url('./border.png') 20 round;
+    -webkit-border-image: url('./border.png') 20 round;
 }
