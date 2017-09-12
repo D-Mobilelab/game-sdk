@@ -4,10 +4,11 @@ import { AxiosInstance } from '../lib/AxiosService';
 export function load(VHOST_API_URL, keys) {
   return (dispatch) => {
     dispatch({ type: 'VHOST_LOAD_START' });
+    const vhostLocal = JSON.parse(localStorage.getItem('gfsdk_vhost'));
+    let vhost = false;
 
-    let vhost;
-    if (localStorage) {
-      vhost = JSON.parse(localStorage.getItem('gfsdk_vhost'));
+    if (vhostLocal) {
+      vhost = JSON.parse(vhostLocal);
     }
 
     /**

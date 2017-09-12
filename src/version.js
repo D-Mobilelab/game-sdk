@@ -1,1 +1,1 @@
-module.exports={build:"v2.3.3-15-g94df46a",version:"2.4.0"}
+module.exports={build:"v2.4.0-14-ga988345",version:"2.4.1"}
