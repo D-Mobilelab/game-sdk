@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/D-Mobilelab/game-sdk.svg?branch=master)](https://travis-ci.org/D-Mobilelab/game-sdk)
-
+[![Coverage Status](https://coveralls.io/repos/github/D-Mobilelab/game-sdk/badge.svg?branch=master)](https://coveralls.io/github/D-Mobilelab/game-sdk?branch=master)
 # GameSDK v2.x
 
 # Table of Contents
