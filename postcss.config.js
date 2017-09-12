@@ -1,5 +1,7 @@
 module.exports = {
-  plugins: [
-    require('autoprefixer')
-  ]
-}
+  plugins: {
+    'postcss-cssnext': {
+      browsers: ['last 2 android versions'],
+    },
+  },
+};

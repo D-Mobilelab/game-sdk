@@ -1,4 +1,4 @@
-import { generatePony } from '../lib/PonyToken';
+import { ponyToken as generatePony } from 'docomo-utils';
 
 export function showBanner() {
   return {
@@ -6,9 +6,10 @@ export function showBanner() {
   };
 }
 
-export function hideBanner() {
+export function hideBanner(loading = false) {
   return {
     type: 'HIDE_BANNER',
+    payload: { loading },
   };
 }
 
@@ -22,28 +23,20 @@ export function isLoading(loading) {
 export function redirectOnStore(fromPage) {
   return (dispatch, getState) => {
     dispatch(isLoading(true));
-
     const { game_info, vhost } = getState();
     generatePony(vhost, { return_url: game_info.url_zoom })
       .then((pony) => {
         // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
         const finalStoreUrl = vhost.GOOGLEPLAY_STORE_URL
           .replace('<page>', fromPage)
-          .replace('<af_sub1>', pony);
+          .replace('<af_sub1>', encodeURIComponent(pony));
 
-        setTimeout(() => {
-          /**
-           * TODO: make a single call to redux store
-           */
-          dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
-          dispatch(isLoading(false));
-          dispatch(hideBanner());
-          window.location.href = finalStoreUrl;
-        }, 200);
+        dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
+        setTimeout(() => dispatch(hideBanner()), 1000);
+        window.location.href = finalStoreUrl;
       }).catch((reason) => {
-        console.warn(reason);
+        dispatch({ type: 'REDIRECT_ON_STORE_ERROR', payload: reason.toString() });
         dispatch(hideBanner());
-        /*dispatch(isLoading(false));*/
       });
   };
 }

@@ -1,0 +1,10 @@
+.bandaiBorder {
+    background: #000;
+    background: linear-gradient(135deg, #000 1px, #000 0) top left,
+                 linear-gradient(225deg, #000 1px, #000 0) top right,
+                 linear-gradient(315deg, #000 1px, #000 0) bottom right,
+                 linear-gradient(45deg,  #000 1px, #000 0) bottom left;
+    background-repeat: no-repeat; 
+    border: 10px solid transparent;
+    border-image: url('./border.png') 20 round;
+}

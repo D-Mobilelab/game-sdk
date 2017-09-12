@@ -14,9 +14,7 @@ export function game_info(state = {
         case 'GAME_INFO_LOAD_START':
             return state;
         case 'GAME_INFO_LOAD_END':            
-            return Object.assign({}, state, {
-                ...state, ...action.game_info,
-            });
+            return Object.assign({}, state, action.game_info);
         case 'GAME_INFO_LOAD_FAIL':
             return Object.assign({}, state, {...state, error: action.error});
         case 'SET_RELATED':

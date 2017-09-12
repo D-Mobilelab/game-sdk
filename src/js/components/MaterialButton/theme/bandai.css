@@ -1,0 +1,28 @@
+@value background: #FF9900;
+
+.btn {
+    composes: btn from './default.css';    
+    color: white;
+    font-family: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;    
+    border-color: background;
+    background: background;
+    background:  linear-gradient(135deg, transparent 2px, background 0) top left, 
+                 linear-gradient(225deg, transparent 2px, background 0) top right,
+                 linear-gradient(315deg, transparent 2px, background 0) bottom right,  
+                 linear-gradient(45deg,  transparent 2px, background 0) bottom left; 
+    background-size: 50% 50%; 
+    background-repeat: no-repeat;
+}
+
+.loadingSpinner {
+    composes: loadingSpinner from './default.css';
+}
+
+.rippleActive {
+    composes: rippleActive from './default.css';
+    background-color: rgba(255,255,255, 0.4);
+}
+
+.centerBtn {
+    composes: centerBtn from './default.css';
+}

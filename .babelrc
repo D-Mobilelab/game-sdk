@@ -3,20 +3,25 @@
     [
       "env",
       {
-        "targets": { "browsers": ["last 2 android versions"] },        
+        "targets": {
+          "browsers": [
+            "last 2 android versions"
+          ]
+        },
         "useBuiltIns": true,
-        "debug": true,
+        "debug": false,
         "modules": false
       }
     ],
     "react",
     "es2015"
   ],
-   "plugins": [
-      ["transform-object-rest-spread",
-        {
-          "useBuiltIns": true
-        }
-      ]
-    ]    
+  "plugins": [
+    [
+      "transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ]
+  ]
 }

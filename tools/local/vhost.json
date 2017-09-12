@@ -1,0 +1,4 @@
+{
+    "WHITE_LABEL": "xx_bandai",
+    "MOA_API_CONTENTS_GAMEINFO": "http://resources2.buongiorno.com/lapis/apps/contents.getList?content_id=:ID&formats=:FORMATS&sort=-born_date&category=:CATEGORY&publisher=:PUBLISHER&size=:SIZE&offset=:OFFSET&label=:LABEL&label_slug=:LABEL_SLUG&access_type=:ACCESS_TYPE&real_customer_id=ia_bandainamco&lang=en&use_cs_id=&white_label=xx_bandai&main_domain=http://bandai2.gameasy.com/ww/&country=xx&fw=gameasy&vh=ww.bandai.gameasy.com&check_compatibility_header=:CHECK_OTA&bl=:BLACKLIST&user_type=:USER_TYPE"
+}

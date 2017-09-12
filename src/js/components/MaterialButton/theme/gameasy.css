@@ -1,0 +1,24 @@
+@value background_cyan: #00c1e2;
+@value foreground_white: #e7e7f9;
+@value purple_gameasy: #f84975;
+@value blue_gameasy: #6482c4;
+
+.btn {
+    composes: btn from './default.css';
+    background: purple_gameasy;
+    color: foreground_white;
+    border-radius: 20px;
+    font-family: 'montserratultra_light', Verdana, Geneva, sans-serif;
+}
+
+.loadingSpinner {
+    composes: loadingSpinner from './default.css';
+}
+
+.rippleActive {
+    composes: rippleActive from './default.css';
+}
+
+.centerBtn {
+    composes: centerBtn from './default.css';
+}

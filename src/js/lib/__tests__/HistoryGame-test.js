@@ -1,18 +1,14 @@
-import HistoryGame from '../HistoryGame';
+import * as HistoryGame from '../HistoryGame';
 
-describe('HistoryGame push and pop!', function() {
-  beforeEach(function() {
-    localStorage.clear();
-  });
+describe('#HistoryGame push and pop!', function () {
 
-  it('push should set a history array', function() {
+  it('push should set a history array', function () {
     HistoryGame.push('http://www.gameasy.com');
     expect(HistoryGame.pop()).toEqual('http://www.gameasy.com');
-    expect(HistoryGame.getHistory()).not.toContain('http://www.gameasy.com');
     expect(HistoryGame.getHistory()).toBeUndefined();
   });
 
-  it('pop should return undefined if no history', function() {
+  it('pop should return undefined if no history', function () {
     expect(HistoryGame.pop()).toBeUndefined();
   });
 });

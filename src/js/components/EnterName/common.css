@@ -1,0 +1,19 @@
+:root {    
+  --bandai-font: 'pixel_emulatorregular', Verdana, Geneva, sans-serif;  
+}
+
+.main {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background 300ms;
+    font-family: var(--bandai-font);
+}
+
+.main.show {
+    display: block;
+    background-color:rgba(0, 0, 0, 0.2);
+    height: 100%;
+}

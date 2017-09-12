@@ -30,13 +30,7 @@ export function load(VHOST_API_URL, keys) {
 
 export function dictLoad(DICTIONARY_API) {
   return (dispatch) => {
-    const dictionaryLocal = localStorage.getItem('gfsdk_dictionary');
-    let dictionary = false;
-
-    if (dictionaryLocal) {
-      dictionary = JSON.parse(dictionaryLocal);
-    }
-
+    const dictionary = JSON.parse(localStorage.getItem('gfsdk_dictionary'));
     const action = { type: 'DICTIONARY_LOAD_END', payload: {} };
     if (dictionary) {
       action.payload = dictionary;

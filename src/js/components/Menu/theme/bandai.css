@@ -1,0 +1,17 @@
+.menu {
+    composes: menu from './default.css';
+    transition: transform 350ms cubic-bezier(.67,1.99,.64,.6); /** easeOutElastic */
+    background-image: url('./sprite_bandai.svg');
+}
+
+.show {
+    composes: show from './default.css';
+}
+
+.active {
+    composes: active from './default.css';
+}
+
+.hide {
+    composes: hide from './default.css';
+}

@@ -1,3 +1,4 @@
+import { dequeryfy } from 'docomo-utils';
 import * as Constants from '../lib/Constants';
 import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
@@ -33,16 +34,24 @@ export function getContentId() {
 export function getGameInfo() {
   return (dispatch, getState) => {
     dispatch({ type: 'GAME_INFO_LOAD_START' });
-    const { generic } = getState();
-      return AxiosInstance.get(Constants.GAME_INFO_API_URL, {
-        params: {
-          content_id: getContentId(),
-          cors_compliant: 1,
-        },
-      }).then((response) => {
-        const gameInfo = normalizeGameInfo(response.data.game_info);
-        dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo });        
-      }).catch((reason) => {
+    const { vhost } = getState();    
+    const query = dequeryfy(vhost.MOA_API_CONTENTS_GAMEINFO);
+    const toRetain = ['country', 'fw', 'lang', 'real_customer_id', 'vh', 'white_label'];
+    /** ... m(_ _)m ma perchè devo fare questo ... */
+    const filteredQuery = Object.keys(query)
+                                .filter(key => toRetain.includes(key))
+                                .reduce((obj, key) => {
+                                  obj[key] = query[key];
+                                  return obj;
+                                }, {});
+    
+    const endPoint = vhost.MOA_API_CONTENTS_GAMEINFO.split('?')[0];
+    return AxiosInstance.get(endPoint, { params: { content_id: getContentId(), ...filteredQuery } })
+      .then((response) => {
+        const gameInfo = normalizeGameInfo(response.data);
+        dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo });
+      })
+      .catch((reason) => {
         dispatch({ type: 'GAME_INFO_LOAD_FAIL', error: reason });
       });
   };

@@ -13,6 +13,8 @@
 class SDK {
 
   constructor() {
+    this.initFinished = false;
+    this.startAfterInit = false;
     this.state = {
       user: {
         user: null,
@@ -34,7 +36,6 @@ class SDK {
       game_info: {},
     };
 
-    this.onLoadUserData = function(){};
     this.onStartSessionCallback = function(){};
 
     const regex = /games\/data\/(\w+)\//gi;
@@ -50,6 +51,7 @@ class SDK {
     const loadedState = localStorage.getItem(`${this.ID}`);
     if (loadedState) {
       this.state = JSON.parse(loadedState);
+      console.log('Loading saved state', this.state);
     }
   }
 
@@ -63,7 +65,11 @@ class SDK {
    */
   init(initConfig) {
     console.log('Init');
-    this.onLoadUserData(this.state.user.userData);
+    this.state.initConfig = initConfig;
+    this.initFinished = true;
+    if (this.startAfterInit) {
+      this.startSession();
+    }
     return Promise.resolve();
   }
 
@@ -113,10 +119,11 @@ class SDK {
    * @returns {Object|undefined}
    * @memberOf SDK
    */
-  loadUserData(onLoadUserData) {
+  loadUserData(onLoadUserData = function() {}) {
     // retro compatibility
     console.log('loadUserData');
-    this.onLoadUserData = onLoadUserData;
+    onLoadUserData(this.state.user.userData.info);
+    return this.state.user.userData.info;
   }
 
   /**
@@ -127,6 +134,7 @@ class SDK {
   saveUserData(userDataInfo) {
     console.log('saveUserData');
     this.state.user.userData.info = userDataInfo;
+    this.__save();
   }
 
   /**
@@ -137,6 +145,7 @@ class SDK {
   clearUserData() {
     console.log('clearUserData');
     this.state.user.userData.info = null;
+    this.__save();
   }
 
   /**
@@ -145,9 +154,13 @@ class SDK {
    */
   goToHome() {
     console.log('goToHome');
-    localStorage.setItem(`${this.ID}`, JSON.stringify(this.state));
+    this.__save();
   }
 
+  __save() {
+    console.log('__save', JSON.stringify(this.state));
+    localStorage.setItem(`${this.ID}`, JSON.stringify(this.state));
+  }
   /**
    * Get the user avatar if any.
    * @returns {Object} avatarObj
@@ -190,6 +203,11 @@ class SDK {
    * @memberOf SDK
    */
   startSession() {
+    if (!this.initFinished) {
+      console.log('startSession wiil start after init');
+      this.startAfterInit = true;
+      return;
+    }
     console.log('startSession');
     this.onStartSessionCallback();
   }
@@ -207,6 +225,12 @@ class SDK {
     console.log('endSession');
     this.state.user.level = scoreAndLevel.level ? scoreAndLevel.level : 1;
     this.state.user.score = scoreAndLevel.score;
+    this.__save();
+    if (!this.state.initConfig.lite) {
+      setTimeout(() => {
+        this.startSession();
+      }, 1000);
+    }
   }
 
   /**
@@ -231,4 +255,8 @@ class SDK {
  * @param {Object|null} userProgress
  */
 const sdkInstance = new SDK();
+let aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
+aliases.map((alias) => {
+    window[alias] = sdkInstance;
+});
 module.exports = sdkInstance;
