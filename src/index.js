@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import localStorage from './js/lib/LocalStorage';
 import SDK from './SDK';
 import Location from './js/lib/Location';
-import localStorage from './js/lib/LocalStorage';
 import { Provider } from 'react-redux';
 import store from './store';
 

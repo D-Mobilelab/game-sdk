@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import Newton from 'newton';
->>>>>>> jest-tests
 import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import { isAndroid } from '../lib/Platform';
