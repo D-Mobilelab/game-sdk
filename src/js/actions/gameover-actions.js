@@ -22,12 +22,9 @@ export function hideEnterNameModal() {
   };
 }
 
-export function showLeaderboard({ leaderboard }) {
+export function showLeaderboard() {
   return {
-    type: 'SHOW_LEADERBOARD',
-    payload: {
-      leaderboard,
-    },
+    type: 'SHOW_LEADERBOARD'
   };
 }
 

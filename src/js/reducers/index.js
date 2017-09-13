@@ -7,6 +7,7 @@ import { game_info } from './game_info';
 import { vhost } from './vhost';
 import { menu } from './menu';
 import { game_over } from './game_over';
+import { gameOverBandai } from './gameOverBandai';
 import { banner } from './banner';
 import { interstitial } from './interstitial';
 
@@ -20,4 +21,5 @@ export default combineReducers({
   menu,
   vhost,
   interstitial,
-})
+  gameOverBandai,
+});

@@ -16,23 +16,35 @@ export default class EnterName extends React.Component {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.serializeForm = this.serializeForm.bind(this);
     this.state = {
       dismiss: false,
       focusOn: 0,
-      letters: ['a','a','a'],
+      letters: ['a', 'a', 'a'],
       placeholder: 'a'
     }
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  serializeForm() {
     /** serialize the form */
     const elements = [].slice.call(this.refs.myForm);
     const alias = elements
-        .filter((element) => element.type === 'text')
-        .map((element) => element.value === '' ? this.state.placeholder : element.value)
-        .join('');
-    this.props.onSubmit(alias);
+      .filter((element) => element.type === 'text')
+      .map((element) => element.value === '' ? this.state.placeholder : element.value)
+      .join('');
+    return alias
+  }
+
+  onClick() {
+    this.props.onSubmit(this.serializeForm());
+  }
+
+  onSubmit(e) {
+    /**
+     * iOS safari can't process correctly the submit
+     */
+    e.preventDefault();
   }
 
   onKeyUp(e) {
@@ -53,7 +65,7 @@ export default class EnterName extends React.Component {
     } else {
       // on input
       if (this.state.focusOn < this.state.letters.length - 1) {
-        this.setState({ ...this.state, focusOn: this.state.focusOn + 1 }, () => { 
+        this.setState({ ...this.state, focusOn: this.state.focusOn + 1 }, () => {
           // Switch focus to next input
           // console.log("next focus", this.state);
           this[`input${this.state.focusOn}`].focus();
@@ -66,48 +78,50 @@ export default class EnterName extends React.Component {
 
   onInputFocus(e) {
     try {
-      e.target.value = '';   
+      e.target.value = '';
       const inputOnFocusNumber = parseInt(e.target.id.split('_')[1]);
       this.setState({ ...this.state, focusOn: inputOnFocusNumber });
-    } catch(e) {}
+    } catch (e) { }
   }
 
   returnComponent() {
     return (
-        <div className={css.container} onClick={(e) => e.stopPropagation()}>
-          <div className={css.title}>{this.props.title}</div>
-            <div className={css.formContainer}>
-              <form className={css.form} ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
-                  <div className={css.element}>
-                    <div className={css.inputBlock}>
-                    {
-                      this.state.letters.map((letter, i) => {
-                        return (
-                          <input onFocus={this.onInputFocus}
-                            className={css.inputLetter}
-                            id={`input_${i}`} 
-                            key={i} 
-                            ref={(ref) => { this[`input${i}`] = ref; }} 
-                            type='text'
-                            maxLength='1'
-                            autoComplete='off'
-                            placeholder={this.state.placeholder}                                       
-                          />)
-                      })
-                    }
-                    </div>                      
-                  </div>
-                  <div className={css.element}>
-                    <BandaiButton ref='submitButton' type="submit" isLoading={this.props.loading} disabled={this.props.loading}>{this.props.buttonLabel.toUpperCase()}</BandaiButton>
-                  </div>
-              </form>
+      <div className={css.container} onClick={(e) => e.stopPropagation()}>
+        <div className={css.title}>{this.props.title}</div>
+        <div className={css.formContainer}>
+          <form className={css.form} ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
+            <div className={css.element}>
+              <div className={css.inputBlock}>
+                {
+                  this.state.letters.map((letter, i) => {
+                    return (
+                      <input onFocus={this.onInputFocus}
+                        className={css.inputLetter}
+                        id={`input_${i}`}
+                        key={i}
+                        ref={(ref) => { this[`input${i}`] = ref; }}
+                        type='text'
+                        maxLength='1'
+                        autoComplete='off'
+                        placeholder={this.state.placeholder}
+                      />)
+                  })
+                }
+              </div>
             </div>
+            <div className={css.element}>
+              <BandaiButton ref='submitButton' type='button' isLoading={this.props.loading} disabled={this.props.loading} onClick={this.onClick}>
+                {this.props.buttonLabel.toUpperCase()}
+              </BandaiButton>
+            </div>
+          </form>
         </div>
+      </div>
     );
-  }  
+  }
 
   render() {
-    return (      
+    return (
       <ReactCSSTransitionGroup
         transitionAppear={true}
         transitionAppearTimeout={600}
@@ -115,16 +129,16 @@ export default class EnterName extends React.Component {
         transitionLeaveTimeout={1200}
         transitionName={transitions}>
         {(this.props.show) ? this.returnComponent() : null}
-      </ReactCSSTransitionGroup>      
+      </ReactCSSTransitionGroup>
     )
   }
 }
 
 EnterName.defaultProps = {
-  title: 'Enter your initials',
+  title: 'Enter your initials!',
   buttonLabel: 'Enter',
-  onSubmit: function(){},
-  onDismiss: function(){},
+  onSubmit: function () { },
+  onDismiss: function () { },
   show: false,
   loading: false
 }

@@ -12,7 +12,7 @@ function Row(props) {
   return (
     <tr>
       <td>{props.position}</td>
-      <td>{props.points}</td>
+      <td>{props.score}</td>
       <td>{props.player_name}</td>
     </tr>
   )
@@ -59,7 +59,7 @@ export default class LeaderBoard extends React.Component {
           <table className={css.table}>
             <tbody>
               {this.props.leaderboard.map((el, i) => {
-                el.points = addPointSeparator(el.score);
+                el.score = addPointSeparator(el.score);
                 if (i === 0) {
                   return (
                     [
