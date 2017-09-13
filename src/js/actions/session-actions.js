@@ -5,7 +5,7 @@ import { isAndroid } from '../lib/Platform';
 import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
-import { hideGameOver, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
+import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
 import { getContentId, setRelated } from './gameinfo-actions';
 import { showBanner } from './banner-actions';
 
@@ -180,102 +180,24 @@ export function registerScore(alias) {
     };
 
     // set is loading: true
+    dispatch({ type: 'REGISTER_SCORE_START' });
     return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params)
       .then((response) => {
-        // set is loading false
-        // showLeaderBoard(leaderboard)
         const realResponse = response.data.response;
+
         if (realResponse.error === 0) {
-          // mock it for now
-          /*realResponse.data.top_scorer = [
-            {
-              player_name: "pas",
-              score: "90",
-              level: "6",
-              white_label: "xx_bandai",
-              country: "it",
-              content_id: "ff5ca19abe70b0f0bcc6d309594255cc",
-              user_id: "E_5661827a319011e7a847005056b60712",
-              gametime: "15",
-              additional_data: "",
-              category_id: "5bfa4fcff1f05613b419ebb072035925",
-              session_id: "fakesessionid1234",
-              timestamp: 1499077223,
-              position: 1,
-              formatted: true
-            },
-            {
-              player_name: "daf",
-              score: "89",
-              level: "6",
-              white_label: "xx_bandai",
-              country: "it",
-              content_id: "ff5ca19abe70b0f0bcc6d309594255cc",
-              user_id: "E_5661827a319011e7a847005056b60712",              
-              gametime: "15",
-              additional_data: "",
-              category_id: "5bfa4fcff1f05613b419ebb072035925",
-              session_id: "fakesessionid1234",
-              timestamp: 1499077223,
-              position: 2,
-              formatted: true
-            },
-            {
-              player_name: "dfa",
-              score: "89",
-              level: "6",
-              white_label: "xx_bandai",
-              country: "it",
-              content_id: "ff5ca19abe70b0f0bcc6d309594255cc",
-              user_id: "E_5661827a319011e7a847005056b60712",              
-              gametime: "15",
-              additional_data: "",
-              category_id: "5bfa4fcff1f05613b419ebb072035925",
-              session_id: "fakesessionid1234",
-              timestamp: 1499077223,
-              position: 3,
-              formatted: true
-            },
-            {
-              player_name: "pas",
-              score: "89",
-              level: "6",
-              white_label: "xx_bandai",
-              country: "it",
-              content_id: "ff5ca19abe70b0f0bcc6d309594255cc",
-              user_id: "E_5661827a319011e7a847005056b60712",              
-              gametime: "15",
-              additional_data: "",
-              category_id: "5bfa4fcff1f05613b419ebb072035925",
-              session_id: "fakesessionid1234",
-              timestamp: 1499077223,
-              position: 4,
-              formatted: true
-            },
-            {
-              player_name: "faf",
-              score: "89",
-              level: "6",
-              white_label: "xx_bandai",
-              country: "it",
-              content_id: "ff5ca19abe70b0f0bcc6d309594255cc",
-              user_id: "E_5661827a319011e7a847005056b60712",              
-              gametime: "15",
-              additional_data: "",
-              category_id: "5bfa4fcff1f05613b419ebb072035925",
-              session_id: "fakesessionid1234",
-              timestamp: 1499077223,
-              position: 5,
-              formatted: true
-            },
-          ];*/
-          dispatch(showLeaderboard({ leaderboard: realResponse.data.top_scorer }));
+          const payload = {
+            leaderboard: realResponse.data.top_scorer,
+          };
+          dispatch({ type: 'REGISTER_SCORE_SUCCESS', payload });
+          dispatch(hideEnterNameModal());
+          dispatch(showLeaderboard());
+        } else {
+          dispatch({ type: 'REGISTER_SCORE_FAIL', payload: { error: realResponse } });
         }
       })
       .catch((reason) => {
-        console.log(reason);
-        // set is loading false
-        // dispatch(showLeaderboard(true));
+        dispatch({ type: 'REGISTER_SCORE_FAIL', error: reason.toString() });
       });
   };
 }

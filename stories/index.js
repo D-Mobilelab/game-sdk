@@ -61,7 +61,7 @@ storiesOf('EnterName without theme', module)
       render() {
         return (
           <div style={{ position: 'fixed', width: '100%', top: '0' }}>
-            <EnterName show={this.state.isOpen} onDismiss={() => this.close()} />
+            <EnterName show={this.state.isOpen} onDismiss={() => this.close()} onSubmit={action('on submit action')} />
           </div>
         )
       }
@@ -87,9 +87,9 @@ storiesOf('LeaderBoard Bandai theme', module)
           onClose={action('close clicked')}
           show={true}
           leaderboard={[
-            { points: 2398, position: 1, alias: "ALE" },
-            { points: 2005, position: 2, alias: "JOE" },
-            { points: 1560, position: 3, alias: "ROY" }
+            { score: 2398, position: 1, player_name: "ALE" },
+            { score: 2005, position: 2, player_name: "JOE" },
+            { score: 1560, position: 3, player_name: "ROY" }
           ]}
         />
       </div>
@@ -97,6 +97,12 @@ storiesOf('LeaderBoard Bandai theme', module)
   });
 
 storiesOf('Menu', module)
-  .add('Menu Bandai', () => {
+  .add('Menu Bandai Left bottom', () => {
     return (<BandaiMenu show={true} position='LEFT_BOTTOM_CORNER' />)
+  })
+  .add('Menu Bandai Right bottom', () => {
+    return (<BandaiMenu show={true} position='RIGHT_BOTTOM_CORNER' />)
+  })
+  .add('Menu Bandai Left top', () => {
+    return (<BandaiMenu show={true} position='LEFT_TOP_CORNER' />)
   })
