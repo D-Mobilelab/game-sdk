@@ -29,6 +29,7 @@ export class MaterialButton extends React.Component {
     }
 
     handleTouchEnd(evt) {
+        evt.preventDefault();
         this.setState({ ...this.state, active: false });
         this.props.onClick(evt);
     }

@@ -9,11 +9,19 @@ describe('#MaterialButton tests', function () {
             btn: 'btn',
             loadingSpinner: 'loadingSpinner'
         }
-        const wrapper = shallow(
+        const wrapper = mount(
             <MaterialButton theme={theme} onClick={() => i += 1} />
         );
         expect(wrapper.state()).toEqual({ active: false, ripplePosition: { top: '0px', left: '0px' } });
-        wrapper.instance().handleMouseUp({ x: 50, y: 100 });
+        expect(wrapper.find('button').length).toEqual(1);
+        const fakeEvent = { clientX: 10, clientY: 10, preventDefault: () => { }, currentTarget: { clientWidth: 100, clientHeight: 100 } };
+
+        const rawButton = wrapper.find('button');
+
+        rawButton.simulate('mousedown', fakeEvent);
+        expect(wrapper.state().active).toEqual(true);
+        rawButton.simulate('mouseup', fakeEvent);
+        expect(wrapper.state().active).toEqual(false);
         expect(i).toEqual(1);
     });
 });
