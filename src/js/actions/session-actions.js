@@ -162,6 +162,7 @@ export function endSession(data = { score: 0, level: 1 }) {
 export function registerScore(alias) {
   return (dispatch, getState) => {
     const lastSession = getState().session;
+    const userId = getState().user.user;
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();
@@ -171,7 +172,7 @@ export function registerScore(alias) {
       score: lastSession.score,
       level: lastSession.level,
       gametime: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-      user_id: userToken,
+      user_id: userId,
       category_id: category.id_category,
       content_id,
       session_id: userToken,
