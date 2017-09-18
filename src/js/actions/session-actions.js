@@ -198,7 +198,7 @@ export function registerScore(alias) {
         }
       })
       .catch((reason) => {
-        dispatch({ type: 'REGISTER_SCORE_FAIL', error: reason.toString() });
+        dispatch({ type: 'REGISTER_SCORE_FAIL', payload: { error: reason.toString() } });
       });
   };
 }
