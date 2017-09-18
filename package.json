@@ -76,6 +76,7 @@
   },
   "dependencies": {
     "axios": "^0.15.2",
+    "blueimp-md5": "^2.10.0",
     "docomo-utils": "^1.2.6",
     "localforage": "^1.4.3",
     "newton-adapter": "^2.6.0",

@@ -8,6 +8,7 @@ import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
 import { getContentId, setRelated } from './gameinfo-actions';
 import { showBanner } from './banner-actions';
+import md5 from 'blueimp-md5';
 
 let onStartCallback = () => { };
 const hybrid = process.env.APP_ENV === 'HYBRID';
@@ -180,6 +181,7 @@ export function registerScore(alias) {
       country: vhost.REAL_COUNTRY,
     };
 
+    params.signature = md5(`${params.user_id}${params.score}${params.content_id}poggioacaiano`);
     // set is loading: true
     dispatch({ type: 'REGISTER_SCORE_START' });
     return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params)
