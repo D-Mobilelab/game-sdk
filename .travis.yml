@@ -3,11 +3,11 @@ dist: trusty
 language: node_js
 git:
   depth: 10
-before_install:
-  - yarn --ignore-engines
+install: true
 node_js:
   - "6"
-node_js:
-  - "6.11.3"
 script:
-  - npm run test:coverage
+  - yarn --ignore-engines
+  - yarn test:coverage
+cache:
+  yarn: true
