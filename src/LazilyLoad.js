@@ -62,7 +62,7 @@ export const LazilyLoadFactory = (Component, modules) => {
 };
 
 export const importLazy = (promise) => (
-  promise.then((result) => result.default)
+  promise.then((result) => result)
 );
 
 export default LazilyLoad;

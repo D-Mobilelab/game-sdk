@@ -1,4 +1,4 @@
-import 'core-js';
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -88,7 +88,11 @@ function onDomLoaded(event) {
     let ROOT_ELEMENT = document.createElement('div');
     ROOT_ELEMENT.id = 'gfsdk_root_new';
     window.document.body.appendChild(ROOT_ELEMENT);
-
+    
+    /**
+     * TODO:
+     * check GamifiveInfo.fw_type_profile instead
+     */
     let WHITE_LABEL = (window.GamifiveInfo && window.GamifiveInfo.label) ? GamifiveInfo.label : 'gamifive';
     // let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
     if (WHITE_LABEL.indexOf('gameasy') > -1) {
@@ -119,4 +123,5 @@ aliases.map((alias) => {
  * Needed otherwise will export GamifiveSDK.default
  * https://github.com/webpack/webpack/issues/3929
  */
-module.exports = instance;
+
+export default instance;
