@@ -177,8 +177,6 @@ export function registerScore(alias) {
       category_id: category.id_category,
       content_id,
       session_id: userToken,
-      white_label: vhost.WHITE_LABEL,
-      country: vhost.REAL_COUNTRY,
     };
 
     params.signature = md5(`${params.user_id}${params.score}${params.content_id}poggioacaiano`);
