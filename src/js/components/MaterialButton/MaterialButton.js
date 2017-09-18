@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class MaterialButton extends React.Component {
+export default class MaterialButton extends React.Component {
     constructor(props) {
         super(props);
         this.handleMouseUp = this.handleMouseUp.bind(this);

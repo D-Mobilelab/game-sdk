@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import { MaterialButton } from '../src/js/components/MaterialButton/MaterialButton';
+import MaterialButton from '../src/js/components/MaterialButton/MaterialButton';
 import EnterName from '../src/js/components/EnterName/EnterName';
 import Leaderboard from '../src/js/components/EnterName/Leaderboard';
 import withTheme from '../src/js/components/withTheme';
