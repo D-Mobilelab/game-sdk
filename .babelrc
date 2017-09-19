@@ -5,7 +5,8 @@
       {
         "targets": {
           "browsers": [
-            "last 2 android versions"
+            "> 1%",
+            "ios >= 7"
           ]
         },
         "useBuiltIns": true,
@@ -13,15 +14,11 @@
         "modules": false
       }
     ],
-    "react",
-    "es2015"
+    "react"    
   ],
   "plugins": [
-    [
-      "transform-object-rest-spread",
-      {
-        "useBuiltIns": true
-      }
-    ]
+    "add-module-exports",
+    "transform-es2015-modules-umd",
+    "transform-object-rest-spread"
   ]
 }

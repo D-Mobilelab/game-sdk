@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import { MaterialButton } from '../MaterialButton/MaterialButton';
+import MaterialButton from '../MaterialButton/MaterialButton';
 import bandaiTheme from '../MaterialButton/theme/bandai.css';
 import withTheme from '../withTheme';
 

@@ -8,6 +8,7 @@ import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
 import { getContentId, setRelated } from './gameinfo-actions';
 import { showBanner } from './banner-actions';
+import md5 from 'blueimp-md5';
 
 let onStartCallback = () => { };
 const hybrid = process.env.APP_ENV === 'HYBRID';
@@ -162,6 +163,7 @@ export function endSession(data = { score: 0, level: 1 }) {
 export function registerScore(alias) {
   return (dispatch, getState) => {
     const lastSession = getState().session;
+    const userId = getState().user.user;
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();
@@ -171,14 +173,13 @@ export function registerScore(alias) {
       score: lastSession.score,
       level: lastSession.level,
       gametime: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-      user_id: userToken,
+      user_id: userId,
       category_id: category.id_category,
       content_id,
       session_id: userToken,
-      white_label: vhost.WHITE_LABEL,
-      country: vhost.REAL_COUNTRY,
     };
 
+    params.signature = md5(`${params.user_id}${params.score}${params.content_id}poggioacaiano`);
     // set is loading: true
     dispatch({ type: 'REGISTER_SCORE_START' });
     return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params)
@@ -197,7 +198,7 @@ export function registerScore(alias) {
         }
       })
       .catch((reason) => {
-        dispatch({ type: 'REGISTER_SCORE_FAIL', error: reason.toString() });
+        dispatch({ type: 'REGISTER_SCORE_FAIL', payload: { error: reason.toString() } });
       });
   };
 }

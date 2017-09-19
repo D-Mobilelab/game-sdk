@@ -1,10 +1,9 @@
 // jest.config.js
 /* eslint-disable */
-module.exports = {
-    "transform": { ".*": "<rootDir>/node_modules/jest-css-modules" },
+module.exports = {    
     verbose: true,
     collectCoverageFrom: [
-        'src/**.{js,jsx}',
+        'src/**/*.{js,jsx}',
         '!**/node_modules/**',
         '!src/sdk.webview.js',
         '!src/index.js',
@@ -12,5 +11,8 @@ module.exports = {
         '!src/version.js',
         '!src/SDK.js',
         '!src/store.js',
-    ]
+    ],
+    moduleNameMapper: {
+        "\\.(css|less)$": "identity-obj-proxy"
+    }
 };

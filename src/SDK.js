@@ -20,6 +20,17 @@ export default class SDK {
   }
 
   /**
+   * Returns if the sdk has been initialized
+   * @returns {Boolean}
+   * @memberof SDK
+   */
+  isInitialized() {
+    const { store } = privates.get(this);
+    const { generic } = store.getState();
+    return generic.initialized;
+  }
+
+  /**
    * Initialize the sdk
    * @memberOf SDK
    * @param {Object}  initConfig

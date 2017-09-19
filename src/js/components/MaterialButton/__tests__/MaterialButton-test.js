@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import { MaterialButton } from '../MaterialButton';
+import MaterialButton from '../MaterialButton';
 
 describe('#MaterialButton tests', function () {
     it('should render in correct way', function () {
