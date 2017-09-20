@@ -1,7 +1,7 @@
 import { queryfy } from 'docomo-utils';
 import {
     FB_SDK_VERSION,
-    FB_SDK_URL 
+    FB_SDK_URL,
 } from './Constants';
 import Location from './Location';
 
@@ -40,7 +40,7 @@ class FacebookInterface {
         appId: this.config.fbAppId,
         cookie: true,    // enable cookies to allow the server to access
         xfbml: false,   // parse social plugins on this page
-        version: this.config.fbVersion,
+        version: FB_SDK_VERSION,
       });
       this.initialized = true;
     }

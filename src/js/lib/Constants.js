@@ -1,5 +1,5 @@
-export const FB_SDK_VERSION = '2.4';
-export const FB_SDK_URL = 'connect.facebook.net/en_US/all.js';
+export const FB_SDK_VERSION = '2.10';
+export const FB_SDK_URL = 'connect.facebook.net/en_US/sdk.js';
 export const CONTENT_ID_REGEX = '(html5gameplay|sdk_integration_test|games)\/([a-zA-Z0-9]+)'; // games in hybrid case(folder name)
 
 // API
