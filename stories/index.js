@@ -14,6 +14,7 @@ import standard from '../src/js/components/MaterialButton/theme/default.css';
 import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
 
 import MenuComponent from '../src/js/components/Menu/MenuComponent';
+import Toast from '../src/js/components/Toast/Toast';
 import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
 
 const MyButton = withTheme(MaterialButton, gameasy);
@@ -106,3 +107,41 @@ storiesOf('Menu', module)
   .add('Menu Bandai Left top', () => {
     return (<BandaiMenu show={true} position='LEFT_TOP_CORNER' />)
   })
+
+var ToastStory = storiesOf('Toast', module);
+
+ToastStory.add('Toast bottom', () => {
+  return (<Toast message={'Cannot register score'} show />)
+});
+
+ToastStory.add('Toast top', () => {
+  return (<Toast message='Cannot register score' show={false} position='top' />)
+});
+
+ToastStory.add('Toast top with duration', () => {
+  class ToastContainer extends React.Component {
+    constructor(props){
+      super(props);
+      this.state = {
+        message: 'Cannot register score',
+        show: false
+      }
+    }
+
+    render() {
+      
+      return (
+        <div>
+          <button onClick={() => {              
+              this.setState({ message: this.state.message.split("").reverse().join(""), show: true });            
+            }
+            }>Change</button>
+          <Toast message={this.state.message} show={this.state.show} position='top' duration={3000}/>
+        </div>
+      )
+    }
+  }
+
+  return (<ToastContainer />)
+  
+})
