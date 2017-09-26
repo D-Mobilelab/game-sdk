@@ -52,6 +52,10 @@ class Location {
     return dequeryfy(theWindow.location.search);
   }
 
+  getRealOrigin(){
+    return theWindow.location.origin;
+  }
+
   /**
    * gameasy.ru, gameasy.sg, www.gameasy.com
    * @returns {Boolean} - return if the hostname it's a gameasy whitelabel
