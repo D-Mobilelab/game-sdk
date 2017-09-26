@@ -107,7 +107,7 @@ function init(initConfig) {
         return true;
       })
       .then(() => dispatch(gameinfoActions.getGameInfo()))
-      .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().game_info.fbAppId })))
+      .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().vhost.FB_APPID })))
       .then(() => {
         // return if you want to wait
         dispatch(newtonActions.init());

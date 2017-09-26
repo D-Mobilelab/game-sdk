@@ -6,7 +6,7 @@ import {
 import Location from './Location';
 
 class FacebookInterface {
-  constructor(config) {
+  constructor() {
     this.initialized = false;
     this.isMobile = false;
     window.fbAsyncInit = this.onFbSDKInit.bind(this);
@@ -21,15 +21,13 @@ class FacebookInterface {
   }
 
   downloadSDK() {
-    let d = document,
-        s = 'script',
-        id = 'facebook-jssdk';
-    let js,
-        fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = `${window.location.protocol}//${FB_SDK_URL}`;
-    fjs.parentNode.insertBefore(js, fjs);
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = `//${FB_SDK_URL}`;
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   }
 
   onFbSDKInit() {
@@ -38,11 +36,13 @@ class FacebookInterface {
     } else {
       window.FB.init({
         appId: this.config.fbAppId,
-        cookie: true,    // enable cookies to allow the server to access
+        cookie: true,   // enable cookies to allow the server to access
+        autoLogAppEvents: true,
         xfbml: false,   // parse social plugins on this page
         version: FB_SDK_VERSION,
       });
       this.initialized = true;
+      window.FB.AppEvents.logPageView();
     }
   }
 
