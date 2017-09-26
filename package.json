@@ -19,7 +19,7 @@
     "dev": "env-cmd development webpack-dev-server --config tools/webpack.config.local.js",
     "build": "npm run build:prod && npm run build:dev",
     "preversion": "npm run test",
-    "version": "sh .getrevision.sh && npm run build && git add -fA src/ dist/",
+    "version": "sh .getrevision.sh && npm run build && git add -fA src/",
     "docs": "$(npm bin)/documentation build src/SDK.js -f html --shallow -o docs/$npm_package_version",
     "append:readme": "$(npm bin)/documentation readme src/SDK.js --section=API --shallow",
     "upload114": "scp -r dist super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/",
