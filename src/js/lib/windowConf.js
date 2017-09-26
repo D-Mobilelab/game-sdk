@@ -13,7 +13,7 @@
  * @returns 
  */
 export default function location({ 
-  HOST = 'appsworld.gamifive-app.com', 
+  HOST = window.location.hostname.replace('local.', ''),
   GAME_ID = 'c2701133414427fee732e051abdfe3e8',
   COUNTRY_CODE = 'ww-it',
   HASH = window.location.hash,
