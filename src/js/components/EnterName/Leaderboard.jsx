@@ -74,13 +74,13 @@ export default class LeaderBoard extends React.Component {
               }
             </tbody>
           </table>
-          <div className={css.title}>Your Score</div>
+          <div className={css.title}>{this.props.yourScore}</div>
           <div style={{ postion: 'relative' }}>
             <Arrows right style={{ width: '25%', textAlign: 'center' }} />
             <div className={css.score} style={{ width: '50%', display: 'inline-block' }}>{addPointSeparator(this.props.score)}</div>
             <Arrows left style={{ width: '25%', textAlign: 'center' }} />
           </div>
-          <div className={css.message}>Congratulations! Try to reach the top five</div>
+          <div className={css.message}>{this.props.congratulations}</div>
         </div>
       </div>
     )
@@ -100,6 +100,8 @@ export default class LeaderBoard extends React.Component {
 
 LeaderBoard.defaultProps = {
   title: 'Highest Score',
+  congratulations: 'Congrats',
+  yourScore: 'Your score',
   onClose: function () { },
   score: 0,
   show: false,

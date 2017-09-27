@@ -25,7 +25,14 @@ const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(Actions, dispatch)
 });
 
-
+/**
+ * WEBAPP_GAMEOVER_HIGH_SCORE default: High Score 
+ * WEBAPP_GAMEOVER_YOUR_SCORE default: Your Score
+ * WEBAPP_GAMEOVER_CONGRATULATIONS default: Congratulations! Try to reach the top five!
+ * 
+ * WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON default: enter
+ * WEBAPP_GAMEOVER_INSERT_ALIAS default: Enter your initials!
+ */
 class EnterNameContainer extends Component {
   constructor(props) {
     super(props);
@@ -52,15 +59,28 @@ class EnterNameContainer extends Component {
   }
 
   render() {
+    const {
+      WEBAPP_GAMEOVER_HIGH_SCORE,
+      WEBAPP_GAMEOVER_YOUR_SCORE,
+      WEBAPP_GAMEOVER_CONGRATULATIONS,
+      WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON,
+      WEBAPP_GAMEOVER_INSERT_ALIAS
+    } = this.props.dictionary;
     return (
       <div className={[css.main, (this.props.showEnterName || this.props.showLeaderboard) ? css.show : ''].join(' ')} onClick={this.onDismiss}>
         <div style={{ position: 'relative' }}>
 
-          <EnterName show={this.props.showEnterName}
+          <EnterName 
+            title={WEBAPP_GAMEOVER_INSERT_ALIAS}
+            buttonLabel={WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON}
+            show={this.props.showEnterName}
             onSubmit={this.onSubmit}
             loading={this.props.loading}
           />
-          <Leaderboard title={'High Score'}
+          <Leaderboard
+            title={WEBAPP_GAMEOVER_HIGH_SCORE}
+            congratulations={WEBAPP_GAMEOVER_CONGRATULATIONS}
+            yourScore={WEBAPP_GAMEOVER_YOUR_SCORE}
             score={this.props.currentScore}
             leaderboard={this.props.leaderboard}
             onClose={this.onLeaderboardClose}
