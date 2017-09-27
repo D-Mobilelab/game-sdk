@@ -1,6 +1,6 @@
-export function interstitial(state = { 
+export function interstitial(state = {
   show: false,
-  dismissableAfter: 5
+  dismissableAfter: 5,
 }, action) {
   switch (action.type) {
     case 'SHOW_INTERSTITIAL':

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class LazilyLoad extends React.Component {
-
   constructor() {
     super(...arguments);
     this.state = {
@@ -32,8 +31,8 @@ class LazilyLoad extends React.Component {
     const { modules } = this.props;
     const keys = Object.keys(modules);
 
-    Promise.all(keys.map((key) => modules[key]()))
-      .then((values) => (keys.reduce((agg, key, index) => {
+    Promise.all(keys.map(key => modules[key]()))
+      .then(values => (keys.reduce((agg, key, index) => {
         agg[key] = values[index];
         return agg;
       }, {})))
@@ -53,16 +52,14 @@ LazilyLoad.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-export const LazilyLoadFactory = (Component, modules) => {
-  return (props) => (
-    <LazilyLoad modules={modules}>
-      {(mods) => <Component {...mods} {...props} />}
-    </LazilyLoad>
-  );
-};
+export const LazilyLoadFactory = (Component, modules) => props => (
+  <LazilyLoad modules={modules}>
+    {mods => <Component {...mods} {...props} />}
+  </LazilyLoad>
+);
 
-export const importLazy = (promise) => (
-  promise.then((result) => result)
+export const importLazy = promise => (
+  promise.then(result => result)
 );
 
 export default LazilyLoad;

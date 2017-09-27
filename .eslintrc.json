@@ -1,16 +1,21 @@
 {
 	"extends": "airbnb/base",
 	"rules": {
-		"valid-jsdoc": 1
+		"valid-jsdoc": 1,
+		"react/jsx-uses-vars": 2
 	},
 	"parserOptions":{
 		"ecmaFeatures": {
 			"spread": true,
-			"experimentalObjectRestSpread": true
+			"experimentalObjectRestSpread": true,
+			"jsx":true
 		}
 	},
 	"env": {
         "browser": true,
         "jasmine": true
-    }
+	},
+	"plugins": [
+		"react"
+	]
 }

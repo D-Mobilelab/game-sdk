@@ -1,7 +1,7 @@
-import List from './List';
-import ListItem from './ListItem';
+import List from './List.jsx';
+import ListItem from './ListItem.jsx';
 
 export {
-    List,
-    ListItem,
-}
+  List,
+  ListItem,
+};

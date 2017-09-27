@@ -1,21 +1,21 @@
 import LocalStorageClass from '../LocalStorage';
 
-describe('#LocalStorage class', function () {
-  beforeEach(function () {
+describe('#LocalStorage class', () => {
+  beforeEach(() => {
     LocalStorageClass.storage = {};
   });
 
-  it('should import the class', function () {
+  it('should import the class', () => {
     LocalStorageClass.setItem('key', 1);
     expect(JSON.parse(LocalStorageClass.getItem('key'))).toEqual(1);
   });
 
-  it('If unsupported should put it on memory', function () {
+  it('If unsupported should put it on memory', () => {
     LocalStorageClass.supported = false;
     expect(LocalStorageClass.supported).toEqual(false);
 
     LocalStorageClass.setItem('chiave', 1);
-    expect(LocalStorageClass.storage).toEqual({ 'chiave': '1' });
+    expect(LocalStorageClass.storage).toEqual({ chiave: '1' });
     expect(LocalStorageClass.getItem('chiave')).toEqual('1');
 
     LocalStorageClass.clear();
@@ -23,7 +23,7 @@ describe('#LocalStorage class', function () {
     LocalStorageClass.supported = true;
   });
 
-  it('If unsupported should return null if key does not exists', function () {
+  it('If unsupported should return null if key does not exists', () => {
     LocalStorageClass.supported = false;
     expect(LocalStorageClass.supported).toEqual(false);
 
@@ -35,7 +35,7 @@ describe('#LocalStorage class', function () {
     LocalStorageClass.supported = true;
   });
 
-  it('removeItem if unsupported', function () {
+  it('removeItem if unsupported', () => {
     LocalStorageClass.supported = false;
     expect(LocalStorageClass.supported).toEqual(false);
     LocalStorageClass.setItem('ciccio', { a: 1 });
@@ -45,19 +45,19 @@ describe('#LocalStorage class', function () {
     LocalStorageClass.supported = true;
   });
 
-  it('test isSupported method when localStorage null', function () {
+  it('test isSupported method when localStorage null', () => {
     const mockWindow = { localStorage: null };
     LocalStorageClass.isSupported(mockWindow);
     expect(LocalStorageClass.supported).toEqual(false);
   });
 
-  it('test isSupported method when setItem throws error', function () {
+  it('test isSupported method when setItem throws error', () => {
     const mockWindow = {
       localStorage: {
-        setItem: function () {
+        setItem() {
           throw new Error();
-        }
-      }
+        },
+      },
     };
     LocalStorageClass.isSupported(mockWindow);
     expect(LocalStorageClass.supported).toEqual(false);

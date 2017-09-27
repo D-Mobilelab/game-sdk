@@ -115,10 +115,6 @@ function init(initConfig) {
       })
       .then(() => {
         const menuStyle = {};
-        if (getState().vhost.SPRITE_GAME_SVG && getState().vhost.SPRITE_GAME_SVG !== '') {
-          //menuStyle.backgroundImage = `url("${getState().vhost.SPRITE_GAME_SVG}")`;
-        }
-
         dispatch(menuActions.showMenu(menuStyle));
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,

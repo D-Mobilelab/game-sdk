@@ -24,7 +24,7 @@ export function show() {
 }
 
 export function hide() {
-    /** empty source to force reload on show action */
+/** empty source to force reload on show action */
   return {
     type: 'HIDE_INTERSTITIAL',
     payload: { show: false, srcDoc: '' },

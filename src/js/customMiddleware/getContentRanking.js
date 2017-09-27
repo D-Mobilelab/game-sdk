@@ -16,14 +16,14 @@ export default function getContentRanking(eventName, eventCategory, contentId, u
   let scopeType = 'social';
   let ranking = 0;
 
-    // ranking score
+  // ranking score
   if (userType === 'premium') {
     ranking = contentRanking[eventCategory][eventName][userType][userFrom];
   } else {
     ranking = contentRanking[eventCategory][eventName][userType];
   }
 
-    // scopeType
+  // scopeType
   if (eventCategory == 'Play') {
     scopeType = 'consumption';
   }

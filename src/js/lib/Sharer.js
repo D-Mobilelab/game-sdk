@@ -1,7 +1,7 @@
 import { queryfy } from 'docomo-utils';
 import {
-    FB_SDK_VERSION,
-    FB_SDK_URL,
+  FB_SDK_VERSION,
+  FB_SDK_URL,
 } from './Constants';
 import Location from './Location';
 
@@ -21,9 +21,10 @@ class FacebookInterface {
   }
 
   downloadSDK() {
-    (function(d, s, id){
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
+    (function (d, s, id) {
+      let js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
       js.src = `//${FB_SDK_URL}`;
       fjs.parentNode.insertBefore(js, fjs);
@@ -36,9 +37,9 @@ class FacebookInterface {
     } else {
       window.FB.init({
         appId: this.config.fbAppId,
-        cookie: true,   // enable cookies to allow the server to access
+        cookie: true, // enable cookies to allow the server to access
         autoLogAppEvents: true,
-        xfbml: false,   // parse social plugins on this page
+        xfbml: false, // parse social plugins on this page
         version: FB_SDK_VERSION,
       });
       this.initialized = true;
@@ -60,12 +61,12 @@ class FacebookInterface {
       href: url,
     };
 
-    /*global facebookConnectPlugin*/
+    /* global facebookConnectPlugin*/
     if (typeof window.facebookConnectPlugin !== 'undefined') {
       return new Promise((resolve, reject) => {
         facebookConnectPlugin.showDialog(shareParams, resolve, reject);
       });
-    }   
+    }
 
     if (!this.initialized) {
       return Promise.resolve(false);

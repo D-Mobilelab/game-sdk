@@ -51,12 +51,12 @@ storiesOf('EnterName without theme', module)
         super(props);
         this.close = this.close.bind(this);
         this.state = {
-          isOpen: true
+          isOpen: true,
         };
       }
 
       close() {
-        this.setState({ isOpen: false })
+        this.setState({ isOpen: false });
       }
 
       render() {
@@ -64,84 +64,66 @@ storiesOf('EnterName without theme', module)
           <div style={{ position: 'fixed', width: '100%', top: '0' }}>
             <EnterName show={this.state.isOpen} onDismiss={() => this.close()} onSubmit={action('on submit action')} />
           </div>
-        )
+        );
       }
     }
 
-    return (<Container />)
-
+    return (<Container />);
   })
-  .add('loading', () => {
-    return (
-      <div style={{ position: 'fixed', width: '100%', top: '0' }}>
-        <EnterName show={true} onDismiss={action('close')} loading={true} />
-      </div>)
-  });
+  .add('loading', () => (
+    <div style={{ position: 'fixed', width: '100%', top: '0' }}>
+      <EnterName show={true} onDismiss={action('close')} loading={true} />
+    </div>));
 
 storiesOf('LeaderBoard Bandai theme', module)
-  .add('Leaderboard', () => {
-
-    return (
-      <div style={{ position: 'fixed', width: '100%', top: '0' }}>
-        <Leaderboard title={'High Score'}
-          score={975}
-          onClose={action('close clicked')}
-          show={true}
-          leaderboard={[
-            { score: 2398, position: 1, player_name: "ALE" },
-            { score: 2005, position: 2, player_name: "JOE" },
-            { score: 1560, position: 3, player_name: "ROY" }
-          ]}
-        />
-      </div>
-    );
-  });
+  .add('Leaderboard', () => (
+    <div style={{ position: 'fixed', width: '100%', top: '0' }}>
+      <Leaderboard title={'High Score'}
+        score={975}
+        onClose={action('close clicked')}
+        show={true}
+        leaderboard={[
+          { score: 2398, position: 1, player_name: 'ALE' },
+          { score: 2005, position: 2, player_name: 'JOE' },
+          { score: 1560, position: 3, player_name: 'ROY' },
+        ]}
+      />
+    </div>
+  ));
 
 storiesOf('Menu', module)
-  .add('Menu Bandai Left bottom', () => {
-    return (<BandaiMenu show={true} position='LEFT_BOTTOM_CORNER' />)
-  })
-  .add('Menu Bandai Right bottom', () => {
-    return (<BandaiMenu show={true} position='RIGHT_BOTTOM_CORNER' />)
-  })
-  .add('Menu Bandai Left top', () => {
-    return (<BandaiMenu show={true} position='LEFT_TOP_CORNER' />)
-  })
+  .add('Menu Bandai Left bottom', () => (<BandaiMenu show={true} position='LEFT_BOTTOM_CORNER' />))
+  .add('Menu Bandai Right bottom', () => (<BandaiMenu show={true} position='RIGHT_BOTTOM_CORNER' />))
+  .add('Menu Bandai Left top', () => (<BandaiMenu show={true} position='LEFT_TOP_CORNER' />));
 
-var ToastStory = storiesOf('Toast', module);
+const ToastStory = storiesOf('Toast', module);
 
-ToastStory.add('Toast bottom', () => {
-  return (<Toast message={'Cannot register score'} show />)
-});
+ToastStory.add('Toast bottom', () => (<Toast message={'Cannot register score'} show />));
 
-ToastStory.add('Toast top', () => {
-  return (<Toast message='Cannot register score' show={false} position='top' />)
-});
+ToastStory.add('Toast top', () => (<Toast message='Cannot register score' show={false} position='top' />));
 
 ToastStory.add('Toast top with duration', () => {
   class ToastContainer extends React.Component {
-    constructor(props){
+    constructor(props) {
       super(props);
       this.state = {
         message: 'Cannot register score',
-        show: false
-      }
+        show: false,
+      };
     }
 
     render() {
-      
       return (
         <div>
-          <button onClick={() => {              
-              this.setState({ message: this.state.message.split("").reverse().join(""), show: true });            
-            }
-            }>Change</button>
+          <button onClick={() => {
+            this.setState({ message: this.state.message.split('').reverse().join(''), show: true });
+          }
+          }>Change</button>
           <Toast message={this.state.message} show={this.state.show} position='top' duration={3000}/>
         </div>
-      )
+      );
     }
   }
 
-  return (<ToastContainer />)
-  
-})
+  return (<ToastContainer />);
+});

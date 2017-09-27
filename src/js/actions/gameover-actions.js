@@ -24,7 +24,7 @@ export function hideEnterNameModal() {
 
 export function showLeaderboard() {
   return {
-    type: 'SHOW_LEADERBOARD'
+    type: 'SHOW_LEADERBOARD',
   };
 }
 

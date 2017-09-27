@@ -13,8 +13,7 @@ export default function createBlob(input, type) {
       const bb = new BlobBuilder();
       bb.append(input);
       return bb.getBlob(type);
-    } else {
-      return false;
     }
+    return false;
   }
 }

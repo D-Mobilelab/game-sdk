@@ -112,7 +112,7 @@ export const newtonMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Behavior',
-          valuable: 'No',          
+          valuable: 'No',
         },
       });
       break;

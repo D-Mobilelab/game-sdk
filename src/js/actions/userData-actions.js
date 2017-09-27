@@ -230,7 +230,6 @@ export function saveUserData(newInfo) {
     } else if (getState().generic.initialized &&
       !getState().user.isSaving &&
       !getState().user.isFetching) {
-
       if (typeof newInfo === 'string') {
         Reporter.add('warn', 'saveUserData: the data to be saved should be an object! got a string');
         try {
@@ -293,7 +292,5 @@ export function loadUserData(callback = onUserDataCallback) {
 }
 
 export function clearUserData() {
-  return (dispatch, getState) => {
-    return dispatch(saveUserData(null));
-  }
+  return (dispatch, getState) => dispatch(saveUserData(null));
 }
