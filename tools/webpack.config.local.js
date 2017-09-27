@@ -26,8 +26,8 @@ var ROOT_DIRECTORY = null;
 }*/
 
 var APPSWORLD_SERVICE = 'appsworld.gamifive-app.com';
-var BANDAI_SERVICE = 'bandai2.gameasy.com';
-var GAMEASY_SERVICE = 'www2.gameasy.com';
+var BANDAI_SERVICE = 'www2.bandainamcoent.fun';
+var GAMEASY_SERVICE = 'www.gameasy.com';
 
 var PROTOCOL = 'http://';
 var LOCAL = 'local';
@@ -44,14 +44,14 @@ devConfiguration.devServer = {
   host: HOSTNAME, // 0.0.0.0 to test on device. then add <ip>:8080/
   disableHostCheck: true,
   proxy: {
-    '/ww-it/v01/**': {
+    '/**/v01/**': {
       onProxyReq: function(proxyReq, req, res) { 
         console.log('Request:', proxyReq.path);
         // proxyReq.setHeader('X-Special-Proxy-Header', 'foobar');
-
       },
       onProxyRes: function(proxyRes, req, res) {
-        if(req.path === '/ww-it/v01/config.getvars') {
+        console.log("Response", req.path);
+        if(req.path === '/v01/config.getvars?keys=poggioacaiano') {
           delete proxyRes.headers['content-length'];
 
           modifyResponse(res, proxyRes.headers['content-encoding'], function (body) {
@@ -64,7 +64,7 @@ devConfiguration.devServer = {
             return body;
           });
         }
-      },
+      },      
       target: PROTOCOL + BANDAI_SERVICE,
       secure: false,
       changeOrigin: true,
@@ -73,7 +73,7 @@ devConfiguration.devServer = {
       cookieDomainRewrite: {
         BANDAI_SERVICE: BANDAI_SERVICE        
       }
-    },    
+    }, 
   }
 }
 
