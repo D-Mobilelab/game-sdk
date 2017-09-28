@@ -1,18 +1,19 @@
-import NewtonAdapter from 'newton-adapter';
+import track from './track';
 import Location from '../lib/Location';
 import getContentRanking from './getContentRanking';
 import { getUserType } from '../actions/user-actions';
 
-export const newtonMiddleware = store => next => (action) => {
+const trackingMiddleware = store => next => (action) => {
   const currentState = store.getState();
   const qs = Location.getQueryString();
   const userFrom = (qs.dest || qs.trackExecutionKey) ? 'acquisition' : 'natural';
   const userType = getUserType(currentState.user);
   const { CONTENT_RANKING } = currentState.vhost;
+  let eventObject = null;
 
   switch (action.type) {
     case 'INIT_FINISHED':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         name: 'GameLoad',
         properties: {
           action: 'Yes',
@@ -21,10 +22,11 @@ export const newtonMiddleware = store => next => (action) => {
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'START_SESSION':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         name: 'GameStart',
         rank: getContentRanking('GameStart', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         properties: {
@@ -34,10 +36,11 @@ export const newtonMiddleware = store => next => (action) => {
           valuable: 'Yes',
           action: 'Yes',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'END_SESSION':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         rank: getContentRanking('GameEnd', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         name: 'GameEnd',
         properties: {
@@ -47,10 +50,11 @@ export const newtonMiddleware = store => next => (action) => {
           valuable: 'No',
           action: 'No',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'GO_TO_HOME':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, 'guest', CONTENT_RANKING, userFrom),
         name: 'GoToHome',
         properties: {
@@ -60,10 +64,11 @@ export const newtonMiddleware = store => next => (action) => {
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'INIT_ERROR':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         name: 'SdkInitError',
         properties: {
           action: 'No',
@@ -73,51 +78,55 @@ export const newtonMiddleware = store => next => (action) => {
           valuable: 'No',
           reason: currentState.generic.error,
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'REDIRECT_ON_STORE':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         name: 'NativeAppPromoClick',
         properties: {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'SHOW_BANNER':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         name: 'NativeAppPromoLoad',
         properties: {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'HIDE_BANNER':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         name: 'NativeAppPromoClose',
         properties: {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'BACK_CLICKED':
-      const name = (userFrom === 'acquisition') ? 'FirstBackClicked' : 'BackClicked';
-      NewtonAdapter.trackEvent({
-        name,
+      eventObject = {
+        name: (userFrom === 'acquisition') ? 'FirstBackClicked' : 'BackClicked',
         properties: {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'No',
         },
-      });
+      };
+      track(eventObject);
       break;
     case 'RELATED_CLICKED':
-      NewtonAdapter.trackEvent({
+      eventObject = {
         name: 'GameOverRelated',
         properties: {
           action: 'Yes',
@@ -125,10 +134,13 @@ export const newtonMiddleware = store => next => (action) => {
           valuable: 'No',
           game_title: action.payload.title,
         },
-      });
+      };
+      track(eventObject);
       break;
     default:
       break;
   }
   return next(action);
 };
+
+export default trackingMiddleware;
