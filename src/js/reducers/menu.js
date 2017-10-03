@@ -1,15 +1,14 @@
-export function menu(state = {
+export default function menu(state = {
   show: false,
   active: false,
   drag: false,
+  position: 'BOTTOM_RIGHT',
 }, action) {
   switch (action.type) {
     case 'SHOW_MENU':
-      const newMenuStateShow = { ...state, show: true, style: { ...state.style, ...action.style } };
-      return Object.assign({}, state, newMenuStateShow);
+      return Object.assign({}, state, { show: true, position: action.payload.position });
     case 'HIDE_MENU':
-      const newMenuStateHide = { ...state, show: false, style: { ...state.style, ...action.style } };
-      return Object.assign({}, state, newMenuStateHide);
+      return Object.assign({}, state, { show: false });
     default:
       return state;
   }

@@ -92,9 +92,9 @@ storiesOf('LeaderBoard Bandai theme', module)
   ));
 
 storiesOf('Menu', module)
-  .add('Menu Bandai Left bottom', () => (<BandaiMenu show={true} position='LEFT_BOTTOM_CORNER' />))
-  .add('Menu Bandai Right bottom', () => (<BandaiMenu show={true} position='RIGHT_BOTTOM_CORNER' />))
-  .add('Menu Bandai Left top', () => (<BandaiMenu show={true} position='LEFT_TOP_CORNER' />));
+  .add('Menu Bandai Left bottom', () => (<BandaiMenu show={true} position='LEFT_BOTTOM' />))
+  .add('Menu Bandai Right bottom', () => (<BandaiMenu show={true} position='RIGHT_BOTTOM' />))
+  .add('Menu Bandai Left top', () => (<BandaiMenu show={true} position='LEFT_TOP' />));
 
 const ToastStory = storiesOf('Toast', module);
 

@@ -23,7 +23,7 @@ export default class Menu extends Component {
       position: this.mapPositions[this.props.position],
       pointerDownPosition: { x: 0, y: 0 },
       pointerUpPosition: { x: 0, y: 0 },
-    }
+    };
   }
 
   onResize() {
@@ -38,42 +38,43 @@ export default class Menu extends Component {
         this.mapPositions = this.calcPositions();
         this.setState({ ...this.state, position: this.mapPositions[this.props.position] });
         break;
+      default:
+        break;
     }
   }
 
   calcPositions() {
     return {
-      LEFT_TOP_CORNER: { x: this.halfWidth, y: this.halfWidth },
-      RIGHT_TOP_CORNER: { x: (window.innerWidth - this.halfWidth), y: this.halfWidth },
-      RIGHT_BOTTOM_CORNER: { x: (window.innerWidth - this.halfWidth), y: (window.innerHeight - this.halfWidth) },
-      LEFT_BOTTOM_CORNER: { x: this.halfWidth, y: (window.innerHeight - this.halfWidth) },
-    }
+      TOP_LEFT: { x: this.halfWidth, y: this.halfWidth },
+      TOP_RIGHT: { x: (window.innerWidth - this.halfWidth), y: this.halfWidth },
+      BOTTOM_RIGHT: { x: (window.innerWidth - this.halfWidth), y: (window.innerHeight - this.halfWidth) },
+      BOTTOM_LEFT: { x: this.halfWidth, y: (window.innerHeight - this.halfWidth) },
+    };
   }
 
   addEventsListener() {
     window.addEventListener('resize', this.onResize, false);
     if (isTouch()) {
-      this.refs.menu.addEventListener("touchstart", this.onTouchStart, false);
-      this.refs.menu.addEventListener("touchmove", this.onTouchMove, false);
-      this.refs.menu.addEventListener("touchend", this.onTouchEnd, false);
+      this.refs.menu.addEventListener('touchstart', this.onTouchStart, false);
+      this.refs.menu.addEventListener('touchmove', this.onTouchMove, false);
+      this.refs.menu.addEventListener('touchend', this.onTouchEnd, false);
     } else {
-      this.refs.menu.addEventListener("mousedown", this.onMouseDown, false);
-      this.refs.menu.addEventListener("mousemove", this.onMouseMove, false);
-      this.refs.menu.addEventListener("mouseup", this.onMouseUp, false);
+      this.refs.menu.addEventListener('mousedown', this.onMouseDown, false);
+      this.refs.menu.addEventListener('mousemove', this.onMouseMove, false);
+      this.refs.menu.addEventListener('mouseup', this.onMouseUp, false);
     }
-
   }
 
   removeEventsListener() {
     window.removeEventListener('resize', this.onResize, false);
     if (isTouch()) {
-      this.refs.menu.removeEventListener("touchstart", this.onTouchStart, false);
-      this.refs.menu.removeEventListener("touchmove", this.onTouchMove, false);
-      this.refs.menu.removeEventListener("touchend", this.onTouchEnd, false);
+      this.refs.menu.removeEventListener('touchstart', this.onTouchStart, false);
+      this.refs.menu.removeEventListener('touchmove', this.onTouchMove, false);
+      this.refs.menu.removeEventListener('touchend', this.onTouchEnd, false);
     } else {
-      this.refs.menu.removeEventListener("mousedown", this.onMouseDown, false);
-      this.refs.menu.removeEventListener("mousemove", this.onMouseMove, false);
-      this.refs.menu.removeEventListener("mouseup", this.onMouseUp, false);
+      this.refs.menu.removeEventListener('mousedown', this.onMouseDown, false);
+      this.refs.menu.removeEventListener('mousemove', this.onMouseMove, false);
+      this.refs.menu.removeEventListener('mouseup', this.onMouseUp, false);
     }
   }
 
@@ -87,23 +88,22 @@ export default class Menu extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.position !== nextProps.position) {
-      this.setState({ ...this.state, position: this.mapPositions[nextProps.position] })
+      this.setState({ ...this.state, position: this.mapPositions[nextProps.position] });
     }
   }
 
   onPointerStart(event) {
-    let position = { x: Math.round(event.clientX), y: Math.round(event.clientY) };
-    //this.props.actions.setDownPosition({ active: true, position });
+    const position = { x: Math.round(event.clientX), y: Math.round(event.clientY) };
+    // this.props.actions.setDownPosition({ active: true, position });
     this.setState({ ...this.state, active: true, pointerDownPosition: position });
   }
 
   onPointerEnd(event) {
-    let endX = Math.round(event.clientX);
-    let endY = Math.round(event.clientY);
-    let position = { x: endX, y: endY };
+    const endX = Math.round(event.clientX);
+    const endY = Math.round(event.clientY);
+    const position = { x: endX, y: endY };
 
     this.setState({ ...this.state, active: false, drag: false, pointerUpPosition: position }, () => {
-
       if ((this.state.pointerDownPosition.x >= this.state.pointerUpPosition.x - this.OFFSET && this.state.pointerDownPosition.x <= this.state.pointerUpPosition.x + this.OFFSET) &&
         (this.state.pointerDownPosition.y >= this.state.pointerUpPosition.y - this.OFFSET && this.state.pointerDownPosition.y <= this.state.pointerUpPosition.y + this.OFFSET)
       ) {
@@ -116,29 +116,29 @@ export default class Menu extends Component {
   }
 
   onPointerMove(event) {
-    let position = { x: Math.round(event.clientX), y: Math.round(event.clientY) };
-    //this.setState({ ...this.state, drag: true });
+    const position = { x: Math.round(event.clientX), y: Math.round(event.clientY) };
+    // this.setState({ ...this.state, drag: true });
     if (this.state.active) {
-      //this.props.actions.setPosition({ position });
+      // this.props.actions.setPosition({ position });
       this.setState({ ...this.state, drag: true, position });
     }
   }
 
   onTouchStart(evt) {
     evt.preventDefault();
-    let touch = evt.touches[0];
+    const touch = evt.touches[0];
     this.onPointerStart(touch);
   }
 
   onTouchEnd(evt) {
     evt.preventDefault();
-    let touch = evt.changedTouches[0];
+    const touch = evt.changedTouches[0];
     this.onPointerEnd(touch);
   }
 
   onTouchMove(evt) {
     evt.preventDefault();
-    let touch = evt.changedTouches[0]; // get one finger
+    const touch = evt.changedTouches[0]; // get one finger
     this.onPointerMove(touch);
   }
 
@@ -156,11 +156,11 @@ export default class Menu extends Component {
 
   render() {
     const { theme } = this.props;
-    let classNames = [theme.menu, this.props.show ? theme.show : theme.hide, this.state.active ? theme.active : ''];
+    const classNames = [theme.menu, this.props.show ? theme.show : theme.hide, this.state.active ? theme.active : ''];
     const style = {
       left: `${(this.state.position.x - this.halfWidth)}px`,
-      top: `${(this.state.position.y - this.halfWidth)}px`
-    }
+      top: `${(this.state.position.y - this.halfWidth)}px`,
+    };
 
     return (
       <div ref='menu' className={classNames.join(' ')} style={style}></div>
@@ -170,6 +170,6 @@ export default class Menu extends Component {
 
 Menu.defaultProps = {
   show: true,
-  position: 'RIGHT_BOTTOM_CORNER',
-  onClick: function () { }
-}
+  position: 'BOTTOM_RIGHT',
+  onClick() { },
+};
