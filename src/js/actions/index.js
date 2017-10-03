@@ -1,4 +1,3 @@
-import FacebookPixelAdapter from 'facebookpixeladapter';
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import * as HistoryGame from '../lib/HistoryGame';
@@ -97,22 +96,21 @@ function init(initConfig) {
     return Promise.resolve()
       .then(() => dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL)))
       .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
+      .then(() => dispatch(userActions.getUser()))
       .then(() => {
         const { vhost } = getState();
-        FacebookPixelAdapter.init(vhost.FACEBOOK_PIXEL_ID);
+        dispatch(sharerActions.initFacebook({ fbAppId: getState().vhost.FB_APPID, enableTracking: vhost.FB_TRACKING_ENABLE }));
       })
-      .then(() => dispatch(userActions.getUser()))
       .then(() => {
         const { user } = getState();
         const { vhost } = getState();
         const userType = userActions.getUserType(user);
         /** User is not premium and ads enabled in configuration => show interstitial */
-        const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);        
+        const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
         if (condition) { dispatch(interstitialActions.show()); }
         return true;
       })
       .then(() => dispatch(gameinfoActions.getGameInfo()))
-      .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().vhost.FB_APPID })))
       .then(() => {
         // return if you want to wait
         dispatch(newtonActions.init());

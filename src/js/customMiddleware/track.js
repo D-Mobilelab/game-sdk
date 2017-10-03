@@ -1,8 +1,7 @@
 import NewtonAdapter from 'newton-adapter';
-import FacebookPixelAdapter from 'facebookpixeladapter';
-
+import FacebookInterface from '../lib/FacebookInterface';
 
 export default function track(eventObject) {
   NewtonAdapter.trackEvent(eventObject);
-  FacebookPixelAdapter.trackCustom(eventObject.name, eventObject.properties);
+  FacebookInterface.trackEvent(eventObject.name, eventObject.properties);
 }

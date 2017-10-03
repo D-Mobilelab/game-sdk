@@ -1,8 +1,8 @@
-import { FacebookSharer } from '../lib/Sharer';
+import FacebookInterface from '../lib/FacebookInterface';
 import Location from '../lib/Location';
 
 export function initFacebook(config) {
-  FacebookSharer.init(config);
+  FacebookInterface.init(config);
   return {
     type: 'INIT_FACEBOOK',
     payload: config,
@@ -17,7 +17,7 @@ export function share(url, service) {
         absUrl = [Location.getOrigin(), url].join('');
       }
       dispatch({ type: 'SHARE_START', payload: { service, url: absUrl } });
-      return FacebookSharer.share(absUrl)
+      return FacebookInterface.share(absUrl)
         .then(() => {
           dispatch({ type: 'SHARE_END', payload: { service, url: absUrl } });
         });
