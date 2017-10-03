@@ -1,5 +1,4 @@
 export class LocalStorage {
-
   constructor() {
     this.storage = {};
     this.isSupported();

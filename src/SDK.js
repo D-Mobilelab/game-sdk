@@ -14,7 +14,6 @@ const privates = new WeakMap();
  * @class SDK
  */
 export default class SDK {
-
   constructor(store) {
     privates.set(this, { store });
   }
@@ -153,7 +152,7 @@ export default class SDK {
    */
   getAvatar() {
     const { store } = privates.get(this);
-    const { user } = store.getState();    
+    const { user } = store.getState();
     return user.avatar;
   }
 

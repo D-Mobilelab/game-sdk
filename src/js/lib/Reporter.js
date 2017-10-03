@@ -32,15 +32,15 @@ class Reporter {
       a.href = window.URL.createObjectURL(theBlob);
       a.download = 'Report.csv';
       a.textContent = 'Download the Report.csv!';
-      
+
       if (document.createEvent) {
-        let evt = document.createEvent('MouseEvents');
+        const evt = document.createEvent('MouseEvents');
         evt.initEvent('click', true, false);
         a.dispatchEvent(evt);
       } else if (document.createEventObject) {
-          a.fireEvent('onclick');
-      } else if (typeof a.onclick == 'function') {
-          a.onclick();
+        a.fireEvent('onclick');
+      } else if (typeof a.onclick === 'function') {
+        a.onclick();
       }
       // window.document.body.appendChild(a);
     }

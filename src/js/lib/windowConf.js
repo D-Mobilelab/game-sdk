@@ -1,19 +1,19 @@
 /**
  * This module is intended for dev and testing purpose
- * 
+ *
  * @export
- * @param {any} { 
- *   HOST = 'appsworld.gamifive-app.com', 
+ * @param {any} {
+ *   HOST = 'appsworld.gamifive-app.com',
  *   GAME_ID = 'c2701133414427fee732e051abdfe3e8',
  *   COUNTRY_CODE = 'ww-it',
  *   HASH = window.location.hash,
  *   SEARCH = window.location.search,
  *   PORT = window.location.port,
- * } 
- * @returns 
+ * }
+ * @returns
  */
-export default function location({ 
-  HOST = 'appsworld.gamifive-app.com', 
+export default function location({
+  HOST = window.location.hostname.replace('local.', ''),
   GAME_ID = 'c2701133414427fee732e051abdfe3e8',
   COUNTRY_CODE = 'ww-it',
   HASH = window.location.hash,

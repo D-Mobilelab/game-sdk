@@ -5,7 +5,7 @@ import transitions from './transitions.css';
 import css from './leaderboard.css';
 
 function addPointSeparator(intNum) {
-  return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1.');
+  return (`${intNum}`).replace(/(\d)(?=(\d{3})+$)/g, '$1.');
 }
 
 function Row(props) {
@@ -15,7 +15,7 @@ function Row(props) {
       <td>{props.score}</td>
       <td>{props.player_name}</td>
     </tr>
-  )
+  );
 }
 
 function Arrows(props) {
@@ -31,7 +31,7 @@ function Arrows(props) {
     <span style={{ display: 'inline-block', ...props.style }}>
       {[...Array(3)].map((el, i) => <span key={`arrow${i}`} className={classes.join(' ')}>&nbsp;</span>)}
     </span>
-  )
+  );
 }
 
 function DividerRow(props) {
@@ -41,15 +41,10 @@ function DividerRow(props) {
         <Arrows top />
       </td>
     </tr>
-  )
+  );
 }
 
 export default class LeaderBoard extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   returnComponent() {
     return (
       <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
@@ -64,26 +59,25 @@ export default class LeaderBoard extends React.Component {
                   return (
                     [
                       <Row {...el} key={`scores_${i}`} />,
-                      <DividerRow colSpan={3} numDividers={3} />
+                      <DividerRow colSpan={3} numDividers={3} />,
                     ]
-                  )
-                } else {
-                  return <Row {...el} key={`scores_${i}`} />
+                  );
                 }
+                return <Row {...el} key={`scores_${i}`} />;
               })
               }
             </tbody>
           </table>
-          <div className={css.title}>Your Score</div>
+          <div className={css.title}>{this.props.yourScore}</div>
           <div style={{ postion: 'relative' }}>
             <Arrows right style={{ width: '25%', textAlign: 'center' }} />
             <div className={css.score} style={{ width: '50%', display: 'inline-block' }}>{addPointSeparator(this.props.score)}</div>
             <Arrows left style={{ width: '25%', textAlign: 'center' }} />
           </div>
-          <div className={css.message}>Congratulations! Try to reach the top five</div>
+          <div className={css.message}>{this.props.congratulations}</div>
         </div>
       </div>
-    )
+    );
   }
 
   render() {
@@ -94,14 +88,16 @@ export default class LeaderBoard extends React.Component {
       transitionLeaveTimeout={1200}
       transitionName={transitions}>
       {(this.props.show) ? this.returnComponent() : null}
-    </ReactCSSTransitionGroup>)
+    </ReactCSSTransitionGroup>);
   }
 }
 
 LeaderBoard.defaultProps = {
   title: 'Highest Score',
-  onClose: function () { },
+  congratulations: 'Congrats',
+  yourScore: 'Your score',
+  onClose: () => { },
   score: 0,
   show: false,
-  leaderboard: []
-}
+  leaderboard: [],
+};

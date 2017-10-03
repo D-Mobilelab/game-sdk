@@ -3,8 +3,8 @@ import localStorage from './LocalStorage';
 import windowConf from './windowConf';
 
 let theWindow = {};
-if (process.env.LOCAL_DEV == true) {
-  console.warn("LOCAL_DEV");
+if (process.env.LOCAL_DEV === true) {
+  console.warn('LOCAL_DEV');
   const GAME_ID = localStorage.getItem('gfsdk-debug-game_id');
   const HOST = localStorage.getItem('gfsdk-debug-host');
   const params = {};
@@ -26,7 +26,7 @@ class Location {
     const isGameasyMatch = theWindow.location.href.match(isGameasyRegex);
 
     let gameasyCountryCode = '',
-        toJoin = [];
+      toJoin = [];
     if (isGameasyMatch !== null) {
       gameasyCountryCode = isGameasyMatch[1];
       // if we are in testing integration mode we need this for url composition
@@ -50,6 +50,10 @@ class Location {
 
   getQueryString() {
     return dequeryfy(theWindow.location.search);
+  }
+
+  getRealOrigin() {
+    return theWindow.location.origin;
   }
 
   /**

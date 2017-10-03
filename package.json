@@ -19,7 +19,7 @@
     "dev": "env-cmd development webpack-dev-server --config tools/webpack.config.local.js",
     "build": "npm run build:prod && npm run build:dev",
     "preversion": "npm run test",
-    "version": "sh .getrevision.sh && npm run build && git add -fA src/ dist/",
+    "version": "sh .getrevision.sh && npm run build && git add -fA src/",
     "docs": "$(npm bin)/documentation build src/SDK.js -f html --shallow -o docs/$npm_package_version",
     "append:readme": "$(npm bin)/documentation readme src/SDK.js --section=API --shallow",
     "upload114": "scp -r dist super@192.168.124.114:/home/super/personal/pasqualemangialavori/html5game/src/main/lib/js/gfsdk/3.x.x/",
@@ -30,6 +30,7 @@
   "author": "eatsjobs",
   "license": "BSD",
   "devDependencies": {
+    "@storybook/addon-knobs": "^3.2.10",
     "@storybook/react": "^3.1.3",
     "autoprefixer-loader": "^3.2.0",
     "axios-mock-adapter": "^1.8.1",
@@ -47,12 +48,12 @@
     "documentation": "^4.0.0-beta16",
     "env-cmd": "^5.1.0",
     "enzyme": "^2.7.1",
-    "eslint": "^3.14.0",
+    "eslint": "^4.7.2",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
-    "eslint-plugin-react": "^6.9.0",
+    "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "identity-obj-proxy": "^3.0.0",
@@ -73,7 +74,8 @@
     "redux-thunk": "^2.1.0",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "^2.4.1",
+    "webpack-obfuscator": "^0.11.2"
   },
   "dependencies": {
     "axios": "^0.15.2",

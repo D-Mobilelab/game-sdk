@@ -11,7 +11,6 @@
  * @class SDK
  */
 class SDK {
-
   constructor() {
     this.initFinished = false;
     this.startAfterInit = false;
@@ -36,7 +35,7 @@ class SDK {
       game_info: {},
     };
 
-    this.onStartSessionCallback = function(){};
+    this.onStartSessionCallback = function () {};
 
     const regex = /games\/data\/(\w+)\//gi;
     const results = regex.exec(location.href);
@@ -119,7 +118,7 @@ class SDK {
    * @returns {Object|undefined}
    * @memberOf SDK
    */
-  loadUserData(onLoadUserData = function() {}) {
+  loadUserData(onLoadUserData = function () {}) {
     // retro compatibility
     console.log('loadUserData');
     onLoadUserData(this.state.user.userData.info);
@@ -192,7 +191,7 @@ class SDK {
    * @param {Function} onStartSessionCallback
    * @memberOf SDK
    */
-  onStartSession(onStartSessionCallback = function(){}) {
+  onStartSession(onStartSessionCallback = function () {}) {
     console.log('onStartSession');
     this.onStartSessionCallback = onStartSessionCallback;
   }
@@ -255,8 +254,8 @@ class SDK {
  * @param {Object|null} userProgress
  */
 const sdkInstance = new SDK();
-let aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
+const aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
 aliases.map((alias) => {
-    window[alias] = sdkInstance;
+  window[alias] = sdkInstance;
 });
 module.exports = sdkInstance;

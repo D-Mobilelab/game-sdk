@@ -16,7 +16,7 @@ export function init() {
 
     return NewtonAdapter.init({
       secretId: newtonSecret,
-      enable: true,    // enable newton
+      enable: true, // enable newton
       waitLogin: true, // wait for login to have been completed (async)
       properties: {
         environment: (hybrid ? 'hybrid' : 'webapp'),

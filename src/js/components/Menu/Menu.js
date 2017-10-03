@@ -7,12 +7,10 @@ import { bindActionCreators } from 'redux';
 import { Actions } from '../../actions/index';
 import MenuComponent from './MenuComponent';
 
-const mapStateToProps = (state) => {
-  return { menu: state.menu }
-};
+const mapStateToProps = state => ({ menu: state.menu });
 
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(Actions, dispatch)
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(Actions, dispatch),
 });
 
 class MenuContainer extends React.Component {
@@ -28,7 +26,7 @@ class MenuContainer extends React.Component {
   render() {
     return (
       <MenuComponent show={this.props.menu.show} position={this.props.menu.position} {...this.props} onClick={this.onClick} />
-    )
+    );
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MenuContainer);

@@ -98,6 +98,10 @@ function init(initConfig) {
       .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
       .then(() => dispatch(userActions.getUser()))
       .then(() => {
+        const { vhost } = getState();
+        dispatch(sharerActions.initFacebook({ fbAppId: getState().vhost.FB_APPID, enableTracking: vhost.FB_TRACKING_ENABLE }));
+      })
+      .then(() => {
         const { user } = getState();
         const { vhost } = getState();
         const userType = userActions.getUserType(user);
@@ -107,7 +111,6 @@ function init(initConfig) {
         return true;
       })
       .then(() => dispatch(gameinfoActions.getGameInfo()))
-      .then(() => dispatch(sharerActions.initFacebook({ fbAppId: getState().game_info.fbAppId })))
       .then(() => {
         // return if you want to wait
         dispatch(newtonActions.init());
@@ -115,10 +118,6 @@ function init(initConfig) {
       })
       .then(() => {
         const menuStyle = {};
-        if (getState().vhost.SPRITE_GAME_SVG && getState().vhost.SPRITE_GAME_SVG !== '') {
-          //menuStyle.backgroundImage = `url("${getState().vhost.SPRITE_GAME_SVG}")`;
-        }
-
         dispatch(menuActions.showMenu(menuStyle));
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,

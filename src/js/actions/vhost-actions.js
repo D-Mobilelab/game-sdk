@@ -30,13 +30,12 @@ export function dictLoad(DICTIONARY_API) {
       action.payload = dictionary;
       dispatch(action);
       return Promise.resolve();
-    } else {
-      return AxiosInstance.get(DICTIONARY_API).then((response) => {
-        action.payload = response.data;
-        dispatch(action);
-      }).catch((reason) => {
-        dispatch({ type: 'DICTIONARY_LOAD_ERROR', payload: reason });
-      });
     }
+    return AxiosInstance.get(DICTIONARY_API).then((response) => {
+      action.payload = response.data;
+      dispatch(action);
+    }).catch((reason) => {
+      dispatch({ type: 'DICTIONARY_LOAD_ERROR', payload: reason });
+    });
   };
 }

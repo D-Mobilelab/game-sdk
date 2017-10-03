@@ -5,6 +5,7 @@ var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
 var modifyResponse = require('node-http-proxy-json');
 var localvhost = require('./local/vhost.json');
+var SERVICE = require('./local/service').service;
 
 var devConfiguration = Object.create(baseConfiguration);
 
@@ -25,13 +26,9 @@ var ROOT_DIRECTORY = null;
   devConfiguration.output.publicPath = ROOT_DIRECTORY;
 }*/
 
-var APPSWORLD_SERVICE = 'appsworld.gamifive-app.com';
-var BANDAI_SERVICE = 'bandai2.gameasy.com';
-var GAMEASY_SERVICE = 'www2.gameasy.com';
-
 var PROTOCOL = 'http://';
 var LOCAL = 'local';
-var HOSTNAME = LOCAL + '.' + BANDAI_SERVICE;
+var HOSTNAME = LOCAL + '.' + SERVICE;
 HOSTNAME = '0.0.0.0';
 // devConfiguration.entry.push('webpack/hot/dev-server');
 // devConfiguration.entry.push('webpack-dev-server/client?http://' + HOSTNAME + ':8080');
@@ -44,14 +41,14 @@ devConfiguration.devServer = {
   host: HOSTNAME, // 0.0.0.0 to test on device. then add <ip>:8080/
   disableHostCheck: true,
   proxy: {
-    '/ww-it/v01/**': {
+    '/**/v01/**': {
       onProxyReq: function(proxyReq, req, res) { 
         console.log('Request:', proxyReq.path);
         // proxyReq.setHeader('X-Special-Proxy-Header', 'foobar');
-
       },
       onProxyRes: function(proxyRes, req, res) {
-        if(req.path === '/ww-it/v01/config.getvars') {
+        console.log("Response", req.path);
+        if(req.path === '/it/v01/config.getvars') {          
           delete proxyRes.headers['content-length'];
 
           modifyResponse(res, proxyRes.headers['content-encoding'], function (body) {
@@ -60,20 +57,22 @@ devConfiguration.devServer = {
               for(var key in localvhost) {
                 body[key] = localvhost[key];
               }
+              console.log('Keys added', localvhost);
+              
             }
             return body;
           });
         }
-      },
-      target: PROTOCOL + BANDAI_SERVICE,
+      },      
+      target: PROTOCOL + SERVICE,
       secure: false,
       changeOrigin: true,
       historyApiFallback: true,
       pathRewrite: function (path, req) { return path.replace('', '') },
       cookieDomainRewrite: {
-        BANDAI_SERVICE: BANDAI_SERVICE        
+        SERVICE: SERVICE
       }
-    },    
+    }, 
   }
 }
 

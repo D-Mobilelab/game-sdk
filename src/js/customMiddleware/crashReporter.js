@@ -1,3 +1,11 @@
+/**
+ * Simple function to report an error on newton
+ * if an error occurs 
+ * @param {any} err - the error object throw in window.onerror
+ * @param {any} [state={ a: 1 }] - the application state if any
+ * @param {string} [action=''] - the last action before error was triggered
+ * @returns {undefined}
+ */
 function reportError(err, state = { a: 1 }, action = '') {
   if (window.Newton) {
     const errorObject = {
@@ -34,7 +42,8 @@ window.onerror = function errorReporter(message, source, lineno, colno, error) {
   return false;
 };
 
-export const crashReporter = store => next => (action) => {
+// export the middleware
+const crashReporter = store => next => (action) => {
   try {
     return next(action); // dispatch
   } catch (err) {
@@ -42,3 +51,5 @@ export const crashReporter = store => next => (action) => {
     throw err; // re-throw error
   }
 };
+
+export default crashReporter;

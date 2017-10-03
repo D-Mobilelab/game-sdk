@@ -26,4 +26,4 @@ export function getHistory() {
   if (history && history.length > 0) { return history; }
 }
 
-export default { push, pop, getHistory }
+export default { push, pop, getHistory };

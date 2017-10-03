@@ -51,47 +51,47 @@ export function getUserFavourites() {
     return getFavPromise.then((userFavouritesResponse) => {
       dispatch({ type: 'GET_FAVOURITES_END', favourites: userFavouritesResponse.data });
     })
-    .catch((reason) => {
-      dispatch({ type: 'GET_FAVOURITES_FAIL', payload: reason });
-    });
+      .catch((reason) => {
+        dispatch({ type: 'GET_FAVOURITES_FAIL', payload: reason });
+      });
   };
 }
 
 export function getUser() {
   return (dispatch, getState) => {
-    dispatch({ type: 'USER_CHECK_LOAD_START' });    
+    dispatch({ type: 'USER_CHECK_LOAD_START' });
     const { generic } = getState();
     const query = {};
     if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
     /** needed to get the pony */
     query.hybrid = 1;
     return AxiosInstance.get(Constants.USER_CHECK, { params: query })
-        .then((userResponse) => {
-          const user = userResponse.data;
+      .then((userResponse) => {
+        const user = userResponse.data;
 
-          if (process.env.NODE_ENV === 'development') {
-            const userType = localStorage.getItem('gfsdk-debug-user_type');
-            if (userType === 'guest') {
-              user.user = null;
-              user.subscribed = false;
-            } else if (userType === 'free') {
-              user.user = decodeURIComponent(localStorage.getItem('gfsdk-debug-user_id'));
-              user.subscribed = false;
-            } else if (userType === 'premium') {
-              user.user = localStorage.getItem('gfsdk-debug-user_id');
-              user.subscribed = true;
-            }
+        if (process.env.NODE_ENV === 'development') {
+          const userType = localStorage.getItem('gfsdk-debug-user_type');
+          if (userType === 'guest') {
+            user.user = null;
+            user.subscribed = false;
+          } else if (userType === 'free') {
+            user.user = decodeURIComponent(localStorage.getItem('gfsdk-debug-user_id'));
+            user.subscribed = false;
+          } else if (userType === 'premium') {
+            user.user = localStorage.getItem('gfsdk-debug-user_id');
+            user.subscribed = true;
           }
+        }
 
-          dispatch({ type: 'USER_CHECK_LOAD_END', user });
-          return Promise.all([
-            dispatch(canPlay()),
-            dispatch(getUserFavourites()),
-          ]);
-        })
-        .catch((reason) => {
-          dispatch({ type: 'USER_CHECK_LOAD_FAIL', reason });
-        });
+        dispatch({ type: 'USER_CHECK_LOAD_END', user });
+        return Promise.all([
+          dispatch(canPlay()),
+          dispatch(getUserFavourites()),
+        ]);
+      })
+      .catch((reason) => {
+        dispatch({ type: 'USER_CHECK_LOAD_FAIL', reason });
+      });
   };
 }
 
@@ -108,12 +108,12 @@ export function removeGameLike(gameId) {
 
     const URL = `${Constants.USER_DELETE_LIKE}?content_id=${gameId}&user_id=${getState().user.user}`;
     return AxiosInstance.post(URL)
-            .then(() => {
-              dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId } });
-            })
-            .catch((reason) => {
-              dispatch({ type: 'REMOVE_GAME_LIKE_ERROR', payload: reason });
-            });
+      .then(() => {
+        dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId } });
+      })
+      .catch((reason) => {
+        dispatch({ type: 'REMOVE_GAME_LIKE_ERROR', payload: reason });
+      });
   };
 }
 
@@ -125,13 +125,13 @@ export function addGameLike(gameId) {
       user_id: getState().user.user,
     };
     return AxiosInstance.get(Constants.USER_SET_LIKE, { params: query })
-                .then((response) => {
-                  const { object_id } = response.data;
-                  dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: object_id, content_id: object_id } });
-                })
-                .catch((reason) => {
-                  dispatch({ type: 'ADD_GAME_LIKE_ERROR', payload: reason });
-                });
+      .then((response) => {
+        const { object_id } = response.data;
+        dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: object_id, content_id: object_id } });
+      })
+      .catch((reason) => {
+        dispatch({ type: 'ADD_GAME_LIKE_ERROR', payload: reason });
+      });
   };
 }
 
