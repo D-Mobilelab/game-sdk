@@ -1,20 +1,24 @@
-import { queryfy } from 'docomo-utils';
 import {
   FB_SDK_VERSION,
   FB_SDK_URL,
 } from './Constants';
-import Location from './Location';
 
-class FacebookInterface {
+export class FacebookInterface {
   constructor() {
     this.initialized = false;
-    this.isMobile = false;
     this.trackPageView = this.trackPageView.bind(this);
     this.trackEvent = this.trackEvent.bind(this);
     this.isInitialized = this.isInitialized.bind(this);
     window.fbAsyncInit = this.onFbSDKInit.bind(this);
   }
-
+  /**
+   * Init method downloads facebook sdk
+   * @param {object} config - the config object
+   * @param {string} config.fbAppId - the facebook app id
+   * @param {boolean} config.enableTracking - enable tracking or not
+   * @returns {undefined}
+   * @memberof FacebookInterface
+   */
   init(config) {
     if (process.env.APP_ENV === 'HYBRID') {
       return;
@@ -30,8 +34,7 @@ class FacebookInterface {
   downloadSDK() {
     /* eslint-disable */
     (function (d, s, id) {
-      let js,
-        fjs = d.getElementsByTagName(s)[0];
+      let js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
       js.src = `//${FB_SDK_URL}`;
@@ -70,7 +73,7 @@ class FacebookInterface {
       href: url,
     };
 
-    /* global facebookConnectPlugin*/
+    /* global facebookConnectPlugin */
     if (typeof window.facebookConnectPlugin !== 'undefined') {
       return new Promise((resolve, reject) => {
         facebookConnectPlugin.showDialog(shareParams, resolve, reject);
@@ -93,22 +96,13 @@ class FacebookInterface {
       return false;
     }
 
-    if (this.isMobile) {
-      const targetURL = queryfy('http://www.facebook.com/dialog/send', {
-        app_id: this.config.fbAppId,
-        link: url,
-        redirect_uri: Location.getOrigin(),
-      });
-      window.open(targetURL, '_parent');
-    } else {
-      const shareParams = {
-        method: 'send',
-        display: 'iframe',
-        link: url,
-      };
+    const shareParams = {
+      method: 'send',
+      display: 'iframe',
+      link: url,
+    };
 
-      return new Promise(resolve => window.FB.ui(shareParams, resolve));
-    }
+    return new Promise(resolve => window.FB.ui(shareParams, resolve));
   }
 
   trackPageView() {
