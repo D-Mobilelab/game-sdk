@@ -32,9 +32,10 @@ export default class SDK {
   /**
    * Initialize the sdk
    * @memberOf SDK
-   * @param {Object}  initConfig
+   * @param {Object} initConfig
    * @param {Boolean} initConfig.lite - true if should show the gameover
-   * @param {Object}  initConfig.moreGamesButtonStyle - a custom styles to pass to moregames button
+   * @param {Object} initConfig.moreGamesButtonStyle - DEPRECATED since v2.5.3: a custom styles to pass to moregames button
+   * @param {String} [initConfig.menuPosition='BOTTOM_RIGHT'] - TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT
    * @returns {Promise}
    */
   init(initConfig) {
@@ -66,11 +67,12 @@ export default class SDK {
   /**
    * Shows the menu|moregames button.
    * call this function when in pause
+   * @param {string} [position='BOTTOM_RIGHT'}] - custom position
    * @memberOf SDK
    */
-  showMoreGamesButton() {
+  showMoreGamesButton(position = 'BOTTOM_RIGHT') {
     const { store } = privates.get(this);
-    store.dispatch(Actions.showMenu());
+    store.dispatch(Actions.showMenu({ position }));
   }
 
   /**

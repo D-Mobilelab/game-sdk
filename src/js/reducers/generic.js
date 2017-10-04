@@ -1,4 +1,4 @@
-export function generic(state = {
+export default function generic(state = {
   error: null,
   hybrid: false,
   connectionState: { online: true, type: 'none' },
@@ -8,6 +8,7 @@ export function generic(state = {
   initConfig: {
     lite: true,
     debug: false,
+    menuPosition: 'BOTTOM_RIGHT',
   },
   isOnStartSessionRegistered: false,
   loadUserDataCalled: false,

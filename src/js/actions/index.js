@@ -117,8 +117,8 @@ function init(initConfig) {
         return dispatch(newtonActions.login());
       })
       .then(() => {
-        const menuStyle = {};
-        dispatch(menuActions.showMenu(menuStyle));
+        const { generic } = getState();
+        dispatch(menuActions.showMenu({ position: generic.initConfig.menuPosition }));
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });

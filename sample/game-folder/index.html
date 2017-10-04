@@ -29,7 +29,7 @@
     var startBtn = document.querySelector('#startSessionBtn');
     var endBtn = document.querySelector('#endSessionBtn');
 
-    GamifiveSDK.init({ lite: false })
+    GamifiveSDK.init({ lite: false, menuPosition: 'BOTTOM_LEFT' })
       .then(function afterInit() {
         end = Date.now();
         var initTime = end - start;

@@ -1,7 +1,7 @@
 import Location from '../lib/Location';
 
 export function goToHome() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     if (process.env.APP_ENV === 'HYBRID') {
       if (window.webview) {
         window.webview.Close();
@@ -19,10 +19,10 @@ export function goToHome() {
   };
 }
 
-export function showMenu(style) {
+export function showMenu(payload) {
   return {
     type: 'SHOW_MENU',
-    style,
+    payload,
   };
 }
 
