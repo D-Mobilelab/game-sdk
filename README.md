@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/D-Mobilelab/game-sdk.svg?branch=master)](https://travis-ci.org/D-Mobilelab/game-sdk)
 [![Coverage Status](https://coveralls.io/repos/github/D-Mobilelab/game-sdk/badge.svg?branch=master)](https://coveralls.io/github/D-Mobilelab/game-sdk?branch=master)
+
 # GameSDK v2.x
 
 # Table of Contents
@@ -167,7 +168,8 @@ Initialize the sdk
 
 -   `initConfig` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `initConfig.lite` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if should show the gameover
-    -   `initConfig.moreGamesButtonStyle` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a custom styles to pass to moregames button
+    -   `initConfig.moreGamesButtonStyle` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** DEPRECATED since v2.5.3: a custom styles to pass to moregames button
+    -   `initConfig.menuPosition` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT (optional, default `'BOTTOM_RIGHT'`)
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
@@ -187,6 +189,10 @@ Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 Shows the menu|moregames button.
 call this function when in pause
+
+**Parameters**
+
+-   `position` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** custom position (optional, default `'BOTTOM_RIGHT'}`)
 
 #### hideMoreGamesButton
 
@@ -274,3 +280,9 @@ Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** version.version - The commit string in semantic version syntax
 
 Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** version.build - The hash of the commit version refers
+
+#### isInitialized
+
+Returns if the sdk has been initialized
+
+Returns **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
