@@ -87,5 +87,13 @@
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.3.1",
     "redux-logger": "^2.7.4"
+  },
+  "gh-pages-deploy": {
+    "staticpath": "docs",
+    "prep": [
+      "docs"
+    ],
+    "post": [],
+    "noprompt": false
   }
 }
