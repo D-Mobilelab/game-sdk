@@ -1,3 +1,4 @@
+import FacebookPixelAdapter from 'facebookpixeladapter';
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import * as HistoryGame from '../lib/HistoryGame';
@@ -99,7 +100,11 @@ function init(initConfig) {
       .then(() => dispatch(userActions.getUser()))
       .then(() => {
         const { vhost } = getState();
-        dispatch(sharerActions.initFacebook({ fbAppId: getState().vhost.FB_APPID, enableTracking: vhost.FB_TRACKING_ENABLE }));
+        if (vhost.FB_TRACKING_ENABLE) { FacebookPixelAdapter.init(vhost.FB_PIXELID); }
+        dispatch(sharerActions.initFacebook({
+          fbAppId: getState().vhost.FB_APPID,
+          enableTracking: vhost.FB_TRACKING_ENABLE,
+        }));
       })
       .then(() => {
         const { user } = getState();

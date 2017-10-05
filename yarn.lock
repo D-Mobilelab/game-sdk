@@ -3329,6 +3329,10 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
+facebookpixeladapter@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/facebookpixeladapter/-/facebookpixeladapter-0.1.2.tgz#4f23095516f12f19221d3ad117e9f4c37a3573ac"
+
 falafel@^1.0.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/falafel/-/falafel-1.2.0.tgz#c18d24ef5091174a497f318cd24b026a25cddab4"
