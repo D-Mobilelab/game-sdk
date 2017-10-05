@@ -8,7 +8,6 @@ export default function generic(state = {
   initConfig: {
     lite: true,
     debug: false,
-    menuPosition: 'BOTTOM_RIGHT',
   },
   isOnStartSessionRegistered: false,
   loadUserDataCalled: false,
@@ -34,8 +33,7 @@ export default function generic(state = {
     case 'SET_IS_HYBRID':
       return Object.assign({}, state, { hybrid: action.hybrid });
     case 'INIT_START':
-      const newInitConfig = { ...state.initConfig, ...action.initConfig };
-      return Object.assign({}, state, { initConfig: newInitConfig, initPending: action.initPending });
+      return Object.assign({}, state, { initConfig: action.initConfig, initPending: action.initPending });
     case 'INIT_ERROR':
       return Object.assign({}, state, { error: action.reason });
     case 'INIT_FINISHED':
@@ -50,8 +48,7 @@ export default function generic(state = {
       const online = action.connectionState.type === 'online';
       return Object.assign({}, state, { connectionState: { online, type: action.connectionState.networkState } });
     case 'DICTIONARY_LOAD_END':
-      const dictionary = { ...state.dictionary, ...action.payload };
-      return Object.assign({}, state, { dictionary });
+      return Object.assign({}, state, { dictionary: action.payload });
     default:
       return state;
   }

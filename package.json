@@ -21,7 +21,7 @@
     "preversion": "npm run test",
     "version": "sh .getrevision.sh && npm run build && git add -fA src/",
     "docs": "$(npm bin)/documentation build src/SDK.js -f html --shallow -o docs/$npm_package_version",
-    "append:readme": "$(npm bin)/documentation readme src/SDK.js --section=API --shallow",    
+    "append:readme": "$(npm bin)/documentation readme src/SDK.js --section=API --shallow",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -73,17 +73,18 @@
     "webpack-obfuscator": "^0.11.2"
   },
   "dependencies": {
-    "redux-thunk": "^2.1.0",
-    "react-redux": "^4.4.5",
-    "redux": "^3.6.0",
     "axios": "^0.15.2",
     "blueimp-md5": "^2.10.0",
     "docomo-utils": "^1.2.6",
+    "facebookpixeladapter": "^0.1.2",
     "localforage": "^1.4.3",
     "newton-adapter": "^2.6.0",
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.3.1",
-    "redux-logger": "^2.7.4"
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.7.4",
+    "redux-thunk": "^2.1.0"
   }
 }
