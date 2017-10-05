@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/D-Mobilelab/game-sdk/badge.svg?branch=master)](https://coveralls.io/github/D-Mobilelab/game-sdk?branch=master)
 
 # GameSDK v2.x
-
+Tech docs [https://d-mobilelab.github.io/game-sdk/docs/2.6.0/](https://d-mobilelab.github.io/game-sdk/docs/2.6.0/)
 # Table of Contents
 
 -   [Setup the debug env](#setup-debug-environment)
@@ -192,7 +192,7 @@ call this function when in pause
 
 **Parameters**
 
--   `position` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** custom position (optional, default `'BOTTOM_RIGHT'}`)
+-   `position` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** custom position
 
 #### hideMoreGamesButton
 
