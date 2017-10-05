@@ -19,10 +19,10 @@ export function goToHome() {
   };
 }
 
-export function showMenu(payload) {
+export function showMenu(position) {
   return {
     type: 'SHOW_MENU',
-    payload,
+    payload: { position },
   };
 }
 

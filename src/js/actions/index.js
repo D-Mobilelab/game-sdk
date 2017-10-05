@@ -122,8 +122,7 @@ function init(initConfig) {
         return dispatch(newtonActions.login());
       })
       .then(() => {
-        const { generic } = getState();
-        dispatch(menuActions.showMenu({ position: generic.initConfig.menuPosition }));
+        dispatch(menuActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });

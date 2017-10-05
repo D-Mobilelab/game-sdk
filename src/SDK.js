@@ -67,12 +67,12 @@ export default class SDK {
   /**
    * Shows the menu|moregames button.
    * call this function when in pause
-   * @param {string} [position='BOTTOM_RIGHT'}] - custom position
+   * @param {string} [position] - custom position
    * @memberOf SDK
    */
-  showMoreGamesButton(position = 'BOTTOM_RIGHT') {
+  showMoreGamesButton(position) {
     const { store } = privates.get(this);
-    store.dispatch(Actions.showMenu({ position }));
+    store.dispatch(Actions.showMenu(position));
   }
 
   /**
