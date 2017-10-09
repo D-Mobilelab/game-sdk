@@ -24,10 +24,15 @@ var devConfiguration = {
   },
   output: {
     path: path.resolve('dist'),
+    auxiliaryComment: 'Docomo digital Game SDK - JS Library',
     publicPath: '/',
     filename: '[name].js',
-    libraryTarget: 'umd',
-    library: 'GamifiveSDK',
+    library: {
+      root: "GamifiveSDK",
+      amd: "docomo-game-sdk",
+      commonjs: "docomo-game-sdk"
+    },
+    libraryTarget: "umd"
   },
   module: {
     noParse: /node_modules\/localforage\/dist\/localforage.js/,
