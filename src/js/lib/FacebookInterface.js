@@ -6,6 +6,10 @@ import {
 export class FacebookInterface {
   constructor() {
     this.initialized = false;
+    this.config = {
+      fbAppId: null,
+      enableTracking: false,
+    };
     this.trackPageView = this.trackPageView.bind(this);
     this.trackEvent = this.trackEvent.bind(this);
     this.isInitialized = this.isInitialized.bind(this);
@@ -44,21 +48,15 @@ export class FacebookInterface {
   }
 
   onFbSDKInit() {
-    if (typeof window.FB === 'undefined') {
-      console.warn('Cannot get facebook sdk', this.config);
-    } else {
-      window.FB.init({
-        appId: this.config.fbAppId,
-        cookie: true, // enable cookies to allow the server to access
-        xfbml: false, // parse social plugins on this page
-        version: FB_SDK_VERSION,
-      });
+    window.FB.init({
+      appId: this.config.fbAppId,
+      cookie: true, // enable cookies to allow the server to access
+      xfbml: false, // parse social plugins on this page
+      version: FB_SDK_VERSION,
+    });
 
-      if (this.config.enableTracking && window.FB.AppEvents) {
-        window.FB.AppEvents.logPageView();
-      }
-      this.initialized = true;
-    }
+    this.trackPageView();
+    this.initialized = true;
   }
 
   /**
@@ -80,7 +78,7 @@ export class FacebookInterface {
       });
     }
 
-    if (!this.initialized) {
+    if (!this.isInitialized()) {
       return Promise.resolve(false);
     }
 
@@ -92,7 +90,7 @@ export class FacebookInterface {
   }
 
   send(url) {
-    if (!this.initialized) {
+    if (!this.isInitialized()) {
       return false;
     }
 
@@ -106,12 +104,12 @@ export class FacebookInterface {
   }
 
   trackPageView() {
-    if (!this.config.enableTracking) { return; }
+    if (!this.config.enableTracking || !this.isInitialized()) { return; }
     window.FB.AppEvents.logPageView();
   }
 
   trackEvent(name, properties) {
-    if (!this.config.enableTracking) { return; }
+    if (!this.config.enableTracking || !this.isInitialized()) { return; }
     window.FB.AppEvents.logEvent(name, null, properties);
   }
 }
