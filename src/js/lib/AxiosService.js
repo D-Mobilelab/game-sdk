@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 let AxiosInstance;
-if (window.ORIGIN) {
+if (window._ORIGIN_) {
   AxiosInstance = axios.create({
-    baseURL: window.ORIGIN,
+    baseURL: window._ORIGIN_,
   });
 } else {
   AxiosInstance = axios.create();
