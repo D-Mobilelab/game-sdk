@@ -102,7 +102,7 @@ function init(initConfig) {
         const { vhost } = getState();
         if (vhost.FB_TRACKING_ENABLE) { FacebookPixelAdapter.init(vhost.FB_PIXELID); }
         dispatch(sharerActions.initFacebook({
-          fbAppId: getState().vhost.FB_APPID,
+          fbAppId: vhost.FB_APPID,
           enableTracking: vhost.FB_TRACKING_ENABLE,
         }));
       })
