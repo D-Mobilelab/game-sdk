@@ -3,8 +3,8 @@ var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
 
-var FILENAME = '[name].[hash:5].min.js';
-var FILENAME_HYBRID = '[name].[hash:5].hybrid.min.js';
+var FILENAME = '[name].[chunkhash:5].min.js';
+var FILENAME_HYBRID = '[name].[chunkhash:5].hybrid.min.js';
 
 var prodConfiguration = Object.create(baseConfiguration);
 var ROOT_DIRECTORY = null;

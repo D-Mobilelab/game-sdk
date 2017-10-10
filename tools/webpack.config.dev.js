@@ -5,8 +5,8 @@ var baseConfiguration = require('./webpack.config.base');
 
 var devConfiguration = Object.create(baseConfiguration);
 
-var FILENAME = '[name].[hash:5].js';
-var FILENAME_HYBRID = '[name].[hash:5].hybrid.js';
+var FILENAME = '[name].[chunkhash:5].js';
+var FILENAME_HYBRID = '[name].[chunkhash:5].hybrid.js';
 
 var envPlugin = new webpack.DefinePlugin({    
     'process.env': {
