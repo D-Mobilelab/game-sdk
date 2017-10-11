@@ -82,7 +82,7 @@ var devConfiguration = {
       // chunks: ["pageA", "pageB"],
       // (Only use these entries)
       minChunks: Infinity,
-    })
+    }),
   ],
   // module end
   resolve: {
