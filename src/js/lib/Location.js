@@ -18,25 +18,7 @@ if (process.env.LOCAL_DEV === true) {
 
 export class Location {
   getOrigin() {
-    if (!theWindow.location.origin) {
-      const port = (theWindow.location.port ? `:${theWindow.location.port}` : '');
-      theWindow.location.origin = `${theWindow.location.protocol}//${theWindow.location.hostname}${port}`;
-    }
-    const isGameasyRegex = new RegExp(/http:\/\/www2?\.gameasy\.com\/([a-zA-Z0-9-_]*)/);
-    const isGameasyMatch = theWindow.location.href.match(isGameasyRegex);
-
-    let gameasyCountryCode = '', toJoin = [];
-    if (isGameasyMatch !== null) {
-      gameasyCountryCode = isGameasyMatch[1];
-      // if we are in testing integration mode we need this for url composition
-      gameasyCountryCode = gameasyCountryCode === 'test' ? 'ww-it' : gameasyCountryCode;
-    }
-
-    toJoin.push(theWindow.location.origin);
-    if (gameasyCountryCode && gameasyCountryCode !== '') {
-      toJoin.push(gameasyCountryCode);
-    }
-    return toJoin.join('/');
+    return (window._ORIGIN_ ? window._ORIGIN_ : theWindow.location.origin);
   }
 
   getCurrentHref() {
