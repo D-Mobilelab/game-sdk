@@ -8,6 +8,7 @@ export function show() {
       INPAGE_AD_CLIENT: vhost.AD_CLIENT,
       INPAGE_AD_SLOT: vhost.INGAME_ADV,
       INPAGE_AD_FORMAT: 'rectangle',
+      refresh: Date.now(),
     };
 
     const endpoint = `${Location.getOrigin()}${vhost.AD_IFRAME_URL}`;
@@ -17,16 +18,14 @@ export function show() {
       payload: {
         show: true,
         src: queryfy(endpoint, params),
-        // srcDoc: response.data
       },
     });
   };
 }
 
 export function hide() {
-/** empty source to force reload on show action */
   return {
     type: 'HIDE_INTERSTITIAL',
-    payload: { show: false, srcDoc: '' },
+    payload: { show: false },
   };
 }
