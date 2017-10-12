@@ -10,6 +10,7 @@
     background-color: rgba(0, 0, 0, 0.2);
     transition: background 300ms;
     font-family: var(--bandai-font);
+    z-index:8100;
 }
 
 .main.show {
