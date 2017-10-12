@@ -8,15 +8,18 @@ describe('Interstitial Component tests', () => {
     const wrapper = shallow(
       <Interstitial show={true}
         dismissableAfter={1}
-        srcDoc='<!DOCTYPE html><html><head></head><body></body></html>'
+        src='http://www.google.com'
         actions={actions}
       />,
     );
 
-    wrapper.instance().onLoad();
-    expect(wrapper.state('loaded')).toBe(true);
-    expect(wrapper.length).toBe(1);
     expect(wrapper).toBeDefined();
+    expect(wrapper.length).toBe(1);
+    expect(wrapper.instance().timerID).toBeNull();
+    // call the onload manually
+    wrapper.instance().handleOnLoad();
+    
+    expect(wrapper.instance().timerID).not.toBeNull();
     // console.log(wrapper.debug());
 
     const fakeEvent = {
@@ -25,6 +28,7 @@ describe('Interstitial Component tests', () => {
     };
 
     setTimeout(() => {
+      expect(wrapper.state('loaded')).toBe(true);
       expect(wrapper.state('dismissable')).toBe(true);
       wrapper.find('button').simulate('click', fakeEvent);
       expect(actions.hide).toHaveBeenCalledTimes(1);

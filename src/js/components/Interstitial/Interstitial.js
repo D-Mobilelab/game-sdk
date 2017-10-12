@@ -33,7 +33,7 @@ export class Interstitial extends React.Component {
     this.timerID = setInterval(() => {
       this.setState({ countdown: this.state.countdown - 1 }, () => {
         if (this.state.countdown <= 0) {
-          this.setState({ dismissable: true });
+          this.setState({ dismissable: true, loaded: true });
           clearInterval(this.timerID);
         }
       });
