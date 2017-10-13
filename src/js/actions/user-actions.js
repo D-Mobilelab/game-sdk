@@ -1,3 +1,4 @@
+import Raven from 'raven-js';
 import * as Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getContentId } from './gameinfo-actions';
@@ -84,6 +85,12 @@ export function getUser() {
         }
 
         dispatch({ type: 'USER_CHECK_LOAD_END', user });
+        if (!user.user) {
+          Raven.setUserContext();
+        } else {
+          Raven.setUserContext(user);
+        }
+
         return Promise.all([
           dispatch(canPlay()),
           dispatch(getUserFavourites()),

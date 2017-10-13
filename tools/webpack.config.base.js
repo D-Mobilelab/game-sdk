@@ -19,7 +19,11 @@ var devConfiguration = {
       'axios',
       'docomo-utils',
       'redux-thunk',
-      'localforage'
+      'localforage',
+      'newton-adapter',
+      'facebookpixeladapter',
+      'raven-js',
+      'raven-for-redux'
     ]
   },
   output: {
@@ -81,7 +85,7 @@ var devConfiguration = {
 
       // chunks: ["pageA", "pageB"],
       // (Only use these entries)
-      minChunks: Infinity,
+      minChunks: 3,
     }),
   ],
   // module end

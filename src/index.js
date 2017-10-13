@@ -12,6 +12,8 @@ import './css/generic.css';
 import LazilyLoad, { importLazy } from './LazilyLoad';
 import Interstitial from './js/components/Interstitial/Interstitial';
 
+window.docomo || (window.docomo = {});
+
 if (module.hot) { module.hot.accept(); }
 
 if (process.env.APP_ENV === 'HYBRID') {
@@ -73,9 +75,9 @@ function onDomLoaded() {
   window.document.body.appendChild(ROOT_ELEMENT);
 
   /**
-     * TODO:
-     * check GamifiveInfo.fw_type_profile instead
-     */
+   * TODO:
+   * check GamifiveInfo.fw_type_profile instead
+   */
   let WHITE_LABEL = (window.GamifiveInfo && window.GamifiveInfo.fw_type_profile) ? window.GamifiveInfo.fw_type_profile : 'gamifive';
   if (WHITE_LABEL.indexOf('gameasy') > -1) {
     WHITE_LABEL = 'gameasy';
