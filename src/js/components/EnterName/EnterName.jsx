@@ -22,7 +22,7 @@ export default class EnterName extends React.Component {
     this.state = {
       dismiss: false,
       focusOn: 0,
-      letters: ['a', 'a', 'a'],
+      letters: [null, null, null],
       placeholder: 'a',
     };
   }
@@ -99,9 +99,9 @@ export default class EnterName extends React.Component {
   }
 
   returnComponent() {
-    
     return (
       <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+        <button className={css.closeButton} onClick={this.props.onDismiss}></button>
         <div className={css.title}>{this.props.title}</div>
         <div className={css.formContainer}>
           <form className={css.form} ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
@@ -157,4 +157,4 @@ EnterName.defaultProps = {
   onDismiss: function () { },
   show: false,
   loading: false,
-}
+};
