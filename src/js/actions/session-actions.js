@@ -1,5 +1,5 @@
-import md5 from 'blueimp-md5';
 import Newton from 'newton';
+import md5 from 'blueimp-md5';
 import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import { isAndroid } from '../lib/Platform';
@@ -120,35 +120,36 @@ export function endSession(data = { score: 0, level: 1 }) {
 
       const lastSession = getState().session;
       // Lite only leaderboard
-      if (!getState().generic.initConfig.lite) {
+      if (!getState().generic.initConfig.lite && getState().game_info.game_type === 'default') {
         dispatch(showGameOver());
-      }
-
-      if (vhost.WHITE_LABEL.indexOf('bandai') > -1) {
-        dispatch(showEnterNameModal());
-      }
-
-      const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
-      const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
-        params: {
-          score: lastSession.score,
-          level: lastSession.level,
-          duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-          start: lastSession.startTime.getTime(),
-          label: getState().game_info.label,
-          userId: getState().user.user,
-          cors_compliant: 1,
-        },
-      })
-        .then((response) => {
+        // call standard leaderboard
+        const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
+        const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
+          params: {
+            score: lastSession.score,
+            level: lastSession.level,
+            duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
+            start: lastSession.startTime.getTime(),
+            label: getState().game_info.label,
+            userId: getState().user.user,
+            cors_compliant: 1,
+          },
+        })
+          .then((response) => {
           // get ranking?
           // response.data.ranking
           // response.data.gameInfo
           // dispatch(setMissingGameInfoPart(response.data.gameInfo));
-          dispatch(setRank(response.data.rank));
-          dispatch(setRelated(response.data.related || []));
-        });
-      return gameOverPromise;
+            dispatch(setRank(response.data.rank));
+            dispatch(setRelated(response.data.related || []));
+          });
+        return gameOverPromise;
+      }
+
+      if (getState().game_info.game_type === 'bandai') {
+        dispatch(showEnterNameModal());
+        return;
+      }
     }
     /**
      * TODO:
@@ -163,11 +164,12 @@ export function endSession(data = { score: 0, level: 1 }) {
 export function registerScore(alias) {
   return (dispatch, getState) => {
     const lastSession = getState().session;
-    const userId = getState().user.user;
+    let userId = getState().user.user;
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();
-    const userToken = NewtonInstance.getUserToken();
+    const sessionId = NewtonInstance.getSessionId();
+    if (!userId || userId === '') { userId = sessionId; }
     const params = {
       player_name: alias,
       score: lastSession.score,
@@ -176,7 +178,7 @@ export function registerScore(alias) {
       user_id: userId,
       category_id: category.id_category,
       content_id,
-      session_id: userToken,
+      session_id: sessionId,
     };
 
     params.signature = md5(`${params.user_id}${params.score}${params.content_id}pacmania`);

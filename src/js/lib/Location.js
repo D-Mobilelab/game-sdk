@@ -1,5 +1,5 @@
 import { dequeryfy } from 'docomo-utils';
-import localStorage from './LocalStorage';
+import { localStorage } from './LocalStorage';
 import windowConf from './windowConf';
 
 let theWindow = {};
@@ -16,28 +16,9 @@ if (process.env.LOCAL_DEV === true) {
   theWindow = window;
 }
 
-class Location {
+export class Location {
   getOrigin() {
-    if (!theWindow.location.origin) {
-      const port = (theWindow.location.port ? `:${theWindow.location.port}` : '');
-      theWindow.location.origin = `${theWindow.location.protocol}//${theWindow.location.hostname}${port}`;
-    }
-    const isGameasyRegex = new RegExp(/http:\/\/www2?\.gameasy\.com\/([a-zA-Z0-9-_]*)/);
-    const isGameasyMatch = theWindow.location.href.match(isGameasyRegex);
-
-    let gameasyCountryCode = '',
-      toJoin = [];
-    if (isGameasyMatch !== null) {
-      gameasyCountryCode = isGameasyMatch[1];
-      // if we are in testing integration mode we need this for url composition
-      gameasyCountryCode = gameasyCountryCode === 'test' ? 'ww-it' : gameasyCountryCode;
-    }
-
-    toJoin.push(theWindow.location.origin);
-    if (gameasyCountryCode && gameasyCountryCode !== '') {
-      toJoin.push(gameasyCountryCode);
-    }
-    return toJoin.join('/');
+    return (window._ORIGIN_ ? window._ORIGIN_ : theWindow.location.origin);
   }
 
   getCurrentHref() {
@@ -54,28 +35,6 @@ class Location {
 
   getRealOrigin() {
     return theWindow.location.origin;
-  }
-
-  /**
-   * gameasy.ru, gameasy.sg, www.gameasy.com
-   * @returns {Boolean} - return if the hostname it's a gameasy whitelabel
-   */
-  isGameasy() {
-    /**
-     * this regex should get host
-     * let hostRegex = new RegExp(/(https?:)\/\/(www2?)?\.?([a-zA-Z0-9_-]+)\.?\.[a-zA-Z0-9_-]{2,}/, 'g');
-     */
-    const host = theWindow.location.host || theWindow.location.hostname;
-    const domainLevels = host.split('.');
-    return domainLevels.some(level => level.indexOf('gameasy') > -1);
-  }
-
-  /**
-   * isGamifive
-   * @returns {Boolean} - return if the hostname it's a gamifive whitelabel
-   */
-  isGamifive() {
-    return !this.isGameasy();
   }
 }
 

@@ -17,9 +17,9 @@ const mapDispatchToProps = dispatch => ({
 export class Interstitial extends React.Component {
   constructor(props) {
     super(props);
-    this.show = this.show.bind(this);
     this.close = this.close.bind(this);
-    this.onLoad = this.onLoad.bind(this);
+    this.handleOnLoad = this.handleOnLoad.bind(this);
+    this.handleOnError = this.handleOnError.bind(this);
     this.timerID = null;
     this.state = {
       loaded: false,
@@ -28,48 +28,42 @@ export class Interstitial extends React.Component {
     };
   }
 
-  startCountDown() {
+  handleOnLoad() {
+    if (this.timerID) { clearInterval(this.timerID); }
     this.timerID = setInterval(() => {
-      this.setState({ ...this.state, countdown: this.state.countdown - 1 });
-      if (this.state.countdown === 0) this.stopCountDown();
+      this.setState({ countdown: this.state.countdown - 1 }, () => {
+        if (this.state.countdown <= 0) {
+          this.setState({ dismissable: true, loaded: true });
+          clearInterval(this.timerID);
+        }
+      });
     }, 1000);
   }
 
-  stopCountDown() {
-    this.setState({ ...this.state, dismissable: true });
-    clearInterval(this.timerID);
-  }
-
-  onLoad() {
-    if (this.props.srcDoc !== '') {
-      this.setState({ ...this.state, loaded: true });
-      this.startCountDown();
-    }
-  }
-
-  show() {
-    this.props.actions.show();
+  handleOnError(event) {
+    console.log(event);
   }
 
   close(event) {
     event.preventDefault();
     event.stopPropagation();
     if (this.state.dismissable) {
-      clearInterval(this.timerID);
-      this.props.actions.hide();
-      this.setState({ ...this.state,
-        dismissable: false,
+      this.setState({
         loaded: false,
+        dismissable: false,
         countdown: this.props.dismissableAfter,
-      });
+      }, () => this.props.actions.hide());
     }
-    // this.refs.iframeAd.parentNode.remove();
   }
 
   componentWillUnmount() {
-    console.log('component unmounted');
-    // just to be sure
     clearInterval(this.timerID);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.dismissableAfter !== nextProps.dismissableAfter) {
+      this.setState({ dismissableAfter: nextProps.dismissableAfter });
+    }
   }
 
   render() {
@@ -83,8 +77,7 @@ export class Interstitial extends React.Component {
             {this.state.countdown === 0 ? 'X' : this.state.countdown}
           </button>
         </div>
-        <iframe ref='iframeAd' src={this.props.src} srcDoc={this.props.srcDoc} onLoad={this.onLoad}>
-        </iframe>
+        <iframe ref='iframeAd' src={this.props.src} onLoad={this.handleOnLoad} onError={this.handleOnError}></iframe>
       </div>
     );
   }

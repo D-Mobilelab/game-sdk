@@ -2,7 +2,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
-
 var devConfiguration = Object.create(baseConfiguration);
 
 var FILENAME = '[name].js';

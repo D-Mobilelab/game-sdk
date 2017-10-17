@@ -1,4 +1,4 @@
-import localStorage from './LocalStorage';
+import { localStorage } from './LocalStorage';
 
 /**
  * This module is intendend to handle history navigation through games

@@ -19,15 +19,25 @@ var devConfiguration = {
       'axios',
       'docomo-utils',
       'redux-thunk',
-      'localforage'
+      'localforage',
+      'newton-adapter',
+      'facebookpixeladapter',
+      'raven-js',
+      'raven-for-redux',
+      'babel-polyfill'
     ]
   },
   output: {
     path: path.resolve('dist'),
+    auxiliaryComment: 'Docomo digital Game SDK - JS Library',
     publicPath: '/',
     filename: '[name].js',
-    libraryTarget: 'umd',
-    library: 'GamifiveSDK',
+    library: {
+      root: "GamifiveSDK",
+      amd: "docomo-game-sdk",
+      commonjs: "docomo-game-sdk"
+    },
+    libraryTarget: "umd"
   },
   module: {
     noParse: /node_modules\/localforage\/dist\/localforage.js/,
@@ -77,7 +87,7 @@ var devConfiguration = {
       // chunks: ["pageA", "pageB"],
       // (Only use these entries)
       minChunks: Infinity,
-    })
+    }),
   ],
   // module end
   resolve: {

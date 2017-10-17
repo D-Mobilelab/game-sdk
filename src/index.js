@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import localStorage from './js/lib/LocalStorage';
+import { localStorage } from './js/lib/LocalStorage';
 import SDK from './SDK';
 import store from './store';
 
@@ -73,11 +73,10 @@ function onDomLoaded() {
   window.document.body.appendChild(ROOT_ELEMENT);
 
   /**
-     * TODO:
-     * check GamifiveInfo.fw_type_profile instead
-     */
-  let WHITE_LABEL = (window.GamifiveInfo && window.GamifiveInfo.label) ? GamifiveInfo.label : 'gamifive';
-  // let WHITE_LABEL = Location.isGamifive() ? 'gamifive' : 'gameasy';
+   * TODO:
+   * check GamifiveInfo.fw_type_profile instead
+   */
+  let WHITE_LABEL = (window.GamifiveInfo && window.GamifiveInfo.fw_type_profile) ? window.GamifiveInfo.fw_type_profile : 'gamifive';
   if (WHITE_LABEL.indexOf('gameasy') > -1) {
     WHITE_LABEL = 'gameasy';
   } else if (WHITE_LABEL.indexOf('bandai') > -1) {

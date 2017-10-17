@@ -137,6 +137,19 @@ const trackingMiddleware = store => next => (action) => {
       };
       track(eventObject);
       break;
+    case 'REGISTER_SCORE_SUCCESS':
+      eventObject = {
+        name: 'NicknameAdded',
+        properties: {
+          action: 'Yes',
+          category: 'Play',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+        },
+      };
+      track(eventObject);
+      break;
     default:
       break;
   }

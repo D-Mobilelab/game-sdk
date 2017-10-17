@@ -18,4 +18,16 @@ describe('#FacebookInterface test', () => {
     instance.init({ fbAppId: '123456778', enableTracking: true });
     expect(spy).toHaveBeenCalled();
   });
+
+  it('#FacebookInterface.track without init', () => {
+    expect(instance).toBeDefined();
+    expect(() => {
+      instance.trackPageView();
+      instance.trackEvent('name', 'properties');
+    }).not.toThrow();
+    expect(instance.config).toMatchObject({
+      fbAppId: null,
+      enableTracking: false,
+    });
+  });
 });

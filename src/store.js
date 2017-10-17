@@ -1,9 +1,27 @@
+import Raven from 'raven-js';
+import createRavenMiddleware from 'raven-for-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-
+import version from './version';
 import reducer from './js/reducers/index';
 import trackingMiddleware from './js/customMiddleware/trackingMiddleware';
-import crashReporter from './js/customMiddleware/crashReporter';
+window.docomo || (window.docomo = {});
+
+const SENTRY_URL = window.docomo.SENTRY_URL;
+const WHITE_LABEL = window.docomo.WHITE_LABEL;
+const B_TEST_ID = window.docomo.B_TEST_ID;
+const ENVIRONMENT = window.docomo.ENVIRONMENT;
+
+Raven.config(SENTRY_URL, {
+  release: version.build,
+  environment: ENVIRONMENT,
+  collectWindowErrors: true,
+}).install();
+
+Raven.setTagsContext({
+  label: WHITE_LABEL,
+  settrack: B_TEST_ID,
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = [thunkMiddleware, trackingMiddleware];
@@ -14,9 +32,7 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
-if (process.env.NODE_ENV === 'production') {
-  middlewares.unshift(crashReporter);
-}
+middlewares.push(createRavenMiddleware(Raven));
 
 // CREATE THE REDUX STORE
 const store = createStore(

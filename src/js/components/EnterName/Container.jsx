@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import { Actions } from '../../actions/index';
 import EnterName from './EnterName';
 import Leaderboard from './Leaderboard';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import css from './common.css'
 
 const mapStateToProps = (state) => {
@@ -36,16 +35,16 @@ const mapDispatchToProps = (dispatch) => ({
 class EnterNameContainer extends Component {
   constructor(props) {
     super(props);
-    this.onDismiss = this.onDismiss.bind(this);
+    this.onEnterModalDismiss = this.onEnterModalDismiss.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onLeaderboardClose = this.onLeaderboardClose.bind(this);
   }
 
-  onDismiss(e) {
+  onEnterModalDismiss(e) {
     e.preventDefault();
     e.stopPropagation();
     this.props.actions.hideEnterNameModal();
-    this.props.actions.hideLeaderboard();
+    /** this.props.actions.hideLeaderboard(); **/
   }
 
   onSubmit(alias) {
@@ -64,18 +63,19 @@ class EnterNameContainer extends Component {
       WEBAPP_GAMEOVER_YOUR_SCORE,
       WEBAPP_GAMEOVER_CONGRATULATIONS,
       WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON,
-      WEBAPP_GAMEOVER_INSERT_ALIAS
+      WEBAPP_GAMEOVER_INSERT_ALIAS,
     } = this.props.dictionary;
     return (
       <div className={[css.main, (this.props.showEnterName || this.props.showLeaderboard) ? css.show : ''].join(' ')} onClick={this.onDismiss}>
         <div style={{ position: 'relative' }}>
 
-          <EnterName 
+          <EnterName
             title={WEBAPP_GAMEOVER_INSERT_ALIAS}
             buttonLabel={WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON}
             show={this.props.showEnterName}
             onSubmit={this.onSubmit}
             loading={this.props.loading}
+            onDismiss={this.onEnterModalDismiss}
           />
           <Leaderboard
             title={WEBAPP_GAMEOVER_HIGH_SCORE}

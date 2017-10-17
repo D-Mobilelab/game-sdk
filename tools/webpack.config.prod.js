@@ -2,9 +2,9 @@
 var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
-
-var FILENAME = '[name].min.js';
-var FILENAME_HYBRID = '[name].hybrid.min.js';
+var getAssetsChunkName = require('./getAssetsChunkName')(process.env.NODE_ENV);
+var FILENAME = '[name].[chunkhash:5].min.js';
+var FILENAME_HYBRID = '[name].[chunkhash:5].hybrid.min.js';
 
 var prodConfiguration = Object.create(baseConfiguration);
 var ROOT_DIRECTORY = null;
@@ -33,6 +33,7 @@ prodConfiguration.plugins = prodConfiguration.plugins.concat([
     sourceMap: true,
     compress: { warnings: false, screw_ie8: true },
   }),
+  getAssetsChunkName  
 ])
 
 module.exports = prodConfiguration;
