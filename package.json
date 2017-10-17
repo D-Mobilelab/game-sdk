@@ -1,6 +1,6 @@
 {
   "name": "docomo-game-sdk",
-  "version": "2.6.1",
+  "version": "2.7.0",
   "description": "Docomo digital Game SDK - JS Library",
   "main": "dist/gfsdk.js",
   "repository": {
