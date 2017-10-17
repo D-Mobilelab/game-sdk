@@ -12,8 +12,6 @@ import './css/generic.css';
 import LazilyLoad, { importLazy } from './LazilyLoad';
 import Interstitial from './js/components/Interstitial/Interstitial';
 
-window.docomo || (window.docomo = {});
-
 if (module.hot) { module.hot.accept(); }
 
 if (process.env.APP_ENV === 'HYBRID') {

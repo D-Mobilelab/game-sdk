@@ -23,7 +23,8 @@ var devConfiguration = {
       'newton-adapter',
       'facebookpixeladapter',
       'raven-js',
-      'raven-for-redux'
+      'raven-for-redux',
+      'babel-polyfill'
     ]
   },
   output: {
@@ -85,7 +86,7 @@ var devConfiguration = {
 
       // chunks: ["pageA", "pageB"],
       // (Only use these entries)
-      minChunks: 3,
+      minChunks: Infinity,
     }),
   ],
   // module end
