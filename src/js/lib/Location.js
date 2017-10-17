@@ -1,5 +1,5 @@
 import { dequeryfy } from 'docomo-utils';
-import localStorage from './LocalStorage';
+import { localStorage } from './LocalStorage';
 import windowConf from './windowConf';
 
 let theWindow = {};

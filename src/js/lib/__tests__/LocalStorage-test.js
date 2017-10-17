@@ -1,54 +1,54 @@
-import LocalStorageClass from '../LocalStorage';
+import { localStorage } from '../LocalStorage';
 
 describe('#LocalStorage class', () => {
   beforeEach(() => {
-    LocalStorageClass.storage = {};
+    localStorage.storage = {};
   });
 
   it('should import the class', () => {
-    LocalStorageClass.setItem('key', 1);
-    expect(JSON.parse(LocalStorageClass.getItem('key'))).toEqual(1);
+    localStorage.setItem('key', 1);
+    expect(JSON.parse(localStorage.getItem('key'))).toEqual(1);
   });
 
   it('If unsupported should put it on memory', () => {
-    LocalStorageClass.supported = false;
-    expect(LocalStorageClass.supported).toEqual(false);
+    localStorage.supported = false;
+    expect(localStorage.supported).toEqual(false);
 
-    LocalStorageClass.setItem('chiave', 1);
-    expect(LocalStorageClass.storage).toEqual({ chiave: '1' });
-    expect(LocalStorageClass.getItem('chiave')).toEqual('1');
+    localStorage.setItem('chiave', 1);
+    expect(localStorage.storage).toEqual({ chiave: '1' });
+    expect(localStorage.getItem('chiave')).toEqual('1');
 
-    LocalStorageClass.clear();
-    expect(LocalStorageClass.storage).toEqual({});
-    LocalStorageClass.supported = true;
+    localStorage.clear();
+    expect(localStorage.storage).toEqual({});
+    localStorage.supported = true;
   });
 
   it('If unsupported should return null if key does not exists', () => {
-    LocalStorageClass.supported = false;
-    expect(LocalStorageClass.supported).toEqual(false);
+    localStorage.supported = false;
+    expect(localStorage.supported).toEqual(false);
 
-    expect(LocalStorageClass.storage).toEqual({});
-    expect(LocalStorageClass.getItem('notExists')).toBeNull();
+    expect(localStorage.storage).toEqual({});
+    expect(localStorage.getItem('notExists')).toBeNull();
 
-    LocalStorageClass.clear();
-    expect(LocalStorageClass.storage).toEqual({});
-    LocalStorageClass.supported = true;
+    localStorage.clear();
+    expect(localStorage.storage).toEqual({});
+    localStorage.supported = true;
   });
 
   it('removeItem if unsupported', () => {
-    LocalStorageClass.supported = false;
-    expect(LocalStorageClass.supported).toEqual(false);
-    LocalStorageClass.setItem('ciccio', { a: 1 });
-    LocalStorageClass.removeItem('ciccio');
+    localStorage.supported = false;
+    expect(localStorage.supported).toEqual(false);
+    localStorage.setItem('ciccio', { a: 1 });
+    localStorage.removeItem('ciccio');
 
-    expect(LocalStorageClass.storage).toEqual({});
-    LocalStorageClass.supported = true;
+    expect(localStorage.storage).toEqual({});
+    localStorage.supported = true;
   });
 
   it('test isSupported method when localStorage null', () => {
     const mockWindow = { localStorage: null };
-    LocalStorageClass.isSupported(mockWindow);
-    expect(LocalStorageClass.supported).toEqual(false);
+    localStorage.isSupported(mockWindow);
+    expect(localStorage.supported).toEqual(false);
   });
 
   it('test isSupported method when setItem throws error', () => {
@@ -59,7 +59,7 @@ describe('#LocalStorage class', () => {
         },
       },
     };
-    LocalStorageClass.isSupported(mockWindow);
-    expect(LocalStorageClass.supported).toEqual(false);
+    localStorage.isSupported(mockWindow);
+    expect(localStorage.supported).toEqual(false);
   });
 });

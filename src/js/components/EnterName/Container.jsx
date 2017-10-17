@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import { Actions } from '../../actions/index';
 import EnterName from './EnterName';
 import Leaderboard from './Leaderboard';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import css from './common.css'
 
 const mapStateToProps = (state) => {
@@ -44,8 +43,10 @@ class EnterNameContainer extends Component {
   onDismiss(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.props.actions.hideEnterNameModal();
-    this.props.actions.hideLeaderboard();
+    /**
+      this.props.actions.hideEnterNameModal();
+      this.props.actions.hideLeaderboard();
+    **/
   }
 
   onSubmit(alias) {

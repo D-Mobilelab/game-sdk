@@ -1,26 +1,31 @@
-export class LocalStorage {
-  constructor() {
+const sessionStorageKey = 'sessionStorage';
+const localStorageKey = 'localStorage';
+
+class Storage {
+  constructor(type) {
+    this.type = type;
     this.storage = {};
     this.isSupported();
   }
 
   setItem(key, obj) {
     if (this.supported) {
-      return window.localStorage.setItem(key, obj);
+      return window[this.type].setItem(key, obj);
     }
-    return this.storage[key] = obj.toString();
+    this.storage[key] = obj.toString();
+    return this.storage[key];
   }
 
   getItem(key) {
     if (this.supported) {
-      return window.localStorage.getItem(key);
+      return window[this.type].getItem(key);
     }
     return this.storage[key] ? this.storage[key] : null;
   }
 
   clear() {
     if (this.supported) {
-      return window.localStorage.clear();
+      return window[this.type].clear();
     }
     this.storage = {};
     return this.storage;
@@ -28,7 +33,7 @@ export class LocalStorage {
 
   removeItem(key) {
     if (this.supported) {
-      window.localStorage.removeItem(key);
+      window[this.type].removeItem(key);
     }
     delete this.storage[key];
   }
@@ -36,12 +41,12 @@ export class LocalStorage {
   isSupported() {
     const global = arguments[0] ? arguments[0] : window;
     try {
-      if (!global.localStorage) {
+      if (!global[this.type]) {
         this.supported = false;
       }
-      global.localStorage.setItem('__test__', 1);
-      global.localStorage.getItem('__test__');
-      global.localStorage.removeItem('__test__');
+      global[this.type].setItem('__test__', 1);
+      global[this.type].getItem('__test__');
+      global[this.type].removeItem('__test__');
       this.supported = true;
     } catch (e) {
       this.supported = false;
@@ -50,5 +55,6 @@ export class LocalStorage {
   }
 }
 
-const localStorageInstance = new LocalStorage();
-export default localStorageInstance;
+const localStorage = new Storage(localStorageKey);
+const sessionStorage = new Storage(sessionStorageKey);
+export default { localStorage, sessionStorage, Storage };

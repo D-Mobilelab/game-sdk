@@ -1,4 +1,4 @@
-import localStorage from '../lib/LocalStorage';
+import { localStorage } from '../lib/LocalStorage';
 import { AxiosInstance } from '../lib/AxiosService';
 
 export function load(VHOST_API_URL, keys) {

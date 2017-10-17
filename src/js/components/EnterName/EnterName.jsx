@@ -4,6 +4,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import MaterialButton from '../MaterialButton/MaterialButton';
 import bandaiTheme from '../MaterialButton/theme/bandai.css';
 import withTheme from '../withTheme';
+import { sessionStorage } from '../../lib/LocalStorage';
 
 const BandaiButton = withTheme(MaterialButton, bandaiTheme);
 
@@ -22,7 +23,14 @@ export default class EnterName extends React.Component {
       dismiss: false,
       focusOn: 0,
       letters: ['a', 'a', 'a'],
-      placeholder: 'a'
+      placeholder: 'a',
+    };
+  }
+
+  componentDidMount() {
+    this.currentAlias = sessionStorage.getItem('gfsdk-alias-name');
+    if (this.currentAlias) {
+      this.setState({ letters: this.currentAlias.split('') });
     }
   }
 
@@ -30,14 +38,18 @@ export default class EnterName extends React.Component {
     /** serialize the form */
     const elements = [].slice.call(this.refs.myForm);
     const alias = elements
-      .filter((element) => element.type === 'text')
-      .map((element) => element.value === '' ? this.state.placeholder : element.value)
+      .filter(element => element.type === 'text')
+      .map(element => element.value === '' ? this.state.placeholder : element.value)
       .join('');
-    return alias
+    return alias;
   }
 
   onClick() {
-    this.props.onSubmit(this.serializeForm());
+    const name = this.serializeForm();
+    this.props.onSubmit(name);
+    // save in storage and in state
+    this.setState({ letters: name.split('') });
+    sessionStorage.setItem('gfsdk-alias-name', name);
   }
 
   onSubmit(e) {
@@ -49,29 +61,31 @@ export default class EnterName extends React.Component {
 
   onKeyUp(e) {
     const key = e.keyCode || e.which || e.charCode;
-    const inputValue = this[`input${this.state.focusOn}`].value;
+    // const inputValue = this[`input${this.state.focusOn}`].value;
     // on delete go backwards
-    // I need to check the delete key press 
-    // like this because an issue on mobile chrome etc    
-    if (inputValue === '') {
+    // 8 is delete
+    const character = String.fromCharCode(key);
+    if (key === 8) {
+      console.log(`Delete key ${key} ${String.fromCharCode(key)}`);
       // on delete
-      if (this.state.focusOn > 0) {
-        this.setState({ ...this.state, focusOn: this.state.focusOn - 1 }, () => {
+      if (this.state.focusOn > 0) {        
+        this.setState({ focusOn: this.state.focusOn - 1 }, () => {
           // Switch focus to previous input
-          //console.log("previous focus", this.state);
+          // console.log("previous focus", this.state);
           this[`input${this.state.focusOn}`].focus();
         });
       }
     } else {
-      // on input
+      // On input
       if (this.state.focusOn < this.state.letters.length - 1) {
-        this.setState({ ...this.state, focusOn: this.state.focusOn + 1 }, () => {
+        this.setState({ focusOn: this.state.focusOn + 1 }, () => {
           // Switch focus to next input
           // console.log("next focus", this.state);
           this[`input${this.state.focusOn}`].focus();
         });
       } else {
-        // give the focus to the button?        
+        // give the focus to the button?
+        this[`input${this.state.focusOn}`].blur();
       }
     }
   }
@@ -79,14 +93,15 @@ export default class EnterName extends React.Component {
   onInputFocus(e) {
     try {
       e.target.value = '';
-      const inputOnFocusNumber = parseInt(e.target.id.split('_')[1]);
-      this.setState({ ...this.state, focusOn: inputOnFocusNumber });
-    } catch (e) { }
+      const inputOnFocusNumber = parseInt(e.target.id.split('_')[1], 10);
+      this.setState({ focusOn: inputOnFocusNumber });
+    } catch (e) {}
   }
 
   returnComponent() {
+    
     return (
-      <div className={css.container} onClick={(e) => e.stopPropagation()}>
+      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
         <div className={css.title}>{this.props.title}</div>
         <div className={css.formContainer}>
           <form className={css.form} ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
@@ -98,11 +113,12 @@ export default class EnterName extends React.Component {
                       <input onFocus={this.onInputFocus}
                         className={css.inputLetter}
                         id={`input_${i}`}
-                        key={i}
+                        key={`input_${i}`}
                         ref={(ref) => { this[`input${i}`] = ref; }}
                         type='text'
                         maxLength='1'
                         autoComplete='off'
+                        defaultValue={letter}
                         placeholder={this.state.placeholder}
                       />)
                   })
@@ -140,5 +156,5 @@ EnterName.defaultProps = {
   onSubmit: function () { },
   onDismiss: function () { },
   show: false,
-  loading: false
+  loading: false,
 }

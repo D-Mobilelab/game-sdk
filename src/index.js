@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import localStorage from './js/lib/LocalStorage';
+import { localStorage } from './js/lib/LocalStorage';
 import SDK from './SDK';
 import store from './store';
 
