@@ -163,13 +163,15 @@ export function endSession(data = { score: 0, level: 1 }) {
 
 export function registerScore(alias) {
   return (dispatch, getState) => {
+    // TODO: 
+    // userId = NewtonInstance.getUserToken();
+    // sessionId = NewtonInstance.getSessionId();
     const lastSession = getState().session;
-    let userId = getState().user.user;
+    const userId = getState().user.user;
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();
     const sessionId = NewtonInstance.getSessionId();
-    if (!userId || userId === '') { userId = sessionId; }
     const params = {
       player_name: alias,
       score: lastSession.score,
