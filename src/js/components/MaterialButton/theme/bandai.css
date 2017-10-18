@@ -1,4 +1,5 @@
 @value background: #FF9900;
+@value backgroundSecondary: #00a2d9;
 
 .btn {
     composes: btn from './default.css';    
@@ -12,6 +13,18 @@
                  linear-gradient(45deg,  transparent 2px, background 0) bottom left; 
     background-size: 50% 50%; 
     background-repeat: no-repeat;
+}
+
+.secondary {
+    composes: btn;
+    border-color: backgroundSecondary;
+    background: backgroundSecondary;
+    background:  linear-gradient(135deg, transparent 2px, backgroundSecondary 0) top left, 
+                 linear-gradient(225deg, transparent 2px, backgroundSecondary 0) top right,
+                 linear-gradient(315deg, transparent 2px, backgroundSecondary 0) bottom right,  
+                 linear-gradient(45deg,  transparent 2px, backgroundSecondary 0) bottom left; 
+    background-size: 50% 50%; 
+    background-repeat: no-repeat;      
 }
 
 .loadingSpinner {

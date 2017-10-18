@@ -52,7 +52,8 @@ export default class MaterialButton extends React.Component {
 
   render() {
     const { theme } = this.props;
-    const buttonClasses = [theme.btn, this.props.center ? theme.centerBtn : ''];
+    const baseClass = this.props.secondary ? theme.secondary : theme.btn;
+    const buttonClasses = [baseClass, this.props.center ? theme.centerBtn : ''];
 
     const classNames = buttonClasses.join(' ');
     return (

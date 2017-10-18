@@ -38,11 +38,13 @@ storiesOf('MaterialButton theme', module)
 
 
 storiesOf('BandaiButton theme', module)
-  .add('standard', () => (<BandaiButton onClick={action('clicked')}>Prova</BandaiButton>))
+  .add('primary', () => (<BandaiButton onClick={action('clicked')}>Prova</BandaiButton>))  
   .add('with long text', () => (<BandaiButton onClick={action('clicked')}>Some very very long texxxxxxxxxxxxxxxxxxt</BandaiButton>))
   .add('disabled', () => (<BandaiButton disabled>Prova</BandaiButton>))
   .add('disabled isLoading', () => (<BandaiButton disabled isLoading>Prova</BandaiButton>))
-  .add('isLoading', () => (<BandaiButton isLoading={true}>Prova</BandaiButton>));
+  .add('isLoading', () => (<BandaiButton isLoading={true}>Prova</BandaiButton>))
+  .add('secondary', () => (<BandaiButton secondary>Prova</BandaiButton>))
+  .add('secondary is loading', () => (<BandaiButton secondary isLoading={true} disabled={true}>Prova</BandaiButton>));
 
 storiesOf('EnterName without theme', module)
   .add('standard', () => {
