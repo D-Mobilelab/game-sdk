@@ -104,10 +104,10 @@ export default class LeaderBoard extends React.Component {
 }
 
 LeaderBoard.defaultProps = {
-  title: 'Highest Score',
-  congratulations: 'Congratulations!',
-  yourScore: 'Your score',
-  replayButtonText: 'Play Again!',
+  title: '',
+  congratulations: '',
+  yourScore: '',
+  replayButtonText: '',
   onClose: () => { },
   score: 0,
   show: false,

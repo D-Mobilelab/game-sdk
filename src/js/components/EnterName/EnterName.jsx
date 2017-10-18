@@ -150,8 +150,8 @@ export default class EnterName extends React.Component {
 }
 
 EnterName.defaultProps = {
-  title: 'Enter your initials!',
-  buttonLabel: 'Enter',
+  title: '',
+  buttonLabel: '',
   onSubmit: function () { },
   onDismiss: function () { },
   show: false,

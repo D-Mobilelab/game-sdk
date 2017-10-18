@@ -57,8 +57,7 @@ devConfiguration.devServer = {
               for(var key in localvhost) {
                 body[key] = localvhost[key];
               }
-              console.log('Keys added', localvhost);
-              
+              console.log('Keys added', localvhost);              
             }
             return body;
           });
@@ -72,7 +71,12 @@ devConfiguration.devServer = {
       cookieDomainRewrite: {
         SERVICE: SERVICE
       }
-    }, 
+    },
+    '/**/dictionary': {
+      target: PROTOCOL + SERVICE,
+      changeOrigin: true,
+      historyApiFallback: true,
+    }
   }
 }
 

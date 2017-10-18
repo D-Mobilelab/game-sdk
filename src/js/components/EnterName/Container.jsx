@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
  * WEBAPP_GAMEOVER_HIGH_SCORE default: High Score 
  * WEBAPP_GAMEOVER_YOUR_SCORE default: Your Score
  * WEBAPP_GAMEOVER_CONGRATULATIONS default: Congratulations! Try to reach the top five!
- * WEBAPP_REPLAY
+ * WEBAPP_REPLAY - rigioca
  * WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON default: enter
  * WEBAPP_GAMEOVER_INSERT_ALIAS default: Enter your initials!
  * 
@@ -45,10 +45,8 @@ class EnterNameContainer extends Component {
   onEnterModalDismiss(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.props.actions.hideEnterNameModal();
-    if (this.props.lite) {
-      this.props.actions.startSession();
-    }
+    this.props.actions.hideEnterNameModal({ userInput: true });
+    if (this.props.lite) { this.props.actions.startSession(); }
   }
 
   onSubmit(alias) {
@@ -59,9 +57,7 @@ class EnterNameContainer extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.props.actions.hideLeaderboard();
-    if (this.props.lite) {
-      this.props.actions.startSession();
-    }
+    if (this.props.lite) { this.props.actions.startSession(); }
   }
 
   render() {
