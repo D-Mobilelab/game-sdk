@@ -4,6 +4,12 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import transitions from './transitions.css';
 import css from './leaderboard.css';
 
+import withTheme from '../withTheme';
+import MaterialButton from '../MaterialButton/MaterialButton';
+import bandaiTheme from '../MaterialButton/theme/bandai.css';
+
+const BandaiButton = withTheme(MaterialButton, bandaiTheme);
+
 function addPointSeparator(intNum) {
   return (`${intNum}`).replace(/(\d)(?=(\d{3})+$)/g, '$1.');
 }
@@ -75,6 +81,11 @@ export default class LeaderBoard extends React.Component {
             <Arrows left style={{ width: '25%', textAlign: 'center' }} />
           </div>
           <div className={css.message}>{this.props.congratulations}</div>
+          { this.props.lite ? (<div>
+            <BandaiButton type='button' secondary style={{ minWidth: '200px', display: 'block', margin: '0 auto' }} onClick={this.props.onClose}>
+              {this.props.replayButtonText.toUpperCase()}
+            </BandaiButton>
+          </div>) : null }
         </div>
       </div>
     );
@@ -94,8 +105,9 @@ export default class LeaderBoard extends React.Component {
 
 LeaderBoard.defaultProps = {
   title: 'Highest Score',
-  congratulations: 'Congrats',
+  congratulations: 'Congratulations!',
   yourScore: 'Your score',
+  replayButtonText: 'Play Again!',
   onClose: () => { },
   score: 0,
   show: false,

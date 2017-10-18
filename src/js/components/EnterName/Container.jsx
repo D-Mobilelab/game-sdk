@@ -16,8 +16,9 @@ const mapStateToProps = (state) => {
     leaderboard: state.gameOverBandai.leaderboard,
     loading: state.gameOverBandai.loading,
     dictionary: state.generic.dictionary,
-    currentScore: state.session.score
-  }
+    currentScore: state.session.score,
+    lite: state.generic.initConfig.lite,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -28,9 +29,10 @@ const mapDispatchToProps = (dispatch) => ({
  * WEBAPP_GAMEOVER_HIGH_SCORE default: High Score 
  * WEBAPP_GAMEOVER_YOUR_SCORE default: Your Score
  * WEBAPP_GAMEOVER_CONGRATULATIONS default: Congratulations! Try to reach the top five!
- * 
+ * WEBAPP_REPLAY
  * WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON default: enter
  * WEBAPP_GAMEOVER_INSERT_ALIAS default: Enter your initials!
+ * 
  */
 class EnterNameContainer extends Component {
   constructor(props) {
@@ -44,7 +46,9 @@ class EnterNameContainer extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.props.actions.hideEnterNameModal();
-    /** this.props.actions.hideLeaderboard(); **/
+    if (this.props.lite) {
+      this.props.actions.startSession();
+    }
   }
 
   onSubmit(alias) {
@@ -55,6 +59,9 @@ class EnterNameContainer extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.props.actions.hideLeaderboard();
+    if (this.props.lite) {
+      this.props.actions.startSession();
+    }
   }
 
   render() {
@@ -64,6 +71,7 @@ class EnterNameContainer extends Component {
       WEBAPP_GAMEOVER_CONGRATULATIONS,
       WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON,
       WEBAPP_GAMEOVER_INSERT_ALIAS,
+      WEBAPP_REPLAY,
     } = this.props.dictionary;
     return (
       <div className={[css.main, (this.props.showEnterName || this.props.showLeaderboard) ? css.show : ''].join(' ')} onClick={this.onDismiss}>
@@ -81,13 +89,15 @@ class EnterNameContainer extends Component {
             title={WEBAPP_GAMEOVER_HIGH_SCORE}
             congratulations={WEBAPP_GAMEOVER_CONGRATULATIONS}
             yourScore={WEBAPP_GAMEOVER_YOUR_SCORE}
+            replayButtonText={WEBAPP_REPLAY}
             score={this.props.currentScore}
             leaderboard={this.props.leaderboard}
             onClose={this.onLeaderboardClose}
-            show={this.props.showLeaderboard} />
+            show={this.props.showLeaderboard}
+            lite={this.props.lite} />
         </div>
       </div>
-    )
+    );
   }
 }
 

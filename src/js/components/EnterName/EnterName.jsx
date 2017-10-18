@@ -5,11 +5,10 @@ import MaterialButton from '../MaterialButton/MaterialButton';
 import bandaiTheme from '../MaterialButton/theme/bandai.css';
 import withTheme from '../withTheme';
 import { sessionStorage } from '../../lib/LocalStorage';
-
-const BandaiButton = withTheme(MaterialButton, bandaiTheme);
-
 import transitions from './transitions.css';
 import css from './enterName.css';
+
+const BandaiButton = withTheme(MaterialButton, bandaiTheme);
 
 export default class EnterName extends React.Component {
   constructor(props) {

@@ -30,8 +30,10 @@
 }
 
 .centerBtn {
-    display: block;
-    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -25%;
 }
 
 .rippleActive {
