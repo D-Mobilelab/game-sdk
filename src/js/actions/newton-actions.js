@@ -8,11 +8,7 @@ const hybrid = process.env.APP_ENV === 'HYBRID';
 export function init() {
   return (dispatch, getState) => {
     const currentState = getState();
-
-    let newtonSecret = currentState.vhost.NEWTON_SECRETID;
-    if (process.env.NODE_ENV === 'development') {
-      newtonSecret = NEWTON_DEBUG_SECRET;
-    }
+    const newtonSecret = currentState.vhost.NEWTON_SECRETID;
 
     return NewtonAdapter.init({
       secretId: newtonSecret,
