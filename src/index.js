@@ -2,73 +2,19 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-
-import { localStorage } from './js/lib/LocalStorage';
-import SDK from './SDK';
 import store from './store';
 
-import './css/generic.css';
-
-import LazilyLoad, { importLazy } from './LazilyLoad';
-import Interstitial from './js/components/Interstitial/Interstitial';
-
-if (module.hot) { module.hot.accept(); }
+import App from './App';
+import { localStorage } from './js/lib/LocalStorage';
+import SDK from './SDK';
 
 if (process.env.APP_ENV === 'HYBRID') {
   __webpack_public_path__ = RUNTIME_PUBLIC_PATH;
 }
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Interstitial />
-        <LazilyLoad modules={{
-          Gameover: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/GameasyOver'));
-            } else if (this.props.label === 'bandai') {
-              return function Noop() { return null; };
-            }
-            return importLazy(System.import('./js/components/GamifiveOver'));
-          },
-          Banner: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/Banner/Banner'));
-            }
-            return function Noop() { return null; };
-          },
-          Menu: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/Menu/MenuGameasy'));
-            } else if (this.props.label === 'bandai') {
-              return importLazy(System.import('./js/components/Menu/MenuBandai'));
-            }
-            return importLazy(System.import('./js/components/Menu/MenuGamifive'));
-          },
-          EnterNameContainer: () => {
-            if (this.props.label === 'bandai') {
-              return importLazy(System.import('./js/components/EnterName/Container'));
-            }
-            return function Noop() { return null; };
-          },
-        }}>
-          {({ Gameover, Banner, Menu, EnterNameContainer }) => (
-            <div>
-              <EnterNameContainer />
-              <Gameover />
-              <Banner />
-              <Menu />
-            </div>)
-          }
-        </LazilyLoad>
-      </div>
-    );
-  }
-}
-
+let ROOT_ELEMENT = null;
 function onDomLoaded() {
-  const ROOT_ELEMENT = document.createElement('div');
+  ROOT_ELEMENT = document.createElement('div');
   ROOT_ELEMENT.id = 'gfsdk_root_new';
   window.document.body.appendChild(ROOT_ELEMENT);
 
@@ -92,6 +38,13 @@ function onDomLoaded() {
     </Provider>,
     ROOT_ELEMENT,
   );
+}
+
+if (module.hot) {
+  module.hot.accept('./App.js', () => {
+    // Require the new version and render it instead    
+    ReactDOM.render(<App />, ROOT_ELEMENT);
+  });
 }
 
 window.document.addEventListener('DOMContentLoaded', onDomLoaded);
