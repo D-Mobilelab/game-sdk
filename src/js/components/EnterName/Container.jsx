@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { Actions } from '../../actions/index';
 import EnterName from './EnterName';
 import Leaderboard from './Leaderboard';
-import css from './common.css'
+import css from './common.css';
 
 const mapStateToProps = (state) => {
   return {
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     loading: state.gameOverBandai.loading,
     dictionary: state.generic.dictionary,
     currentScore: state.session.score,
-    lite: state.generic.initConfig.lite,
+    showReplayButton: false,
   };
 };
 
@@ -38,15 +38,15 @@ class EnterNameContainer extends Component {
   constructor(props) {
     super(props);
     this.onEnterModalDismiss = this.onEnterModalDismiss.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.onLeaderboardClose = this.onLeaderboardClose.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onEnterModalDismiss(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.props.actions.hideEnterNameModal({ userInput: true });
-    if (this.props.lite) { this.props.actions.startSession(); }
+    this.props.actions.hideEnterNameModal(true);
+    if (this.props.showReplayButton) { this.props.actions.startSession(); }
   }
 
   onSubmit(alias) {
@@ -57,7 +57,7 @@ class EnterNameContainer extends Component {
     e.preventDefault();
     e.stopPropagation();
     this.props.actions.hideLeaderboard();
-    if (this.props.lite) { this.props.actions.startSession(); }
+    if (this.props.showReplayButton) { this.props.actions.startSession(); }
   }
 
   render() {
@@ -90,7 +90,8 @@ class EnterNameContainer extends Component {
             leaderboard={this.props.leaderboard}
             onClose={this.onLeaderboardClose}
             show={this.props.showLeaderboard}
-            lite={this.props.lite} />
+            showReplayButton={this.props.showReplayButton}
+          />
         </div>
       </div>
     );

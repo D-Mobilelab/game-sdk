@@ -1,4 +1,3 @@
-@value height: 120px;
 @value background_orange: #FF9900;
 
 .container {
@@ -11,7 +10,8 @@
     margin-top: 3%;
     width: 85%;
     max-width: 480px;
-    height: height;
+    height: auto;
+    padding: 15px 0;
 }
 
 .formContainer {
@@ -29,7 +29,7 @@
     color: background_orange;
     text-transform: uppercase;
     text-align: center;
-    padding-top: 10px;
+    padding: 5px 0;
 }
 
 .element {
@@ -69,6 +69,7 @@
 
 .closeButton {
     position: absolute;
+    top:0;
     right: 0;
     width: 15px;
     height: 15px;

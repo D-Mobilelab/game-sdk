@@ -150,6 +150,21 @@ const trackingMiddleware = store => next => (action) => {
       };
       track(eventObject);
       break;
+    case 'HIDE_ENTER_NAME':
+      if (action.payload && action.payload.userInput) {
+        eventObject = {
+          name: 'EnterNameClose',
+          properties: {
+            action: 'Yes',
+            category: 'Play',
+            game_title: currentState.game_info.title,
+            label: currentState.game_info.content_id,
+            valuable: 'No',
+          },
+        };
+        track(eventObject);
+      }
+      break;
     default:
       break;
   }

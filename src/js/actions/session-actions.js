@@ -119,10 +119,18 @@ export function endSession(data = { score: 0, level: 1 }) {
       dispatch(showMenu());
 
       const lastSession = getState().session;
-      // Lite only leaderboard
-      if (!getState().generic.initConfig.lite && getState().game_info.game_type === 'default') {
-        dispatch(showGameOver());
-        // call standard leaderboard
+      const { game_type } = getState().game_info;
+      const { initConfig } = getState().generic;
+      const { FW_TYPE_PROFILE } = getState().vhost;
+      if (FW_TYPE_PROFILE === 'bandai' && game_type === 'bandai') {
+        // always show if on bandai service and game is a bandai one
+        dispatch(showEnterNameModal());
+        return;
+      } else if (game_type === 'default') {
+        if (initConfig.lite === false) {
+          dispatch(showGameOver());
+        }
+        // Call standard leaderboard
         const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
         const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
           params: {
@@ -144,12 +152,12 @@ export function endSession(data = { score: 0, level: 1 }) {
             dispatch(setRelated(response.data.related || []));
           });
         return gameOverPromise;
-      }
-
-      if (getState().game_info.game_type === 'bandai') {
+      } else if (game_type === 'default' && !initConfig.lite && FW_TYPE_PROFILE === 'bandai') {
+        // on bandai portal, non-bandai game, non-lite(requires gameover) then show bandai gameover
         dispatch(showEnterNameModal());
         return;
       }
+      return;
     }
     /**
      * TODO:
@@ -164,8 +172,7 @@ export function endSession(data = { score: 0, level: 1 }) {
 export function registerScore(alias) {
   return (dispatch, getState) => {
     // TODO: 
-    // userId = NewtonInstance.getUserToken();
-    // sessionId = NewtonInstance.getSessionId();
+    // userId = NewtonInstance.getUserToken();    
     const lastSession = getState().session;
     const userId = getState().user.user;
     const { vhost } = getState();

@@ -99,7 +99,7 @@ export default class EnterName extends React.Component {
 
   returnComponent() {
     return (
-      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>        
         <button className={css.closeButton} onClick={this.props.onDismiss}></button>
         <div className={css.title}>{this.props.title}</div>
         <div className={css.formContainer}>

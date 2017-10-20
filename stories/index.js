@@ -91,6 +91,22 @@ storiesOf('LeaderBoard Bandai theme', module)
         ]}
       />
     </div>
+  ))
+  .add('Leaderboard with replaybutton', () => (
+    <div style={{ position: 'fixed', width: '100%', top: '0' }}>
+      <Leaderboard title={'High Score'}
+        score={975}
+        onClose={action('close clicked')}
+        show={true}
+        leaderboard={[
+          { score: 2398, position: 1, player_name: 'ALE' },
+          { score: 2005, position: 2, player_name: 'JOE' },
+          { score: 1560, position: 3, player_name: 'ROY' },
+        ]}
+        showReplayButton={true}
+        replayButtonText='Replay'
+      />
+    </div>
   ));
 
 storiesOf('Menu', module)
