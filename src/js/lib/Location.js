@@ -18,7 +18,8 @@ if (process.env.LOCAL_DEV === true) {
 
 export class Location {
   getOrigin() {
-    return (window._ORIGIN_ ? window._ORIGIN_ : theWindow.location.origin);
+    const origin = window._ORIGIN_ ? window._ORIGIN_.substr(0, window._ORIGIN_.length - 1) : theWindow.location.origin;
+    return origin;
   }
 
   getCurrentHref() {
