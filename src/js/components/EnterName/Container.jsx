@@ -49,8 +49,8 @@ class EnterNameContainer extends Component {
     if (this.props.showReplayButton) { this.props.actions.startSession(); }
   }
 
-  onSubmit(alias) {
-    this.props.actions.registerScore(alias);
+  onSubmit(alias, inputFocus) {
+    this.props.actions.registerScore(alias, inputFocus);
   }
 
   onLeaderboardClose(e) {

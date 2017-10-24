@@ -170,8 +170,17 @@ export function endSession(data = { score: 0, level: 1 }) {
   };
 }
 
-export function registerScore(alias) {
+export function registerScore(alias, inputFocus) {
   return (dispatch, getState) => {
+    let shouldTrack = false;
+    if (inputFocus === 0 && alias === 'aaa') {
+      // Not inserted
+    } else if (inputFocus === 0 && alias !== 'aaa') {
+      // Already inserted the first time. Should I track?
+    } else if (inputFocus > 0 && alias !== 'aaa') {
+      // Nick name added
+      shouldTrack = true;
+    }
     // TODO: 
     // userId = NewtonInstance.getUserToken();    
     const lastSession = getState().session;
@@ -201,6 +210,7 @@ export function registerScore(alias) {
         if (realResponse.error === 0) {
           const payload = {
             leaderboard: realResponse.data.top_scorer,
+            shouldTrack,
           };
           dispatch({ type: 'REGISTER_SCORE_SUCCESS', payload });
           dispatch(hideEnterNameModal());
