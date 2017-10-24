@@ -1,8 +1,7 @@
-import { normalizeGameInfo } from '../gameinfo-actions';
+import { normalizeGameInfo } from '../utils';
 
 describe('Gameinfo tests', () => {
-  let gameInfoResponse403,
-    gameInfoResponse200;
+  let gameInfoResponse403, gameInfoResponse200;
   beforeEach(() => {
     gameInfoResponse403 = {
       status: 403,

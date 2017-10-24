@@ -1,7 +1,7 @@
 import Raven from 'raven-js';
 import * as Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
-import { getContentId } from './gameinfo-actions';
+import { getContentId } from './utils';
 import { localStorage } from '../lib/LocalStorage';
 
 export function canPlay() {
@@ -16,21 +16,6 @@ export function canPlay() {
       dispatch({ type: 'SET_CAN_PLAY', canPlay: response.data.canDownload });
     });
   };
-}
-
-/**
- * Get the user type: guest(unlogged) free(facebook) or premium(subscribed)
- * @param {Object} userInfo - user check returned object
- * @returns {String} return the type of the user
- */
-export function getUserType(userInfo) {
-  if (!userInfo.user) {
-    return 'guest';
-  } else if (!userInfo.subscribed) {
-    return 'free';
-  } else if (userInfo.subscribed) {
-    return 'premium';
-  }
 }
 
 export function getUserFavourites() {

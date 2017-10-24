@@ -1,7 +1,7 @@
 import track from './track';
 import Location from '../lib/Location';
 import getContentRanking from './getContentRanking';
-import { getUserType } from '../actions/user-actions';
+import { getUserType } from '../actions/utils';
 
 const trackingMiddleware = store => next => (action) => {
   const currentState = store.getState();

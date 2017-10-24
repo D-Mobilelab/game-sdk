@@ -25,6 +25,7 @@ export class Interstitial extends React.Component {
       loaded: false,
       dismissable: false,
       countdown: this.props.dismissableAfter,
+      iframePermissions: ['allow-scripts', 'allow-same-origin', 'allow-pointer-lock', 'allow-popups', 'allow-forms', 'allow-top-navigation'],
     };
   }
 
@@ -56,6 +57,13 @@ export class Interstitial extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.ifr) {
+      this.ifr.onload = this.handleOnLoad;
+      this.ifr.onerror = this.handleOnError;
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
@@ -77,7 +85,7 @@ export class Interstitial extends React.Component {
             {this.state.countdown === 0 ? 'X' : this.state.countdown}
           </button>
         </div>
-        <iframe ref='iframeAd' src={this.props.src} onLoad={this.handleOnLoad} onError={this.handleOnError}></iframe>
+        <iframe sandbox={this.state.iframePermissions.join(' ')} ref={(f) => { this.ifr = f; }} src={this.props.src} />
       </div>
     );
   }

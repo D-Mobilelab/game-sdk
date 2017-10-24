@@ -7,7 +7,8 @@ import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
-import { getContentId, setRelated } from './gameinfo-actions';
+import { setRelated } from './gameinfo-actions';
+import { getContentId } from './utils';
 import { showBanner } from './banner-actions';
 
 let onStartCallback = () => { };

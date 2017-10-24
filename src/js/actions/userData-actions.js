@@ -4,8 +4,7 @@ import Reporter from '../lib/Reporter';
 import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
 import { storage } from '../lib/Storage';
-import { getContentId } from './gameinfo-actions';
-import { getUserType } from './user-actions';
+import { getUserType, getContentId } from './utils';
 
 /**
  * LOAD_USER_DATA_SERVER_START

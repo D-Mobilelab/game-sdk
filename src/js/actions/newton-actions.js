@@ -1,7 +1,6 @@
 import NewtonAdapter from 'newton-adapter';
 import Location from '../lib/Location';
-import { getUserType } from './user-actions';
-import { NEWTON_DEBUG_SECRET } from '../lib/Constants';
+import { getUserType } from './utils';
 
 const hybrid = process.env.APP_ENV === 'HYBRID';
 

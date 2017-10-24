@@ -45,10 +45,18 @@ export default class EnterName extends React.Component {
 
   onClick() {
     const name = this.serializeForm();
+    if (this.state.focusOn === 0 && name === 'aaa') {
+      // Not inserted
+    } else if (this.state.focusOn === 0 && name !== 'aaa') {
+      // Already inserted the first time should I track?
+    }
+
+    // Save in storage and in state only if different from default
+    if (name !== 'aaa') {
+      this.setState({ letters: name.split('') });
+      sessionStorage.setItem('gfsdk-alias-name', name);
+    }
     this.props.onSubmit(name);
-    // save in storage and in state
-    this.setState({ letters: name.split('') });
-    sessionStorage.setItem('gfsdk-alias-name', name);
   }
 
   onSubmit(e) {
@@ -67,7 +75,7 @@ export default class EnterName extends React.Component {
     if (key === 8) {
       console.log(`Delete key ${key} ${String.fromCharCode(key)}`);
       // on delete
-      if (this.state.focusOn > 0) {        
+      if (this.state.focusOn > 0) {
         this.setState({ focusOn: this.state.focusOn - 1 }, () => {
           // Switch focus to previous input
           // console.log("previous focus", this.state);

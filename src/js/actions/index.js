@@ -2,7 +2,7 @@ import FacebookPixelAdapter from 'facebookpixeladapter';
 import * as Constants from '../lib/Constants';
 import Reporter from '../lib/Reporter';
 import * as HistoryGame from '../lib/HistoryGame';
-
+import { getUserType } from './utils';
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
 import * as gameinfoActions from './gameinfo-actions';
@@ -109,7 +109,7 @@ function init(initConfig) {
       .then(() => {
         const { user } = getState();
         const { vhost } = getState();
-        const userType = userActions.getUserType(user);
+        const userType = getUserType(user);
         /** User is not premium and ads enabled in configuration => show interstitial */
         const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
         if (condition) { dispatch(interstitialActions.show()); }
