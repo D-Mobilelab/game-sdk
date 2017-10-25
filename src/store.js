@@ -7,6 +7,11 @@ import reducer from './js/reducers/index';
 import trackingMiddleware from './js/customMiddleware/trackingMiddleware';
 window.docomo || (window.docomo = {});
 
+/** disable sentry in local env or by conf */
+if (process.env.LOCAL_DEV === true || !window.docomo.SENTRY_ENABLE) {
+  window.docomo.SENTRY_URL = null;
+}
+
 const SENTRY_URL = window.docomo.SENTRY_URL;
 const WHITE_LABEL = window.docomo.WHITE_LABEL;
 const B_TEST_ID = window.docomo.B_TEST_ID;
