@@ -15,7 +15,8 @@ export default function track(eventObject) {
     eventObject.properties.content_ids = [eventObject.properties.label];
     eventObject.properties.content_name = eventObject.properties.game_title;
     eventObject.properties.content_type = 'product';
-    eventObject.properties.value = 0;
+    eventObject.properties.currency = 'USD';
+    eventObject.properties.value = 1;
     FacebookPixelAdapter.track(mapNewtonEventToFacebook[eventObject.name], eventObject.properties);
   } else {
     FacebookPixelAdapter.trackCustom(eventObject.name, eventObject.properties);
