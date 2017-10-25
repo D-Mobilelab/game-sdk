@@ -30,6 +30,7 @@ export class Interstitial extends React.Component {
   }
 
   handleOnLoad() {
+    if (this.state.countdown === 0) { return; }
     if (this.timerID) { clearInterval(this.timerID); }
     this.timerID = setInterval(() => {
       this.setState({ countdown: this.state.countdown - 1 }, () => {
@@ -85,7 +86,7 @@ export class Interstitial extends React.Component {
             {this.state.countdown === 0 ? 'X' : this.state.countdown}
           </button>
         </div>
-        <iframe sandbox={this.state.iframePermissions.join(' ')} ref={(f) => { this.ifr = f; }} src={this.props.src} />
+        <iframe sandbox={this.state.iframePermissions.join(' ')} allowFullScreen={true} ref={(f) => { this.ifr = f; }} src={this.props.src} />
       </div>
     );
   }

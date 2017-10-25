@@ -7,7 +7,8 @@ export function show() {
     const params = {
       INPAGE_AD_CLIENT: vhost.AD_CLIENT,
       INPAGE_AD_SLOT: vhost.INGAME_ADV,
-      INPAGE_AD_FORMAT: 'rectangle',
+      WIDTH: '336',
+      HEIGHT: '280',
       refresh: Date.now(),
     };
 
