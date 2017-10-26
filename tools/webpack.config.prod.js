@@ -19,6 +19,7 @@ prodConfiguration.output.filename = process.env.APP_ENV === "WEB" ? FILENAME : F
 prodConfiguration.devtool = 'source-map';
 
 prodConfiguration.plugins = prodConfiguration.plugins.concat([
+  new webpack.HashedModuleIdsPlugin(),
   new webpack.DefinePlugin({
     'process.env': {
       APP_ENV: JSON.stringify(process.env.APP_ENV),
