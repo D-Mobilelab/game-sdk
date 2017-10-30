@@ -46,7 +46,12 @@ export default function generic(state = {
       return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });
     case 'SET_CONNECTION_STATE':
       const online = action.connectionState.type === 'online';
-      return Object.assign({}, state, { connectionState: { online, type: action.connectionState.networkState } });
+      return Object.assign({}, state, {
+        connectionState: {
+          online,
+          type: action.connectionState.networkState,
+        },
+      });
     case 'DICTIONARY_LOAD_END':
       return Object.assign({}, state, { dictionary: action.payload });
     default:

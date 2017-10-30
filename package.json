@@ -72,6 +72,7 @@
     "webpack-obfuscator": "^0.11.2"
   },
   "dependencies": {
+    "prop-types": "^15.5.10",
     "axios": "^0.15.2",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.10.0",

@@ -1,24 +1,16 @@
 import React from 'react';
-import Gameover from './Gameover';
-
-/** My Components */
-import Image from './Image/Image';
-import { LikeButton } from './LikeButton';
-import { ShareButton } from './ShareButton';
-
-import { Grid, Column, Row } from './Layout/index';
-
-/** The styles */
-import genericStyle from '../../css/generic.css';
-import gameasyStyle from '../../css/gameover.css';
-import iconStyles from '../../css/icons.css';
-
 /** Connect to redux store */
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Gameover from './Gameover';
+
+/** My Components */
+import Image from './Image/Image';
+
 /** TODO: import only needed actions */
 import { Actions } from '../actions/index';
+
 const mapStateToProps = state => ({
   show: state.game_over.show,
   game_info: state.game_info,
@@ -46,10 +38,6 @@ const mapDispatchToProps = dispatch => ({
     WEBAPP_SHARE_FACEBOOK
  * */
 class GamifiveGameover extends Gameover {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const showAndHideStyle = this.props.show ? { display: 'block', zIndex: '998', position: 'absolute' } : { display: 'none' };
     const imgWidth = (Math.round(window.innerWidth / 100) * 100);
@@ -104,10 +92,12 @@ class GamifiveGameover extends Gameover {
 
               <div className="row score__info" style={showFbStyle}>
                 <h4></h4>
-                <button className="btn-mini btn--fb fa-facebook-official" id="fb-challenge-button" onClick={(evt) => {
-                  evt.preventDefault();
-                  this.handleShare(this.props.game_info.url_share);
-                }}>
+                <button className="btn-mini btn--fb fa-facebook-official"
+                  id="fb-challenge-button"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    this.handleShare(this.props.game_info.url_share);
+                  }}>
                   {WEBAPP_SHARE_FACEBOOK}
                 </button>
               </div>

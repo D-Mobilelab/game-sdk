@@ -1,6 +1,5 @@
 import NewtonAdapter from 'newton-adapter';
 import FacebookPixelAdapter from 'facebookpixeladapter';
-import FacebookInterface from '../lib/FacebookInterface';
 
 const mapNewtonEventToFacebook = {
   GameLoad: 'ViewContent',
@@ -10,7 +9,6 @@ const mapNewtonEventToFacebook = {
 
 export default function track(eventObject) {
   NewtonAdapter.trackEvent(eventObject);
-  // FacebookInterface.trackEvent(eventObject.name, eventObject.properties);
   if (eventObject.name in mapNewtonEventToFacebook) {
     eventObject.properties.content_ids = [eventObject.properties.label];
     eventObject.properties.content_name = eventObject.properties.game_title;

@@ -82,7 +82,10 @@ export class Interstitial extends React.Component {
     return (
       <div className={styles}>
         <div className={style.buttonContainer}>
-          <button ref='closeButton' type='button' className={style.close} onClick={this.close} onTouchEnd={this.close}>
+          <button ref='closeButton' type='button'
+            className={style.close}
+            onClick={this.close}
+            onTouchEnd={this.close}>
             {this.state.countdown === 0 ? 'X' : this.state.countdown}
           </button>
         </div>

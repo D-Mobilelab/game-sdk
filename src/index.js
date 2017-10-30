@@ -8,6 +8,7 @@ import App from './App';
 import { localStorage } from './js/lib/LocalStorage';
 import SDK from './SDK';
 
+/* global __webpack_public_path__:true, RUNTIME_PUBLIC_PATH */
 if (process.env.APP_ENV === 'HYBRID') {
   __webpack_public_path__ = RUNTIME_PUBLIC_PATH;
 }

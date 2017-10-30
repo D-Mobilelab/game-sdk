@@ -144,7 +144,7 @@ function setUserDataOnLocal(newInfo) {
     const key = `${user.user}-${game_id}`;
     const newUserData = { ...user.userData, info: newInfo, UpdatedAt: new Date().toISOString() };
 
-    return storage.setItem(key, newUserData).then((result) => {
+    return storage.setItem(key, newUserData).then(() => {
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_END', payload: newUserData });
     }).catch((reason) => {
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_ERROR', payload: reason });

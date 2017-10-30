@@ -6,7 +6,7 @@
  * @param {string} userType - free | premium | guest
  * @param {object} contentRankingObject - the map to calculate the rank
  * @param {string} [userFrom=natural] - acquisition | natural
- * @returns {object}
+ * @returns {object} - the content ranking object
  */
 export default function getContentRanking(eventName, eventCategory, contentId, userType, contentRankingObject, userFrom = 'natural') {
   const contentRanking = contentRankingObject;
@@ -24,7 +24,7 @@ export default function getContentRanking(eventName, eventCategory, contentId, u
   }
 
   // scopeType
-  if (eventCategory == 'Play') {
+  if (eventCategory === 'Play') {
     scopeType = 'consumption';
   }
 

@@ -16,29 +16,34 @@ if (process.env.LOCAL_DEV === true) {
   theWindow = window;
 }
 
-export class Location {
-  getOrigin() {
-    const origin = window._ORIGIN_ ? window._ORIGIN_.substr(0, window._ORIGIN_.length - 1) : theWindow.location.origin;
-    return origin;
-  }
-
-  getCurrentHref() {
-    return theWindow.location.href;
-  }
-
-  getQueryStringKey(key) {
-    return dequeryfy(theWindow.location.search)[key];
-  }
-
-  getQueryString() {
-    return dequeryfy(theWindow.location.search);
-  }
-
-  getRealOrigin() {
-    return theWindow.location.origin;
-  }
+function getOrigin() {
+  const origin = window._ORIGIN_ ? window._ORIGIN_.substr(0, window._ORIGIN_.length - 1) : theWindow.location.origin;
+  return origin;
 }
 
-const LocationInstance = new Location();
-window.Location = LocationInstance;
-export default LocationInstance;
+function getCurrentHref() {
+  return theWindow.location.href;
+}
+
+function getQueryStringKey(key) {
+  return dequeryfy(theWindow.location.search)[key];
+}
+
+function getQueryString() {
+  return dequeryfy(theWindow.location.search);
+}
+
+function getRealOrigin() {
+  return theWindow.location.origin;
+}
+
+const Location = {
+  getOrigin,
+  getCurrentHref,
+  getRealOrigin,
+  getQueryString,
+  getQueryStringKey,
+};
+
+window.Location = Location;
+export default Location;

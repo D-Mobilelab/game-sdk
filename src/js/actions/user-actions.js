@@ -44,9 +44,8 @@ export function getUserFavourites() {
 }
 
 export function getUser() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: 'USER_CHECK_LOAD_START' });
-    const { generic } = getState();
     const query = {};
     if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
     /** needed to get the pony */

@@ -203,7 +203,8 @@ export function registerScore(alias, inputFocus) {
     params.signature = md5(`${params.user_id}${params.score}${params.content_id}pacmania`);
     // set is loading: true
     dispatch({ type: 'REGISTER_SCORE_START' });
-    return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params, { withCredentials: true })
+    return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params,
+      { withCredentials: true })
       .then((response) => {
         const realResponse = response.data.response;
 

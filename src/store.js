@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import version from './version';
 import reducer from './js/reducers/index';
 import trackingMiddleware from './js/customMiddleware/trackingMiddleware';
+
 window.docomo || (window.docomo = {});
 
 /** disable sentry in local env or by conf */
