@@ -19,21 +19,6 @@ const vhostKeys = [
   'poggioacaiano',
 ];
 
-/*
-function hashHandler(event, dispatch) {
-  event.preventDefault();
-  event.stopPropagation();
-  event.stopImmediatePropagation();
-  const { oldURL, newURL } = event;
-  if (oldURL.indexOf('gameplay') > -1 && newURL.indexOf('index') > -1) {
-    dispatch({ type: 'BACK_CLICKED', payload: event });
-    dispatch(menuActions.goToHome());
-    return false;
-  }
-  return false;
-}
-*/
-
 function historyHandler(event, dispatch) {
   event.preventDefault();
   event.stopPropagation();
@@ -55,13 +40,7 @@ function historyHandler(event, dispatch) {
     dispatch(menuActions.goToHome());
     return false;
   }
-  /*
-  else if (state.location === 'step0') {
-    dispatch({ type: 'BACK_CLICKED' });
-    dispatch(menuActions.goToHome());
-    return false;
-  }
-  */
+  return false;
 }
 
 function wrapHandler(fn, dispatch) {
@@ -80,7 +59,7 @@ window.history.replaceState({ location: 'step0' }, document.title, `${addressBar
 window.history.pushState({ location: 'step1' }, document.title, `${addressBar}#1`);
 window.history.pushState({ location: 'step2' }, document.title, `${addressBar}#2`);
 
-/** registering state change */
+// registering state change
 function init(initConfig) {
   return (dispatch, getState) => {
     window.addEventListener('popstate', wrapHandler(historyHandler, dispatch));
@@ -110,14 +89,10 @@ function init(initConfig) {
         const { user } = getState();
         const { vhost } = getState();
         const userType = getUserType(user);
-        /** User is not premium and ads enabled in configuration => show interstitial */
+        // User is not premium and ads enabled in configuration => show interstitial        
         const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
         if (condition) {
-          if (window.GamePixAdv) {
-            window.GamePixAdv.show({ tid: vhost.GAMEPIX_AD_ID });
-          } else {
-            dispatch(interstitialActions.show());
-          }
+          dispatch(interstitialActions.show());
         }
         return true;
       })
@@ -135,6 +110,7 @@ function init(initConfig) {
         if (getState().generic.loadUserDataCalled) {
           return dispatch(userDataActions.loadUserData());
         }
+        return Promise.resolve();
       })
       .then(() => {
         if (getState().generic.session_start_after_init) {
