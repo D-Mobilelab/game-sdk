@@ -9,7 +9,7 @@ var FILENAME_HYBRID = '[name].hybrid.js';
 
 var envPlugin = new webpack.DefinePlugin({    
     'process.env': {
-      'APP_ENV': JSON.stringify(process.env.APP_ENV),
+      APP_ENV: JSON.stringify(process.env.APP_ENV),
       NODE_ENV: JSON.stringify(process.env.NODE_ENV) 
     }
 });

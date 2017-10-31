@@ -73,7 +73,7 @@ var devConfiguration = {
       },
     ],
   },
-  plugins: [    
+  plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendor', 'gfsdk'],
       // (the commons chunk name)
@@ -92,7 +92,7 @@ var devConfiguration = {
   externals: {
     // require("jquery") is external and available
     //  on the global var jQuery
-    newton: "Newton"
+    newton: "Newton"    
   }
 };
 
