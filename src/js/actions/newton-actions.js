@@ -15,7 +15,7 @@ export function init() {
       waitLogin: true, // wait for login to have been completed (async)
       properties: {
         environment: (hybrid ? 'hybrid' : 'webapp'),
-        white_label_id: currentState.game_info.label || 'it-gameasy',
+        white_label_id: currentState.vhost.WHITE_LABEL,
       },
     });
   };
@@ -33,13 +33,13 @@ export function login() {
     const toAdd = [
       ['country', currentState.vhost.TLD],
       ['real_country', currentState.vhost.NT_REAL_COUNTRY],
-      ['white_label_id', currentState.game_info.label],
+      ['white_label_id', currentState.vhost.WHITE_LABEL],
       ['http_referrer', window.document.referrer],
     ];
 
     const userProperties = toAdd.reduce((accumulator, keyValue) => {
       const [key, value] = keyValue;
-      if (value) { accumulator[key] = value; }
+      if (value) { accumulator[key] = value; } // eslint-disable-line no-param-reassign
       return accumulator;
     }, queryString);
 
