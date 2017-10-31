@@ -5,12 +5,6 @@ export function goToHome() {
     if (process.env.APP_ENV === 'HYBRID') {
       if (window.webview) {
         window.webview.Close();
-      } else {
-        /**
-         * TODO: go to local index to be implemented
-         */
-        console.warn('Go to local index to be implemented');
-        // Stargate.goToLocalIndex();
       }
     } else {
       window.location.href = Location.getOrigin();

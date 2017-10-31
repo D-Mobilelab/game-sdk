@@ -5,7 +5,7 @@ import Location from '../lib/Location';
  * Normalize game info object
  * @export
  * @param {bject} gameInfo - the gameInfo object
- * @returns {object}
+ * @returns {object} - returns the normalized gameinfo
  */
 export function normalizeGameInfo(gameInfo) {
   let newGameInfo = JSON.parse(JSON.stringify(gameInfo || {}));
@@ -20,7 +20,7 @@ export function normalizeGameInfo(gameInfo) {
  * Gets the content id from querystring
  * 
  * @export
- * @returns {string}
+ * @returns {string} - returns the contentId
  * @throws - Cannot get content id from url
  */
 export function getContentId() {
@@ -37,7 +37,7 @@ export function getContentId() {
 /**
  * Get the user type: guest(unlogged) free(facebook) or premium(subscribed)
  * @param {Object} userInfo - user check returned object
- * @returns {String} return the type of the user
+ * @returns {String} - return the type of the user
  */
 export function getUserType(userInfo) {
   if (!userInfo.user) {
@@ -47,4 +47,5 @@ export function getUserType(userInfo) {
   } else if (userInfo.subscribed) {
     return 'premium';
   }
+  return 'guest';
 }

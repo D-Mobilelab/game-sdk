@@ -1,5 +1,4 @@
 import { dequeryfy } from 'docomo-utils';
-import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
 import { normalizeGameInfo, getContentId } from './utils';
 
@@ -16,11 +15,11 @@ export function getGameInfo() {
     const { vhost } = getState();
     const query = dequeryfy(vhost.MOA_API_CONTENTS_GAMEINFO);
     const toRetain = ['country', 'fw', 'lang', 'real_customer_id', 'vh', 'white_label'];
-    /** ... m(_ _)m ma perchè devo fare questo ... */
+    // ... m(_ _)m ma perchè devo fare questo
     const filteredQuery = Object.keys(query)
       .filter(key => toRetain.includes(key))
       .reduce((obj, key) => {
-        obj[key] = query[key];
+        obj[key] = query[key]; // eslint-disable-line no-param-reassign
         return obj;
       }, {});
 
