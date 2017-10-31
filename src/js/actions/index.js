@@ -112,7 +112,13 @@ function init(initConfig) {
         const userType = getUserType(user);
         /** User is not premium and ads enabled in configuration => show interstitial */
         const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
-        if (condition) { dispatch(interstitialActions.show()); }
+        if (condition) {
+          if (window.GamePixAdv) {
+            window.GamePixAdv.show({ tid: vhost.GAMEPIX_AD_ID });
+          } else {
+            dispatch(interstitialActions.show());
+          }
+        }
         return true;
       })
       .then(() => dispatch(gameinfoActions.getGameInfo()))
