@@ -15,61 +15,24 @@ import * as bannerActions from './banner-actions';
 import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 
+import focusAction from './focus-action';
+import historyHandler from './history-actions';
+import listenToWindowEvents from './listenToWindowEvents';
+
 const vhostKeys = [
   'poggioacaiano',
 ];
 
-function historyHandler(event, dispatch) {
-  event.preventDefault();
-  event.stopPropagation();
-  event.stopImmediatePropagation();
-  const { state } = event;
-  if (state && state.location === 'step1') {
-    /* *
-     * This means the user have clicked back and
-     * coming from a related game
-     * */
-    dispatch({ type: 'BACK_CLICKED' });
-
-    const lastHistoryGame = HistoryGame.pop();
-    if (lastHistoryGame) {
-      window.location.replace(lastHistoryGame);
-      return false;
-    }
-
-    dispatch(menuActions.goToHome());
-    return false;
-  }
-  return false;
-}
-
-function wrapHandler(fn, dispatch) {
-  return function realHandler(event) {
-    return fn.call(null, event, dispatch);
-  };
-}
-
-/*
-* window.location.hash = '#index';
-* window.location.hash = '#gameplay';
-*/
-
-const addressBar = `${window.location.pathname}${window.location.search}`;
-window.history.replaceState({ location: 'step0' }, document.title, `${addressBar}#0`);
-window.history.pushState({ location: 'step1' }, document.title, `${addressBar}#1`);
-window.history.pushState({ location: 'step2' }, document.title, `${addressBar}#2`);
-
 // registering state change
 function init(initConfig) {
   return (dispatch, getState) => {
-    window.addEventListener('popstate', wrapHandler(historyHandler, dispatch));
-    /** registering hash change */
-    /* window.onhashchange = wrapHandler(hashHandler, dispatch);*/
-
-    // dispatch({ type: 'SET_IS_HYBRID', hybrid: Stargate.isHybrid() });
     if (getState().generic.initialized) {
       return Promise.resolve();
     }
+
+    dispatch(listenToWindowEvents('popstate', historyHandler));
+    dispatch(listenToWindowEvents('focus', focusAction));
+    dispatch(listenToWindowEvents('blur', focusAction));
 
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
 
