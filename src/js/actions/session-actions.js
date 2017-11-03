@@ -10,6 +10,7 @@ import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, sho
 import { setRelated } from './gameinfo-actions';
 import { getContentId } from './utils';
 import { showBanner } from './banner-actions';
+import fromConsole from '../lib/fromConsole';
 
 let onStartCallback = () => { };
 const hybrid = process.env.APP_ENV === 'HYBRID';
@@ -50,6 +51,11 @@ export function registerOnStartCallback(callback) {
 
 export function startSession() {
   return (dispatch, getState) => {
+    if (fromConsole() && process.env.NODE_ENV === 'production') {
+      console.warn('Can\'t be called from console!');
+      return;
+    }
+
     // Not initialized but init called and pending
     if (!getState().generic.initialized && getState().generic.initPending) {
       dispatch({ type: 'ADD_TO_AFTER_INIT', session_start_after_init: true });
@@ -86,8 +92,13 @@ export function endSession(data = { score: 0, level: 1 }) {
     data.level = 1;
   }
   return (dispatch, getState) => {
+    if (fromConsole()) {
+      console.warn('Can\'t be called from console!');
+      return;
+    }
+    const { generic } = getState();
     // only if already initialized
-    if (!getState().generic.initialized) {
+    if (!generic.initialized) {
       /**
        * TODO:
        * endSession before init
@@ -97,6 +108,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       console.log('Cannot end a session before initialized');
       return;
     }
+
 
     const { user, vhost } = getState();
     const bannerCondition = [
