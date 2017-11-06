@@ -40,6 +40,7 @@ class EnterNameContainer extends Component {
     this.onEnterModalDismiss = this.onEnterModalDismiss.bind(this);
     this.onLeaderboardClose = this.onLeaderboardClose.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.stopPropagation = this.stopPropagation.bind(this);
   }
 
   onEnterModalDismiss(e) {
@@ -60,6 +61,11 @@ class EnterNameContainer extends Component {
     if (this.props.showReplayButton) { this.props.actions.startSession(); }
   }
 
+  stopPropagation(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   render() {
     const {
       WEBAPP_GAMEOVER_HIGH_SCORE,
@@ -70,7 +76,7 @@ class EnterNameContainer extends Component {
       WEBAPP_REPLAY,
     } = this.props.dictionary;
     return (
-      <div className={[css.main, (this.props.showEnterName || this.props.showLeaderboard) ? css.show : ''].join(' ')} onClick={this.onDismiss}>
+      <div className={[css.main, (this.props.showEnterName || this.props.showLeaderboard) ? css.show : ''].join(' ')} onClick={this.stopPropagation}>
         <div style={{ position: 'relative' }}>
 
           <EnterName
