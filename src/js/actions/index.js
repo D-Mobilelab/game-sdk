@@ -40,6 +40,12 @@ function init(initConfig) {
       .then(() => dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL)))
       .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
       .then(() => dispatch(userActions.getUser()))
+      .then(() => dispatch(gameinfoActions.getGameInfo()))
+      .then(() => {
+        // return if you want to wait
+        dispatch(newtonActions.init());
+        return dispatch(newtonActions.login());
+      })
       .then(() => {
         const { vhost } = getState();
         if (vhost.FB_TRACKING_ENABLE) { FacebookPixelAdapter.init(vhost.FB_PIXELID); }
@@ -58,12 +64,6 @@ function init(initConfig) {
           dispatch(interstitialActions.show());
         }
         return true;
-      })
-      .then(() => dispatch(gameinfoActions.getGameInfo()))
-      .then(() => {
-        // return if you want to wait
-        dispatch(newtonActions.init());
-        return dispatch(newtonActions.login());
       })
       .then(() => {
         dispatch(menuActions.showMenu());
