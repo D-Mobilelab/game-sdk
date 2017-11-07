@@ -140,7 +140,7 @@ const trackingMiddleware = store => next => (action) => {
     case 'REGISTER_SCORE_SUCCESS':
       if (action.payload.shouldTrack) {
         eventObject = {
-          name: 'NicknameAdded',
+          name: action.payload.eventName,
           properties: {
             action: 'Yes',
             category: 'Play',
