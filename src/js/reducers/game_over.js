@@ -1,4 +1,4 @@
-export function game_over(state = {
+export default function game_over(state = {
   show: false,
 }, action) {
   switch (action.type) {

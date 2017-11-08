@@ -1,4 +1,4 @@
-export function user(state = {
+export default function user(state = {
   matchPlayed: 0,
   user: null, // the user id
   isSaving: false,

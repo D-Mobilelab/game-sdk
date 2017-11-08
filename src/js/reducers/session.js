@@ -1,4 +1,4 @@
-export function session(state = { opened: false }, action) {
+export default function session(state = { opened: false }, action) {
   switch (action.type) {
     case 'START_SESSION':
       return Object.assign({}, state, { ...action.session });

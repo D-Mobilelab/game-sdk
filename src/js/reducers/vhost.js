@@ -1,4 +1,4 @@
-export function vhost(state = { loaded: false, isFetching: false, error: null }, action) {
+export default function vhost(state = { loaded: false, isFetching: false, error: null }, action) {
   switch (action.type) {
     case 'VHOST_LOAD_START':
       return Object.assign({}, state, { isFetching: true });

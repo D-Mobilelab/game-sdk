@@ -1,4 +1,4 @@
-export function game_info(state = {
+export default function game_info(state = {
   title: '',
   name: '',
   images: {
