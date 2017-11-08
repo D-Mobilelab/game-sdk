@@ -75,19 +75,15 @@ var devConfiguration = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: ['vendor', 'gfsdk'],
       // (the commons chunk name)
-
-
       // (the filename of the commons chunk)
-
       // minChunks: 3,
       // (Modules must be shared between 3 entries)
-
       // chunks: ["pageA", "pageB"],
       // (Only use these entries)
       minChunks: Infinity,
-    }),
+    })
   ],
   // module end
   resolve: {
@@ -96,7 +92,7 @@ var devConfiguration = {
   externals: {
     // require("jquery") is external and available
     //  on the global var jQuery
-    newton: "Newton"
+    newton: "Newton"    
   }
 };
 

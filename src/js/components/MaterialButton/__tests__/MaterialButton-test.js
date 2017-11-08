@@ -14,7 +14,15 @@ describe('#MaterialButton tests', () => {
     );
     expect(wrapper.state()).toEqual({ active: false, ripplePosition: { top: '0px', left: '0px' } });
     expect(wrapper.find('button').length).toEqual(1);
-    const fakeEvent = { clientX: 10, clientY: 10, preventDefault: () => { }, currentTarget: { clientWidth: 100, clientHeight: 100 } };
+    const fakeEvent = {
+      clientX: 10,
+      clientY: 10,
+      preventDefault: () => { },
+      currentTarget: {
+        clientWidth: 100,
+        clientHeight: 100,
+      },
+    };
 
     const rawButton = wrapper.find('button');
 

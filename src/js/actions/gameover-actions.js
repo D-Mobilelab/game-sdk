@@ -16,9 +16,10 @@ export function showEnterNameModal() {
   };
 }
 
-export function hideEnterNameModal() {
+export function hideEnterNameModal(userInput = false) {
   return {
     type: 'HIDE_ENTER_NAME',
+    payload: { userInput },
   };
 }
 
@@ -28,8 +29,9 @@ export function showLeaderboard() {
   };
 }
 
-export function hideLeaderboard() {
+export function hideLeaderboard(userInput = false) {
   return {
     type: 'HIDE_LEADERBOARD',
+    payload: { userInput },
   };
 }

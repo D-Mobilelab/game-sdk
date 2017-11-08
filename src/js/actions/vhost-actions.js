@@ -8,11 +8,18 @@ export function load(VHOST_API_URL, keys) {
     /**
      * Avoid a call if there's the vhost in localStorage (saved by webapp)
      */
+    const FW_TYPE_PROFILE = (window.GamifiveInfo && window.GamifiveInfo.fw_type_profile) ? window.GamifiveInfo.fw_type_profile : 'gamifive';
     if (vhost) {
+      if (!vhost.FW_TYPE_PROFILE) {
+        vhost.FW_TYPE_PROFILE = FW_TYPE_PROFILE;
+      }
       dispatch({ type: 'VHOST_LOAD_END', vhost });
     } else {
       return AxiosInstance.get(VHOST_API_URL, { params: { keys: keys.join(',') } })
         .then((response) => {
+          if (!response.data.FW_TYPE_PROFILE) {
+            response.data.FW_TYPE_PROFILE = FW_TYPE_PROFILE;
+          }
           dispatch({ type: 'VHOST_LOAD_END', vhost: response.data });
         }).catch((reason) => {
           dispatch({ type: 'VHOST_LOAD_FAIL', error: reason });

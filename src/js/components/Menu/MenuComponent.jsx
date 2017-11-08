@@ -27,7 +27,7 @@ export default class Menu extends Component {
   }
 
   onResize() {
-    const { angle } = window.screen.orientation;
+    const angle = window.screen.orientation ? window.screen.orientation.angle : window.orientation;
     switch (angle) {
       case 0:
         this.mapPositions = this.calcPositions();

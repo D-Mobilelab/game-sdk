@@ -118,7 +118,8 @@ export default class SDK {
 
   /**
    * Save an arbitrary object on server and on local
-   * @param {Object} userDataInfo
+   * @param {Object} userDataInfo - an object with user data
+   * @returns {undefined}
    * @memberOf SDK
    */
   saveUserData(userDataInfo) {
@@ -129,6 +130,7 @@ export default class SDK {
   /**
    * Clear the user data saved on local and on server.
    * Use this function only under explicit user input
+   * @returns {undefined}
    * @memberOf SDK
    */
   clearUserData() {
@@ -138,6 +140,7 @@ export default class SDK {
 
   /**
    * Redirect the browser to the game portal
+   * @returns {undefined}
    * @memberOf SDK
    */
   goToHome() {
@@ -160,7 +163,7 @@ export default class SDK {
 
   /**
    * Get the userNickName if any. otherwise undefined
-   * @returns {Object|undefined}
+   * @returns {Object|undefined} - the nickname of the user
    * @memberOf SDK
    */
   getNickname() {
@@ -172,7 +175,8 @@ export default class SDK {
   /**
    * Register a function that will be called
    * on each startSession call
-   * @param {Function} onStartSessionCallback
+   * @param {Function} onStartSessionCallback - the callback called at each startSession
+   * @returns {undefined}
    * @memberOf SDK
    */
   onStartSession(onStartSessionCallback) {
@@ -183,6 +187,7 @@ export default class SDK {
   /**
    * Starts a session. If the init it's still in pending
    * the session will start on init finished
+   * @returns {undefined}
    * @memberOf SDK
    */
   startSession() {
@@ -196,7 +201,8 @@ export default class SDK {
    * In this case only the session time is calculated. 
    * It can be called also with just the score and in this case the level is implicitly 1
    * this is useful for games without levels.
-   * @param {Object} [scoreAndLevel={score:0, level:1}]
+   * @param {Object} [scoreAndLevel={score:0, level:1}] - score and level object
+   * @returns {undefined}
    * @memberOf SDK
    */
   endSession(scoreAndLevel) {

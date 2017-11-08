@@ -39,7 +39,6 @@ export default class MaterialButton extends React.Component {
     const maxDimHalf = maxDim / 2;
     const buttonRect = this.refs.button.getBoundingClientRect();
 
-    // console.log(["halfBtnHeight",halfBtnHeight,"halfBtnWidth",halfBtnWidth, "maxDim", maxDim, "maxDimHalf", maxDimHalf].join(":"));
     const ripplePosition = {
       top: `${(y - buttonRect.top - (maxDimHalf / 2))}px`,
       left: `${(x - buttonRect.left - (maxDimHalf / 2))}px`,
@@ -52,7 +51,8 @@ export default class MaterialButton extends React.Component {
 
   render() {
     const { theme } = this.props;
-    const buttonClasses = [theme.btn, this.props.center ? theme.centerBtn : ''];
+    const baseClass = this.props.secondary ? theme.secondary : theme.btn;
+    const buttonClasses = [baseClass, this.props.center ? theme.centerBtn : ''];
 
     const classNames = buttonClasses.join(' ');
     return (

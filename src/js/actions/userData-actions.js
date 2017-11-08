@@ -4,8 +4,7 @@ import Reporter from '../lib/Reporter';
 import Location from '../lib/Location';
 import { AxiosInstance } from '../lib/AxiosService';
 import { storage } from '../lib/Storage';
-import { getContentId } from './gameinfo-actions';
-import { getUserType } from './user-actions';
+import { getUserType, getContentId } from './utils';
 
 /**
  * LOAD_USER_DATA_SERVER_START
@@ -145,7 +144,7 @@ function setUserDataOnLocal(newInfo) {
     const key = `${user.user}-${game_id}`;
     const newUserData = { ...user.userData, info: newInfo, UpdatedAt: new Date().toISOString() };
 
-    return storage.setItem(key, newUserData).then((result) => {
+    return storage.setItem(key, newUserData).then(() => {
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_END', payload: newUserData });
     }).catch((reason) => {
       dispatch({ type: 'SAVE_USER_DATA_LOCAL_ERROR', payload: reason });

@@ -1,11 +1,14 @@
 import React from 'react';
+/** Connect to redux store */
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Gameover from './Gameover';
 
 /** My Components */
 import gameasyButtonTheme from './MaterialButton/theme/gameasy.css';
 import withTheme from './withTheme';
 import MaterialButton from './MaterialButton/MaterialButton';
-const GameasyButton = withTheme(MaterialButton, gameasyButtonTheme);
 
 import RelatedList from './Related/List';
 import RelatedListItem from './Related/ListItem';
@@ -20,12 +23,11 @@ import genericStyle from '../../css/generic.css';
 import gameasyStyle from '../../css/gameover.css';
 import iconStyles from '../../css/icons.css';
 
-/** Connect to redux store */
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
 /** TODO: import only needed actions */
 import { Actions } from '../actions/index';
+
+const GameasyButton = withTheme(MaterialButton, gameasyButtonTheme);
+
 const mapStateToProps = state => ({
   show: state.game_over.show,
   game_info: state.game_info,
@@ -52,17 +54,12 @@ const mapDispatchToProps = dispatch => ({
     WEBAPP_SHARE_FACEBOOK
  * */
 class GameasyGameover extends Gameover {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const classNames = [gameasyStyle.gameover];
     classNames.push(this.props.show ? gameasyStyle.show : gameasyStyle.hide);
 
     const classes = classNames.join(' ');
-    const innerWidth = (Math.round(window.innerWidth / 100) * 100);
-    const percentage = Math.round(window.innerWidth * 60 / 100);
+    const percentage = Math.round((window.innerWidth * 60) / 100);
     const imgSrc = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
 
     const {
@@ -125,7 +122,8 @@ class GameasyGameover extends Gameover {
                 {
                   this.props.game_info.related.map((item, index) => (
                     <Column cols={4} key={index}>
-                      <RelatedListItem item={item} onClick={this.handleOnClickRelated.bind(this, item)} />
+                      <RelatedListItem item={item}
+                        onClick={this.handleOnClickRelated.bind(this, item)} />
                     </Column>
                   ))
                 }

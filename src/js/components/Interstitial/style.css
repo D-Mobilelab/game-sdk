@@ -17,8 +17,9 @@
 }
 
 .interstitialContainer iframe {
+    position: absolute;
     width: 100%;
-    min-height: 240px;
+    min-height: 280px;
     border: 0;
     outline: 0;
     top: 0;
@@ -26,7 +27,6 @@
     bottom: 0;
     right: 0;
     margin: auto;
-    position: absolute;
 }
 
 .buttonContainer {

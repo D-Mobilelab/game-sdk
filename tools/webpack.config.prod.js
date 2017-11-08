@@ -18,7 +18,18 @@ if (process.env.ROOT_DIRECTORY) {
 prodConfiguration.output.filename = process.env.APP_ENV === "WEB" ? FILENAME : FILENAME_HYBRID;
 prodConfiguration.devtool = 'source-map';
 
-prodConfiguration.plugins = prodConfiguration.plugins.concat([
+prodConfiguration.plugins = [
+  new webpack.HashedModuleIdsPlugin(),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: ['vendor', 'gfsdk'],
+    // (the commons chunk name)
+    // (the filename of the commons chunk)
+    // minChunks: 3,
+    // (Modules must be shared between 3 entries)
+    // chunks: ["pageA", "pageB"],
+    // (Only use these entries)
+    minChunks: Infinity,
+  }),
   new webpack.DefinePlugin({
     'process.env': {
       APP_ENV: JSON.stringify(process.env.APP_ENV),
@@ -34,6 +45,6 @@ prodConfiguration.plugins = prodConfiguration.plugins.concat([
     compress: { warnings: false, screw_ie8: true },
   }),
   getAssetsChunkName  
-])
+];
 
 module.exports = prodConfiguration;

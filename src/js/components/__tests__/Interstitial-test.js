@@ -18,7 +18,7 @@ describe('Interstitial Component tests', () => {
     expect(wrapper.instance().timerID).toBeNull();
     // call the onload manually
     wrapper.instance().handleOnLoad();
-    
+
     expect(wrapper.instance().timerID).not.toBeNull();
     // console.log(wrapper.debug());
 

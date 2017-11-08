@@ -28,6 +28,7 @@ export default function generic(state = {
     WEBAPP_SHARE_FACEBOOK: 'Share',
     WEBAPP_GAME_OVER: 'Gameover',
   },
+  focus: true,
 }, action) {
   switch (action.type) {
     case 'SET_IS_HYBRID':
@@ -46,9 +47,16 @@ export default function generic(state = {
       return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });
     case 'SET_CONNECTION_STATE':
       const online = action.connectionState.type === 'online';
-      return Object.assign({}, state, { connectionState: { online, type: action.connectionState.networkState } });
+      return Object.assign({}, state, {
+        connectionState: {
+          online,
+          type: action.connectionState.networkState,
+        },
+      });
     case 'DICTIONARY_LOAD_END':
       return Object.assign({}, state, { dictionary: action.payload });
+    case 'FOCUS_CHANGE':
+      return Object.assign({}, state, { focus: action.payload.focus });
     default:
       return state;
   }

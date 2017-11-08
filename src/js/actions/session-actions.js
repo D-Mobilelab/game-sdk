@@ -7,8 +7,10 @@ import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
-import { getContentId, setRelated } from './gameinfo-actions';
+import { setRelated } from './gameinfo-actions';
+import { getContentId } from './utils';
 import { showBanner } from './banner-actions';
+import fromConsole from '../lib/fromConsole';
 
 let onStartCallback = () => { };
 const hybrid = process.env.APP_ENV === 'HYBRID';
@@ -49,6 +51,11 @@ export function registerOnStartCallback(callback) {
 
 export function startSession() {
   return (dispatch, getState) => {
+    if (fromConsole() && process.env.NODE_ENV === 'production') {
+      console.warn('Can\'t be called from console!');
+      return;
+    }
+
     // Not initialized but init called and pending
     if (!getState().generic.initialized && getState().generic.initPending) {
       dispatch({ type: 'ADD_TO_AFTER_INIT', session_start_after_init: true });
@@ -85,8 +92,13 @@ export function endSession(data = { score: 0, level: 1 }) {
     data.level = 1;
   }
   return (dispatch, getState) => {
+    if (fromConsole()) {
+      console.warn('Can\'t be called from console!');
+      return;
+    }
+    const { generic } = getState();
     // only if already initialized
-    if (!getState().generic.initialized) {
+    if (!generic.initialized) {
       /**
        * TODO:
        * endSession before init
@@ -96,6 +108,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       console.log('Cannot end a session before initialized');
       return;
     }
+
 
     const { user, vhost } = getState();
     const bannerCondition = [
@@ -119,10 +132,18 @@ export function endSession(data = { score: 0, level: 1 }) {
       dispatch(showMenu());
 
       const lastSession = getState().session;
-      // Lite only leaderboard
-      if (!getState().generic.initConfig.lite && getState().game_info.game_type === 'default') {
-        dispatch(showGameOver());
-        // call standard leaderboard
+      const { game_type } = getState().game_info;
+      const { initConfig } = getState().generic;
+      const { FW_TYPE_PROFILE } = getState().vhost;
+      if (FW_TYPE_PROFILE === 'bandai' && game_type === 'bandai') {
+        // always show if on bandai service and game is a bandai one
+        dispatch(showEnterNameModal());
+        return;
+      } else if (game_type === 'default') {
+        if (initConfig.lite === false) {
+          dispatch(showGameOver());
+        }
+        // Call standard leaderboard
         const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
         const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
           params: {
@@ -144,12 +165,12 @@ export function endSession(data = { score: 0, level: 1 }) {
             dispatch(setRelated(response.data.related || []));
           });
         return gameOverPromise;
-      }
-
-      if (getState().game_info.game_type === 'bandai') {
+      } else if (game_type === 'default' && !initConfig.lite && FW_TYPE_PROFILE === 'bandai') {
+        // on bandai portal, non-bandai game, non-lite(requires gameover) then show bandai gameover
         dispatch(showEnterNameModal());
         return;
       }
+      return;
     }
     /**
      * TODO:
@@ -161,15 +182,23 @@ export function endSession(data = { score: 0, level: 1 }) {
   };
 }
 
-export function registerScore(alias) {
+export function registerScore(alias, inputFocus) {
   return (dispatch, getState) => {
+    const shouldTrack = true;
+    let eventName = 'NicknameAdded';
+    if (inputFocus === 0 && alias === 'aaa') {
+      // Not inserted
+      // track DefaultNicknameAdded
+      eventName = 'DefaultNicknameAdded';
+    }
+    // TODO: 
+    // userId = NewtonInstance.getUserToken();    
     const lastSession = getState().session;
-    let userId = getState().user.user;
+    const userId = getState().user.user;
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();
     const sessionId = NewtonInstance.getSessionId();
-    if (!userId || userId === '') { userId = sessionId; }
     const params = {
       player_name: alias,
       score: lastSession.score,
@@ -184,13 +213,16 @@ export function registerScore(alias) {
     params.signature = md5(`${params.user_id}${params.score}${params.content_id}pacmania`);
     // set is loading: true
     dispatch({ type: 'REGISTER_SCORE_START' });
-    return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params)
+    return AxiosInstance.post(vhost.MOA_API_LEADERBOARD_POST_SCORE, params,
+      { withCredentials: true })
       .then((response) => {
         const realResponse = response.data.response;
 
         if (realResponse.error === 0) {
           const payload = {
             leaderboard: realResponse.data.top_scorer,
+            shouldTrack,
+            eventName,
           };
           dispatch({ type: 'REGISTER_SCORE_SUCCESS', payload });
           dispatch(hideEnterNameModal());

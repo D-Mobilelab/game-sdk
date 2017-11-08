@@ -1,7 +1,7 @@
 import track from './track';
 import Location from '../lib/Location';
 import getContentRanking from './getContentRanking';
-import { getUserType } from '../actions/user-actions';
+import { getUserType } from '../actions/utils';
 
 const trackingMiddleware = store => next => (action) => {
   const currentState = store.getState();
@@ -138,17 +138,34 @@ const trackingMiddleware = store => next => (action) => {
       track(eventObject);
       break;
     case 'REGISTER_SCORE_SUCCESS':
-      eventObject = {
-        name: 'NicknameAdded',
-        properties: {
-          action: 'Yes',
-          category: 'Play',
-          game_title: currentState.game_info.title,
-          label: currentState.game_info.content_id,
-          valuable: 'No',
-        },
-      };
-      track(eventObject);
+      if (action.payload.shouldTrack) {
+        eventObject = {
+          name: action.payload.eventName,
+          properties: {
+            action: 'Yes',
+            category: 'Play',
+            game_title: currentState.game_info.title,
+            label: currentState.game_info.content_id,
+            valuable: 'No',
+          },
+        };
+        track(eventObject);
+      }
+      break;
+    case 'HIDE_ENTER_NAME':
+      if (action.payload && action.payload.userInput) {
+        eventObject = {
+          name: 'EnterNameClose',
+          properties: {
+            action: 'Yes',
+            category: 'Play',
+            game_title: currentState.game_info.title,
+            label: currentState.game_info.content_id,
+            valuable: 'No',
+          },
+        };
+        track(eventObject);
+      }
       break;
     default:
       break;

@@ -4,6 +4,12 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import transitions from './transitions.css';
 import css from './leaderboard.css';
 
+import withTheme from '../withTheme';
+import MaterialButton from '../MaterialButton/MaterialButton';
+import bandaiTheme from '../MaterialButton/theme/bandai.css';
+
+const BandaiButton = withTheme(MaterialButton, bandaiTheme);
+
 function addPointSeparator(intNum) {
   return (`${intNum}`).replace(/(\d)(?=(\d{3})+$)/g, '$1.');
 }
@@ -49,7 +55,7 @@ export default class LeaderBoard extends React.Component {
     return (
       <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
         <button className={css.closeButton} onClick={this.props.onClose}></button>
-        <div style={{ width: '80%', margin: '0 auto' }}>
+        <div style={{ width: '98%', margin: '0 auto' }}>
           <div className={css.title}>{this.props.title}</div>
           <table className={css.table}>
             <tbody>
@@ -75,6 +81,11 @@ export default class LeaderBoard extends React.Component {
             <Arrows left style={{ width: '25%', textAlign: 'center' }} />
           </div>
           <div className={css.message}>{this.props.congratulations}</div>
+          { this.props.showReplayButton ? (<div>
+            <BandaiButton type='button' secondary style={{ minWidth: '200px', display: 'block', margin: '0 auto' }} onClick={this.props.onClose}>
+              {this.props.replayButtonText.toUpperCase()}
+            </BandaiButton>
+          </div>) : null }
         </div>
       </div>
     );
@@ -93,11 +104,13 @@ export default class LeaderBoard extends React.Component {
 }
 
 LeaderBoard.defaultProps = {
-  title: 'Highest Score',
-  congratulations: 'Congrats',
-  yourScore: 'Your score',
+  title: '',
+  congratulations: '',
+  yourScore: '',
+  replayButtonText: '',
   onClose: () => { },
   score: 0,
   show: false,
+  showReplayButton: false,
   leaderboard: [],
 };

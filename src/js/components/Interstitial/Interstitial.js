@@ -25,10 +25,12 @@ export class Interstitial extends React.Component {
       loaded: false,
       dismissable: false,
       countdown: this.props.dismissableAfter,
+      iframePermissions: ['allow-scripts', 'allow-same-origin', 'allow-pointer-lock', 'allow-popups', 'allow-forms', 'allow-top-navigation'],
     };
   }
 
   handleOnLoad() {
+    if (this.state.countdown === 0) { return; }
     if (this.timerID) { clearInterval(this.timerID); }
     this.timerID = setInterval(() => {
       this.setState({ countdown: this.state.countdown - 1 }, () => {
@@ -56,6 +58,13 @@ export class Interstitial extends React.Component {
     }
   }
 
+  componentDidMount() {
+    if (this.ifr) {
+      this.ifr.onload = this.handleOnLoad;
+      this.ifr.onerror = this.handleOnError;
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
@@ -73,11 +82,14 @@ export class Interstitial extends React.Component {
     return (
       <div className={styles}>
         <div className={style.buttonContainer}>
-          <button ref='closeButton' type='button' className={style.close} onClick={this.close} onTouchEnd={this.close}>
+          <button ref='closeButton' type='button'
+            className={style.close}
+            onClick={this.close}
+            onTouchEnd={this.close}>
             {this.state.countdown === 0 ? 'X' : this.state.countdown}
           </button>
         </div>
-        <iframe ref='iframeAd' src={this.props.src} onLoad={this.handleOnLoad} onError={this.handleOnError}></iframe>
+        <iframe sandbox={this.state.iframePermissions.join(' ')} allowFullScreen={true} ref={(f) => { this.ifr = f; }} src={this.props.src} />
       </div>
     );
   }

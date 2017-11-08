@@ -38,11 +38,13 @@ storiesOf('MaterialButton theme', module)
 
 
 storiesOf('BandaiButton theme', module)
-  .add('standard', () => (<BandaiButton onClick={action('clicked')}>Prova</BandaiButton>))
+  .add('primary', () => (<BandaiButton onClick={action('clicked')}>Prova</BandaiButton>))  
   .add('with long text', () => (<BandaiButton onClick={action('clicked')}>Some very very long texxxxxxxxxxxxxxxxxxt</BandaiButton>))
   .add('disabled', () => (<BandaiButton disabled>Prova</BandaiButton>))
   .add('disabled isLoading', () => (<BandaiButton disabled isLoading>Prova</BandaiButton>))
-  .add('isLoading', () => (<BandaiButton isLoading={true}>Prova</BandaiButton>));
+  .add('isLoading', () => (<BandaiButton isLoading={true}>Prova</BandaiButton>))
+  .add('secondary', () => (<BandaiButton secondary>Prova</BandaiButton>))
+  .add('secondary is loading', () => (<BandaiButton secondary isLoading={true} disabled={true}>Prova</BandaiButton>));
 
 storiesOf('EnterName without theme', module)
   .add('standard', () => {
@@ -87,6 +89,22 @@ storiesOf('LeaderBoard Bandai theme', module)
           { score: 2005, position: 2, player_name: 'JOE' },
           { score: 1560, position: 3, player_name: 'ROY' },
         ]}
+      />
+    </div>
+  ))
+  .add('Leaderboard with replaybutton', () => (
+    <div style={{ position: 'fixed', width: '100%', top: '0' }}>
+      <Leaderboard title={'High Score'}
+        score={975}
+        onClose={action('close clicked')}
+        show={true}
+        leaderboard={[
+          { score: 2398, position: 1, player_name: 'ALE' },
+          { score: 2005, position: 2, player_name: 'JOE' },
+          { score: 1560, position: 3, player_name: 'ROY' },
+        ]}
+        showReplayButton={true}
+        replayButtonText='Replay'
       />
     </div>
   ));

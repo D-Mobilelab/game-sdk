@@ -5,11 +5,10 @@ import MaterialButton from '../MaterialButton/MaterialButton';
 import bandaiTheme from '../MaterialButton/theme/bandai.css';
 import withTheme from '../withTheme';
 import { sessionStorage } from '../../lib/LocalStorage';
-
-const BandaiButton = withTheme(MaterialButton, bandaiTheme);
-
 import transitions from './transitions.css';
 import css from './enterName.css';
+
+const BandaiButton = withTheme(MaterialButton, bandaiTheme);
 
 export default class EnterName extends React.Component {
   constructor(props) {
@@ -46,10 +45,13 @@ export default class EnterName extends React.Component {
 
   onClick() {
     const name = this.serializeForm();
-    this.props.onSubmit(name);
-    // save in storage and in state
-    this.setState({ letters: name.split('') });
-    sessionStorage.setItem('gfsdk-alias-name', name);
+    // Save in storage and in state only if different from default
+    if (name !== 'aaa') {
+      this.setState({ letters: name.split('') });
+      sessionStorage.setItem('gfsdk-alias-name', name);
+    }
+    this.props.onSubmit(name, this.state.focusOn);
+    this.setState({ focusOn: 0 });
   }
 
   onSubmit(e) {
@@ -68,7 +70,7 @@ export default class EnterName extends React.Component {
     if (key === 8) {
       console.log(`Delete key ${key} ${String.fromCharCode(key)}`);
       // on delete
-      if (this.state.focusOn > 0) {        
+      if (this.state.focusOn > 0) {
         this.setState({ focusOn: this.state.focusOn - 1 }, () => {
           // Switch focus to previous input
           // console.log("previous focus", this.state);
@@ -100,7 +102,7 @@ export default class EnterName extends React.Component {
 
   returnComponent() {
     return (
-      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>        
         <button className={css.closeButton} onClick={this.props.onDismiss}></button>
         <div className={css.title}>{this.props.title}</div>
         <div className={css.formContainer}>
@@ -151,8 +153,8 @@ export default class EnterName extends React.Component {
 }
 
 EnterName.defaultProps = {
-  title: 'Enter your initials!',
-  buttonLabel: 'Enter',
+  title: '',
+  buttonLabel: '',
   onSubmit: function () { },
   onDismiss: function () { },
   show: false,

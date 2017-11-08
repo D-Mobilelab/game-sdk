@@ -1,18 +1,13 @@
 import NewtonAdapter from 'newton-adapter';
 import Location from '../lib/Location';
-import { getUserType } from './user-actions';
-import { NEWTON_DEBUG_SECRET } from '../lib/Constants';
+import { getUserType } from './utils';
 
 const hybrid = process.env.APP_ENV === 'HYBRID';
 
 export function init() {
   return (dispatch, getState) => {
     const currentState = getState();
-
-    let newtonSecret = currentState.vhost.NEWTON_SECRETID;
-    if (process.env.NODE_ENV === 'development') {
-      newtonSecret = NEWTON_DEBUG_SECRET;
-    }
+    const newtonSecret = currentState.vhost.NEWTON_SECRETID;
 
     return NewtonAdapter.init({
       secretId: newtonSecret,
@@ -20,7 +15,7 @@ export function init() {
       waitLogin: true, // wait for login to have been completed (async)
       properties: {
         environment: (hybrid ? 'hybrid' : 'webapp'),
-        white_label_id: currentState.game_info.label || 'it-gameasy',
+        white_label_id: currentState.vhost.WHITE_LABEL,
       },
     });
   };
@@ -38,13 +33,13 @@ export function login() {
     const toAdd = [
       ['country', currentState.vhost.TLD],
       ['real_country', currentState.vhost.NT_REAL_COUNTRY],
-      ['white_label_id', currentState.game_info.label],
+      ['white_label_id', currentState.vhost.WHITE_LABEL],
       ['http_referrer', window.document.referrer],
     ];
 
     const userProperties = toAdd.reduce((accumulator, keyValue) => {
       const [key, value] = keyValue;
-      if (value) { accumulator[key] = value; }
+      if (value) { accumulator[key] = value; } // eslint-disable-line no-param-reassign
       return accumulator;
     }, queryString);
 

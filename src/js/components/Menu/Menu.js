@@ -25,7 +25,10 @@ class MenuContainer extends React.Component {
 
   render() {
     return (
-      <MenuComponent show={this.props.menu.show} position={this.props.menu.position} {...this.props} onClick={this.onClick} />
+      <MenuComponent show={this.props.menu.show}
+        position={this.props.menu.position}
+        {...this.props} onClick={this.onClick}
+      />
     );
   }
 }
