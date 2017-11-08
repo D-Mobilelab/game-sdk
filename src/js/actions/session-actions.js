@@ -139,7 +139,7 @@ export function endSession(data = { score: 0, level: 1 }) {
         // always show if on bandai service and game is a bandai one
         dispatch(showEnterNameModal());
         return;
-      } else if (game_type === 'default') {
+      } else if (game_type === 'default' && FW_TYPE_PROFILE !== 'bandai') {
         if (initConfig.lite === false) {
           dispatch(showGameOver());
         }
@@ -165,9 +165,9 @@ export function endSession(data = { score: 0, level: 1 }) {
             dispatch(setRelated(response.data.related || []));
           });
         return gameOverPromise;
-      } else if (game_type === 'default' && !initConfig.lite && FW_TYPE_PROFILE === 'bandai') {
-        // on bandai portal, non-bandai game, non-lite(requires gameover) then show bandai gameover
-        dispatch(showEnterNameModal());
+      } else if (game_type === 'default' && initConfig.lite === true && FW_TYPE_PROFILE === 'bandai') {
+        // Non-bandai game on bandai portal and without gameover => requires the button
+        dispatch(showEnterNameModal({ showReplayButton: true }));
         return;
       }
       return;

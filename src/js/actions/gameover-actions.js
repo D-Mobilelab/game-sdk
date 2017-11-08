@@ -10,9 +10,10 @@ export function hideGameOver() {
   };
 }
 
-export function showEnterNameModal() {
+export function showEnterNameModal(options) {
   return {
     type: 'SHOW_ENTER_NAME',
+    payload: { showReplayButton: options ? options.showReplayButton : false },
   };
 }
 

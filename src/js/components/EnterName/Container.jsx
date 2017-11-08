@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     loading: state.gameOverBandai.loading,
     dictionary: state.generic.dictionary,
     currentScore: state.session.score,
-    showReplayButton: false,
+    showReplayButton: state.gameOverBandai.showReplayButton,
   };
 };
 
