@@ -23,7 +23,20 @@ const trackingMiddleware = store => next => (action) => {
           valuable: 'No',
         },
       };
+
       track(eventObject);
+      track({
+        name: 'pageview',
+        properties: {
+          action: 'pageview',
+          page_name: 'game-page',
+          page_title: window.document.title,
+          http_referrer: window.document.referrer,
+          page_path: Location.getCurrentHref(),
+          content_id: currentState.game_info.content_id,
+          content_name: currentState.game_info.title,
+        },
+      });
       break;
     case 'GAMEPIX_INTERSTITIAL_CALLBACK':
       eventObject = {
