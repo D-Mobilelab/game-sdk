@@ -5,7 +5,13 @@ export function show() {
   return (dispatch, getState) => {
     const { vhost } = getState();
     if (window.GamePixAdv) {
-      window.GamePixAdv.show({ tid: vhost.GAMEPIX_AD_ID });
+      window.GamePixAdv.show({
+        tid: vhost.GAMEPIX_AD_ID,
+        callback: () => {
+          // callback (optional) execute custom js code after the Ad execution it is completed or has been killed by AdBlock
+          dispatch({ type: 'GAMEPIX_INTERSTITIAL_CALLBACK' });
+        }
+      });
     } else {
       const params = {
         INPAGE_AD_CLIENT: vhost.AD_CLIENT,

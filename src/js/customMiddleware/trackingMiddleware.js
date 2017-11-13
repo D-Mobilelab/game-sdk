@@ -25,6 +25,19 @@ const trackingMiddleware = store => next => (action) => {
       };
       track(eventObject);
       break;
+    case 'GAMEPIX_INTERSTITIAL_CALLBACK':
+      eventObject = {
+        name: 'InterstitialAdShown',
+        properties: {
+          action: 'Yes',
+          category: 'Play',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+        },
+      };
+      track(eventObject);
+      break;
     case 'START_SESSION':
       eventObject = {
         name: 'GameStart',
