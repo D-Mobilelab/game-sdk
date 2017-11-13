@@ -55,8 +55,7 @@ function init(initConfig) {
         }));
       })
       .then(() => {
-        const { user } = getState();
-        const { vhost } = getState();
+        const { user, vhost } = getState();
         const userType = getUserType(user);
         // User is not premium and ads enabled in configuration => show interstitial        
         const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
