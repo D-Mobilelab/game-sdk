@@ -1,4 +1,4 @@
-export function interstitial(state = {
+export default function interstitial(state = {
   show: false,
   dismissableAfter: 5,
 }, action) {

@@ -1,4 +1,4 @@
-export function banner(state = {
+export default function banner(state = {
   show: false,
   isLoading: false,
   installBannerClicked: false,

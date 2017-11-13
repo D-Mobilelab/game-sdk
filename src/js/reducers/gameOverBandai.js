@@ -1,13 +1,14 @@
-export function gameOverBandai(state = {
+export default function gameOverBandai(state = {
   error: null,
   showLeaderboard: false,
   showEnterName: false,
   leaderboard: [],
   loading: false,
+  showReplayButton: false,
 }, action) {
   switch (action.type) {
     case 'SHOW_ENTER_NAME':
-      return Object.assign({}, state, { showEnterName: true });
+      return Object.assign({}, state, { showEnterName: true, showReplayButton: action.payload.showReplayButton });
     case 'HIDE_ENTER_NAME':
       return Object.assign({}, state, { showEnterName: false });
     case 'SHOW_LEADERBOARD':
