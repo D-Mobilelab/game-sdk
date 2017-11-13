@@ -16,7 +16,6 @@ export default function track(eventObject) {
     eventObject.properties.currency = 'USD';
     eventObject.properties.value = 1;
     FacebookPixelAdapter.track(mapNewtonEventToFacebook[eventObject.name], eventObject.properties);
-  } else {
     FacebookPixelAdapter.trackCustom(eventObject.name, eventObject.properties);
   }
 }
