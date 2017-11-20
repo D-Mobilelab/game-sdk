@@ -163,7 +163,7 @@ export default class Menu extends Component {
     };
 
     return (
-      <div ref='menu' className={classNames.join(' ')} style={style}></div>
+      <div ref='menu' className={classNames.join(' ')} style={style} data-mip-qa='menu'></div>
     );
   }
 }

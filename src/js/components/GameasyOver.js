@@ -70,7 +70,7 @@ class GameasyGameover extends Gameover {
     } = this.props.dictionary;
     return (
       <Grid>
-        <div className={classes}>
+        <div className={classes} data-mip-qa='gameasy-gameover'>
           <Row>
             <Column cols={12}>
               <header className={gameasyStyle.header}>
