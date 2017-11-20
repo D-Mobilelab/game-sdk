@@ -4,13 +4,16 @@ import Location from '../lib/Location';
 export function show() {
   return (dispatch, getState) => {
     const { vhost } = getState();
-    if (window.GamePixAdv) {
+    const { FW_TYPE_PROFILE } = vhost;
+
+    if (window.GamePixAdv && FW_TYPE_PROFILE === 'bandai') {
       window.GamePixAdv.show({
         tid: vhost.GAMEPIX_AD_ID,
         callback: () => {
-          // callback (optional) execute custom js code after the Ad execution it is completed or has been killed by AdBlock
+          // callback (optional) execute custom js code 
+          // after the Ad execution it is completed or has been killed by AdBlock
           dispatch({ type: 'GAMEPIX_INTERSTITIAL_CALLBACK' });
-        }
+        },
       });
     } else {
       const params = {
