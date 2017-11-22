@@ -19,7 +19,7 @@ export default class App extends React.Component {
           },
           Banner: () => {
             if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/Banner/Banner'));
+              return importLazy(System.import('./js/components/Banner/Container'));
             }
             return function Noop() { return null; };
           },

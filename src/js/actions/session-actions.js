@@ -2,7 +2,6 @@ import Newton from 'newton';
 import md5 from 'blueimp-md5';
 import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
-import { isAndroid } from '../lib/Platform';
 import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
@@ -96,7 +95,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       console.warn('Can\'t be called from console!');
       return;
     }
-    const { generic } = getState();
+    const { user, vhost, generic } = getState();
     // only if already initialized
     if (!generic.initialized) {
       /**
@@ -109,12 +108,10 @@ export function endSession(data = { score: 0, level: 1 }) {
       return;
     }
 
-
-    const { user, vhost } = getState();
     const bannerCondition = [
       (user.matchPlayed % 3 === 0),
       !hybrid,
-      isAndroid(),
+      (generic.platformInfo.android || generic.platformInfo.ios),
       vhost.INSTALL_HYBRID_VISIBLE,
     ].every(condition => condition === true);
 

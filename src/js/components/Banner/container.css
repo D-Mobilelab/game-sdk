@@ -1,0 +1,21 @@
+.Container {
+    position: fixed;
+    display: none;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.Container .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.Container.show {  
+    display: block;
+}

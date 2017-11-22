@@ -17,6 +17,9 @@ import MenuComponent from '../src/js/components/Menu/MenuComponent';
 import Toast from '../src/js/components/Toast/Toast';
 import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
 
+import BannerIOS from '../src/js/components/Banner/ios/Banner';
+import BannerAndroid from '../src/js/components/Banner/android/Banner';
+
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
@@ -142,6 +145,9 @@ ToastStory.add('Toast top with duration', () => {
       );
     }
   }
-
   return (<ToastContainer />);
 });
+
+storiesOf('Banner', module)  
+  .add('Banner ios', () => <BannerIOS buttonText={'GET APP'} onClick={action('on submit action')} texts={['All Your Games', 'ANYTIME', 'ANYWHERE']} />)
+  .add('Banner android', () => <BannerAndroid buttonText={'GET APP'} handleClose={action('on handle close')} onClick={action('on submit action')} dictionary={{}} />);

@@ -1,5 +1,6 @@
 import FacebookPixelAdapter from 'facebookpixeladapter';
 import * as Constants from '../lib/Constants';
+import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
 import * as HistoryGame from '../lib/HistoryGame';
 import { getUserType } from './utils';
@@ -29,7 +30,8 @@ function init(initConfig) {
     if (getState().generic.initialized) {
       return Promise.resolve();
     }
-
+    
+    dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS() } });
     dispatch(listenToWindowEvents('popstate', historyHandler));
     dispatch(listenToWindowEvents('focus', focusAction));
     dispatch(listenToWindowEvents('blur', focusAction));

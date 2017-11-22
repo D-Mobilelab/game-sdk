@@ -23,11 +23,11 @@ export function isLoading(loading) {
 export function redirectOnStore(fromPage) {
   return (dispatch, getState) => {
     dispatch(isLoading(true));
-    const { game_info, vhost } = getState();
+    const { game_info, vhost, generic } = getState();
     generatePony(vhost, { return_url: game_info.url_zoom })
       .then((pony) => {
         // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
-        const finalStoreUrl = vhost.GOOGLEPLAY_STORE_URL
+        const finalStoreUrl = generic.platformInfo.android ? vhost.GOOGLEPLAY_STORE_URL : vhost.ITUNES_STORE_URL
           .replace('<page>', fromPage)
           .replace('<af_sub1>', encodeURIComponent(pony));
 

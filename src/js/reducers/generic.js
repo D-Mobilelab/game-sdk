@@ -1,6 +1,10 @@
 export default function generic(state = {
   error: null,
   hybrid: false,
+  platformInfo: {
+    android: false,
+    ios: false,
+  },
   connectionState: { online: true, type: 'none' },
   initialized: false,
   initPending: false,
@@ -45,18 +49,12 @@ export default function generic(state = {
       return Object.assign({}, state, { isOnStartSessionRegistered: action.registered });
     case 'REGISTER_ON_USER_DATA_CALLBACK':
       return Object.assign({}, state, { loadUserDataCalled: action.loadUserDataCalled });
-    case 'SET_CONNECTION_STATE':
-      const online = action.connectionState.type === 'online';
-      return Object.assign({}, state, {
-        connectionState: {
-          online,
-          type: action.connectionState.networkState,
-        },
-      });
     case 'DICTIONARY_LOAD_END':
       return Object.assign({}, state, { dictionary: action.payload });
     case 'FOCUS_CHANGE':
       return Object.assign({}, state, { focus: action.payload.focus });
+    case 'PLATFORM_INFO':
+      return Object.assign({}, state, { platformInfo: action.payload });
     default:
       return state;
   }
