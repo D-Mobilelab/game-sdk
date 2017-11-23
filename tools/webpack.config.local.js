@@ -4,9 +4,9 @@ var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
 var modifyResponse = require('node-http-proxy-json');
-var localvhost = require('./local/vhost.json');
-var SERVICE = require('./local/service').service;
-
+var localvhost = require('./local/' + process.env.SERVICE + '/vhost.json').config;
+var SERVICE = require('./local/' + process.env.SERVICE + '/vhost.json').domain;
+console.log(SERVICE);
 var devConfiguration = Object.create(baseConfiguration);
 
 var hotPlugin = new webpack.HotModuleReplacementPlugin();
@@ -19,12 +19,6 @@ var envPlugin = new webpack.DefinePlugin({
 });
 
 var ROOT_DIRECTORY = null;
-
-/*if(process.env.ROOT_DIRECTORY) {
-  console.log("ROOT DIRECTORY", process.env.ROOT_DIRECTORY);
-  ROOT_DIRECTORY = process.env.ROOT_DIRECTORY;
-  devConfiguration.output.publicPath = ROOT_DIRECTORY;
-}*/
 
 var PROTOCOL = 'http://';
 var LOCAL = 'local';
