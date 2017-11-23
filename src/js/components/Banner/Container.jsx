@@ -28,7 +28,7 @@ class BannerContainer extends Component {
     super(props);
     this.handleGetAppButton = this.handleGetAppButton.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.genericClose = this.genericClose.bind(this);    
+    this.genericClose = this.genericClose.bind(this);
   }
 
   genericClose(evt) {
@@ -62,12 +62,21 @@ class BannerContainer extends Component {
     return (<div className={classes} onClick={this.genericClose}>
       <div className={style.center}>
         {this.props.plaftormInfo.ios ?
-          <BannerIOS texts={[WEBAPP_HYBRIDINSTALL_TXT_IOS, WEBAPP_HYBRIDINSTALL_APPINFOSMALL_IOS]}
+          <BannerIOS
+            texts={[
+              WEBAPP_HYBRIDINSTALL_TXT_IOS,
+              WEBAPP_HYBRIDINSTALL_APPINFO,
+              WEBAPP_HYBRIDINSTALL_APPINFOSMALL_IOS,
+            ]}
             buttonText={WEBAPP_BANNER_BUTTON}
             onClick={this.handleGetAppButton}
             onClose={this.handleClose} /> :
           <BannerAndroid
-            texts={[WEBAPP_HYBRIDINSTALL_TXT, WEBAPP_HYBRIDINSTALL_APPINFO, WEBAPP_HYBRIDINSTALL_APPINFOSMALL]}
+            texts={[
+              WEBAPP_HYBRIDINSTALL_TXT,
+              WEBAPP_HYBRIDINSTALL_APPINFO,
+              WEBAPP_HYBRIDINSTALL_APPINFOSMALL,
+            ]}
             buttonText={WEBAPP_BANNER_BUTTON}
             onClick={this.handleGetAppButton}
             onClose={this.handleClose}
