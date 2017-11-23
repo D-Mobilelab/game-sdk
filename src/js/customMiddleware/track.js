@@ -11,12 +11,14 @@ export default function track(eventObject) {
   NewtonAdapter.trackEvent(eventObject);
   FacebookPixelAdapter.trackCustom(eventObject.name, eventObject.properties);
   if (eventObject.name in mapNewtonEventToFacebook) {
-    eventObject.properties.content_ids = [eventObject.properties.label];
-    eventObject.properties.content_name = eventObject.properties.game_title;
-    eventObject.properties.content_type = 'product';
-    eventObject.properties.currency = 'USD';
-    eventObject.properties.value = 1;
-    FacebookPixelAdapter.track(mapNewtonEventToFacebook[eventObject.name], eventObject.properties);
+    const clonedEventObject = Object.assign({}, eventObject);
+    clonedEventObject.properties = {};
+    clonedEventObject.properties.content_ids = [eventObject.properties.label];
+    clonedEventObject.properties.content_name = eventObject.properties.game_title;
+    clonedEventObject.properties.content_type = 'product';
+    clonedEventObject.properties.currency = 'USD';
+    clonedEventObject.properties.value = 1;
+    FacebookPixelAdapter.track(mapNewtonEventToFacebook[clonedEventObject.name], clonedEventObject.properties);
   }
 }
 
