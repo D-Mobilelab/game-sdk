@@ -34,11 +34,13 @@ Probably you already have this installed in your PC/Mac but just in case here ar
 
 #### Edit your host file
 
-You should add this line to your file hosts 
+You should add these lines to your file hosts 
 ( [How to edit my host file?](http://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/) )
 
 ```javascript
    127.0.0.1 local.appsworld.gamifive-app.com
+   127.0.0.1 local.www.bandainamcoentfun.com
+   127.0.0.1 local.www.gameasy.com
 ```
 
 ### Clone the repo
@@ -71,7 +73,16 @@ Put the game in game-sdk/sample/myfolder where myfolder could have any name you 
 #### Run the local server
 
 ```javascript
+// possible values: bandai, gameasy, gamifive
+export SERVICE=bandai
+// or if you're on windows
+set SERVICE=bandai
+```
+
+```javascript
 npm run dev
+// OR
+yarn dev
 ```
 
 Go to the setup page <http://local.appsworld.gamifive-app.com:8080/setup.html>
