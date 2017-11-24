@@ -51,7 +51,8 @@ if (module.hot) {
 window.document.addEventListener('DOMContentLoaded', onDomLoaded);
 
 const aliases = ['GamefiveSDK', 'DocomoSDK', 'GamifiveSdk', 'GamefiveSdk'];
-const instance = new SDK(store);
+const instance = Object.freeze(new SDK(store));
+
 aliases.map((alias) => {
   window[alias] = instance;
   return true;
