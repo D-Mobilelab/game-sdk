@@ -55,7 +55,7 @@ class BannerContainer extends Component {
       WEBAPP_HYBRIDINSTALL_APPINFO,
       WEBAPP_HYBRIDINSTALL_APPINFOSMALL,
       WEBAPP_BANNER_BUTTON,
-      WEBAPP_HYBRIDINSTALL_TXT_IOS,
+      WEBAPP_HYBRIDINSTALL_APPINFO_IOS,
       WEBAPP_HYBRIDINSTALL_APPINFOSMALL_IOS,
     } = this.props.dictionary;
     const classes = [style.Container, this.props.show ? style.show : ''].join(' ');
@@ -64,8 +64,7 @@ class BannerContainer extends Component {
         {this.props.plaftormInfo.ios ?
           <BannerIOS
             texts={[
-              WEBAPP_HYBRIDINSTALL_TXT_IOS,
-              WEBAPP_HYBRIDINSTALL_APPINFO,
+              WEBAPP_HYBRIDINSTALL_APPINFO_IOS,
               WEBAPP_HYBRIDINSTALL_APPINFOSMALL_IOS,
             ]}
             buttonText={WEBAPP_BANNER_BUTTON}
