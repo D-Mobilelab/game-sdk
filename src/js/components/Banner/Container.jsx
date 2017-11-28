@@ -79,6 +79,7 @@ class BannerContainer extends Component {
             buttonText={WEBAPP_BANNER_BUTTON}
             onClick={this.handleGetAppButton}
             onClose={this.handleClose}
+            isLoading={this.props.isLoading}
           /> }
       </div>
     </div>);
