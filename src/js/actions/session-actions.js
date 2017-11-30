@@ -179,6 +179,12 @@ export function endSession(data = { score: 0, level: 1 }) {
   };
 }
 
+/**
+ * The register score function for bandai
+ * @param {string} alias - the alias to register
+ * @param {number} inputFocus - the index of the input field in the gameover
+ * @returns {function} - return the redux thunk function
+ */
 export function registerScore(alias, inputFocus) {
   return (dispatch, getState) => {
     const shouldTrack = true;
