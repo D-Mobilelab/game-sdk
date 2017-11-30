@@ -33,8 +33,10 @@ function init(initConfig) {
     
     dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS() } });
     dispatch(listenToWindowEvents('popstate', historyHandler));
-    dispatch(listenToWindowEvents('focus', focusAction));
-    dispatch(listenToWindowEvents('blur', focusAction));
+    if (!process.env.LOCAL_DEV) {
+      dispatch(listenToWindowEvents('focus', focusAction));
+      dispatch(listenToWindowEvents('blur', focusAction));
+    }
 
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
 
