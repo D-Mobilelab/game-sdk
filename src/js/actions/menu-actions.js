@@ -14,23 +14,29 @@ export function goToHome() {
 }
 
 export function showMenu(position) {
-  let thePosition = null;
-  const rightPositions = [
-    'TOP_LEFT',
-    'TOP_RIGHT',
-    'BOTTOM_RIGHT',
-    'BOTTOM_LEFT',
-  ];
-  if (typeof position === 'string') {
-    position = position.toUpperCase();
-    if (rightPositions.indexOf(position) > -1) {
-      thePosition = position;
+  return (dispatch, getState) => {
+    const { vhost } = getState();
+    if (vhost.GFSDK_MENU_BUTTON && !vhost.GFSDK_MENU_BUTTON) {
+      return;
     }
-  }
+    let thePosition = null;
+    const rightPositions = [
+      'TOP_LEFT',
+      'TOP_RIGHT',
+      'BOTTOM_RIGHT',
+      'BOTTOM_LEFT',
+    ];
+    if (typeof position === 'string') {
+      position = position.toUpperCase();
+      if (rightPositions.indexOf(position) > -1) {
+        thePosition = position;
+      }
+    }
 
-  return {
-    type: 'SHOW_MENU',
-    payload: { position: thePosition },
+    dispatch({
+      type: 'SHOW_MENU',
+      payload: { position: thePosition },
+    });
   };
 }
 
