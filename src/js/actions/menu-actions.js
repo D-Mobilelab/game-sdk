@@ -16,7 +16,7 @@ export function goToHome() {
 export function showMenu(position) {
   return (dispatch, getState) => {
     const { vhost } = getState();
-    if (vhost.GFSDK_MENU_BUTTON && !vhost.GFSDK_MENU_BUTTON) {
+    if (typeof vhost.GFSDK_MENU_BUTTON !== 'undefined' && vhost.GFSDK_MENU_BUTTON === false) {
       return;
     }
     let thePosition = null;
