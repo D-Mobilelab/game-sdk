@@ -4,9 +4,10 @@ var path = require('path');
 var webpack = require('webpack');
 var baseConfiguration = require('./webpack.config.base');
 var modifyResponse = require('node-http-proxy-json');
-if(!process.env.SERVICE || process.env.SERVICE === '') console.warn('Please set SERVICE env variable: export SERVICE=bandai|gameasy|gamifive');
+if(!process.env.SERVICE || process.env.SERVICE === '') { console.warn('Please set SERVICE env variable: export SERVICE=bandai|gameasy|gamifive'); }
 var localvhost = require('./local/' + process.env.SERVICE + '/vhost.json').config;
 var SERVICE = require('./local/' + process.env.SERVICE + '/vhost.json').domain;
+console.warn(process.env.SERVICE, SERVICE, localvhost);
 var devConfiguration = Object.create(baseConfiguration);
 
 var hotPlugin = new webpack.HotModuleReplacementPlugin();
@@ -42,9 +43,8 @@ devConfiguration.devServer = {
       },
       onProxyRes: function(proxyRes, req, res) {
         console.log("Response", req.path);
-        if(req.path === '/it/v01/config.getvars') {          
+        if(req.path.indexOf("config.getvars" > -1)) {
           delete proxyRes.headers['content-length'];
-
           modifyResponse(res, proxyRes.headers['content-encoding'], function (body) {
             if (body) {
               // replace some keys with locals
