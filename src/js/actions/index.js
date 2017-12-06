@@ -30,19 +30,24 @@ function init(initConfig) {
     if (getState().generic.initialized) {
       return Promise.resolve();
     }
-    
+
     dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS() } });
-    dispatch(listenToWindowEvents('popstate', historyHandler));
     if (!process.env.LOCAL_DEV) {
       dispatch(listenToWindowEvents('focus', focusAction));
       dispatch(listenToWindowEvents('blur', focusAction));
     }
 
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
-
-    return Promise.resolve()
-      .then(() => dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL)))
-      .then(() => dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)))
+    return Promise.all([
+      dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)),
+      dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL)),
+    ])
+      .then(() => {
+        const { vhost } = getState();
+        if (vhost.GFSDK_OVERRIDE_BACK !== undefined && vhost.GFSDK_OVERRIDE_BACK) {
+          dispatch(listenToWindowEvents('popstate', historyHandler));
+        }
+      })
       .then(() => dispatch(userActions.getUser()))
       .then(() => dispatch(gameinfoActions.getGameInfo()))
       .then(() => {
