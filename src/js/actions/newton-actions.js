@@ -53,6 +53,9 @@ export function login() {
       userId: currentState.user.user || '',
       userProperties,
       logged,
-    }).catch(reason => Promise.resolve(reason));
+    }).catch((reason) => {
+      console.warn(reason);
+      return Promise.resolve(reason);
+    });
   };
 }
