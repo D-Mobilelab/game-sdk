@@ -35,11 +35,11 @@ export function redirectOnStore(fromPage) {
           .replace('<af_sub1>', encodeURIComponent(pony));
 
         dispatch({ type: 'REDIRECT_ON_STORE', payload: finalStoreUrl });
-        setTimeout(() => dispatch(hideBanner()), 1000);
+        dispatch(isLoading(false));
         window.location.href = finalStoreUrl;
       }).catch((reason) => {
         dispatch({ type: 'REDIRECT_ON_STORE_ERROR', payload: reason.toString() });
-        dispatch(hideBanner());
+        dispatch(isLoading(false));
       });
   };
 }
