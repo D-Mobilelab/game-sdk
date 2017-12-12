@@ -44,7 +44,7 @@ function init(initConfig) {
     ])
       .then(() => {
         const { vhost } = getState();
-        if (!vhost.GFSDK_OVERRIDE_BACK) {
+        if (typeof vhost.GFSDK_OVERRIDE_BACK === 'undefined' || vhost.GFSDK_OVERRIDE_BACK) {
           addSteps();
           dispatch(listenToWindowEvents('popstate', historyHandler));
         }
