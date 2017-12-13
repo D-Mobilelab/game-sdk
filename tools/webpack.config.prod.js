@@ -1,6 +1,7 @@
 /* eslint-disable */
 var path = require('path');
 var webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 var baseConfiguration = require('./webpack.config.base');
 var getAssetsChunkName = require('./getAssetsChunkName')(process.env.NODE_ENV);
 var FILENAME = '[name].[chunkhash:5].min.js';
@@ -19,6 +20,7 @@ prodConfiguration.output.filename = process.env.APP_ENV === "WEB" ? FILENAME : F
 prodConfiguration.devtool = 'source-map';
 
 prodConfiguration.plugins = [
+  new CleanWebpackPlugin(['dist'], { root: process.cwd() }),
   new webpack.HashedModuleIdsPlugin(),
   new webpack.optimize.CommonsChunkPlugin({
     name: ['vendor', 'gfsdk'],
