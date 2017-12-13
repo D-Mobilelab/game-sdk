@@ -75,7 +75,7 @@
     "axios": "^0.15.2",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.10.0",
-    "docomo-utils": "^1.2.6",
+    "docomo-utils": "^1.2.8",
     "facebookpixeladapter": "^0.1.2",
     "localforage": "^1.4.3",
     "newton-adapter": "^2.6.0",
