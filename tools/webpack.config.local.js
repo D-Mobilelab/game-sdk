@@ -25,6 +25,7 @@ var PROTOCOL = 'http://';
 var LOCAL = 'local';
 var HOSTNAME = LOCAL + '.' + SERVICE;
 HOSTNAME = '0.0.0.0';
+var TARGET = PROTOCOL + SERVICE;
 // devConfiguration.entry.push('webpack/hot/dev-server');
 // devConfiguration.entry.push('webpack-dev-server/client?http://' + HOSTNAME + ':8080');
 
@@ -44,8 +45,9 @@ devConfiguration.devServer = {
       onProxyRes: function(proxyRes, req, res) {
         console.log("Response", req.path);
         if(req.path.indexOf("config.getvars" > -1)) {
+          console.log(proxyRes.headers);
           delete proxyRes.headers['content-length'];
-          modifyResponse(res, proxyRes.headers['content-encoding'], function (body) {
+          modifyResponse(res, proxyRes.headers['content-encoding'] ? proxyRes.headers['content-encoding'] : proxyRes.headers['transfer-encoding'], function (body) {
             if (body) {
               // replace some keys with locals
               for(var key in localvhost) {
@@ -57,7 +59,7 @@ devConfiguration.devServer = {
           });
         }
       },      
-      target: PROTOCOL + SERVICE,
+      target: TARGET,
       secure: false,
       changeOrigin: true,
       historyApiFallback: true,
@@ -67,7 +69,7 @@ devConfiguration.devServer = {
       }
     },
     '/**/dictionary': {
-      target: PROTOCOL + SERVICE,
+      target: TARGET,
       changeOrigin: true,
       historyApiFallback: true,
     }
