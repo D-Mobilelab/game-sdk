@@ -23,7 +23,7 @@ prodConfiguration.plugins = [
   new CleanWebpackPlugin(['dist'], { root: process.cwd() }),
   new webpack.HashedModuleIdsPlugin(),
   new webpack.optimize.CommonsChunkPlugin({
-    name: ['vendor', 'gfsdk'],
+    name: ['vendor', 'manifest'],
     // (the commons chunk name)
     // (the filename of the commons chunk)
     // minChunks: 3,
