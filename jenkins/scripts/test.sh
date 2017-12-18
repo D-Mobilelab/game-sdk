@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-echo 'test.sh'
+echo 'npm test'

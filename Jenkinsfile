@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:6-alpine'
-            args '-p 3000:3000'
+            args '-p 3000:3000 -u root:root'
         }
     }
     environment { 
@@ -11,16 +11,21 @@ pipeline {
     stages {
         stage('Install') {
             steps {
+                sh 'echo "Node version: $(node --version), Npm version:$(npm --version)"'                
+                sh 'ls -la'
+                sh 'echo "npm get prefix: $(npm get prefix)"'
                 sh 'npm install'
             }
         }        
         stage('Test') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                sh 'npm test'
             }
         }
         stage('Build') {
-            sh 'npm run build'
+            steps {
+                sh 'npm run build'
+            }
         }
         stage('Deliver') { 
             steps {
