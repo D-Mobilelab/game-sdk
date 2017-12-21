@@ -2,13 +2,11 @@ import Location from '../lib/Location';
 
 export function goToHome() {
   return (dispatch) => {
-    if (process.env.APP_ENV === 'HYBRID') {
-      if (window.webview) {
-        window.webview.Close();
-      }
-    } else {
-      window.location.href = Location.getOrigin();
+    // If I'm in iframe...
+    if (window !== window.top) {
+      window.parent.postMessage('GO_TO_HOME', '*');
     }
+    window.location.href = Location.getOrigin();
     dispatch({ type: 'GO_TO_HOME' });
   };
 }
