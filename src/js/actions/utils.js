@@ -49,3 +49,7 @@ export function getUserType(userInfo) {
   }
   return 'guest';
 }
+
+export function isStandAlone() {
+  return (window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches);
+}

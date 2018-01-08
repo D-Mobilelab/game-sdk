@@ -10,7 +10,7 @@ export function canPlay() {
     return AxiosInstance.get(url, {
       params: { cors_compliant: 1 },
     }).then((response) => {
-      if (process.env.NODE_ENV === 'development' || process.env.APP_ENV === 'HYBRID') {
+      if (process.env.NODE_ENV === 'development') {
         response.data.canDownload = true;
       }
       dispatch({ type: 'SET_CAN_PLAY', canPlay: response.data.canDownload });
@@ -47,9 +47,6 @@ export function getUser() {
   return (dispatch) => {
     dispatch({ type: 'USER_CHECK_LOAD_START' });
     const query = {};
-    if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
-    /** needed to get the pony */
-    query.hybrid = 1;
     return AxiosInstance.get(Constants.USER_CHECK, { params: query })
       .then((userResponse) => {
         const user = userResponse.data;

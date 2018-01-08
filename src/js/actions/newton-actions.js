@@ -1,8 +1,6 @@
 import NewtonAdapter from 'newton-adapter';
 import Location from '../lib/Location';
-import { getUserType } from './utils';
-
-const hybrid = process.env.APP_ENV === 'HYBRID';
+import { getUserType, isStandAlone } from './utils';
 
 export function init() {
   return (dispatch, getState) => {
@@ -14,7 +12,7 @@ export function init() {
       enable: true, // enable newton
       waitLogin: true, // wait for login to have been completed (async)
       properties: {
-        environment: (hybrid ? 'hybrid' : 'webapp'),
+        environment: isStandAlone() ? 'webapp_standalone' : 'webapp',
         white_label_id: currentState.vhost.WHITE_LABEL,
       },
     });
@@ -43,19 +41,23 @@ export function login() {
       return accumulator;
     }, queryString);
 
-    let logged = true;
-    if (getUserType(currentState.user) === 'guest') {
-      logged = false;
-    }
-
-    return NewtonAdapter.login({
+    const loginOptions = {
       type: 'external',
-      userId: currentState.user.user || '',
       userProperties,
-      logged,
-    }).catch((reason) => {
-      console.warn(reason);
-      return Promise.resolve(reason);
-    });
+    };
+
+    let logged = false;
+    // guest: unlogged, free: facebook, premium: acquisition
+    if (getUserType(currentState.user) !== 'guest') {
+      logged = true;
+      loginOptions.userId = currentState.user.user;
+    }
+    loginOptions.logged = logged;
+
+    return NewtonAdapter.login(loginOptions)
+      .catch((reason) => {
+        console.warn(reason);
+        throw reason;
+      });
   };
 }

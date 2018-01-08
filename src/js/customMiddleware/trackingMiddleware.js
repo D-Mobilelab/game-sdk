@@ -7,7 +7,7 @@ const trackingMiddleware = store => next => (action) => {
   const currentState = store.getState();
   const qs = Location.getQueryString();
   const userFrom = (qs.dest || qs.trackExecutionKey) ? 'acquisition' : 'natural';
-  const userType = getUserType(currentState.user);
+  const user_type = getUserType(currentState.user);
   const { CONTENT_RANKING } = currentState.vhost;
   let eventObject = null;
 
@@ -21,6 +21,7 @@ const trackingMiddleware = store => next => (action) => {
           game_title: currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
+          user_type,
         },
       };
 
@@ -35,6 +36,7 @@ const trackingMiddleware = store => next => (action) => {
           page_path: Location.getCurrentHref(),
           content_id: currentState.game_info.content_id,
           content_name: currentState.game_info.title,
+          user_type,
         },
       });
       break;
@@ -54,20 +56,21 @@ const trackingMiddleware = store => next => (action) => {
     case 'START_SESSION':
       eventObject = {
         name: 'GameStart',
-        rank: getContentRanking('GameStart', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameStart', 'Play', currentState.game_info.content_id, user_type, CONTENT_RANKING, userFrom),
         properties: {
           category: 'Play',
           game_title: currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'Yes',
           action: 'Yes',
+          user_type,
         },
       };
       track(eventObject);
       break;
     case 'END_SESSION':
       eventObject = {
-        rank: getContentRanking('GameEnd', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameEnd', 'Play', currentState.game_info.content_id, user_type, CONTENT_RANKING, userFrom),
         name: 'GameEnd',
         properties: {
           category: 'Play',
@@ -75,13 +78,14 @@ const trackingMiddleware = store => next => (action) => {
           label: currentState.game_info.content_id,
           valuable: 'No',
           action: 'No',
+          user_type,
         },
       };
       track(eventObject);
       break;
     case 'GO_TO_HOME':
       eventObject = {
-        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, 'guest', CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, user_type, CONTENT_RANKING, userFrom),
         name: 'GoToHome',
         properties: {
           action: 'Yes',
@@ -89,6 +93,7 @@ const trackingMiddleware = store => next => (action) => {
           game_title: currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
+          user_type,
         },
       };
       track(eventObject);
@@ -103,6 +108,7 @@ const trackingMiddleware = store => next => (action) => {
           label: currentState.game_info.content_id || '',
           valuable: 'No',
           reason: currentState.generic.error,
+          user_type,
         },
       };
       track(eventObject);
@@ -114,6 +120,7 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
+          user_type,
         },
       };
       track(eventObject);
@@ -125,6 +132,7 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
+          user_type,
         },
       };
       track(eventObject);
@@ -136,6 +144,7 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
+          user_type,
         },
       };
       track(eventObject);
@@ -147,6 +156,7 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'No',
+          user_type,
         },
       };
       track(eventObject);
@@ -159,6 +169,7 @@ const trackingMiddleware = store => next => (action) => {
           category: 'Behavior',
           valuable: 'No',
           game_title: action.payload.title,
+          user_type,
         },
       };
       track(eventObject);
@@ -173,6 +184,7 @@ const trackingMiddleware = store => next => (action) => {
             game_title: currentState.game_info.title,
             label: currentState.game_info.content_id,
             valuable: 'No',
+            user_type,
           },
         };
         track(eventObject);
@@ -188,6 +200,7 @@ const trackingMiddleware = store => next => (action) => {
             game_title: currentState.game_info.title,
             label: currentState.game_info.content_id,
             valuable: 'No',
+            user_type,
           },
         };
         track(eventObject);
