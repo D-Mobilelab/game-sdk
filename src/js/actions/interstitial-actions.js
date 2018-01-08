@@ -4,9 +4,9 @@ import Location from '../lib/Location';
 export function show() {
   return (dispatch, getState) => {
     const { vhost } = getState();
-    const { FW_TYPE_PROFILE } = vhost;
+    const { USE_GAMEPIX_ADS } = vhost;
 
-    if (window.GamePixAdv && FW_TYPE_PROFILE === 'bandai') {
+    if (window.GamePixAdv && USE_GAMEPIX_ADS) {
       window.GamePixAdv.show({
         tid: vhost.GAMEPIX_AD_ID,
         callback: () => {
