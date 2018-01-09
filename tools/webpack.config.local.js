@@ -44,8 +44,7 @@ devConfiguration.devServer = {
       },
       onProxyRes: function(proxyRes, req, res) {
         console.log("Response", req.path);
-        if(req.path.indexOf("config.getvars" > -1)) {
-          console.log(proxyRes.headers);
+        if(req.path === '/v01/config.getvars') {
           delete proxyRes.headers['content-length'];
           modifyResponse(res, proxyRes.headers['content-encoding'] ? proxyRes.headers['content-encoding'] : proxyRes.headers['transfer-encoding'], function (body) {
             if (body) {
