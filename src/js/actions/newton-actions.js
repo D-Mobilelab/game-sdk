@@ -51,6 +51,7 @@ export function login() {
     if (getUserType(currentState.user) !== 'guest') {
       logged = true;
       loginOptions.userId = currentState.user.user;
+      loginOptions.userProperties.user_type = getUserType(currentState.user);
     }
     loginOptions.logged = logged;
 
