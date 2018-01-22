@@ -19,11 +19,14 @@ import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
 
 import BannerIOS from '../src/js/components/Banner/ios/Banner';
 import BannerAndroid from '../src/js/components/Banner/android/Banner';
+import HelloComponent from '../src/js/components/Hello/Hello.gameasy.jsx';
+import HelloDefault from '../src/js/components/Hello/Hello.default.jsx';
 
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
 const BandaiMenu = withTheme(MenuComponent, bandaiMenuTheme);
+
 
 storiesOf('MaterialButton', module)
   .add('standard', () => (<StandardButton onClick={action('clicked')}>Prova</StandardButton>))
@@ -151,3 +154,11 @@ ToastStory.add('Toast top with duration', () => {
 storiesOf('Banner', module)  
   .add('Banner ios', () => <BannerIOS buttonText={'GET APP'} onClick={action('on submit action')} texts={['All Your Games', 'ANYTIME', 'ANYWHERE']} />)
   .add('Banner android', () => <BannerAndroid buttonText={'GET APP'} handleClose={action('on handle close')} onClick={action('on submit action')} dictionary={{}} />);
+
+storiesOf('Hello Component', module)
+  .add('Hello compoennt', () => {
+    return <HelloComponent name="pippo" />
+  })
+  .add('Hello component with uppercase', () => {
+    return <HelloDefault name="Pippo" />
+  });

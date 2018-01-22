@@ -1,0 +1,4 @@
+.Hello {
+    composes: Hello from './default.css';
+    color: white;
+}
