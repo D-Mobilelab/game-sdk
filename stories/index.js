@@ -3,6 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
+import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import MaterialButton from '../src/js/components/MaterialButton/MaterialButton';
 import EnterName from '../src/js/components/EnterName/EnterName';
@@ -118,10 +119,15 @@ storiesOf('Menu', module)
   .add('Menu Bandai Left top', () => (<BandaiMenu show={true} position='TOP_LEFT' />));
 
 const ToastStory = storiesOf('Toast', module);
+ToastStory.addDecorator(withKnobs);
 
-ToastStory.add('Toast bottom', () => (<Toast message={'Cannot register score'} show />));
+ToastStory.add('Toast bottom', () => {
+  const label = 'position';
+  const defaultValue = 'bottom';
 
-ToastStory.add('Toast top', () => (<Toast message='Cannot register score' show={false} position='top' />));
+  const position = text(label, defaultValue);
+  return (<Toast message={'Cannot register score'} show={boolean('show', true)} position={position} />);
+});
 
 ToastStory.add('Toast top with duration', () => {
   class ToastContainer extends React.Component {
