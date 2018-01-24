@@ -91,7 +91,7 @@ export function endSession(data = { score: 0, level: 1 }) {
     data.level = 1;
   }
   return (dispatch, getState) => {
-    if (fromConsole()) {
+    if (fromConsole() && process.env.NODE_ENV === 'production') {
       console.warn('Can\'t be called from console!');
       return;
     }
