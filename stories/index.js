@@ -126,7 +126,7 @@ ToastStory.add('Toast bottom', () => {
   const defaultValue = 'bottom';
 
   const position = text(label, defaultValue);
-  return (<Toast message={'Cannot register score'} show={boolean('show', true)} position={position} />);
+  return (<Toast message={'Cannot register score'} show={boolean('show', false)} position={text('position', 'bottom')} />);
 });
 
 ToastStory.add('Toast top with duration', () => {
