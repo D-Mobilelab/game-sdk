@@ -75,7 +75,7 @@ var devConfiguration = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor', 'gfsdk'],
+      name: ['vendor', 'manifest'],
       // (the commons chunk name)
       // (the filename of the commons chunk)
       // minChunks: 3,
