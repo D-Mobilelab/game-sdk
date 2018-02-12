@@ -1,0 +1,19 @@
+/* colors.css */
+@value background_cyan: #00c1e2;
+@value foreground_white: #e7e7f9;
+@value purple_gameasy: #f84975;
+@value blue_gameasy: #6482c4;
+
+.header {
+    composes: header from './default.css';
+    background: background_cyan;
+    color: foreground_white;
+}
+
+.divider {
+	composes: divider from './default.css';
+}
+
+.scoreContainer {
+    composes: scoreContainer from './default.css';
+}

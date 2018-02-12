@@ -21,6 +21,9 @@ import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
 import BannerIOS from '../src/js/components/Banner/ios/Banner';
 import BannerAndroid from '../src/js/components/Banner/android/Banner';
 
+import Gameover from '../src/js/components/Gameover/Default';
+import GameasyGameover from '../src/js/components/Gameover/Gameasy';
+
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
@@ -157,3 +160,7 @@ ToastStory.add('Toast top with duration', () => {
 storiesOf('Banner', module)  
   .add('Banner ios', () => <BannerIOS buttonText={'GET APP'} onClick={action('on submit action')} texts={['All Your Games', 'ANYTIME', 'ANYWHERE']} />)
   .add('Banner android', () => <BannerAndroid buttonText={'GET APP'} handleClose={action('on handle close')} onClick={action('on submit action')} dictionary={{}} />);
+
+storiesOf('Gameover', module)
+  .add('standard', () => <Gameover score={200} rank={6} related={[{ images: { cover: { ratio_1: '' } } }]} />)
+  .add('gameasy', () => <GameasyGameover score={200} rank={6} />);
