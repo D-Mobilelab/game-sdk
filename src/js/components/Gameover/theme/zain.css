@@ -1,0 +1,44 @@
+@value header_background: #421782;
+@value header_foreground: #ffffff;
+@value background: #4B48A0;
+@value foreground: #ffffff;
+
+
+.gameover {
+    composes: gameover from './default.css';
+
+    font-family: 'montserratultra_light';
+    background-color: background;
+    color: foreground;
+}
+
+.gameover_show {
+    composes: gameover_show from './default.css';
+}
+
+.gameover_hide {
+    composes: gameover_hide from './default.css';
+}
+
+
+.header {
+    composes: header from './default.css';
+    background: header_background;
+    color: foreground;
+}
+
+.divider {
+	composes: divider from './default.css';
+}
+
+.scoreContainer {
+    composes: scoreContainer from './default.css';
+}
+
+.gameover {
+    composes: gameover from './default.css';
+    
+    font-family: 'montserratultra_light';
+    background-color: background;
+    color: foreground;
+}

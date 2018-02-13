@@ -1,13 +1,46 @@
 /* colors.css */
-@value background_cyan: #00c1e2;
-@value foreground_white: #e7e7f9;
+@value header_background: #00c1e2;
+@value header_foreground: #e7e7f9;
+@value background: #121721;
+@value foreground: #ffffff;
+
+@value trophy_color:#e7f943;
+@value podium_color:header_background;
+
 @value purple_gameasy: #f84975;
 @value blue_gameasy: #6482c4;
 
+
+@font-face{
+    font-family: 'montserratultra_light';
+    src: url('../font/montserrat-ultralight-webfont.eot');
+    src: url('../font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('../font/montserrat-ultralight-webfont.woff') format('woff'), url('../font/montserrat-ultralight-webfont.ttf') format('truetype'), url('../font/montserrat-ultralight-webfont.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.gameover {
+    composes: gameover from './default.css';
+
+    font-family: 'montserratultra_light';
+    background-color: background;
+    color: foreground;
+}
+
+.gameover_show {
+    composes: gameover_show from './default.css';
+}
+
+.gameover_hide {
+    composes: gameover_hide from './default.css';
+}
+
+
+
 .header {
     composes: header from './default.css';
-    background: background_cyan;
-    color: foreground_white;
+    background: header_background;
+    color: foreground;
 }
 
 .divider {
@@ -16,4 +49,12 @@
 
 .scoreContainer {
     composes: scoreContainer from './default.css';
+}
+
+.trophy{
+    color:#e7f943;
+}
+
+.podium{
+    color: header_background;
 }

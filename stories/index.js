@@ -23,6 +23,7 @@ import BannerAndroid from '../src/js/components/Banner/android/Banner';
 
 import Gameover from '../src/js/components/Gameover/Default';
 import GameasyGameover from '../src/js/components/Gameover/Gameasy';
+import ZainGameover from '../src/js/components/Gameover/Zain';
 
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
@@ -161,6 +162,10 @@ storiesOf('Banner', module)
   .add('Banner ios', () => <BannerIOS buttonText={'GET APP'} onClick={action('on submit action')} texts={['All Your Games', 'ANYTIME', 'ANYWHERE']} />)
   .add('Banner android', () => <BannerAndroid buttonText={'GET APP'} handleClose={action('on handle close')} onClick={action('on submit action')} dictionary={{}} />);
 
-storiesOf('Gameover', module)
-  .add('standard', () => <Gameover score={200} rank={6} related={[{ images: { cover: { ratio_1: '' } } }]} />)
-  .add('gameasy', () => <GameasyGameover score={200} rank={6} />);
+const GameoverStory = storiesOf('Gameover', module);
+GameoverStory.addDecorator(withKnobs);
+
+GameoverStory.add('standard', () => <Gameover show={boolean('Show', false)} label={'Default'} title={'Default'} score={200} rank={6} related={[{ images: { cover: { ratio_1: '' } } }]} />)
+GameoverStory.add('gameasy', () => <GameasyGameover show={boolean('Show', false)} label={'Gameasy'} title={'Gameasy'} score={200} rank={6} related={[{ images: { cover: { ratio_1: '' } } }]}/>)
+GameoverStory.add('zain', () => <ZainGameover show={boolean('Show', false)} label={'Zain'} title={'Zain'} score={200} rank={6} related={[{ images: { cover: { ratio_1: '' } } }]}/>);
+
