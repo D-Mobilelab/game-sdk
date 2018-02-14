@@ -51,7 +51,7 @@ export class Gameover extends Component {
           <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
             <Column cols={4} offset={2}>
               <Button style={{ width: '90px' }} mytheme={theme.btn_like}>
-                <Icon name='heart' theme={theme.icon_like}/>
+                <Icon name='heart' theme={theme.icon_like} full={this.props.full}/>
               </Button>
             </Column>
             <Column cols={4}>
@@ -62,7 +62,6 @@ export class Gameover extends Component {
           </Row>
           <Row>
             <List title={'Recommended for you'}>
-              
               {
                 this.props.related.map((item, index) => (
                   <Column cols={4} key={index}>
@@ -70,8 +69,6 @@ export class Gameover extends Component {
                   </Column>
                 ))
               }
-              
-              
             </List>
           </Row>
         </div>

@@ -21,7 +21,7 @@
     content: "\e915";
 }
 
-.heart.full:before {
+.heart_full:before {
     content:"\e91b";
 }
 
