@@ -58,3 +58,12 @@
 .podium{
     color: header_background;
 }
+
+/* button */
+
+.btn {
+    background: purple_gameasy;
+    color: foreground;
+    border-radius: 20px;
+    font-family: 'montserratultra_light', Verdana, Geneva, sans-serif;
+}
