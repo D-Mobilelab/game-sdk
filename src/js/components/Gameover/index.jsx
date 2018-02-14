@@ -26,14 +26,14 @@ export class Gameover extends Component {
           <Row style={{ position: 'relative' }}>
             <Column cols={8}>
               <Image src={this.props.game_info.images.cover.ratio_1} />
-              <Button center={true} onClick={() => {}} mytheme={theme.btn}>Play</Button>
+              <Button center={true} onClick={() => {}} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
             </Column>
             <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
               <div className={theme.scoreContainer}>
                 <div>
                   <div style={{ textAlign: 'center' }}>
                     <Icon name='trophy' theme={theme.trophy}/>
-                    <h3>Your Score</h3>
+                    <h3>{this.props.dictionary.WEBAPP_CONGRATULATIONS_SCORE}</h3>
                     <h2>{this.props.score}</h2>
                   </div>
                 </div>
@@ -41,7 +41,7 @@ export class Gameover extends Component {
                 <div>
                   <div style={{ textAlign: 'center' }}>
                     <Icon name='podium' theme={theme.podium}/>
-                    <h3>Your Ranking</h3>
+                    <h3>{this.props.dictionary.WEBAPP_YOUR_POSITION_TITLE}</h3>
                     <h2>{this.props.rank}</h2>
                   </div>
                 </div>
@@ -61,7 +61,7 @@ export class Gameover extends Component {
             </Column>
           </Row>
           <Row>
-            <List title={'Recommended for you'}>
+            <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
               {
                 this.props.related.map((item, index) => (
                   <Column cols={4} key={index}>
@@ -81,7 +81,12 @@ Gameover.defaultProps = {
   label: 'label',
   theme: {},
   related: [],
-  dictionary: {},
+  dictionary: {
+      WEBAPP_CONGRATULATIONS_SCORE: 'Your Score',
+      WEBAPP_YOUR_POSITION_TITLE: 'Your Ranking',
+      WEBAPP_CANVAS_BUTTON_PLAY: 'Play',
+      WEBAPP_RELATED_TITLE: 'Recommended for you'
+  },
   game_info:{
     images:{
       cover:{
