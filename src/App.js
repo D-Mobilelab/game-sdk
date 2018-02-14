@@ -10,12 +10,15 @@ export default class App extends React.Component {
         <Interstitial />
         <LazilyLoad modules={{
           Gameover: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/GameasyOver'));
-            } else if (this.props.label === 'bandai') {
-              return function Noop() { return null; };
+            switch (this.props.label) {
+              case 'bandai':
+                return function Noop() { return null; };
+              case 'zain':
+                return importLazy(System.import('./js/components/Gameover/Zain'));
+              default:
             }
-            return importLazy(System.import('./js/components/GamifiveOver'));
+
+            return importLazy(System.import('./js/components/Gameover/Gameasy'));
           },
           Banner: () => {
             if (this.props.label === 'gameasy') {

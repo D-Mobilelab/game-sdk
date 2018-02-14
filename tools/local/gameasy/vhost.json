@@ -2,7 +2,7 @@
     "domain": "www2.gameasy.com",
     "config": {
         "WHITE_LABEL": "xx_gameasy",
-        "SHOW_INGAME_ADS": true,    
+        "SHOW_INGAME_ADS": false,    
         "AD_IFRAME_URL": "/bannerads",
         "AD_CLIENT": "ca-pub-8608548322608076",
         "INGAME_ADV": "2412964751",

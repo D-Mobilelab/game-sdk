@@ -7,6 +7,48 @@ import Button from '../MaterialButton/Default';
 import Icon from '../Icon/index.jsx';
 
 export class Gameover extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleReplay = this.handleReplay.bind(this);
+    this.goToHome = this.goToHome.bind(this);
+    this.handleShare = this.handleShare.bind(this);
+    this.handleFavourites = this.handleFavourites.bind(this);
+    this.handleOnClickRelated = this.handleOnClickRelated.bind(this);
+  }
+
+  handleReplay(evt) {
+    evt.preventDefault();
+    this.props.actions.startSession();
+  }
+
+  goToHome(evt) {
+    evt.preventDefault();
+    this.props.actions.goToHome();
+  }
+
+  handleShare(url) {
+    this.props.actions.share(url, 'facebook');
+  }
+
+  isGameFavourite() {
+    return this.props.user.favourites.some(favourite => (favourite.id === this.props.game_info.id));
+  }
+
+  handleFavourites(evt) {
+    evt.preventDefault();
+    this.props.actions.toggleGameLike();
+  }
+
+  handleOnClickRelated(related) {
+    /**
+         * TODO:
+         * make it as action and track the GameClickOnRelated
+         */
+    this.props.actions.goToRelated(related);
+    // window.location.href = related.url_play;
+  }
+
   render() {
     console.log(this.props);
 
@@ -26,7 +68,7 @@ export class Gameover extends Component {
           <Row style={{ position: 'relative' }}>
             <Column cols={8}>
               <Image src={this.props.game_info.images.cover.ratio_1} />
-              <Button center={true} onClick={() => {}} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
+              <Button center={true} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
             </Column>
             <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
               <div className={theme.scoreContainer}>
@@ -51,12 +93,15 @@ export class Gameover extends Component {
           <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
             <Column cols={4} offset={2}>
               <Button style={{ width: '90px' }} mytheme={theme.btn_like}>
-                <Icon name='heart' theme={theme.icon_like} full={this.props.full}/>
+                <Icon name='heart' onClick={this.handleFavourites} theme={theme.icon_like} full={this.props.full}/>
               </Button>
             </Column>
             <Column cols={4}>
               <Button style={{ width: '90px' }} mytheme={theme.btn_share}>
-                <Icon name='share' theme={theme.icon_share}/>
+                <Icon name='share' theme={theme.icon_share} onClick={(evt) => {
+                  evt.preventDefault();
+                  this.handleShare(this.props.game_info.url_share);
+                }}/>
               </Button>
             </Column>
           </Row>
@@ -65,7 +110,7 @@ export class Gameover extends Component {
               {
                 this.props.related.map((item, index) => (
                   <Column cols={4} key={index}>
-                    <ListItem item={item} onClick={()=>{}} />
+                    <ListItem item={item} onClick={this.handleOnClickRelated.bind(this, item)} />
                   </Column>
                 ))
               }
@@ -82,15 +127,15 @@ Gameover.defaultProps = {
   theme: {},
   related: [],
   dictionary: {
-      WEBAPP_CONGRATULATIONS_SCORE: 'Your Score',
-      WEBAPP_YOUR_POSITION_TITLE: 'Your Ranking',
-      WEBAPP_CANVAS_BUTTON_PLAY: 'Play',
-      WEBAPP_RELATED_TITLE: 'Recommended for you'
+      WEBAPP_CONGRATULATIONS_SCORE: '',
+      WEBAPP_YOUR_POSITION_TITLE: '',
+      WEBAPP_CANVAS_BUTTON_PLAY: '',
+      WEBAPP_RELATED_TITLE: ''
   },
   game_info:{
     images:{
       cover:{
-        ratio_1:"http://s2.motime.com/p/bcontents/absimageapp1/h0/w461/xx_gameasy/mnt/alfresco_content_prod/contentstore/2016/6/28/9/20/cd1fe756-1a4e-442a-8e21-5ac73639390d/fruit-slicer.bin?v=1510660303"
+        ratio_1:"http://via.placeholder.com/350x350"
       }
     }
   }
