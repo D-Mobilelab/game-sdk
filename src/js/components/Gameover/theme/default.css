@@ -40,8 +40,22 @@
     vertical-align: middle;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: 400;
     margin: 0;
+}
+
+h3{
+    font-size:16px;
+}
+
+h1, h2{
+    font-size:22px;
+}
+
+ul {
+    list-style-type: none;
 }
 
 .scoreContainer {

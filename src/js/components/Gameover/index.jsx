@@ -20,7 +20,7 @@ export class Gameover extends Component {
         <div className={classes} data-mip-qa={ `${this.props.label}-gameover` }>
           <Row>
             <Column cols={12}>
-              <div className={theme.header}>{this.props.title}</div>
+              <div className={theme.header}><h1>{this.props.title}</h1></div>
             </Column>
           </Row>
           <Row style={{ position: 'relative' }}>
@@ -33,7 +33,7 @@ export class Gameover extends Component {
                 <div>
                   <div style={{ textAlign: 'center' }}>
                     <Icon name='trophy' theme={theme.trophy}/>
-                    <h3>Score</h3>
+                    <h3>Your Score</h3>
                     <h2>{this.props.score}</h2>
                   </div>
                 </div>
@@ -41,7 +41,7 @@ export class Gameover extends Component {
                 <div>
                   <div style={{ textAlign: 'center' }}>
                     <Icon name='podium' theme={theme.podium}/>
-                    <h3>Rank</h3>
+                    <h3>Your Ranking</h3>
                     <h2>{this.props.rank}</h2>
                   </div>
                 </div>
@@ -50,19 +50,28 @@ export class Gameover extends Component {
           </Row>
           <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
             <Column cols={4} offset={2}>
-              <Button style={{ width: '90px' }} mytheme={theme.btn}>
-                <Icon name='heart' />
+              <Button style={{ width: '90px' }} mytheme={theme.btn_like}>
+                <Icon name='heart' theme={theme.icon_like}/>
               </Button>
             </Column>
             <Column cols={4}>
-              <Button style={{ width: '90px' }} mytheme={theme.btn}>
-                <Icon name='share' />
+              <Button style={{ width: '90px' }} mytheme={theme.btn_share}>
+                <Icon name='share' theme={theme.icon_share}/>
               </Button>
             </Column>
           </Row>
           <Row>
             <List title={'Recommended for you'}>
-              {this.props.related.map((item, i) => <ListItem item={item} key={`item_${i}`} />)}
+              
+              {
+                this.props.related.map((item, index) => (
+                  <Column cols={4} key={index}>
+                    <ListItem item={item} onClick={()=>{}} />
+                  </Column>
+                ))
+              }
+              
+              
             </List>
           </Row>
         </div>

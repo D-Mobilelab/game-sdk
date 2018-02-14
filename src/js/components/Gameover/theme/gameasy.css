@@ -35,8 +35,6 @@
     composes: gameover_hide from './default.css';
 }
 
-
-
 .header {
     composes: header from './default.css';
     background: header_background;
@@ -59,6 +57,14 @@
     color: header_background;
 }
 
+.icon_like{
+    color: purple_gameasy;
+}
+
+.icon_share{
+    color: blue_gameasy;
+}
+
 /* button */
 
 .btn {
@@ -66,4 +72,24 @@
     color: foreground;
     border-radius: 20px;
     font-family: 'montserratultra_light', Verdana, Geneva, sans-serif;
+}
+
+.btn_outline{
+    composes: btn;
+    width: 90px;
+    background: transparent;
+    border: solid 2px;
+    line-height: 38px;
+}
+
+.btn_like {
+    composes: btn_outline;
+	color: purple_gameasy;
+    border-color: purple_gameasy;
+}
+
+.btn_share {
+    composes: btn_outline;
+	color: blue_gameasy;
+    border-color: blue_gameasy;
 }
