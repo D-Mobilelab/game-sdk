@@ -41,30 +41,25 @@ export class Gameover extends Component {
   }
 
   handleOnClickRelated(related) {
-    /**
-         * TODO:
-         * make it as action and track the GameClickOnRelated
-         */
     this.props.actions.goToRelated(related);
-    // window.location.href = related.url_play;
   }
 
   render() {
-    console.log(this.props);
 
     const { theme, dictionary } = this.props;
     const classNames = [theme.gameover];
     classNames.push(this.props.show ? theme.gameover_show : theme.gameover_hide);
     const classes = classNames.join(' ');
 
-    const imageUrl = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0, '[WSIZE]', window.innerWidth);
+    const percentage = Math.round((window.innerWidth * 60) / 100);
+    const imageUrl = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
 
     return (
       <Grid>
         <div className={classes} data-mip-qa={ `${this.props.label}-gameover` }>
           <Row>
             <Column cols={12}>
-              <div className={theme.header}><h1>{this.props.title}</h1></div>
+              <div className={theme.header}><h1>{this.props.game_info.title}</h1></div>
             </Column>
           </Row>
           <Row style={{ position: 'relative' }}>
@@ -95,7 +90,7 @@ export class Gameover extends Component {
           <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
             <Column cols={4} offset={2}>
               <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                <Icon name='heart' theme={theme.icon_like} full={this.props.full}/>
+                <Icon name='heart' theme={theme.icon_like} full={!!this.isGameFavourite()}/>
               </Button>
             </Column>
             <Column cols={4}>
@@ -107,7 +102,7 @@ export class Gameover extends Component {
           <Row>
             <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
               {
-                this.props.related.map((item, index) => (
+                this.props.game_info.related.map((item, index) => (
                   <Column cols={4} key={index}>
                     <ListItem item={item} onClick={this.handleOnClickRelated.bind(this, item)} />
                   </Column>
