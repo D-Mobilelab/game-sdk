@@ -13,11 +13,12 @@ export default class App extends React.Component {
             switch (this.props.label) {
               case 'bandai':
                 return function Noop() { return null; };
+              case 'gamifive':
+                return importLazy(System.import('./js/components/GamifiveOver'));
               case 'zain':
                 return importLazy(System.import('./js/components/Gameover/Zain'));
               default:
             }
-
             return importLazy(System.import('./js/components/Gameover/Gameasy'));
           },
           Banner: () => {
@@ -27,12 +28,16 @@ export default class App extends React.Component {
             return function Noop() { return null; };
           },
           Menu: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/Menu/MenuGameasy'));
-            } else if (this.props.label === 'bandai') {
-              return importLazy(System.import('./js/components/Menu/MenuBandai'));
+            switch (this.props.label) {
+              case 'bandai':
+                return importLazy(System.import('./js/components/Menu/MenuBandai'));
+              case 'gamifive':
+                return importLazy(System.import('./js/components/Menu/MenuGamifive'));
+              case 'zain':
+                return importLazy(System.import('./js/components/Menu/MenuZain'));
+              default:
             }
-            return importLazy(System.import('./js/components/Menu/MenuGamifive'));
+            return importLazy(System.import('./js/components/Menu/MenuGameasy'));
           },
           EnterNameContainer: () => {
             if (this.props.label === 'bandai') {

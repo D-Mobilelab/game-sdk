@@ -9,7 +9,7 @@
     left:0;
     width:0;
     height: 0;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     transform: scale(0);
     transition: transform 200ms;
     z-index: 998;
@@ -53,6 +53,7 @@
 .scoreContainer h3{
     font-weight:400;
     font-size:16px;
+    margin:0;
 }
 
 .scoreContainer h2{

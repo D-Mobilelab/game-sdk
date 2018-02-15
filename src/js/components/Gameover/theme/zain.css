@@ -9,13 +9,13 @@
 @value background: #171027;
 @value foreground: #ffffff;
 
-@value header_background: #421782;
+@value header_background: #5D5697;
 @value header_foreground: #ffffff;
 
 @value trophy_color:#ffffff;
 @value podium_color:#ffffff;
 
-@value button_background: #8B0C84;
+@value button_background: #8A0C84;
 @value button_foreground: #ffffff;
 
 @value button_outline_background: transparent;
@@ -85,6 +85,6 @@
 
 .btn_share {
     composes: btn_outline;
-    border-color:#5D5697;
-    color:#5D5697;
+    border-color:header_background;
+    color:header_background;
 }
