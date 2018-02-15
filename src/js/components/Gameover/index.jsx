@@ -57,6 +57,10 @@ export class Gameover extends Component {
     classNames.push(this.props.show ? theme.gameover_show : theme.gameover_hide);
     const classes = classNames.join(' ');
 
+    // adjust dimension image
+    const percentage = Math.round((window.innerWidth * 60) / 100);
+    const imgSrc = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
+
     return (
       <Grid>
         <div className={classes} data-mip-qa={ `${this.props.label}-gameover` }>
@@ -67,7 +71,7 @@ export class Gameover extends Component {
           </Row>
           <Row style={{ position: 'relative' }}>
             <Column cols={8}>
-              <Image src={this.props.game_info.images.cover.ratio_1} />
+              <Image src={imgSrc} />
               <Button center={true} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
             </Column>
             <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
@@ -93,7 +97,7 @@ export class Gameover extends Component {
           <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
             <Column cols={4} offset={2}>
               <Button style={{ width: '90px' }} mytheme={theme.btn_like}>
-                <Icon name='heart' onClick={this.handleFavourites} theme={theme.icon_like} full={this.props.full}/>
+                <Icon name='heart' onClick={this.handleFavourites} theme={theme.icon_like} full={!!this.isGameFavourite()} />
               </Button>
             </Column>
             <Column cols={4}>
