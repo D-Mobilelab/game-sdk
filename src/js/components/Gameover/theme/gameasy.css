@@ -1,15 +1,27 @@
-/* colors.css */
-@value header_background: #00c1e2;
-@value header_foreground: #e7e7f9;
+/* custom */
+@value purple_gameasy: #f84975;
+@value blue_gameasy: #6482c4;
+
+/* base */
+
+@value font_family: montserratultra_light, Verdana, Geneva, sans-serif;
+
 @value background: #121721;
 @value foreground: #ffffff;
+
+@value header_background: #00c1e2;
+@value header_foreground: #e7e7f9;
 
 @value trophy_color:#e7f943;
 @value podium_color:header_background;
 
-@value purple_gameasy: #f84975;
-@value blue_gameasy: #6482c4;
+@value button_background: purple_gameasy;
+@value button_foreground: #ffffff;
 
+@value button_outline_background: transparent;
+@value button_outline_foreground: purple_gameasy;
+
+/* classes */
 
 @font-face{
     font-family: 'montserratultra_light';
@@ -22,7 +34,7 @@
 .gameover {
     composes: gameover from './default.css';
 
-    font-family: 'montserratultra_light';
+    font-family: font_family;
     background-color: background;
     color: foreground;
 }
@@ -38,26 +50,6 @@
 .header {
     composes: header from './default.css';
     background: header_background;
-    color: foreground;
-}
-
-h1{
-    font-size:22px;
-    font-weight: 400;
-    margin: 0;
-}
-
-h2{
-    font-size:22px;
-    font-weight: 400;
-    margin: 0;
-}
-
-h3{
-    font-size: 100%;
-    font-weight: 400;
-    margin: 0;
-    font-size:16px;
     color: foreground;
 }
 
@@ -85,31 +77,37 @@ h3{
     color: blue_gameasy;
 }
 
+/* related */
+
+.related{
+    composes: related from './default.css';
+}
+
 /* button */
 
 .btn {
-    background: purple_gameasy;
-    color: foreground;
+    background: button_background;
+    color: button_foreground;
     border-radius: 20px;
-    font-family: 'montserratultra_light', Verdana, Geneva, sans-serif;
+    font-family: font_family;
 }
 
 .btn_outline{
     composes: btn;
     width: 90px;
-    background: transparent;
+    background: button_outline_background;
     border: solid 2px;
     line-height: 38px;
+    color: button_outline_foreground;
+    border-color: button_outline_foreground;
 }
 
 .btn_like {
     composes: btn_outline;
-	color: purple_gameasy;
-    border-color: purple_gameasy;
 }
 
 .btn_share {
     composes: btn_outline;
-	color: blue_gameasy;
     border-color: blue_gameasy;
+    color: blue_gameasy;
 }

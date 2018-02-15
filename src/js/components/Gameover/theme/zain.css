@@ -1,13 +1,31 @@
+/* custom */
+
+
+
+/* base */
+
+@value font_family: montserratultra_light, Verdana, Geneva, sans-serif;
+
+@value background: #171027;
+@value foreground: #ffffff;
+
 @value header_background: #421782;
 @value header_foreground: #ffffff;
-@value background: #4B48A0;
-@value foreground: #ffffff;
+
+@value trophy_color:#ffffff;
+@value podium_color:#ffffff;
+
+@value button_background: #8B0C84;
+@value button_foreground: #ffffff;
+
+@value button_outline_background: transparent;
+@value button_outline_foreground: #8A0C84;
 
 
 .gameover {
     composes: gameover from './default.css';
 
-    font-family: 'montserratultra_light';
+    font-family: font_family;
     background-color: background;
     color: foreground;
 }
@@ -19,7 +37,6 @@
 .gameover_hide {
     composes: gameover_hide from './default.css';
 }
-
 
 .header {
     composes: header from './default.css';
@@ -35,10 +52,39 @@
     composes: scoreContainer from './default.css';
 }
 
-.gameover {
-    composes: gameover from './default.css';
-    
-    font-family: 'montserratultra_light';
-    background-color: background;
-    color: foreground;
+.trophy{
+    color:#e7f943;
+}
+
+.podium{
+    color: header_background;
+}
+
+/* button */
+
+.btn {
+    background: button_background;
+    color: button_foreground;
+    border-radius: 10px;
+    font-family: font_family;
+}
+
+.btn_outline{
+    composes: btn;
+    width: 90px;
+    background: button_outline_background;
+    border: solid 2px;
+    line-height: 38px;
+    color: button_outline_foreground;
+    border-color: button_outline_foreground;
+}
+
+.btn_like {
+    composes: btn_outline;
+}
+
+.btn_share {
+    composes: btn_outline;
+    border-color:#5D5697;
+    color:#5D5697;
 }
