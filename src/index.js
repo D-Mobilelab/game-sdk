@@ -24,11 +24,7 @@ function onDomLoaded() {
    * check GamifiveInfo.fw_type_profile instead
    */
   let WHITE_LABEL = (window.GamifiveInfo && window.GamifiveInfo.fw_type_profile) ? window.GamifiveInfo.fw_type_profile : 'gamifive';
-  if (WHITE_LABEL.indexOf('gameasy') > -1) {
-    WHITE_LABEL = 'gameasy';
-  } else if (WHITE_LABEL.indexOf('bandai') > -1) {
-    WHITE_LABEL = 'bandai';
-  }
+
   /** overwrite with localStorage if any */
   const label = localStorage.getItem('gfsdk-debug-label');
   if (label) { WHITE_LABEL = label; }

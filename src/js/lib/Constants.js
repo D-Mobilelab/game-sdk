@@ -1,6 +1,6 @@
 export const FB_SDK_VERSION = 'v2.10';
 export const FB_SDK_URL = 'connect.facebook.net/en_US/sdk.js';
-export const CONTENT_ID_REGEX = '(html5gameplay|sdk_integration_test|games)\/([a-zA-Z0-9]+)'; // games in hybrid case(folder name)
+export const CONTENT_ID_REGEX = '(html5gameplay)\/([a-zA-Z0-9]+)';
 
 export const VHOST_API_URL = '/v01/config.getvars';
 export const DICTIONARY_API_URL = '/dictionary'; // dictionary keys
