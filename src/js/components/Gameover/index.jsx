@@ -51,12 +51,14 @@ export class Gameover extends Component {
     classNames.push(this.props.show ? theme.gameover_show : theme.gameover_hide);
     const classes = classNames.join(' ');
 
+    console.log(this.props);
+
     const percentage = Math.round((window.innerWidth * 60) / 100);
     const imageUrl = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
 
     return (
       <Grid>
-        <div className={classes} data-mip-qa={ `${this.props.label}-gameover` }>
+        <div className={classes} data-mipqa={ `${this.props.label}-gameover` }>
           <Row>
             <Column cols={12}>
               <div className={theme.header}><h1>{this.props.game_info.title}</h1></div>
