@@ -15,11 +15,11 @@
 @value trophy_color:#ffffff;
 @value podium_color:#ffffff;
 
-@value button_background: #8A0C84;
+@value button_background: #BE10B6;
 @value button_foreground: #ffffff;
 
 @value button_outline_background: transparent;
-@value button_outline_foreground: #8A0C84;
+@value button_outline_foreground: #BE10B6;
 
 
 .gameover {
@@ -57,7 +57,7 @@
 }
 
 .podium{
-    color: header_background;
+    color: #00c1e2;
 }
 
 /* button */
@@ -65,7 +65,7 @@
 .btn {
     background: button_background;
     color: button_foreground;
-    border-radius: 10px;
+    border-radius: 20px;
     font-family: font_family;
 }
 

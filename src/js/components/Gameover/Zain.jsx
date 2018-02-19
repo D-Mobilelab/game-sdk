@@ -8,6 +8,7 @@ import withTheme from '../withTheme';
 import { Actions } from '../../actions/index';
 
 const mapStateToProps = state => ({
+  label: state.generic.label,
   show: state.game_over.show,
   game_info: state.game_info,
   user: state.user,

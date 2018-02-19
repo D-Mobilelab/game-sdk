@@ -18,8 +18,8 @@ export default class App extends React.Component {
               case 'zain':
                 return importLazy(System.import('./js/components/Gameover/Zain'));
               default:
+                return importLazy(System.import('./js/components/Gameover/Gameasy'));
             }
-            return importLazy(System.import('./js/components/Gameover/Gameasy'));
           },
           Banner: () => {
             if (this.props.label === 'gameasy') {
@@ -36,8 +36,8 @@ export default class App extends React.Component {
               case 'zain':
                 return importLazy(System.import('./js/components/Menu/MenuZain'));
               default:
+                return importLazy(System.import('./js/components/Menu/MenuGameasy'));
             }
-            return importLazy(System.import('./js/components/Menu/MenuGameasy'));
           },
           EnterNameContainer: () => {
             if (this.props.label === 'bandai') {
