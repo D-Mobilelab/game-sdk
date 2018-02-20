@@ -9,7 +9,7 @@
     left:0;
     width:0;
     height: 0;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     transform: scale(0);
     transition: transform 200ms;
     z-index: 998;
