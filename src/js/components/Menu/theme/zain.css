@@ -1,6 +1,6 @@
 .menu {
     composes: menu from './default.css';
-    background-image: url('./sprite_gameasy.png');
+    background-image: url('./sprite_zain.png');
     background-image: url('./sprite_zain.svg');
 }
 

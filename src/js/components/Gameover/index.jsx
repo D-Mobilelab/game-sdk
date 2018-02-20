@@ -45,13 +45,10 @@ export class Gameover extends Component {
   }
 
   render() {
-
     const { theme, dictionary } = this.props;
     const classNames = [theme.gameover];
     classNames.push(this.props.show ? theme.gameover_show : theme.gameover_hide);
     const classes = classNames.join(' ');
-
-    console.log(this.props);
 
     const percentage = Math.round((window.innerWidth * 60) / 100);
     const imageUrl = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
@@ -64,54 +61,56 @@ export class Gameover extends Component {
               <div className={theme.header}><h1>{this.props.game_info.title}</h1></div>
             </Column>
           </Row>
-          <Row style={{ position: 'relative' }}>
-            <Column cols={8}>
-              <Image src={imageUrl} />
-              <Button center={true} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
-            </Column>
-            <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
-              <div className={theme.scoreContainer}>
-                <div>
-                  <div style={{ textAlign: 'center' }}>
-                    <Icon name='trophy' theme={theme.trophy}/>
-                    <h3>{this.props.dictionary.WEBAPP_CONGRATULATIONS_SCORE}</h3>
-                    <h2>{this.props.score}</h2>
+          <div style={{ position: 'relative', maxWidth: '768px', margin: '0px auto' }}>
+            <Row style={{ position: 'relative' }}>
+              <Column cols={8}>
+                <Image src={imageUrl} />
+                <Button center={true} style={{width:'50%'}} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
+              </Column>
+              <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
+                <div className={theme.scoreContainer}>
+                  <div>
+                    <div style={{ textAlign: 'center' }}>
+                      <Icon name='trophy' theme={theme.trophy}/>
+                      <h3>{this.props.dictionary.WEBAPP_CONGRATULATIONS_SCORE}</h3>
+                      <h2>{this.props.score}</h2>
+                    </div>
+                  </div>
+                  <hr className={theme.divider} />
+                  <div>
+                    <div style={{ textAlign: 'center' }}>
+                      <Icon name='podium' theme={theme.podium}/>
+                      <h3>{this.props.dictionary.WEBAPP_YOUR_POSITION_TITLE}</h3>
+                      <h2>{this.props.rank}</h2>
+                    </div>
                   </div>
                 </div>
-                <hr className={theme.divider} />
-                <div>
-                  <div style={{ textAlign: 'center' }}>
-                    <Icon name='podium' theme={theme.podium}/>
-                    <h3>{this.props.dictionary.WEBAPP_YOUR_POSITION_TITLE}</h3>
-                    <h2>{this.props.rank}</h2>
-                  </div>
-                </div>
-              </div>
-            </Column>
-          </Row>
-          <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
-            <Column cols={4} offset={2}>
-              <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                <Icon name='heart' theme={theme.icon_like} full={!!this.isGameFavourite()}/>
-              </Button>
-            </Column>
-            <Column cols={4}>
-              <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
-                <Icon name='share' theme={theme.icon_share} />
-              </Button>
-            </Column>
-          </Row>
-          <Row>
-            <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
-              {
-                this.props.game_info.related.map((item, index) => (
-                  <Column cols={4} key={index}>
-                    <ListItem item={item} onClick={this.handleOnClickRelated.bind(this, item)} />
-                  </Column>
-                ))
-              }
-            </List>
-          </Row>
+              </Column>
+            </Row>
+            <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
+              <Column cols={4} offset={2}>
+                <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                  <Icon name='heart' theme={theme.icon_like} full={!!this.isGameFavourite()}/>
+                </Button>
+              </Column>
+              <Column cols={4}>
+                <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
+                  <Icon name='share' theme={theme.icon_share} />
+                </Button>
+              </Column>
+            </Row>
+            <Row>
+              <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
+                {
+                  this.props.game_info.related.map((item, index) => (
+                    <Column cols={4} key={index}>
+                      <ListItem item={item} onClick={this.handleOnClickRelated.bind(this, item)} />
+                    </Column>
+                  ))
+                }
+              </List>
+            </Row>
+          </div>
         </div>
       </Grid>
     );
