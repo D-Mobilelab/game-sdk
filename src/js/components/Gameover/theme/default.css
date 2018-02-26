@@ -1,0 +1,83 @@
+@value header_background: #000000;
+@value header_foreground: #ffffff;
+@value background: #eeeeee;
+@value foreground: #000000;
+
+.gameover {
+    position: fixed;
+    top:0;
+    left:0;
+    width:0;
+    height: 0;
+    overflow-y: scroll;
+    transform: scale(0);
+    transition: transform 200ms;
+    z-index: 998;
+    
+    background-color: background;
+    color: foreground;
+
+}
+
+.gameover_show {
+    width:100%;
+    height:100%;
+    transform: scale(1);
+}
+
+.gameover_hide {
+    transform: scale(0);
+}
+
+
+.header {
+    min-height: 60px;
+    line-height: 60px;
+    background: header_background;
+    color: header_foreground;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.header h1{
+    font-size:22px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.scoreContainer {
+    height: 100%;
+}
+
+.scoreContainer h3{
+    font-weight:400;
+    font-size:16px;
+    margin:0;
+}
+
+.scoreContainer h2{
+    font-size:22px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.scoreContainer > div {
+    width: 100%;
+    height: 50%;
+    display: table;
+}
+
+.scoreContainer > div > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.divider {
+	width: 65%;
+	margin: 0 auto;
+    position: relative;
+    border: 0;
+    border-bottom: 1px solid rgba(231, 231, 249, 0.2);
+    top: -2px;
+}

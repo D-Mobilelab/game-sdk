@@ -1,11 +1,12 @@
 import React from 'react';
+import styles from './style.css';
 
 export default class List extends React.Component {
   render() {
     return (
-      <div>
-        <h2 style={{ marginBottom: '2%' }}>{this.props.title}</h2>
-        <ul style={{ textAlign: 'center', margin: '0', padding: '0' }}>
+      <div className={`${styles.related}`}>
+        <h2>{this.props.title}</h2>
+        <ul>
           {this.props.children}
         </ul>
       </div>

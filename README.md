@@ -49,6 +49,13 @@ You should add these lines to your file hosts
 git clone https://github.com/D-Mobilelab/game-sdk.git
 ```
 
+#### Install all dependencies packages
+
+```javascript
+npm install
+```
+
+
 #### Add dependencies to your index
 
 Copy and paste these two scripts in the head tag of your html
@@ -85,7 +92,7 @@ npm run dev
 yarn dev
 ```
 
-Go to the setup page <http://local.appsworld.gamifive-app.com:8080/setup.html>
+Go to the setup page <http://local.appsworld.gamifive-app.com:8080>
 
 1.  game_id: 
     if you already have your game in our server you can put the game_id here otherwise leaves the default

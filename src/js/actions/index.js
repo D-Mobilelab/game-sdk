@@ -3,7 +3,7 @@ import * as Constants from '../lib/Constants';
 import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
 import * as HistoryGame from '../lib/HistoryGame';
-import { getUserType } from './utils';
+import { getUserType, getLabel } from './utils';
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
 import * as gameinfoActions from './gameinfo-actions';
@@ -36,6 +36,8 @@ function init(initConfig) {
       dispatch(listenToWindowEvents('focus', focusAction));
       dispatch(listenToWindowEvents('blur', focusAction));
     }
+
+    dispatch({ type: 'SET_LABEL', label: getLabel() });
 
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
     return Promise.all([

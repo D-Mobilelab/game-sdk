@@ -1,0 +1,74 @@
+@value colors: './colors.css';
+@value foreground_white, background_cyan from colors;
+
+.gameover {
+    position: fixed;
+    top:0;
+    left:0;
+    width:0;
+    height: 0;
+    overflow-y: scroll;
+
+    font-family: 'montserratultra_light';
+    background-color: #121721;
+    transform: scale(0);
+    transition: transform 200ms;
+    color: foreground_white;
+    z-index: 998;
+}
+
+.gameover * {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+    user-select: none;
+}
+
+.gameover ul {
+    list-style-type: none;
+}
+
+.scoreContainer {
+    height: 100%;
+}
+
+.scoreContainer > div {
+    width: 100%;
+    height: 50%;
+    display: table;
+}
+
+.scoreContainer > div > div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.gameover .box {
+    max-width: 768px;
+    margin:0 auto;
+}
+
+.gameover i {
+    font-family: 'icomoon';
+}
+
+.gameover.show {
+    width:100%;
+    height:100%;
+    transform: scale(1);
+}
+
+.gameover.hide {
+    transform: scale(0);
+}
+
+.header {
+    background: background_cyan;
+    height: 60px;
+    line-height: 60px;
+    color:foreground_white;
+    clear: both;
+    vertical-align: middle;
+}
+
+.header h1 {
+    text-align: center;
+}

@@ -3,6 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
+import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import MaterialButton from '../src/js/components/MaterialButton/MaterialButton';
 import EnterName from '../src/js/components/EnterName/EnterName';
@@ -19,6 +20,10 @@ import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
 
 import BannerIOS from '../src/js/components/Banner/ios/Banner';
 import BannerAndroid from '../src/js/components/Banner/android/Banner';
+
+import Gameover from '../src/js/components/Gameover/Default';
+import GameasyGameover from '../src/js/components/Gameover/Gameasy';
+import ZainGameover from '../src/js/components/Gameover/Zain';
 
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
@@ -118,10 +123,15 @@ storiesOf('Menu', module)
   .add('Menu Bandai Left top', () => (<BandaiMenu show={true} position='TOP_LEFT' />));
 
 const ToastStory = storiesOf('Toast', module);
+ToastStory.addDecorator(withKnobs);
 
-ToastStory.add('Toast bottom', () => (<Toast message={'Cannot register score'} show />));
+ToastStory.add('Toast bottom', () => {
+  const label = 'position';
+  const defaultValue = 'bottom';
 
-ToastStory.add('Toast top', () => (<Toast message='Cannot register score' show={false} position='top' />));
+  const position = text(label, defaultValue);
+  return (<Toast message={'Cannot register score'} show={boolean('show', true)} position={position} />);
+});
 
 ToastStory.add('Toast top with duration', () => {
   class ToastContainer extends React.Component {
@@ -151,3 +161,15 @@ ToastStory.add('Toast top with duration', () => {
 storiesOf('Banner', module)  
   .add('Banner ios', () => <BannerIOS buttonText={'GET APP'} onClick={action('on submit action')} texts={['All Your Games', 'ANYTIME', 'ANYWHERE']} />)
   .add('Banner android', () => <BannerAndroid buttonText={'GET APP'} handleClose={action('on handle close')} onClick={action('on submit action')} dictionary={{}} />);
+
+const GameoverStory = storiesOf('Gameover', module);
+GameoverStory.addDecorator(withKnobs);
+
+GameoverStory.add('standard', () => <Gameover full={boolean('Like', false)} show={boolean('Show', true)} label={'Default'} title={'Default'} score={200} rank={6} related={[{ images: { cover: { ratio_1: '' } } }]} />)
+GameoverStory.add('gameasy', () => <GameasyGameover full={boolean('Like', false)} show={boolean('Show', true)} label={'Gameasy'} title={'Gameasy'} score={200} rank={6} game_info={{images: {cover: {ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w455/xx_gameasy/mnt/alfresco_content_prod/contentstore/2016/7/1/12/30/d806572b-3cdb-4925-be24-3f8cee2e51d9/fruit-galaxy.bin?v=1485249889'} } }}  related={[
+  { images: { cover: { ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w253/xx_gameasy/mnt/alfresco_content_prod/contentstore/2014/9/9/15/50/584124cf-f364-4419-8af7-5d0428371d36/cheese-lab.bin?v=1485251871' } } },
+  { images: { cover: { ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w253/xx_gameasy/mnt/alfresco_content_prod/contentstore/2016/5/26/18/56/b5a6c5b4-1f2b-4002-8fed-ba11f9dcd33b/jumping-light.bin?v=1485251932' } } },
+  { images: { cover: { ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w253/xx_gameasy/mnt/alfresco_content_prod/contentstore/2015/11/16/12/5/b36412bd-1893-4dc8-835c-28284da9a631/paper-plane-flight.bin?v=1485252028' } } }
+]}/>)
+GameoverStory.add('zain', () => <ZainGameover full={boolean('Like', false)} show={boolean('Show', true)} label={'Zain'} title={'Zain'} score={200} rank={6} related={[{ images: { cover: { ratio_1: '' } } }]}/>);
+
