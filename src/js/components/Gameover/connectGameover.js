@@ -1,13 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import index from './index.jsx';
-import theme from './theme/zain.css';
-import withTheme from '../withTheme';
-
 import { Actions } from '../../actions/index';
 
 const mapStateToProps = state => ({
+  isGameFavourite: state.user.favourites.some(favourite => (favourite.id === state.props.game_info.id)),
   label: state.generic.label,
   show: state.game_over.show,
   game_info: state.game_info,
@@ -21,5 +18,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(Actions, dispatch),
 });
 
-const wt = withTheme(index, theme);
-export default connect(mapStateToProps, mapDispatchToProps)(wt);
+
+export default function connectGameover(gameover) {
+  return connect(mapStateToProps, mapDispatchToProps)(gameover);
+}
