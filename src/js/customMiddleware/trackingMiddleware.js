@@ -91,7 +91,7 @@ const trackingMiddleware = store => next => (action) => {
       ReactGA.event({
         category: eventObject.properties.category,
         action: eventObject.name,
-        label: currentState.game_info.content_id,
+        label: eventObject.properties.game_title,
       });
       break;
     case 'END_SESSION':
@@ -111,7 +111,7 @@ const trackingMiddleware = store => next => (action) => {
       ReactGA.event({
         category: eventObject.properties.category,
         action: eventObject.name,
-        label: currentState.game_info.content_id,
+        label: eventObject.properties.game_title,
       });
       break;
     case 'GO_TO_HOME':
