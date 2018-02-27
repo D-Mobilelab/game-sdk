@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Actions } from '../../actions/index';
 
 const mapStateToProps = state => ({
-  isGameFavourite: state.user.favourites.some(favourite => (favourite.id === state.props.game_info.id)),
+  isGameFavourite: state.user.favourites.some(favourite => (favourite.id === state.game_info.id)),
   label: state.generic.label,
   show: state.game_over.show,
   game_info: state.game_info,
