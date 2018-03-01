@@ -60,14 +60,16 @@ function init(initConfig) {
         return dispatch(newtonActions.login());
       })
       .then(() => {
-        const { vhost } = getState();
+        const { user, vhost } = getState();
         if (vhost.FB_TRACKING_ENABLE) { FacebookPixelAdapter.init(vhost.FB_PIXELID); }
         dispatch(sharerActions.initFacebook({
           fbAppId: vhost.FB_APPID,
           enableTracking: vhost.FB_TRACKING_ENABLE,
         }));
+
         if (vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL) {
           ReactGA.initialize(vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL);
+          ReactGA.set({ '&uid': user.user });
         }
       })
       .then(() => {
