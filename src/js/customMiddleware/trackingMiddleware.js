@@ -1,4 +1,5 @@
 import NewtonAdapter from 'newton-adapter';
+import ReactGA from 'react-ga';
 import FacebookPixelAdapter from 'facebookpixeladapter';
 import Location from '../lib/Location';
 import getContentRanking from './getContentRanking';
@@ -87,6 +88,11 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
+      ReactGA.event({
+        category: eventObject.properties.category,
+        action: eventObject.name,
+        label: eventObject.properties.game_title,
+      });
       break;
     case 'END_SESSION':
       eventObject = {
@@ -102,6 +108,11 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
+      ReactGA.event({
+        category: eventObject.properties.category,
+        action: eventObject.name,
+        label: eventObject.properties.game_title,
+      });
       break;
     case 'GO_TO_HOME':
       eventObject = {

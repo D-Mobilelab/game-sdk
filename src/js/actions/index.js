@@ -1,4 +1,5 @@
 import FacebookPixelAdapter from 'facebookpixeladapter';
+import ReactGA from 'react-ga';
 import * as Constants from '../lib/Constants';
 import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
@@ -65,11 +66,14 @@ function init(initConfig) {
           fbAppId: vhost.FB_APPID,
           enableTracking: vhost.FB_TRACKING_ENABLE,
         }));
+        if (vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL) {
+          ReactGA.initialize(vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL);
+        }
       })
       .then(() => {
         const { user, vhost } = getState();
         const userType = getUserType(user);
-        // User is not premium and ads enabled in configuration => show interstitial        
+        // User is not premium and ads enabled in configuration => show interstitial
         const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
         if (condition) {
           dispatch(interstitialActions.show());
