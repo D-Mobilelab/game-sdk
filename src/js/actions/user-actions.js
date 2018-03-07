@@ -73,7 +73,6 @@ export function getUser() {
         }
 
         return Promise.all([
-          dispatch(canPlay()),
           dispatch(getUserFavourites()),
         ]);
       })

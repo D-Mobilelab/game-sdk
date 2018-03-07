@@ -17,6 +17,7 @@ export default function user(state = {
   },
   logged: false,
   favourites: [],
+  canPlay: true,
 }, action) {
   switch (action.type) {
     case 'USER_CHECK_LOAD_START':
@@ -33,8 +34,6 @@ export default function user(state = {
       return Object.assign({}, state, { ...state, favourites: action.favourites });
     case 'GET_FAVOURITES_FAIL':
       return Object.assign({}, state, { ...state, fetch_error: action.reason });
-    case 'SET_CAN_PLAY':
-      return Object.assign({}, state, { ...state, canPlay: action.canPlay });
     case 'INCREASE_MATCH_PLAYED':
       return Object.assign({}, state, { ...state, matchPlayed: state.matchPlayed += 1 });
     case 'ADD_GAME_LIKE_START':
