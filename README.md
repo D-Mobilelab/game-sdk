@@ -189,7 +189,7 @@ Initialize the sdk
 **Parameters**
 
 -   `initConfig` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `initConfig.lite` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if should show the gameover
+    -   `initConfig.lite` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** false if should show the gameover
     -   `initConfig.moreGamesButtonStyle` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** DEPRECATED since v2.5.3: a custom styles to pass to moregames button
     -   `initConfig.menuPosition` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT (optional, default `'BOTTOM_RIGHT'`)
 
