@@ -23,6 +23,8 @@ import BannerAndroid from '../src/js/components/Banner/android/Banner';
 
 import { ZainGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index';
 
+import Menulist from '../src/js/components/MenuList';
+
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
@@ -181,7 +183,13 @@ const dictionary= {
 const GameoverStory = storiesOf('Gameover', module);
 GameoverStory.addDecorator(withKnobs);
 
-GameoverStory.add('standard', () => <DefaultGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'default'} title={'Default'} score={200} rank={6} game_info={game_info} />)
+GameoverStory.add('default', () => <DefaultGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'default'} title={'Default'} score={200} rank={6} game_info={game_info} />)
 GameoverStory.add('gameasy', () => <GameasyGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'gameasy'} title={'Gameasy'} score={200} rank={6} game_info={game_info}/>);
 GameoverStory.add('zain', () => <ZainGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'zain'} title={'Zain'} score={200} rank={6} game_info={game_info}/>);
+
+
+
+const MenulistStory = storiesOf('Menulist', module);
+MenulistStory.addDecorator(withKnobs);
+MenulistStory.add('default', () => <Menulist show={boolean('Show', true)} showList={boolean('Show List', true)}/>);
 

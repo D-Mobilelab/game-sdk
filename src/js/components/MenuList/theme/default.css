@@ -1,0 +1,77 @@
+@font-face{
+    font-family: 'montserratultra_light';
+    src: url('../../Gameover/font/montserrat-ultralight-webfont.eot');
+    src: url('../../Gameover/font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('../../Gameover/font/montserrat-ultralight-webfont.woff') format('woff'), url('../../Gameover/font/montserrat-ultralight-webfont.ttf') format('truetype'), url('../../Gameover/font/montserrat-ultralight-webfont.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.menulistHide{
+    display:none;
+}
+
+.menulistShow{
+    display:block;
+}
+
+.listHide{
+    display:none;
+}
+
+.listShow{
+    display:block;
+}
+
+
+
+.container{
+    font-family: 'montserratultra_light';
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.list{
+    list-style-type: none
+}
+
+.list li{
+    margin: 30px 10px;
+    position: relative;
+    width: 100%;
+    text-align: right;
+    margin-left: -64px;
+}
+
+.list li a{
+    text-decoration: none;
+    color: red;
+    padding: 69px;
+    text-align: right;
+}
+
+.list li a:before{
+    content:"";
+    display:block;
+    height: 30px;
+    width: 30px;
+    background: red;
+    border-radius:50%;
+    position:absolute;
+    left:100%;
+    top:-5px;
+}
+
+.master{
+    border-radius: 50%;
+    background: red;
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: white;
+    position: relative;
+    float: right;
+    margin-bottom: 36px;
+    margin-right: 24px;
+}
