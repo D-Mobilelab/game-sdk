@@ -28,21 +28,31 @@ export class Menulist extends Component {
 
     const classNames = [theme.container];
     const classNamesList = [theme.list];
-    classNames.push(this.props.show ? theme.menulistShow : theme.menulistHide);
-    classNamesList.push(this.props.showList ? theme.listShow : theme.listHide);
+    const classOverlay = [theme.overlay];
+
+
+    classNames.push(this.props.show ? theme.show : theme.hide);
+    classNamesList.push(this.props.showList ? theme.show : theme.hide);
+    classOverlay.push(this.props.showOverlay ? theme.show : theme.hide);
     const classes = classNames.join(' ');
     const classesList = classNamesList.join(' ');
+    const classesOverlay = classOverlay.join(' ');
 
     return (
-      <div className={classes}>
-        <ul className={classesList}>
-          <li><a href="featured">Featured</a></li>
-          <li><a href="zoom">Zoom Page</a></li>
-          <li><a href="account">Account</a></li>
-          <li><a href="leaderboard">Leaderboard</a></li>
-          <li><a href="play">Start Game</a></li>
-        </ul>
-        <div className={theme.master}>X</div>
+      <div>
+        <div className={classesOverlay}>
+
+        </div>
+        <div className={classes}>
+          <ul className={classesList}>
+            <li><a href="featured">Featured</a></li>
+            <li><a href="zoom">Zoom Page</a></li>
+            <li><a href="account">Account</a></li>
+            <li><a href="leaderboard">Leaderboard</a></li>
+            <li><a href="play">Start Game</a></li>
+          </ul>
+          <div className={theme.master}>X</div>
+        </div>
       </div>
     );
   }

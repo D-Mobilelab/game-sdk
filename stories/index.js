@@ -191,5 +191,5 @@ GameoverStory.add('zain', () => <ZainGameover isGameFavourite={boolean('Like', f
 
 const MenulistStory = storiesOf('Menulist', module);
 MenulistStory.addDecorator(withKnobs);
-MenulistStory.add('default', () => <Menulist show={boolean('Show', true)} showList={boolean('Show List', true)}/>);
+MenulistStory.add('default', () => <Menulist show={boolean('Show', true)} showList={boolean('Show List', true)} showOverlay={boolean('Show Overlay', true)} />);
 
