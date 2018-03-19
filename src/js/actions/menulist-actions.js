@@ -1,4 +1,4 @@
-export function showMenuList() {
+export function showMenu() {
   return (dispatch, getState) => {
     dispatch({
       type: 'SHOW_MENU_LIST',
@@ -7,20 +7,20 @@ export function showMenuList() {
   };
 }
 
-export function hideMenuList() {
+export function hideMenu() {
   return {
     type: 'HIDE_MENU_LIST',
   };
 }
 
-export function showMenuListOptions() {
+export function showButtons() {
   return {
-    type: 'OPEN_MENU_LIST_OPTIONS',
+    type: 'SHOW_MENU_LIST_BUTTONS',
   };
 }
 
-export function hideMenuListOptions() {
+export function hideButtons() {
   return {
-    type: 'HIDE_MENU_LIST_OPTIONS',
+    type: 'HIDE_MENU_LIST_BUTTONS',
   };
 }

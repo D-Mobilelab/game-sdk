@@ -84,7 +84,7 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        dispatch(menuActions.showMenu());
+        dispatch(menulistActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });

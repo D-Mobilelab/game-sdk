@@ -3,9 +3,9 @@ export default function menu_list(state = {
 }, action) {
   switch (action.type) {
     case 'SHOW_MENU_LIST':
-      return Object.assign({}, state, { showmenulist: true });
+      return Object.assign({}, state, { show: true });
     case 'HIDE_MENU_LIST':
-      return Object.assign({}, state, { showmenulist: false });
+      return Object.assign({}, state, { show: false });
     default:
       return state;
   }

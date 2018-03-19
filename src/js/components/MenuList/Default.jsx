@@ -13,13 +13,14 @@ export class Menulist extends Component {
   //   }
 
   toggleList(evt) {
-    console.log('open list');
     evt.preventDefault();
     this.props.actions.openlist();
   }
 
   render() {
     const { theme, dictionary } = this.props;
+
+    console.log(this.props);
 
     const classNames = [theme.container];
     const classNamesList = [theme.list];
@@ -34,7 +35,7 @@ export class Menulist extends Component {
     const classesOverlay = classOverlay.join(' ');
 
     return (
-      <div className={(this.props.showmenulist ? theme.show : theme.hide)}>
+      <div className={(this.props.show ? theme.show : theme.hide)}>
         <div className={classesOverlay}></div>
         <div className={theme.header}>
           Fruit Slicer        
@@ -58,7 +59,7 @@ Menulist.defaultProps = {
   label: 'label',
   theme: {},
   store: {},
-  show: true,
+  show: false,
   showList: false,
   dictionary: {
     WEBAPP_CONGRATULATIONS_SCORE: '',

@@ -42,7 +42,7 @@ export default class App extends React.Component {
           MenuList: () => {
             switch (this.props.label) {
               default:
-                return importLazy(System.import('./js/components/MenuList/index'));
+                return importLazy(System.import('./js/components/MenuList/Gameasy'));
             }
           },
           EnterNameContainer: () => {
