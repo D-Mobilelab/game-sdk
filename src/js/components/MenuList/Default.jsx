@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 
-// import { Grid, Row, Column } from '../Layout/index';
-// import Image from '../Image/Image';
-// import { List, ListItem } from '../Related';
-// import Button from '../MaterialButton/Default';
-// import Icon from '../Icon/index.jsx';
-
 export class Menulist extends Component {
   constructor(props) {
     super(props);
@@ -19,8 +13,9 @@ export class Menulist extends Component {
   //   }
 
   toggleList(evt) {
+    console.log('open list');
     evt.preventDefault();
-    return true;
+    this.props.actions.openlist();
   }
 
   render() {
@@ -30,18 +25,19 @@ export class Menulist extends Component {
     const classNamesList = [theme.list];
     const classOverlay = [theme.overlay];
 
-
     classNames.push(this.props.show ? theme.show : theme.hide);
     classNamesList.push(this.props.showList ? theme.show : theme.hide);
     classOverlay.push(this.props.showOverlay ? theme.show : theme.hide);
+
     const classes = classNames.join(' ');
     const classesList = classNamesList.join(' ');
     const classesOverlay = classOverlay.join(' ');
 
     return (
-      <div>
-        <div className={classesOverlay}>
-
+      <div className={(this.props.showmenulist ? theme.show : theme.hide)}>
+        <div className={classesOverlay}></div>
+        <div className={theme.header}>
+          Fruit Slicer        
         </div>
         <div className={classes}>
           <ul className={classesList}>
@@ -51,7 +47,7 @@ export class Menulist extends Component {
             <li><a href="leaderboard">Leaderboard</a></li>
             <li><a href="play">Start Game</a></li>
           </ul>
-          <div className={theme.master}>X</div>
+          <div className={theme.master} onClick={this.toogleList}>X</div>
         </div>
       </div>
     );

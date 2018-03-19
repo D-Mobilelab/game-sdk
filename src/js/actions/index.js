@@ -16,6 +16,7 @@ import * as newtonActions from './newton-actions';
 import * as bannerActions from './banner-actions';
 import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
+import * as menulistActions from './menulist-actions';
 
 import focusAction from './focus-action';
 import historyHandler, { addSteps } from './history-actions';
@@ -134,6 +135,7 @@ export const Actions = {
   ...sessionActions,
   ...userActions,
   ...menuActions,
+  ...menulistActions,
   ...gameoverActions,
   ...userDataActions,
   ...gameinfoActions,
