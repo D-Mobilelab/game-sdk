@@ -13,14 +13,13 @@ export class Menulist extends Component {
   //   }
 
   toggleList(evt) {
+    console.log(evt);
     evt.preventDefault();
     this.props.actions.openlist();
   }
 
   render() {
     const { theme, dictionary } = this.props;
-
-    console.log(this.props);
 
     const classNames = [theme.container];
     const classNamesList = [theme.list];
@@ -32,14 +31,10 @@ export class Menulist extends Component {
 
     const classes = classNames.join(' ');
     const classesList = classNamesList.join(' ');
-    const classesOverlay = classOverlay.join(' ');
 
     return (
       <div className={(this.props.show ? theme.show : theme.hide)}>
-        <div className={classesOverlay}></div>
-        <div className={theme.header}>
-          Fruit Slicer        
-        </div>
+        <div className={theme.overlay}></div>
         <div className={classes}>
           <ul className={classesList}>
             <li><a href="featured">Featured</a></li>

@@ -3,7 +3,7 @@ import md5 from 'blueimp-md5';
 import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import * as Constants from '../lib/Constants';
-import { hideMenuList, showMenuList } from './menu-actions';
+// import { hideMenuList, showMenuList } from './menu-actions';
 import { hideMenu, showMenu } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
@@ -70,7 +70,7 @@ export function startSession() {
       Reporter.add('error', 'start session before init!');
       console.log('You should call init before startSession!');
     } else if (getState().user.canPlay || getState().user.canDownload) {
-      dispatch(hideMenuList());
+      dispatch(hideMenu());
       dispatch(hideGameOver());
       dispatch(doStartSession());
     } else {
@@ -127,7 +127,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const session = { score: data.score, level: data.level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
       dispatch(increaseMatchPlayed());
-      dispatch(showMenuList());
+      dispatch(showMenu());
 
       const lastSession = getState().session;
       const { game_type } = getState().game_info;
