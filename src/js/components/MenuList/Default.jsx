@@ -26,27 +26,48 @@ export class Menulist extends Component {
   render() {
     const { theme, dictionary } = this.props;
 
-    const classNames = [theme.container];
+    const classNamesContainer = [theme.container];
     const classNamesList = [theme.list];
 
-    classNames.push(this.props.show ? theme.show : theme.hide);
+    classNamesContainer.push(this.props.show ? theme.show : theme.hide);
     classNamesList.push(this.props.showList ? theme.open : theme.close);
 
-    const classes = classNames.join(' ');
+    const classesContainer = classNamesContainer.join(' ');
     const classesList = classNamesList.join(' ');
 
     return (
       <div className={(this.props.show ? theme.show : theme.hide)}>
         <div onClick={this.hideMenu} className={theme.overlay}></div>
-        <div className={classes}>
-          <ul className={classesList}>
-            <li><a href="featured">Featured</a></li>
-            <li><a href="zoom">Zoom Page</a></li>
-            <li><a href="account">Account</a></li>
-            <li><a href="leaderboard">Leaderboard</a></li>
-            <li><a href="play">Start Game</a></li>
-          </ul>
-          <div onClick={this.toggleList} className={theme.master}>X</div>
+        <div className={classesContainer}>
+          <div className={theme.container_list}>
+            <ul className={classesList}>
+              <li>
+                <a href="#">
+                  <div className={theme.label}>ZOOM PAGE</div>
+                  <div className={theme.icon}></div>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <div className={theme.label}>HOME PAGE</div>
+                  <div className={theme.icon}></div>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <div className={theme.label}>ACCOUNT</div>
+                  <div className={theme.icon}></div>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <div className={theme.label}>START GAME</div>
+                  <div className={theme.icon}></div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div onClick={this.toggleList} className={theme.plus}>X</div>
         </div>
       </div>
     );
