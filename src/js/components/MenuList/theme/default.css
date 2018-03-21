@@ -1,3 +1,5 @@
+@value btn_foreground: #00C1E2;
+
 @font-face{
     font-family: 'montserratultra_light';
     src: url('../../Gameover/font/montserrat-ultralight-webfont.eot');
@@ -5,6 +7,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 
 
 .overlay{
@@ -15,7 +18,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.8);
     z-index: 1000;
 }
 
@@ -49,50 +52,80 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
-    z-index: 1000;
+    z-index: 1001;
+}
+
+.close{
+    margin:0px;
+    transition: all;
+    height:0px;
+    opacity:0;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+}
+
+.open{
+    margin:0px;
+    transition: all;
+    height:350px;
+    opacity:1;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
 }
 
 .list{
-    list-style-type: none
+    list-style-type: none;
+    transition: all;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
 }
 
+
+
+
 .list li{
-    margin: 30px 10px;
+    margin: 50px 10px;
     position: relative;
     width: 100%;
     text-align: right;
-    margin-left: -64px;
+    margin-left: -82px;
+    
 }
 
 .list li a{
     text-decoration: none;
-    color: red;
-    padding: 69px;
+    color: btn_foreground;
+    padding: 100px;
     text-align: right;
 }
 
 .list li a:before{
     content:"";
     display:block;
-    height: 30px;
-    width: 30px;
-    background: red;
+    height: 50px;
+    width: 50px;
+    background: btn_foreground;
     border-radius:50%;
     position:absolute;
     left:100%;
     top:-5px;
+    box-shadow: 0px 0px 15px #000;
 }
 
 .master{
     border-radius: 50%;
-    background: red;
-    height: 50px;
-    width: 50px;
-    line-height: 50px;
+    background: btn_foreground;
+    height: 70px;
+    width: 70px;
+    line-height: 70px;
     text-align: center;
     color: white;
     position: relative;
     float: right;
     margin-bottom: 36px;
     margin-right: 24px;
+    z-index: 1002;
+    box-shadow: 0px 0px 15px #000;
+    font-weight: bold;
+    font-size:35px;
 }

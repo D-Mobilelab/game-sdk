@@ -3,19 +3,24 @@ import React, { Component } from 'react';
 export class Menulist extends Component {
   constructor(props) {
     super(props);
-    // this.goToHome = this.goToHome.bind(this);
+    this.openList = this.openList.bind(this);
+    this.hideMenu = this.hideMenu.bind(this);
     this.toggleList = this.toggleList.bind(this);
   }
 
-  //   goToHome(evt) {
-  //     evt.preventDefault();
-  //     this.props.actions.goToHome();
-  //   }
+  openList(e) {
+    e.preventDefault();
+    this.props.actions.showButtons();
+  }
 
-  toggleList(evt) {
-    console.log(evt);
-    evt.preventDefault();
-    this.props.actions.openlist();
+  toggleList(e) {
+    e.preventDefault();
+    this.props.actions.toggleButtons();
+  }
+
+  hideMenu(e) {
+    e.preventDefault();
+    this.props.actions.hideMenu();
   }
 
   render() {
@@ -23,18 +28,16 @@ export class Menulist extends Component {
 
     const classNames = [theme.container];
     const classNamesList = [theme.list];
-    const classOverlay = [theme.overlay];
 
     classNames.push(this.props.show ? theme.show : theme.hide);
-    classNamesList.push(this.props.showList ? theme.show : theme.hide);
-    classOverlay.push(this.props.showOverlay ? theme.show : theme.hide);
+    classNamesList.push(this.props.showList ? theme.open : theme.close);
 
     const classes = classNames.join(' ');
     const classesList = classNamesList.join(' ');
 
     return (
       <div className={(this.props.show ? theme.show : theme.hide)}>
-        <div className={theme.overlay}></div>
+        <div onClick={this.hideMenu} className={theme.overlay}></div>
         <div className={classes}>
           <ul className={classesList}>
             <li><a href="featured">Featured</a></li>
@@ -43,7 +46,7 @@ export class Menulist extends Component {
             <li><a href="leaderboard">Leaderboard</a></li>
             <li><a href="play">Start Game</a></li>
           </ul>
-          <div className={theme.master} onClick={this.toogleList}>X</div>
+          <div onClick={this.toggleList} className={theme.master}>X</div>
         </div>
       </div>
     );
@@ -54,8 +57,8 @@ Menulist.defaultProps = {
   label: 'label',
   theme: {},
   store: {},
-  show: false,
-  showList: false,
+  // show: false,
+  // showList: false,
   dictionary: {
     WEBAPP_CONGRATULATIONS_SCORE: '',
     WEBAPP_YOUR_POSITION_TITLE: '',

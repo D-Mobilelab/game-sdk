@@ -5,6 +5,7 @@ import { Actions } from '../../actions/index';
 
 const mapStateToProps = state => ({
   show: state.menu_list.show,
+  showList: state.menu_list.showList,
 });
 
 const mapDispatchToProps = dispatch => ({
