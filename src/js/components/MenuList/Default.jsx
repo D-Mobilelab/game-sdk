@@ -1,43 +1,28 @@
 import React, { Component } from 'react';
+import SearchIcon from './icons/search.jsx';
 
 export class Menulist extends Component {
   constructor(props) {
     super(props);
-    // this.openList = this.openList.bind(this);
-    // this.hideMenu = this.hideMenu.bind(this);
     this.toggleList = this.toggleList.bind(this);
   }
-
-  // openList(e) {
-  //   e.preventDefault();
-  //   this.props.actions.showButtons();
-  // }
 
   toggleList(e) {
     e.preventDefault();
     this.props.actions.toggleButtons();
   }
 
-  // hideMenu(e) {
-  //   e.preventDefault();
-  //   this.props.actions.hideMenu();
-  // }
-
   render() {
-    const { theme, dictionary } = this.props;
+    const { theme } = this.props;
 
     const classNamesContainer = [theme.container];
-    // const classNamesContainerList = [theme.container_list];
     const classNamesList = [theme.list];
     const classNamesOverlay = [theme.overlay];
 
     classNamesContainer.push(this.props.show ? theme.show : theme.hide);
-    // classNamesContainerList.push(this.props.showList ? theme.level_up : theme.level_down);
     classNamesList.push(this.props.showList ? theme.open : theme.close);
     classNamesOverlay.push(this.props.showList ? theme.show : theme.hide);
 
-    // const classesContainer = classNamesContainer.join(' ');
-    // const classContainerList = classNamesContainerList.join(' ');
     const classesList = classNamesList.join(' ');
     const classesOverlay = classNamesOverlay.join(' ');
 
@@ -50,7 +35,7 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>ZOOM PAGE</div>
               <div className={theme.icon}>
-                <div className={[theme.icon_image, theme.search].join(' ')}></div>
+                <SearchIcon circle={theme.circle} path={theme.search}></SearchIcon>
               </div>
             </a>
           </li>
@@ -59,7 +44,7 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>HOME PAGE</div>
               <div className={theme.icon}>
-                <div className={[theme.icon_image, theme.search].join(' ')}></div>
+                <SearchIcon circle={theme.circle} path={theme.homepage}></SearchIcon>
               </div>
             </a>
           </li>
@@ -68,7 +53,7 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>ACCOUNT</div>
               <div className={theme.icon}>
-                <div className={[theme.icon_image, theme.search].join(' ')}></div>
+                <SearchIcon circle={theme.circle} path={theme.account}></SearchIcon>
               </div>
             </a>
           </li>
@@ -77,7 +62,7 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>START GAME</div>
               <div className={theme.icon}>
-                <div className={[theme.icon_image, theme.search].join(' ')}></div>
+                <SearchIcon circle={theme.circle} path={theme.startgame}></SearchIcon>
               </div>
             </a>
           </li>

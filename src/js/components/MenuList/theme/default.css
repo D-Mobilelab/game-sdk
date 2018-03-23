@@ -137,19 +137,13 @@
 }
 
 .icon_image{
-    background-repeat: no-repeat;
-    height: 40px;
-    width: 40px;
-    position: relative;
-    margin: auto;
-    top: 15px;
+    height: 70px;
 }
-
 
 .arrow{
     width: 18px;
     height: 18px;
-    background: #00C1E2;
+    background: label_color;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     border-radius: 4px;
@@ -159,6 +153,31 @@
     margin-right: 102px;
 }
 
+.circle{
+    fill-rule:evenodd;
+    clip-rule:evenodd;
+    fill:#FFFFFF;
+}
+
 .search{
-    background-image: url(./search.png);
+    fill-rule:evenodd;
+    clip-rule:evenodd;
+    fill:orange;
+}
+
+.startgame{
+    fill-rule:evenodd;
+    clip-rule:evenodd;
+    fill:blue;
+}
+
+.homepage{
+    fill-rule:evenodd;
+    clip-rule:evenodd;
+    fill:green;
+}
+.account{
+    fill-rule:evenodd;
+    clip-rule:evenodd;
+    fill:violet;
 }
