@@ -145,6 +145,20 @@
     top: 15px;
 }
 
+
+.arrow{
+    width: 18px;
+    height: 18px;
+    background: #00C1E2;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-radius: 4px;
+    position: absolute;
+    right: 0px;
+    margin-top: 25px;
+    margin-right: 102px;
+}
+
 .search{
     background-image: url(./search.png);
 }

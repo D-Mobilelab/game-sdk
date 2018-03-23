@@ -47,6 +47,7 @@ export class Menulist extends Component {
         <ul className={classesList}>
           <li>
             <a href="#">
+              <div className={theme.arrow}></div>
               <div className={theme.label}>ZOOM PAGE</div>
               <div className={theme.icon}>
                 <div className={[theme.icon_image, theme.search].join(' ')}></div>
@@ -55,6 +56,7 @@ export class Menulist extends Component {
           </li>
           <li>
             <a href="#">
+              <div className={theme.arrow}></div>
               <div className={theme.label}>HOME PAGE</div>
               <div className={theme.icon}>
                 <div className={[theme.icon_image, theme.search].join(' ')}></div>
@@ -63,6 +65,7 @@ export class Menulist extends Component {
           </li>
           <li>
             <a href="#">
+              <div className={theme.arrow}></div>
               <div className={theme.label}>ACCOUNT</div>
               <div className={theme.icon}>
                 <div className={[theme.icon_image, theme.search].join(' ')}></div>
@@ -71,6 +74,7 @@ export class Menulist extends Component {
           </li>
           <li>
             <a href="#">
+              <div className={theme.arrow}></div>
               <div className={theme.label}>START GAME</div>
               <div className={theme.icon}>
                 <div className={[theme.icon_image, theme.search].join(' ')}></div>
