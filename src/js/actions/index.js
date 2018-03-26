@@ -84,7 +84,13 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        dispatch(menulistActions.showMenu());
+        const { generic } = getState();
+        if(generic.initConfig.menuType==="extended") {
+          dispatch(menulistActions.showMenu());
+        } else {
+          dispatch(menuActions.showMenu());
+        }
+
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });

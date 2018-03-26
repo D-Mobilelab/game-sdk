@@ -1,11 +1,4 @@
 export function showMenu() {
-  // return (dispatch, getState) => {
-  //   dispatch({
-  //     type: 'SHOW_MENU_LIST',
-  //     payload: {},
-  //   });
-  // };
-
   return {
     type: 'SHOW_MENU_LIST',
   };

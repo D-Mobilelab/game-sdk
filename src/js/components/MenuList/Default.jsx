@@ -77,14 +77,8 @@ Menulist.defaultProps = {
   label: 'label',
   theme: {},
   store: {},
-  // show: false,
-  // showList: false,
-  dictionary: {
-    WEBAPP_CONGRATULATIONS_SCORE: '',
-    WEBAPP_YOUR_POSITION_TITLE: '',
-    WEBAPP_CANVAS_BUTTON_PLAY: '',
-    WEBAPP_RELATED_TITLE: '',
-  },
+  show: false,
+  dictionary: {},
 };
 
 export default Menulist;
