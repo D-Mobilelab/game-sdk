@@ -84,13 +84,8 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        const { generic } = getState();
-        if(generic.initConfig.menuType==="extended") {
-          dispatch(menulistActions.showMenu());
-        } else {
-          dispatch(menuActions.showMenu());
-        }
-
+        const { vhost } = getState();
+        dispatch((vhost.GFSDK_MENU_TYPE === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });

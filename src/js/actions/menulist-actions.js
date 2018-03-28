@@ -1,10 +1,10 @@
-export function showMenu() {
+export function showMenuList() {
   return {
     type: 'SHOW_MENU_LIST',
   };
 }
 
-export function hideMenu() {
+export function hideMenuList() {
   return {
     type: 'HIDE_MENU_LIST',
   };

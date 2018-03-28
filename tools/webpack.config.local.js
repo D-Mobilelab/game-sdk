@@ -40,13 +40,11 @@ devConfiguration.devServer = {
     '/**/v01/**': {
       onProxyReq: function(proxyReq, req, res) { 
         console.log('Request:', proxyReq.path);
-        // proxyReq.setHeader('X-Special-Proxy-Header', 'foobar');
       },
       onProxyRes: function(proxyRes, req, res) {
         console.log("Response", req.path);
-        if(req.path === '/v01/config.getvars') {
-          delete proxyRes.headers['content-length'];
-          modifyResponse(res, proxyRes.headers['content-encoding'] ? proxyRes.headers['content-encoding'] : proxyRes.headers['transfer-encoding'], function (body) {
+        if(req.path === '/ww-it/v01/config.getvars') {
+          modifyResponse(res, proxyRes, function (body) {
             if (body) {
               // replace some keys with locals
               for(var key in localvhost) {

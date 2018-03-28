@@ -33,7 +33,7 @@ export class Menulist extends Component {
           <li>
             <a href="#">
               <div className={theme.arrow}></div>
-              <div className={theme.label}>ZOOM PAGE</div>
+              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ZOOM_PAGE}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.search}></SearchIcon>
               </div>
@@ -42,7 +42,7 @@ export class Menulist extends Component {
           <li>
             <a href="#">
               <div className={theme.arrow}></div>
-              <div className={theme.label}>HOME PAGE</div>
+              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_HOME_PAGE}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.homepage}></SearchIcon>
               </div>
@@ -51,7 +51,7 @@ export class Menulist extends Component {
           <li>
             <a href="#">
               <div className={theme.arrow}></div>
-              <div className={theme.label}>ACCOUNT</div>
+              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ACCOUNT}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.account}></SearchIcon>
               </div>
@@ -60,7 +60,7 @@ export class Menulist extends Component {
           <li>
             <a href="#">
               <div className={theme.arrow}></div>
-              <div className={theme.label}>START GAME</div>
+              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_START_GAME}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.startgame}></SearchIcon>
               </div>
@@ -78,7 +78,12 @@ Menulist.defaultProps = {
   theme: {},
   store: {},
   show: false,
-  dictionary: {},
+  dictionary: {
+    'GFSDK_MENU_START_GAME':'START GAME',
+    'GFSDK_MENU_HOME_PAGE':'HOME PAGE',
+    'GFSDK_MENU_ACCOUNT':'ACCOUNT',
+    'GFSDK_MENU_ZOOM_PAGE':'ZOOM PAGE'
+  },
 };
 
 export default Menulist;
