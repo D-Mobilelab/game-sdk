@@ -24,7 +24,7 @@ export function getGameInfo() {
       }, {});
 
     const endPoint = vhost.MOA_API_CONTENTS_GAMEINFO.split('?')[0];
-    return AxiosInstance.get(endPoint, { params: { content_id: getContentId(), ...filteredQuery } })
+    return AxiosInstance.get(endPoint, { withCredentials: true, params: { content_id: getContentId(), ...filteredQuery } })
       .then((response) => {
         const gameInfo = normalizeGameInfo(response.data);
         dispatch({ type: 'GAME_INFO_LOAD_END', game_info: gameInfo });

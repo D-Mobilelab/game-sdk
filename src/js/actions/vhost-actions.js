@@ -15,7 +15,7 @@ export function load(VHOST_API_URL, keys) {
       }
       dispatch({ type: 'VHOST_LOAD_END', vhost });
     } else {
-      return AxiosInstance.get(VHOST_API_URL, { params: { keys: keys.join(',') } })
+      return AxiosInstance.get(VHOST_API_URL, { withCredentials: true, params: { keys: keys.join(',') } })
         .then((response) => {
           if (!response.data.FW_TYPE_PROFILE) {
             response.data.FW_TYPE_PROFILE = getLabel();
@@ -38,7 +38,7 @@ export function dictLoad(DICTIONARY_API) {
       dispatch(action);
       return Promise.resolve();
     }
-    return AxiosInstance.get(DICTIONARY_API).then((response) => {
+    return AxiosInstance.get(DICTIONARY_API, { withCredentials: true }).then((response) => {
       action.payload = response.data;
       dispatch(action);
     }).catch((reason) => {
