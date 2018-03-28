@@ -5,11 +5,35 @@ export class Menulist extends Component {
   constructor(props) {
     super(props);
     this.toggleList = this.toggleList.bind(this);
+    this.goHome = this.goHome.bind(this);
+    this.replay = this.replay.bind(this);
+    this.goAccount = this.goAccount.bind(this);
+    this.goZoom = this.goZoom.bind(this);
   }
 
   toggleList(e) {
     e.preventDefault();
     this.props.actions.toggleButtons();
+  }
+
+  goHome(e) {
+    e.preventDefault();
+    this.props.actions.goToHome();
+  }
+
+  goZoom(e) {
+    e.preventDefault();
+    this.props.actions.goToZoom();
+  }
+
+  goAccount(e) {
+    e.preventDefault();
+    this.props.actions.goToAccount();
+  }
+
+  replay(e) {
+    e.preventDefault();
+    this.props.actions.startSession();
   }
 
   render() {
@@ -31,40 +55,40 @@ export class Menulist extends Component {
         <div className={classesOverlay}></div>
         <ul className={classesList}>
           <li>
-            <a href="#">
+            <span className={theme.item} onClick={this.goZoom}>
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ZOOM_PAGE}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.search}></SearchIcon>
               </div>
-            </a>
+            </span>
           </li>
           <li>
-            <a href="#">
+            <span className={theme.item} onClick={this.goHome} >
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_HOME_PAGE}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.homepage}></SearchIcon>
               </div>
-            </a>
+            </span>
           </li>
           <li>
-            <a href="#">
+            <span className={theme.item} onClick={this.goAccount}>
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ACCOUNT}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.account}></SearchIcon>
               </div>
-            </a>
+            </span>
           </li>
           <li>
-            <a href="#">
+            <span className={theme.item} onClick={this.replay}>
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_START_GAME}</div>
               <div className={theme.icon}>
                 <SearchIcon circle={theme.circle} path={theme.startgame}></SearchIcon>
               </div>
-            </a>
+            </span>
           </li>
         </ul>
         <div onClick={this.toggleList} className={theme.plus}>X</div>
