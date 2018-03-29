@@ -17,6 +17,8 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/GamifiveOver'));
               case 'zain':
                 return importLazy(System.import('./js/components/Gameover/Zain'));
+              case 'gamempire':
+                return importLazy(System.import('./js/components/Gameover/Gamempire'));
               default:
                 return importLazy(System.import('./js/components/Gameover/Gameasy'));
             }
@@ -35,6 +37,8 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/Menu/MenuGamifive'));
               case 'zain':
                 return importLazy(System.import('./js/components/Menu/MenuZain'));
+              case 'gamempire':
+                return importLazy(System.import('./js/components/Menu/MenuGamempire'));
               default:
                 return importLazy(System.import('./js/components/Menu/MenuGameasy'));
             }

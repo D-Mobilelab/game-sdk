@@ -56,7 +56,7 @@ export function isStandAlone() {
 }
 
 export function getLabel() {
-  let WHITE_LABEL = window.GamifiveInfo ? window.GamifiveInfo.fw_type_profile : null;
+  let WHITE_LABEL = window.GamifiveInfo ? window.GamifiveInfo.layout_style : null;
   if (process.env.LOCAL_DEV) {
     /** overwrite with localStorage if any */
     const label = localStorage.getItem('gfsdk-debug-label');
