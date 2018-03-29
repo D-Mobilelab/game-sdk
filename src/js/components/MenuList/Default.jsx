@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import SearchIcon from './icons/search.jsx';
+import XIcon from './icons/x.jsx';
+import PlayIcon from './icons/play.jsx';
+import AccountIcon from './icons/account.jsx';
+import HomeIcon from './icons/home.jsx';
+import InfoIcon from './icons/info.jsx';
 
 export class Menulist extends Component {
   constructor(props) {
@@ -59,7 +63,7 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ZOOM_PAGE}</div>
               <div className={theme.icon}>
-                <SearchIcon circle={theme.circle} path={theme.search}></SearchIcon>
+                <InfoIcon circle={theme.circle} path={theme.zoompage}></InfoIcon>
               </div>
             </span>
           </li>
@@ -68,7 +72,7 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_HOME_PAGE}</div>
               <div className={theme.icon}>
-                <SearchIcon circle={theme.circle} path={theme.homepage}></SearchIcon>
+                <HomeIcon circle={theme.circle} path={theme.homepage}></HomeIcon>
               </div>
             </span>
           </li>
@@ -77,7 +81,7 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ACCOUNT}</div>
               <div className={theme.icon}>
-                <SearchIcon circle={theme.circle} path={theme.account}></SearchIcon>
+                <AccountIcon circle={theme.circle} path={theme.account}></AccountIcon>
               </div>
             </span>
           </li>
@@ -86,12 +90,14 @@ export class Menulist extends Component {
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_START_GAME}</div>
               <div className={theme.icon}>
-                <SearchIcon circle={theme.circle} path={theme.startgame}></SearchIcon>
+                <PlayIcon circle={theme.circle} path={theme.replay}></PlayIcon>
               </div>
             </span>
           </li>
         </ul>
-        <div onClick={this.toggleList} className={theme.plus}>X</div>
+        <div onClick={this.toggleList} className={theme.plus}>
+          <XIcon circle={theme.circle} path={theme.x}></XIcon>
+        </div>
       </div>
     );
   }

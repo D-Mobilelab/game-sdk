@@ -159,25 +159,31 @@
     fill:#FFFFFF;
 }
 
-.search{
+.zoompage{
     fill-rule:evenodd;
     clip-rule:evenodd;
-    fill:orange;
+    fill:#71E600;
 }
 
-.startgame{
+.replay{
     fill-rule:evenodd;
     clip-rule:evenodd;
-    fill:blue;
+    fill:#FF4147;
 }
 
 .homepage{
     fill-rule:evenodd;
     clip-rule:evenodd;
-    fill:green;
+    fill:#307DFF;
 }
 .account{
     fill-rule:evenodd;
     clip-rule:evenodd;
-    fill:violet;
+    fill:#FFB295;
+}
+
+.x{
+    fill-rule:evenodd;
+    clip-rule:evenodd;
+    fill:btn_text;
 }
