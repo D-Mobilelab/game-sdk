@@ -129,6 +129,52 @@ const trackingMiddleware = store => next => (action) => {
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
       break;
+    case 'TOGGLE_MENU_LIST_BUTTONS':
+      eventObject = {
+        properties: {
+          action: 'Yes',
+          category: 'Behavior',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+        },
+      };
+      if (currentState.menu_list.showList) {
+        eventObject.name = 'MenuClose';
+      } else {
+        eventObject.name = 'MenuOpen';
+      }
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      break;
+    case 'GO_TO_ACCOUNT':
+      eventObject = {
+        name: 'GoToAccount',
+        properties: {
+          action: 'Yes',
+          category: 'Behavior',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+        },
+      };
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      break;
+    case 'GO_TO_ZOOM':
+      eventObject = {
+        name: 'GoToZoom',
+        properties: {
+          action: 'Yes',
+          category: 'Behavior',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+        },
+      };
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      break;          
     case 'INIT_ERROR':
       eventObject = {
         name: 'SdkInitError',

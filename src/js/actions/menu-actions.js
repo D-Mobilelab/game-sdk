@@ -1,39 +1,3 @@
-import Location from '../lib/Location';
-
-export function goToHome() {
-  return (dispatch) => {
-    // If I'm in iframe...
-    if (window !== window.top) {
-      window.parent.postMessage('GO_TO_HOME', '*');
-    }
-    window.location.href = Location.getOrigin();
-    dispatch({ type: 'GO_TO_HOME' });
-  };
-}
-
-export function goToAccount() {
-  return (dispatch) => {
-    // If I'm in iframe...
-    if (window !== window.top) {
-      window.parent.postMessage('GO_TO_ACCOUNT', '*');
-    }
-    window.location.href = '/#!/settings';
-    dispatch({ type: 'GO_TO_ACCOUNT' });
-  };
-}
-
-export function goToZoom() {
-  return (dispatch, getState) => {
-    const { game_info } = getState();
-    // If I'm in iframe...
-    if (window !== window.top) {
-      window.parent.postMessage('GO_TO_ZOOM', '*');
-    }
-    window.location.href = game_info.url_zoom;
-    dispatch({ type: 'GO_TO_ZOOM' });
-  };
-}
-
 export function showMenu(position) {
   return (dispatch, getState) => {
     const { vhost } = getState();

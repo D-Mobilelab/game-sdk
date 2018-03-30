@@ -10,7 +10,7 @@ export class Menulist extends Component {
     super(props);
     this.toggleList = this.toggleList.bind(this);
     this.goHome = this.goHome.bind(this);
-    this.replay = this.replay.bind(this);
+    this.play = this.play.bind(this);
     this.goAccount = this.goAccount.bind(this);
     this.goZoom = this.goZoom.bind(this);
   }
@@ -35,7 +35,7 @@ export class Menulist extends Component {
     this.props.actions.goToAccount();
   }
 
-  replay(e) {
+  play(e) {
     e.preventDefault();
     this.props.actions.startSession();
   }
@@ -86,17 +86,17 @@ export class Menulist extends Component {
             </span>
           </li>
           <li>
-            <span className={theme.item} onClick={this.replay}>
+            <span className={theme.item} onClick={this.play}>
               <div className={theme.arrow}></div>
               <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_START_GAME}</div>
               <div className={theme.icon}>
-                <PlayIcon circle={theme.circle} path={theme.replay}></PlayIcon>
+                <PlayIcon circle={theme.circle} path={theme.play}></PlayIcon>
               </div>
             </span>
           </li>
         </ul>
         <div onClick={this.toggleList} className={theme.plus}>
-          <XIcon circle={theme.circle} path={theme.x}></XIcon>
+          <XIcon circle={theme.circle} path={theme.x} position={theme.plus_position}></XIcon>
         </div>
       </div>
     );

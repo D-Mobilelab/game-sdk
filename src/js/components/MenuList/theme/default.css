@@ -36,14 +36,6 @@
     display:block;
 }
 
-/* .container{
-    font-family: 'montserratultra_light';
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    z-index: 1001;
-} */
-
 .close{
     margin: 0px;
     transition: all;
@@ -63,14 +55,6 @@
     position: absolute;
     bottom: 160px;
 }
-
-/* .container_list{
-    height: 460px;
-    position: absolute;
-    bottom: 56px;
-    right: 3px;
-    overflow: hidden;
-} */
 
 .list{
     font-family: 'montserratultra_light';
@@ -107,7 +91,6 @@
     bottom: 0px;
     right: 0px;
 }
-
 
 .label{
     width: 120px;
@@ -165,7 +148,7 @@
     fill:#71E600;
 }
 
-.replay{
+.play{
     fill-rule:evenodd;
     clip-rule:evenodd;
     fill:#FF4147;
@@ -186,4 +169,9 @@
     fill-rule:evenodd;
     clip-rule:evenodd;
     fill:btn_text;
+}
+
+.plus_position{
+    margin-left: 10px;
+    margin-top:10px;
 }
