@@ -143,6 +143,7 @@ export function endSession(data = { score: 0, level: 1 }) {
         // Call standard leaderboard
         const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
         const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
+          withCredentials: true,
           params: {
             score: lastSession.score,
             level: lastSession.level,

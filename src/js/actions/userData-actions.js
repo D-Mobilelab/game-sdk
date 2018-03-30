@@ -43,7 +43,7 @@ function getUserDataFromServer() {
       .replace(':COLLECTION', 'gameInfo');
 
     dispatch({ type: 'LOAD_USER_DATA_SERVER_START' });
-    return AxiosInstance.get(userDataGetApi)
+    return AxiosInstance.get(userDataGetApi, { withCredentials: true })
       .then((response) => {
         const { data } = response;
         const realResponseData = data.response.data;
