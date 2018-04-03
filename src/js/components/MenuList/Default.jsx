@@ -17,6 +17,7 @@ export class Menulist extends Component {
 
   toggleList(e) {
     e.preventDefault();
+    this.props.actions.hideBanner();
     this.props.actions.toggleButtons();
   }
 
@@ -109,10 +110,10 @@ Menulist.defaultProps = {
   store: {},
   show: false,
   dictionary: {
-    'GFSDK_MENU_START_GAME':'START GAME',
-    'GFSDK_MENU_HOME_PAGE':'HOME PAGE',
-    'GFSDK_MENU_ACCOUNT':'ACCOUNT',
-    'GFSDK_MENU_ZOOM_PAGE':'ZOOM PAGE'
+    'GFSDK_MENU_START_GAME':'start game',
+    'GFSDK_MENU_HOME_PAGE':'home page',
+    'GFSDK_MENU_ACCOUNT':'account',
+    'GFSDK_MENU_ZOOM_PAGE':'zoom page'
   },
 };
 
