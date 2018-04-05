@@ -17,16 +17,18 @@ import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
 import MenuComponent from '../src/js/components/Menu/MenuComponent';
 import Toast from '../src/js/components/Toast/Toast';
 import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
+import gamempireMenuTheme from '../src/js/components/Menu/theme/gamempire.css';
 
 import BannerIOS from '../src/js/components/Banner/ios/Banner';
 import BannerAndroid from '../src/js/components/Banner/android/Banner';
 
-import { ZainGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index';
+import { ZainGameover, GamempireGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index';
 
 const MyButton = withTheme(MaterialButton, gameasy);
 const StandardButton = withTheme(MaterialButton, standard);
 const BandaiButton = withTheme(MaterialButton, bandai);
 const BandaiMenu = withTheme(MenuComponent, bandaiMenuTheme);
+const GamempireMenu = withTheme(MenuComponent, gamempireMenuTheme);
 
 storiesOf('MaterialButton', module)
   .add('standard', () => (<StandardButton onClick={action('clicked')}>Prova</StandardButton>))
@@ -118,7 +120,8 @@ storiesOf('LeaderBoard Bandai theme', module)
 storiesOf('Menu', module)
   .add('Menu Bandai Left bottom', () => (<BandaiMenu show={true} position='BOTTOM_LEFT' />))
   .add('Menu Bandai Right bottom', () => (<BandaiMenu show={true} position='BOTTOM_RIGHT' />))
-  .add('Menu Bandai Left top', () => (<BandaiMenu show={true} position='TOP_LEFT' />));
+  .add('Menu Bandai Left top', () => (<BandaiMenu show={true} position='TOP_LEFT' />))
+  .add('Menu Gamempire Left top', () => (<GamempireMenu show={true} position='TOP_LEFT' />));
 
 const ToastStory = storiesOf('Toast', module);
 ToastStory.addDecorator(withKnobs);
@@ -184,4 +187,5 @@ GameoverStory.addDecorator(withKnobs);
 GameoverStory.add('standard', () => <DefaultGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'default'} title={'Default'} score={200} rank={6} game_info={game_info} />)
 GameoverStory.add('gameasy', () => <GameasyGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'gameasy'} title={'Gameasy'} score={200} rank={6} game_info={game_info}/>);
 GameoverStory.add('zain', () => <ZainGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'zain'} title={'Zain'} score={200} rank={6} game_info={game_info}/>);
+GameoverStory.add('gamempire', () => <GamempireGameover isGameFavourite={boolean('Like', false)} dictionary={dictionary} show={boolean('Show', true)} label={'zain'} title={'Zain'} score={200} rank={6} game_info={game_info}/>);
 
