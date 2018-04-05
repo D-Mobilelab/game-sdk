@@ -7,7 +7,7 @@ export class PlayIcon extends Component {
 
   render() {
     return (
-      <svg width="70" height="70">
+      <svg viewBox="0 0 70 70" width="50" height="50">
           <circle className={this.props.circle} cx={this.props.radius} cy={this.props.radius} r={this.props.radius}/>
           <path className={this.props.path} d="M44.2,36.8c0,0.3,0.1,0.5,0.3,0.6c0.2,0.2,0.4,0.3,0.6,0.3h1.5c0.3,0,0.5-0.1,0.6-0.3
                     c0.2-0.2,0.3-0.4,0.3-0.6c0-0.2-0.1-0.5-0.3-0.6c-0.2-0.2-0.4-0.3-0.6-0.3h-1.5c-0.2,0-0.5,0.1-0.6,0.3

@@ -7,7 +7,7 @@ export class AccountIcon extends Component {
 
   render() {
     return (
-      <svg width="70" height="70">
+      <svg viewBox="0 0 70 70" width="50" height="50">
         <circle className={this.props.circle} cx={this.props.radius} cy={this.props.radius} r={this.props.radius}/>
         <g transform="matrix( 0.543182373046875, 0, 0, 0.543182373046875, 223.45,61.65) ">
           <g transform="matrix( 1, 0, 0, 1, 0,0) ">

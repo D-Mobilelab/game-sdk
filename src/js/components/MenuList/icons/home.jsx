@@ -7,7 +7,7 @@ export class HomeIcon extends Component {
 
   render() {
     return (
-      <svg width="70" height="70">
+      <svg viewBox="0 0 70 70" width="50" height="50">
         <circle className={this.props.circle} cx={this.props.radius} cy={this.props.radius} r={this.props.radius}/>
         <path className={this.props.path} d="M51.5,33.5L51.5,33.5L51.5,33.5l-14-13.9l0,0l0,0c-0.7-0.7-1.4-1.1-2.1-1.1c-0.7,0-1.4,0.4-2.2,1.1l-14,13.9
             c0,0,0,0-0.1,0.1c-1.2,0.9-1.7,1.9-1.6,2.9l0,0c0.2,0.9,0.9,1.4,2.3,1.4h2c0.1,0,0.2,0,0.3,0.1l0,0l0,0c0.1,0.1,0.1,0.2,0.1,0.3
