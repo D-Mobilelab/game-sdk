@@ -70,7 +70,7 @@
 
 .item{
     width: 231px;
-    height: 56px;
+    height: 65px;
     display: block;
     position: relative;
 }
@@ -170,7 +170,19 @@
     fill:btn_text;
 }
 
-.plus_position{
-    /* margin-left: 10px;
-    margin-top:10px; */
+.plus_position{}
+
+@media (orientation: landscape) {
+ .list{
+     transform:scale(0.9);
+     right: 15px;
+ }
+
+ .open{
+    bottom: 85px;
+ }
+
+ .item{
+     height:56px;
+ }
 }
