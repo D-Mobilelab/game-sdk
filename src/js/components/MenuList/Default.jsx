@@ -97,7 +97,7 @@ export class Menulist extends Component {
           </li>
         </ul>
         <div onClick={this.toggleList} className={theme.plus}>
-          <XIcon circle={theme.circle} path={theme.x} position={theme.plus_position}></XIcon>
+          <XIcon circle={theme.circle} path={theme.x}></XIcon>
         </div>
       </div>
     );
