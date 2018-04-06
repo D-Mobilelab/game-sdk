@@ -187,5 +187,6 @@
 
  .plus{
     transform: scale(0.8);
+    bottom: 5px;
  }
 }
