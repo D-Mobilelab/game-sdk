@@ -35,7 +35,7 @@ export default function generic(state = {
     GFSDK_MENU_START_GAME: 'start game',
     GFSDK_MENU_HOME_PAGE: 'home page',
     GFSDK_MENU_ACCOUNT: 'account',
-    GFSDK_MENU_ZOOM_PAGE: 'zoom page1',
+    GFSDK_MENU_ZOOM_PAGE: 'zoom page',
   },
   focus: true,
 }, action) {
