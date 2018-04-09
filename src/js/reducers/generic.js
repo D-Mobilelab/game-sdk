@@ -32,6 +32,10 @@ export default function generic(state = {
     WEBAPP_CHALLENGE_INVITE: '',
     WEBAPP_SHARE_FACEBOOK: 'Share',
     WEBAPP_GAME_OVER: 'Gameover',
+    GFSDK_MENU_START_GAME: 'start game',
+    GFSDK_MENU_HOME_PAGE: 'home page',
+    GFSDK_MENU_ACCOUNT: 'account',
+    GFSDK_MENU_ZOOM_PAGE: 'zoom page1',
   },
   focus: true,
 }, action) {
