@@ -62,7 +62,7 @@ export class Menulist extends Component {
           <li>
             <span className={theme.item} onClick={this.goZoom}>
               <div className={theme.arrow}></div>
-              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ZOOM_PAGE}</div>
+              <div className={theme.label}>{this.props.generic.dictionary.GFSDK_MENU_ZOOM_PAGE}</div>
               <div className={theme.icon}>
                 <InfoIcon circle={theme.circle} path={theme.zoompage}></InfoIcon>
               </div>
@@ -71,7 +71,7 @@ export class Menulist extends Component {
           <li>
             <span className={theme.item} onClick={this.goHome} >
               <div className={theme.arrow}></div>
-              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_HOME_PAGE}</div>
+              <div className={theme.label}>{this.props.generic.dictionary.GFSDK_MENU_HOME_PAGE}</div>
               <div className={theme.icon}>
                 <HomeIcon circle={theme.circle} path={theme.homepage}></HomeIcon>
               </div>
@@ -80,7 +80,7 @@ export class Menulist extends Component {
           <li>
             <span className={theme.item} onClick={this.goAccount}>
               <div className={theme.arrow}></div>
-              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_ACCOUNT}</div>
+              <div className={theme.label}>{this.props.generic.dictionary.GFSDK_MENU_ACCOUNT}</div>
               <div className={theme.icon}>
                 <AccountIcon circle={theme.circle} path={theme.account}></AccountIcon>
               </div>
@@ -89,7 +89,7 @@ export class Menulist extends Component {
           <li>
             <span className={theme.item} onClick={this.play}>
               <div className={theme.arrow}></div>
-              <div className={theme.label}>{this.props.dictionary.GFSDK_MENU_START_GAME}</div>
+              <div className={theme.label}>{this.props.generic.dictionary.GFSDK_MENU_START_GAME}</div>
               <div className={theme.icon}>
                 <PlayIcon circle={theme.circle} path={theme.play}></PlayIcon>
               </div>
@@ -109,11 +109,13 @@ Menulist.defaultProps = {
   theme: {},
   store: {},
   show: false,
-  dictionary: {
-    'GFSDK_MENU_START_GAME':'start game',
-    'GFSDK_MENU_HOME_PAGE':'home page',
-    'GFSDK_MENU_ACCOUNT':'account',
-    'GFSDK_MENU_ZOOM_PAGE':'zoom page'
+  generic: {
+    dictionary: {
+      GFSDK_MENU_START_GAME: 'start game',
+      GFSDK_MENU_HOME_PAGE: 'home page',
+      GFSDK_MENU_ACCOUNT: 'account',
+      GFSDK_MENU_ZOOM_PAGE: 'zoom page',
+    },
   },
 };
 
