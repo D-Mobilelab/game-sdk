@@ -36,3 +36,10 @@ export function hideLeaderboard(userInput = false) {
     payload: { userInput },
   };
 }
+
+export function redirectLanding(creativity = '') {
+  return {
+    type: 'REDIRECT_SUBSCRIBE',
+    payload: creativity,
+  };
+}
