@@ -134,7 +134,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const { initConfig } = getState().generic;
       const { FW_TYPE_PROFILE, GFSDK_ENDSESSION_TO_LANDING, CAT_DEFAULT_SUBSCRIBE_URL, DEST_DOMAIN } = getState().vhost;
       const utmTerm = location.getQueryStringKey('utm_term');
-      if (GFSDK_ENDSESSION_TO_LANDING && utmTerm && !user.subscribed) {
+      if (GFSDK_ENDSESSION_TO_LANDING && !isNaN(utmTerm) && !user.subscribed) {
         dispatch(redirectLanding(utmTerm));
         location.goToUrl(DEST_DOMAIN + CAT_DEFAULT_SUBSCRIBE_URL.replace('{[CREATIVITY_ID]}', utmTerm));
         return;
