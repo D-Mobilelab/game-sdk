@@ -59,7 +59,7 @@ export default function generic(state = {
     case 'PLATFORM_INFO':
       return Object.assign({}, state, { platformInfo: action.payload });
     case 'REDIRECT_SUBSCRIBE':
-      return Object.assign({}, state, { creativity: action.payload });
+      return Object.assign({}, state, { creativity: action.payload.creativity });
     default:
       return state;
   }
