@@ -67,7 +67,7 @@ var devConfiguration = {
         use: [
           {
             loader: 'file-loader',
-            options: { name: 'assets/[name].[ext]' }
+            options: { name: 'assets/[name].[hash:5].[ext]' }
           }
         ]
       },
@@ -92,7 +92,7 @@ var devConfiguration = {
   externals: {
     // require("jquery") is external and available
     //  on the global var jQuery
-    newton: "Newton"    
+    newton: "Newton"
   }
 };
 
