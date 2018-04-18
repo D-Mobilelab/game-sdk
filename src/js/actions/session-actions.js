@@ -5,11 +5,12 @@ import { AxiosInstance } from '../lib/AxiosService';
 import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { increaseMatchPlayed } from './user-actions';
-import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard } from './gameover-actions';
+import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard, redirectLanding } from './gameover-actions';
 import { setRelated } from './gameinfo-actions';
-import { getContentId } from './utils';
+import { getContentId, getUserType } from './utils';
 import { showBanner } from './banner-actions';
 import fromConsole from '../lib/fromConsole';
+import location from '../lib/Location';
 
 let onStartCallback = () => { };
 const hybrid = process.env.APP_ENV === 'HYBRID';
@@ -91,7 +92,7 @@ export function endSession(data = { score: 0, level: 1 }) {
     data.level = 1;
   }
   return (dispatch, getState) => {
-    if (fromConsole()) {
+    if (fromConsole() && process.env.NODE_ENV === 'production') {
       console.warn('Can\'t be called from console!');
       return;
     }
@@ -131,10 +132,22 @@ export function endSession(data = { score: 0, level: 1 }) {
       const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
-      const { FW_TYPE_PROFILE } = getState().vhost;
+      const { FW_TYPE_PROFILE, GFSDK_ENDSESSION_TO_LANDING, CAT_DEFAULT_SUBSCRIBE_URL, DEST_DOMAIN } = vhost;
+      const creativity = location.getQueryStringKey('utm_term');
+      if (GFSDK_ENDSESSION_TO_LANDING && creativity) {
+        dispatch(redirectLanding({
+          CAT_DEFAULT_SUBSCRIBE_URL,
+          DEST_DOMAIN,
+          creativity,
+          subscribed: getUserType(user) === 'premium',
+        }));
+        return;
+      }
+      
       if (FW_TYPE_PROFILE === 'bandai' && game_type === 'bandai') {
         // always show if on bandai service and game is a bandai one
         dispatch(showEnterNameModal());
+
         return;
       } else if (game_type === 'default' && FW_TYPE_PROFILE !== 'bandai') {
         if (initConfig.lite === false) {
@@ -143,6 +156,7 @@ export function endSession(data = { score: 0, level: 1 }) {
         // Call standard leaderboard
         const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
         const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
+          withCredentials: true,
           params: {
             score: lastSession.score,
             level: lastSession.level,
@@ -160,6 +174,7 @@ export function endSession(data = { score: 0, level: 1 }) {
           // dispatch(setMissingGameInfoPart(response.data.gameInfo));
             dispatch(setRank(response.data.rank));
             dispatch(setRelated(response.data.related || []));
+
           });
         return gameOverPromise;
       } else if (game_type === 'default' && initConfig.lite === false && FW_TYPE_PROFILE === 'bandai') {

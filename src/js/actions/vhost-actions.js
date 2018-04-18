@@ -1,5 +1,6 @@
 import { localStorage } from '../lib/LocalStorage';
 import { AxiosInstance } from '../lib/AxiosService';
+import { getLabel } from './utils';
 
 export function load(VHOST_API_URL, keys) {
   return (dispatch) => {
@@ -8,17 +9,16 @@ export function load(VHOST_API_URL, keys) {
     /**
      * Avoid a call if there's the vhost in localStorage (saved by webapp)
      */
-    const FW_TYPE_PROFILE = (window.GamifiveInfo && window.GamifiveInfo.fw_type_profile) ? window.GamifiveInfo.fw_type_profile : 'gamifive';
     if (vhost) {
       if (!vhost.FW_TYPE_PROFILE) {
-        vhost.FW_TYPE_PROFILE = FW_TYPE_PROFILE;
+        vhost.FW_TYPE_PROFILE = getLabel();
       }
       dispatch({ type: 'VHOST_LOAD_END', vhost });
     } else {
-      return AxiosInstance.get(VHOST_API_URL, { params: { keys: keys.join(',') } })
+      return AxiosInstance.get(VHOST_API_URL, { withCredentials: true, params: { keys: keys.join(',') } })
         .then((response) => {
           if (!response.data.FW_TYPE_PROFILE) {
-            response.data.FW_TYPE_PROFILE = FW_TYPE_PROFILE;
+            response.data.FW_TYPE_PROFILE = getLabel();
           }
           dispatch({ type: 'VHOST_LOAD_END', vhost: response.data });
         }).catch((reason) => {
@@ -38,7 +38,7 @@ export function dictLoad(DICTIONARY_API) {
       dispatch(action);
       return Promise.resolve();
     }
-    return AxiosInstance.get(DICTIONARY_API).then((response) => {
+    return AxiosInstance.get(DICTIONARY_API, { withCredentials: true }).then((response) => {
       action.payload = response.data;
       dispatch(action);
     }).catch((reason) => {

@@ -1,4 +1,4 @@
-import { normalizeGameInfo } from '../utils';
+import { normalizeGameInfo, getUserType } from '../utils';
 
 describe('Gameinfo tests', () => {
   let gameInfoResponse200;
@@ -91,5 +91,12 @@ describe('Gameinfo tests', () => {
     expect(result.game).toBeUndefined();
     expect(result.title).toBeUndefined();
     expect(result.content_id).toBeUndefined();
+  });
+
+  it('get user type from usercheck', () => {
+    expect(getUserType({ user: 'abcdefghi123456789', subscribed: true })).toEqual('premium');
+    expect(getUserType({ user: null })).toEqual('guest');
+    expect(getUserType({ user: null })).toEqual('guest');
+    expect(getUserType({ user: '1231512', subscribed: false })).toEqual('free');
   });
 });

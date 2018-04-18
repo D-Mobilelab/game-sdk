@@ -20,12 +20,3 @@
     font-weight: normal;
     font-style: normal;
 }
-
-.divider {
-	width: 65%;
-	margin: 0 auto;
-    position: relative;
-    border: 0;
-    border-bottom: 1px solid rgba(231, 231, 249, 0.2);
-    top: -2px;
-}

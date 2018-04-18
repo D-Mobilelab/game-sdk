@@ -1,4 +1,5 @@
 export default function generic(state = {
+  label: '',
   error: null,
   hybrid: false,
   platformInfo: {
@@ -37,6 +38,8 @@ export default function generic(state = {
   switch (action.type) {
     case 'SET_IS_HYBRID':
       return Object.assign({}, state, { hybrid: action.hybrid });
+    case 'SET_LABEL':
+      return Object.assign({}, state, { label: action.label });
     case 'INIT_START':
       return Object.assign({}, state, { initConfig: action.initConfig, initPending: action.initPending });
     case 'INIT_ERROR':
@@ -55,6 +58,8 @@ export default function generic(state = {
       return Object.assign({}, state, { focus: action.payload.focus });
     case 'PLATFORM_INFO':
       return Object.assign({}, state, { platformInfo: action.payload });
+    case 'REDIRECT_SUBSCRIBE':
+      return Object.assign({}, state, { creativity: action.payload.creativity });
     default:
       return state;
   }

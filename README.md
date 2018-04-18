@@ -49,6 +49,13 @@ You should add these lines to your file hosts
 git clone https://github.com/D-Mobilelab/game-sdk.git
 ```
 
+#### Install all dependencies packages
+
+```javascript
+npm install
+```
+
+
 #### Add dependencies to your index
 
 Copy and paste these two scripts in the head tag of your html
@@ -85,7 +92,7 @@ npm run dev
 yarn dev
 ```
 
-Go to the setup page <http://local.appsworld.gamifive-app.com:8080/setup.html>
+Go to the setup page <http://local.appsworld.gamifive-app.com:8080>
 
 1.  game_id: 
     if you already have your game in our server you can put the game_id here otherwise leaves the default
@@ -182,7 +189,7 @@ Initialize the sdk
 **Parameters**
 
 -   `initConfig` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `initConfig.lite` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if should show the gameover
+    -   `initConfig.lite` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** false if should show the gameover
     -   `initConfig.moreGamesButtonStyle` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** DEPRECATED since v2.5.3: a custom styles to pass to moregames button
     -   `initConfig.menuPosition` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT (optional, default `'BOTTOM_RIGHT'`)
 

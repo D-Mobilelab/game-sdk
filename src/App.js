@@ -10,12 +10,18 @@ export default class App extends React.Component {
         <Interstitial />
         <LazilyLoad modules={{
           Gameover: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/GameasyOver'));
-            } else if (this.props.label === 'bandai') {
-              return function Noop() { return null; };
+            switch (this.props.label) {
+              case 'bandai':
+                return function Noop() { return null; };
+              case 'gamifive':
+                return importLazy(System.import('./js/components/GamifiveOver'));
+              case 'zain':
+                return importLazy(System.import('./js/components/Gameover/Zain'));
+              case 'gamempire':
+                return importLazy(System.import('./js/components/Gameover/Gamempire'));
+              default:
+                return importLazy(System.import('./js/components/Gameover/Gameasy'));
             }
-            return importLazy(System.import('./js/components/GamifiveOver'));
           },
           Banner: () => {
             if (this.props.label === 'gameasy') {
@@ -24,12 +30,18 @@ export default class App extends React.Component {
             return function Noop() { return null; };
           },
           Menu: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/Menu/MenuGameasy'));
-            } else if (this.props.label === 'bandai') {
-              return importLazy(System.import('./js/components/Menu/MenuBandai'));
+            switch (this.props.label) {
+              case 'bandai':
+                return importLazy(System.import('./js/components/Menu/MenuBandai'));
+              case 'gamifive':
+                return importLazy(System.import('./js/components/Menu/MenuGamifive'));
+              case 'zain':
+                return importLazy(System.import('./js/components/Menu/MenuZain'));
+              case 'gamempire':
+                return importLazy(System.import('./js/components/Menu/MenuGamempire'));
+              default:
+                return importLazy(System.import('./js/components/Menu/MenuGameasy'));
             }
-            return importLazy(System.import('./js/components/Menu/MenuGamifive'));
           },
           EnterNameContainer: () => {
             if (this.props.label === 'bandai') {

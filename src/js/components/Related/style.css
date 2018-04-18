@@ -1,0 +1,10 @@
+.related h2{
+    margin-bottom: 2%;
+}
+
+.related ul{
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}

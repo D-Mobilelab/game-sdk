@@ -1,7 +1,29 @@
-import track from './track';
+import NewtonAdapter from 'newton-adapter';
+import ReactGA from 'react-ga';
+import FacebookPixelAdapter from 'facebookpixeladapter';
 import Location from '../lib/Location';
 import getContentRanking from './getContentRanking';
 import { getUserType } from '../actions/utils';
+
+const mapNewtonEventToFacebook = {
+  GameLoad: 'ViewContent',
+  GameStart: 'AddToCart',
+  GameEnd: 'Purchase',
+};
+
+function PixelTrack(eventObject, extraProps = {}) {
+  FacebookPixelAdapter.trackCustom(eventObject.name, { ...eventObject.properties, ...extraProps });
+  if (eventObject.name in mapNewtonEventToFacebook) {
+    const clonedEventObject = Object.assign({}, eventObject);
+    clonedEventObject.properties = {};
+    clonedEventObject.properties.content_ids = [eventObject.properties.label];
+    clonedEventObject.properties.content_name = eventObject.properties.game_title;
+    clonedEventObject.properties.content_type = 'product';
+    clonedEventObject.properties.currency = 'USD';
+    clonedEventObject.properties.value = 1;
+    FacebookPixelAdapter.track(mapNewtonEventToFacebook[clonedEventObject.name], clonedEventObject.properties);
+  }
+}
 
 const trackingMiddleware = store => next => (action) => {
   const currentState = store.getState();
@@ -24,9 +46,8 @@ const trackingMiddleware = store => next => (action) => {
         },
       };
 
-      track(eventObject);
-      track({
-        name: 'pageview',
+      NewtonAdapter.trackEvent(eventObject);
+      NewtonAdapter.trackPageview({
         properties: {
           action: 'pageview',
           page_name: 'game-page',
@@ -37,6 +58,7 @@ const trackingMiddleware = store => next => (action) => {
           content_name: currentState.game_info.title,
         },
       });
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'GAMEPIX_INTERSTITIAL_CALLBACK':
       eventObject = {
@@ -49,7 +71,8 @@ const trackingMiddleware = store => next => (action) => {
           valuable: 'No',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'START_SESSION':
       eventObject = {
@@ -63,7 +86,13 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      ReactGA.event({
+        category: eventObject.properties.category,
+        action: eventObject.name,
+        label: eventObject.properties.game_title,
+      });
       break;
     case 'END_SESSION':
       eventObject = {
@@ -77,11 +106,17 @@ const trackingMiddleware = store => next => (action) => {
           action: 'No',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      ReactGA.event({
+        category: eventObject.properties.category,
+        action: eventObject.name,
+        label: eventObject.properties.game_title,
+      });
       break;
     case 'GO_TO_HOME':
       eventObject = {
-        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, 'guest', CONTENT_RANKING, userFrom),
+        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         name: 'GoToHome',
         properties: {
           action: 'Yes',
@@ -91,7 +126,8 @@ const trackingMiddleware = store => next => (action) => {
           valuable: 'No',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'INIT_ERROR':
       eventObject = {
@@ -105,7 +141,8 @@ const trackingMiddleware = store => next => (action) => {
           reason: currentState.generic.error,
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'REDIRECT_ON_STORE':
       eventObject = {
@@ -116,7 +153,8 @@ const trackingMiddleware = store => next => (action) => {
           valuable: 'Yes',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'SHOW_BANNER':
       eventObject = {
@@ -127,7 +165,8 @@ const trackingMiddleware = store => next => (action) => {
           valuable: 'Yes',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'HIDE_BANNER':
       eventObject = {
@@ -138,7 +177,8 @@ const trackingMiddleware = store => next => (action) => {
           valuable: 'Yes',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'BACK_CLICKED':
       eventObject = {
@@ -149,7 +189,8 @@ const trackingMiddleware = store => next => (action) => {
           valuable: 'No',
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'RELATED_CLICKED':
       eventObject = {
@@ -161,7 +202,8 @@ const trackingMiddleware = store => next => (action) => {
           game_title: action.payload.title,
         },
       };
-      track(eventObject);
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
       break;
     case 'REGISTER_SCORE_SUCCESS':
       if (action.payload.shouldTrack) {
@@ -175,7 +217,8 @@ const trackingMiddleware = store => next => (action) => {
             valuable: 'No',
           },
         };
-        track(eventObject);
+        NewtonAdapter.trackEvent(eventObject);
+        PixelTrack(eventObject, { user_type: userType });
       }
       break;
     case 'HIDE_ENTER_NAME':
@@ -190,7 +233,8 @@ const trackingMiddleware = store => next => (action) => {
             valuable: 'No',
           },
         };
-        track(eventObject);
+        NewtonAdapter.trackEvent(eventObject);
+        PixelTrack(eventObject, { user_type: userType });
       }
       break;
     default:

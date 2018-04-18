@@ -8,9 +8,10 @@ export function canPlay() {
   return (dispatch) => {
     const url = Constants.CAN_DOWNLOAD_API_URL.replace(':ID', getContentId());
     return AxiosInstance.get(url, {
+      withCredentials: true,
       params: { cors_compliant: 1 },
     }).then((response) => {
-      if (process.env.NODE_ENV === 'development' || process.env.APP_ENV === 'HYBRID') {
+      if (process.env.NODE_ENV === 'development') {
         response.data.canDownload = true;
       }
       dispatch({ type: 'SET_CAN_PLAY', canPlay: response.data.canDownload });
@@ -24,6 +25,7 @@ export function getUserFavourites() {
     dispatch({ type: 'GET_FAVOURITES_START' });
     if (getState().user.logged) {
       getFavPromise = AxiosInstance.get(Constants.USER_GET_LIKE, {
+        withCredentials: true,
         params: {
           user_id: getState().user.user, // userID
           size: 51,
@@ -47,10 +49,7 @@ export function getUser() {
   return (dispatch) => {
     dispatch({ type: 'USER_CHECK_LOAD_START' });
     const query = {};
-    if (process.env.APP_ENV === 'HYBRID') { query.hybrid = 1; }
-    /** needed to get the pony */
-    query.hybrid = 1;
-    return AxiosInstance.get(Constants.USER_CHECK, { params: query })
+    return AxiosInstance.get(Constants.USER_CHECK, { withCredentials: true, params: query })
       .then((userResponse) => {
         const user = userResponse.data;
 
@@ -76,7 +75,6 @@ export function getUser() {
         }
 
         return Promise.all([
-          dispatch(canPlay()),
           dispatch(getUserFavourites()),
         ]);
       })
@@ -98,7 +96,7 @@ export function removeGameLike(gameId) {
     dispatch({ type: 'REMOVE_GAME_LIKE_START' });
 
     const URL = `${Constants.USER_DELETE_LIKE}?content_id=${gameId}&user_id=${getState().user.user}`;
-    return AxiosInstance.post(URL)
+    return AxiosInstance.post(URL, {}, { withCredentials: true })
       .then(() => {
         dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId } });
       })
@@ -115,7 +113,7 @@ export function addGameLike(gameId) {
       content_id: gameId,
       user_id: getState().user.user,
     };
-    return AxiosInstance.get(Constants.USER_SET_LIKE, { params: query })
+    return AxiosInstance.get(Constants.USER_SET_LIKE, { withCredentials: true, params: query })
       .then((response) => {
         const { object_id } = response.data;
         dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: object_id, content_id: object_id } });
