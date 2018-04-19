@@ -5,9 +5,15 @@
  * Released under the Modified BSD License
  */
 import { Actions } from './js/actions/index';
+import { VHOST_API_URL, DICTIONARY_API_URL } from './js/lib/Constants';
 import version from './version';
 
 const privates = new WeakMap();
+
+const vhostKeys = [
+  'poggioacaiano',
+];
+
 /*
  * SDK
  * @export
@@ -40,7 +46,10 @@ export default class SDK {
    */
   init(initConfig) {
     const { store } = privates.get(this);
-    return store.dispatch(Actions.init(initConfig));
+    return Promise.all([
+      store.dispatch(Actions.dictLoad(DICTIONARY_API_URL)),
+      store.dispatch(Actions.load(VHOST_API_URL, vhostKeys)),
+    ]).then(() => store.dispatch(Actions.init(initConfig)));    
   }
 
   /**
@@ -72,7 +81,7 @@ export default class SDK {
    */
   showMoreGamesButton(position) {
     const { store } = privates.get(this);
-    store.dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? Actions.showMenuList() : Actions.showMenu(position));
+    store.dispatch(Actions.showMenu(position));
   }
   
   /**
@@ -82,7 +91,7 @@ export default class SDK {
    */
   hideMoreGamesButton() {
     const { store } = privates.get(this);
-    store.dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? Actions.hideMenuList() : Actions.hideMenu());
+    store.dispatch(Actions.hideMenu());
   }
 
   /**

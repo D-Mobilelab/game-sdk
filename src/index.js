@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import App from './App';
-import { localStorage } from './js/lib/LocalStorage';
 import SDK from './SDK';
 import { getLabel } from './js/actions/utils';
 

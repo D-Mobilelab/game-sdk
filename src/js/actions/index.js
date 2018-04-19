@@ -1,6 +1,5 @@
 import FacebookPixelAdapter from 'facebookpixeladapter';
 import ReactGA from 'react-ga';
-import * as Constants from '../lib/Constants';
 import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
 import * as HistoryGame from '../lib/HistoryGame';
@@ -22,10 +21,6 @@ import focusAction from './focus-action';
 import historyHandler, { addSteps } from './history-actions';
 import listenToWindowEvents from './listenToWindowEvents';
 
-const vhostKeys = [
-  'poggioacaiano',
-];
-
 // registering state change
 function init(initConfig) {
   return (dispatch, getState) => {
@@ -42,10 +37,7 @@ function init(initConfig) {
     dispatch({ type: 'SET_LABEL', label: getLabel() });
 
     dispatch({ type: 'INIT_START', initConfig, initPending: true });
-    return Promise.all([
-      dispatch(vhostActions.load(Constants.VHOST_API_URL, vhostKeys)),
-      dispatch(vhostActions.dictLoad(Constants.DICTIONARY_API_URL)),
-    ])
+    return Promise.resolve()
       .then(() => {
         const { vhost } = getState();
         if (typeof vhost.GFSDK_OVERRIDE_BACK === 'undefined' || vhost.GFSDK_OVERRIDE_BACK) {
@@ -84,7 +76,7 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
+        dispatch(menuActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });
@@ -141,4 +133,5 @@ export const Actions = {
   ...gameinfoActions,
   ...bannerActions,
   ...sharerActions,
+  ...vhostActions
 };

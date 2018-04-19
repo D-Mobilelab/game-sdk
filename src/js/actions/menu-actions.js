@@ -1,7 +1,9 @@
+import { showMenuList, hideMenuList } from './menulist-actions';
+
 export function showMenu(position) {
   return (dispatch, getState) => {
-    const { vhost } = getState();
-    if (typeof vhost.GFSDK_MENU_BUTTON !== 'undefined' && vhost.GFSDK_MENU_BUTTON === false) {
+    const { GFSDK_MENU_BUTTON, GFSDK_MENU_TYPE = 'standard' } = getState().vhost;
+    if (typeof GFSDK_MENU_BUTTON !== 'undefined' && GFSDK_MENU_BUTTON === false) {
       return;
     }
     let thePosition = null;
@@ -17,16 +19,26 @@ export function showMenu(position) {
         thePosition = position;
       }
     }
-
-    dispatch({
-      type: 'SHOW_MENU',
-      payload: { position: thePosition },
-    });
+    if (GFSDK_MENU_TYPE === 'standard') {
+      dispatch({
+        type: 'SHOW_MENU',
+        payload: { position: thePosition },
+      });
+    } else if (GFSDK_MENU_TYPE === 'extended') {
+      dispatch(showMenuList());
+    }
   };
 }
 
 export function hideMenu() {
-  return {
-    type: 'HIDE_MENU',
+  return (dispatch, getState) => {
+    const { GFSDK_MENU_TYPE = 'standard' } = getState().vhost;
+    if (GFSDK_MENU_TYPE === 'standard') {
+      dispatch({
+        type: 'HIDE_MENU',
+      });
+    } else if (GFSDK_MENU_TYPE === 'extended') {
+      dispatch(hideMenuList());
+    }
   };
 }

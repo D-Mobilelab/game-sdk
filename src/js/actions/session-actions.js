@@ -4,7 +4,6 @@ import Reporter from '../lib/Reporter';
 import { AxiosInstance } from '../lib/AxiosService';
 import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
-import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard, redirectLanding } from './gameover-actions';
 import { setRelated } from './gameinfo-actions';
@@ -71,7 +70,7 @@ export function startSession() {
       Reporter.add('error', 'start session before init!');
       console.log('You should call init before startSession!');
     } else if (getState().user.canPlay || getState().user.canDownload) {
-      dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? hideMenuList() : hideMenu());
+      dispatch(hideMenu());
       dispatch(hideGameOver());
       dispatch(doStartSession());
     } else {
@@ -128,7 +127,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const session = { score: data.score, level: data.level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
       dispatch(increaseMatchPlayed());
-      dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? showMenuList() : showMenu());
+      dispatch(showMenu());
       const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
