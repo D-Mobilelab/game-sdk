@@ -37,12 +37,17 @@ function getRealOrigin() {
   return theWindow.location.origin;
 }
 
+function goToUrl(url) {
+  theWindow.location.href = url;
+}
+
 const Location = {
   getOrigin,
   getCurrentHref,
   getRealOrigin,
   getQueryString,
   getQueryStringKey,
+  goToUrl,
 };
 
 window.Location = Location;

@@ -1,3 +1,5 @@
+import location from '../lib/Location';
+
 export function showGameOver() {
   return {
     type: 'SHOW_GAME_OVER',
@@ -34,5 +36,15 @@ export function hideLeaderboard(userInput = false) {
   return {
     type: 'HIDE_LEADERBOARD',
     payload: { userInput },
+  };
+}
+
+export function redirectLanding(options) {
+  if (!isNaN(options.creativity) && !options.subscribed) {
+    setTimeout(() => location.goToUrl(`${options.DEST_DOMAIN}${options.CAT_DEFAULT_SUBSCRIBE_URL.replace('{[CREATIVITY_ID]}', options.creativity)}`), 500);
+  }
+  return {
+    type: 'REDIRECT_SUBSCRIBE',
+    payload: { creativity: options.creativity },
   };
 }
