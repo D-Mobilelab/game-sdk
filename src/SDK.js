@@ -72,9 +72,9 @@ export default class SDK {
    */
   showMoreGamesButton(position) {
     const { store } = privates.get(this);
-    store.dispatch(Actions.showMenu(position));
+    store.dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? Actions.showMenuList() : Actions.showMenu(position));
   }
-
+  
   /**
    * Hides the menu | moregames button
    * call this function when on pause exit
@@ -82,7 +82,7 @@ export default class SDK {
    */
   hideMoreGamesButton() {
     const { store } = privates.get(this);
-    store.dispatch(Actions.hideMenu());
+    store.dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? Actions.hideMenuList() : Actions.hideMenu());
   }
 
   /**

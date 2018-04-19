@@ -84,8 +84,7 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        const { vhost } = getState();
-        dispatch((vhost.GFSDK_MENU_TYPE === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
+        dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });
