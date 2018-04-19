@@ -40,7 +40,6 @@ devConfiguration.devServer = {
     '/**/v01/**': {
       onProxyReq: function(proxyReq, req, res) { 
         console.log('Request:', proxyReq.path);
-        // proxyReq.setHeader('X-Special-Proxy-Header', 'foobar');
       },
       onProxyRes: function(proxyRes, req, res) {
         console.log("Response", req.path);

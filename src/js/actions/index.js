@@ -16,6 +16,7 @@ import * as newtonActions from './newton-actions';
 import * as bannerActions from './banner-actions';
 import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
+import * as menulistActions from './menulist-actions';
 
 import focusAction from './focus-action';
 import historyHandler, { addSteps } from './history-actions';
@@ -83,7 +84,8 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        dispatch(menuActions.showMenu());
+        const { vhost } = getState();
+        dispatch((vhost.GFSDK_MENU_TYPE === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });
@@ -134,6 +136,7 @@ export const Actions = {
   ...sessionActions,
   ...userActions,
   ...menuActions,
+  ...menulistActions,
   ...gameoverActions,
   ...userDataActions,
   ...gameinfoActions,

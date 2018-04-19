@@ -1,16 +1,3 @@
-import Location from '../lib/Location';
-
-export function goToHome() {
-  return (dispatch) => {
-    // If I'm in iframe...
-    if (window !== window.top) {
-      window.parent.postMessage('GO_TO_HOME', '*');
-    }
-    window.location.href = Location.getOrigin();
-    dispatch({ type: 'GO_TO_HOME' });
-  };
-}
-
 export function showMenu(position) {
   return (dispatch, getState) => {
     const { vhost } = getState();

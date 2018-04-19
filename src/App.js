@@ -43,6 +43,12 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/Menu/MenuGameasy'));
             }
           },
+          MenuList: () => {
+            switch (this.props.label) {
+              default:
+                return importLazy(System.import('./js/components/MenuList/Gameasy'));
+            }
+          },
           EnterNameContainer: () => {
             if (this.props.label === 'bandai') {
               return importLazy(System.import('./js/components/EnterName/Container'));
@@ -50,12 +56,13 @@ export default class App extends React.Component {
             return function Noop() { return null; };
           },
         }}>
-          {({ Gameover, Banner, Menu, EnterNameContainer }) => (
+          {({ Gameover, Banner, Menu, MenuList, EnterNameContainer }) => (
             <div>
               <EnterNameContainer />
               <Gameover />
               <Banner />
               <Menu />
+              <MenuList />
             </div>)
           }
         </LazilyLoad>
