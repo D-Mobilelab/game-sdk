@@ -8,7 +8,7 @@ import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard, redirectLanding } from './gameover-actions';
 import { setRelated } from './gameinfo-actions';
-import { getContentId, getUserType } from './utils';
+import { getContentId, getUserType, getMenuType } from './utils';
 import { showBanner } from './banner-actions';
 import fromConsole from '../lib/fromConsole';
 import location from '../lib/Location';
@@ -71,7 +71,7 @@ export function startSession() {
       Reporter.add('error', 'start session before init!');
       console.log('You should call init before startSession!');
     } else if (getState().user.canPlay || getState().user.canDownload) {
-      dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? hideMenuList() : hideMenu());
+      dispatch((getMenuType() === 'extended') ? hideMenuList() : hideMenu());
       dispatch(hideGameOver());
       dispatch(doStartSession());
     } else {
@@ -137,7 +137,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const session = { score: data.score, level: data.level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
       dispatch(increaseMatchPlayed());
-      dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? showMenuList() : showMenu());
+      dispatch((getMenuType() === 'extended') ? showMenuList() : showMenu());
       const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
