@@ -109,6 +109,9 @@ export function endSession(data = { score: 0, level: 1 }) {
       console.log('Cannot end a session before initialized');
       return;
     }
+    
+    const { FW_TYPE_PROFILE, GFSDK_ENDSESSION_TO_LANDING, CAT_DEFAULT_SUBSCRIBE_URL, DEST_DOMAIN } = vhost;
+    const creativity = location.getQueryStringKey('utm_term');
 
     const bannerCondition = [
       (user.matchPlayed % 3 === 0),
@@ -117,7 +120,13 @@ export function endSession(data = { score: 0, level: 1 }) {
       vhost.INSTALL_HYBRID_VISIBLE,
     ].every(condition => condition === true);
 
-    if (bannerCondition) {
+    const freemiumCondition = [
+      getUserType(user) !== 'premium',
+      !isNaN(creativity),
+      GFSDK_ENDSESSION_TO_LANDING,
+    ].every(condition => condition === true);
+
+    if (bannerCondition && !freemiumCondition) {
       dispatch(showBanner());
     }
 
@@ -132,8 +141,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
-      const { FW_TYPE_PROFILE, GFSDK_ENDSESSION_TO_LANDING, CAT_DEFAULT_SUBSCRIBE_URL, DEST_DOMAIN } = vhost;
-      const creativity = location.getQueryStringKey('utm_term');
+      
       if (GFSDK_ENDSESSION_TO_LANDING && creativity) {
         dispatch(redirectLanding({
           CAT_DEFAULT_SUBSCRIBE_URL,
