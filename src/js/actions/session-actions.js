@@ -71,7 +71,7 @@ export function startSession() {
       Reporter.add('error', 'start session before init!');
       console.log('You should call init before startSession!');
     } else if (getState().user.canPlay || getState().user.canDownload) {
-      dispatch((getState().vhost.GFSDK_MENU_TYPE === 'extended') ? hideMenuList() : hideMenu());
+      dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? hideMenuList() : hideMenu());
       dispatch(hideGameOver());
       dispatch(doStartSession());
     } else {
@@ -137,7 +137,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const session = { score: data.score, level: data.level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
       dispatch(increaseMatchPlayed());
-      dispatch((getState().vhost.GFSDK_MENU_TYPE === 'extended') ? showMenuList() : showMenu());
+      dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? showMenuList() : showMenu());
       const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
