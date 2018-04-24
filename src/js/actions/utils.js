@@ -73,6 +73,5 @@ export function getMenuType() {
     const local_menu_type = localStorage.getItem('gfsdk-debug-menu-type');
     if (local_menu_type) { MENU_TYPE = local_menu_type; }
   }
-  if (!MENU_TYPE) { throw new Error('Missing menu type!'); }
   return MENU_TYPE;
 }
