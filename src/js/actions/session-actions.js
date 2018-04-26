@@ -142,7 +142,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
       
-      if (GFSDK_ENDSESSION_TO_LANDING && creativity) {
+      if (freemiumCondition) {
         dispatch(redirectLanding({
           CAT_DEFAULT_SUBSCRIBE_URL,
           DEST_DOMAIN,
