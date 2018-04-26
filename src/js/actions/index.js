@@ -4,7 +4,7 @@ import * as Constants from '../lib/Constants';
 import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
 import * as HistoryGame from '../lib/HistoryGame';
-import { getUserType, getLabel } from './utils';
+import { getUserType, getLabel, getMenuType } from './utils';
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
 import * as gameinfoActions from './gameinfo-actions';
@@ -84,7 +84,7 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
+        dispatch((getMenuType() === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });

@@ -5,6 +5,7 @@
  * Released under the Modified BSD License
  */
 import { Actions } from './js/actions/index';
+import { getMenuType } from './js/actions/utils';
 import version from './version';
 
 const privates = new WeakMap();
@@ -72,7 +73,7 @@ export default class SDK {
    */
   showMoreGamesButton(position) {
     const { store } = privates.get(this);
-    store.dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? Actions.showMenuList() : Actions.showMenu(position));
+    store.dispatch((getMenuType() === 'extended') ? Actions.showMenuList() : Actions.showMenu(position));
   }
   
   /**
@@ -82,7 +83,7 @@ export default class SDK {
    */
   hideMoreGamesButton() {
     const { store } = privates.get(this);
-    store.dispatch((window.GamifiveInfo.GFSDK_MENU_TYPE === 'extended') ? Actions.hideMenuList() : Actions.hideMenu());
+    store.dispatch((getMenuType === 'extended') ? Actions.hideMenuList() : Actions.hideMenu());
   }
 
   /**

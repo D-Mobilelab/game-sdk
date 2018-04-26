@@ -65,3 +65,13 @@ export function getLabel() {
   if (!WHITE_LABEL) { throw new Error('Missing gamfive info label!'); }
   return WHITE_LABEL;
 }
+
+export function getMenuType() {
+  let MENU_TYPE = window.GamifiveInfo ? window.GamifiveInfo.GFSDK_MENU_TYPE : null;
+  if (process.env.LOCAL_DEV) {
+    /** overwrite with localStorage if any */
+    const local_menu_type = localStorage.getItem('gfsdk-debug-menu-type');
+    if (local_menu_type) { MENU_TYPE = local_menu_type; }
+  }
+  return MENU_TYPE;
+}
