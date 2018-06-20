@@ -57,7 +57,9 @@ export function login() {
 
     return NewtonAdapter.login(loginOptions)
       .catch((reason) => {
+        dispatch({ type: 'INIT_FINISH', initialized:false, initPending: false, message: reason });
         console.warn(reason);
+        console.log('Error on Newton init, init pending resolved!');
         throw reason;
       });
   };
