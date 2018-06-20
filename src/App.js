@@ -19,6 +19,8 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/Gameover/Zain'));
               case 'gamempire':
                 return importLazy(System.import('./js/components/Gameover/Gamempire'));
+              case 'vodafone':
+                return importLazy(System.import('./js/components/Gameover/Vodafone'));
               default:
                 return importLazy(System.import('./js/components/Gameover/Gameasy'));
             }
@@ -39,6 +41,8 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/Menu/MenuZain'));
               case 'gamempire':
                 return importLazy(System.import('./js/components/Menu/MenuGamempire'));
+              case 'vodafone':
+                return importLazy(System.import('./js/components/Menu/MenuVodafone'));
               default:
                 return importLazy(System.import('./js/components/Menu/MenuGameasy'));
             }

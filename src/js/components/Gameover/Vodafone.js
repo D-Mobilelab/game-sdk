@@ -1,5 +1,5 @@
 import gameover from './Default.jsx';
-import theme from './theme/gamempire.css';
+import theme from './theme/vodafone.css';
 import connect from './connectGameover';
 import withTheme from '../withTheme';
 

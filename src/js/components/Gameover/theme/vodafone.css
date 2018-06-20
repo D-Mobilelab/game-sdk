@@ -1,0 +1,86 @@
+/* custom */
+@value purple_gameasy: #f84975;
+@value blue_gameasy: #6482c4;
+
+
+/* base */
+
+@value font_family: montserratultra_light, Verdana, Geneva, sans-serif;
+
+@value background: #FFFFFF;
+@value foreground: #4a4a4a;
+
+@value trophy_color: #9f32a3;
+
+@value header_background: #EC0112;
+@value header_foreground: #FFFFFF;
+
+@value button_background: #EC0112;
+
+@value button_outline_background: background;
+@value button_outline_foreground: purple_gameasy;
+
+
+.gameover {
+    composes: gameover from './default.css';
+
+    font-family: font_family;
+    background-color: background;
+    color: foreground;
+}
+
+.gameover_show {
+    composes: gameover_show from './default.css';
+}
+
+.gameover_hide {
+    composes: gameover_hide from './default.css';
+}
+
+.header {
+    composes: header from './default.css';
+    background: header_background;
+    color: header_foreground;
+}
+
+.divider {
+    composes: divider from './default.css';
+    border-bottom: 1px solid rgba(192, 192, 192, 1);
+
+}
+
+.scoreContainer {
+    composes: scoreContainer from './default.css';
+}
+
+.trophy{
+    color: trophy_color;
+}
+
+.podium{
+    color: #00c1e2;
+}
+
+.icon_like{
+    color: purple_gameasy;
+}
+
+.icon_share{
+    color: blue_gameasy;
+}
+
+/* button */
+
+.btn {
+    composes: btn from './gameasy.css';
+    background: button_background;
+    border-radius:5px;
+}
+
+.btn_like {
+    composes: btn_like from './gameasy.css';
+}
+
+.btn_share {
+    composes: btn_share from './gameasy.css';
+}

@@ -27,12 +27,18 @@ export default class Image extends React.Component {
          * that the image will cover in document
          * http://davidecalignano.it/lazy-loading-with-responsive-images-and-unknown-height/
          */
-    let paddingBottom = { paddingBottom: '100%' };
+
+    let computedStyle = {};
+    if (this.props.bkg) {
+      computedStyle = this.props.bkg;
+    }
+    computedStyle.paddingBottom = '100%';
+
     if (this.props.height && this.props.width) {
-      paddingBottom = { paddingBottom: `${(this.props.height / this.props.width) * 100}%` };
+      computedStyle.paddingBottom = ((this.props.height / this.props.width) * 100) + "%";
     }
     return (
-      <div className={imageStyle.lazyContainer} style={paddingBottom}>
+      <div className={imageStyle.lazyContainer} style={computedStyle}>
         <img className={imageClasses.join(' ')}
           onLoad={this.onImgLoad}
           onError={this.onImgError}

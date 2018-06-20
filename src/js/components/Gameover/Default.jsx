@@ -60,7 +60,7 @@ export class Gameover extends Component {
           <div style={{ position: 'relative', maxWidth: '768px', margin: '0px auto' }}>
             <Row style={{ position: 'relative' }}>
               <Column cols={8}>
-                <Image src={imageUrl} />
+                <Image src={imageUrl} bkg={{background:'#000000'}}/>
                 <Button center={true} style={{width:'50%'}} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
               </Column>
               <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>

@@ -1,5 +1,6 @@
+import gameover from './Default.jsx';
+import theme from './theme/zain.css';
 import connect from './connectGameover';
-import { ZainGameover } from './index';
+import withTheme from '../withTheme';
 
-
-export default connect(ZainGameover)
+export default  connect(withTheme(gameover, theme));
