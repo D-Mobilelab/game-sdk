@@ -56,18 +56,12 @@ function init(initConfig) {
       .then(() => dispatch(userActions.getUser()))
       .then(() => dispatch(gameinfoActions.getGameInfo()))
       .then(() => {
-        // return if you want to wait
-        dispatch(newtonActions.init());
-        return dispatch(newtonActions.login());
-      })
-      .then(() => {
         const { user, vhost } = getState();
         if (vhost.FB_TRACKING_ENABLE) { FacebookPixelAdapter.init(vhost.FB_PIXELID); }
         dispatch(sharerActions.initFacebook({
           fbAppId: vhost.FB_APPID,
           enableTracking: vhost.FB_TRACKING_ENABLE,
         }));
-
         if (vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL) {
           ReactGA.initialize(vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL);
           ReactGA.set({ '&uid': user.user });
@@ -94,7 +88,13 @@ function init(initConfig) {
         return Promise.resolve();
       })
       .then(() => {
+        // return if you want to wait
+        dispatch(newtonActions.init());
+        return dispatch(newtonActions.login());
+      })
+      .then(() => {
         if (getState().generic.session_start_after_init) {
+          console.log('session started after init');
           dispatch(sessionActions.startSession());
         }
       })
