@@ -1,5 +1,6 @@
 import FacebookPixelAdapter from 'facebookpixeladapter';
 import ReactGA from 'react-ga';
+import Raven from 'raven-js';
 import * as Constants from '../lib/Constants';
 import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
@@ -26,13 +27,24 @@ const vhostKeys = [
   'poggioacaiano',
 ];
 
+// Raven.config('https://570f6b3da0514539ad70eff24710948a@sentry.io/1232794').install();
+Raven.config('https://570f6b3da0514539ad70eff24710948a@sentry.io/1232794', { captureUnhandledRejections: true }).install();
+
+try{
+  throw new Error('on show gameover!');
+
+}
+catch(e){
+  Raven.captureMessage(e.toString());
+  console.log('no problem');
+}
+
 // registering state change
 function init(initConfig) {
   return (dispatch, getState) => {
     if (getState().generic.initialized) {
       return Promise.resolve();
     }
-
     dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS() } });
     if (!process.env.LOCAL_DEV) {
       dispatch(listenToWindowEvents('focus', focusAction));
@@ -74,6 +86,9 @@ function init(initConfig) {
         }
       })
       .then(() => {
+
+        // throw new Error('test purpose only!');
+
         const { user, vhost } = getState();
         const userType = getUserType(user);
         // User is not premium and ads enabled in configuration => show interstitial
@@ -99,6 +114,7 @@ function init(initConfig) {
         }
       })
       .catch((reason) => {
+        Raven.captureMessage(reason.toString());
         dispatch({
           type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, reason: reason.toString(),
         });
