@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import Raven from 'raven-js';
 import store from './store';
 
 import App from './App';
@@ -19,12 +20,16 @@ function onDomLoaded() {
   ROOT_ELEMENT = document.createElement('div');
   ROOT_ELEMENT.id = 'gfsdk_root_new';
   window.document.body.appendChild(ROOT_ELEMENT);
-  ReactDOM.render(
-    <Provider store={store}>
-      <App label={getLabel()} />
-    </Provider>,
-    ROOT_ELEMENT,
-  );
+  Raven.config('https://570f6b3da0514539ad70eff24710948a@sentry.io/1232794', { 
+    captureUnhandledRejections: true 
+  }).install().context(function () {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App label={getLabel()} />
+      </Provider>,
+      ROOT_ELEMENT,
+    );
+  });
 }
 
 if (module.hot) {

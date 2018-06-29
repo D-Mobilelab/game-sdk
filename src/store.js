@@ -44,7 +44,7 @@ const middlewares = [thunkMiddleware, trackingMiddleware];
 //   middlewares.push(logger);
 // }
 /** eslint-enable */
-middlewares.push(createRavenMiddleware(Raven));
+middlewares.push(createRavenMiddleware(Raven, {}));
 
 // CREATE THE REDUX STORE
 const store = createStore(

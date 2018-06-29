@@ -27,8 +27,6 @@ const vhostKeys = [
   'poggioacaiano',
 ];
 
-Raven.config('https://570f6b3da0514539ad70eff24710948a@sentry.io/1232794', { captureUnhandledRejections: true }).install();
-
 try {
   throw new Error('before init actions!');
 } catch (e) {
