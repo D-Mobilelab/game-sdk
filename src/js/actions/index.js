@@ -27,16 +27,13 @@ const vhostKeys = [
   'poggioacaiano',
 ];
 
-// Raven.config('https://570f6b3da0514539ad70eff24710948a@sentry.io/1232794').install();
 Raven.config('https://570f6b3da0514539ad70eff24710948a@sentry.io/1232794', { captureUnhandledRejections: true }).install();
 
-try{
-  throw new Error('on show gameover!');
-
-}
-catch(e){
+try {
+  throw new Error('before init actions!');
+} catch (e) {
+  console.log('catch excpetion: sent error to sentry');
   Raven.captureMessage(e.toString());
-  console.log('no problem');
 }
 
 // registering state change
@@ -86,8 +83,7 @@ function init(initConfig) {
         }
       })
       .then(() => {
-
-        // throw new Error('test purpose only!');
+        throw new Error('exception inside action!');
 
         const { user, vhost } = getState();
         const userType = getUserType(user);
@@ -114,7 +110,6 @@ function init(initConfig) {
         }
       })
       .catch((reason) => {
-        Raven.captureMessage(reason.toString());
         dispatch({
           type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, reason: reason.toString(),
         });
