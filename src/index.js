@@ -20,9 +20,17 @@ function onDomLoaded() {
   ROOT_ELEMENT = document.createElement('div');
   ROOT_ELEMENT.id = 'gfsdk_root_new';
   window.document.body.appendChild(ROOT_ELEMENT);
-  Raven.config('https://570f6b3da0514539ad70eff24710948a@sentry.io/1232794', { 
-    captureUnhandledRejections: true 
-  }).install().context(function () {
+  if (process.env.LOCAL_DEV === true || !window.docomo.SENTRY_ENABLE) {
+    window.docomo.SENTRY_URL = null;
+  }
+
+  Raven.config(window.docomo.SENTRY_URL, {
+    captureUnhandledRejections: true,
+    tags: {
+      label: window.docomo.WHITE_LABEL,
+      settrack: window.docomo.B_TEST_ID,
+    },
+  }).install().context(() => {
     ReactDOM.render(
       <Provider store={store}>
         <App label={getLabel()} />
@@ -34,7 +42,7 @@ function onDomLoaded() {
 
 if (module.hot) {
   module.hot.accept('./App.js', () => {
-    // Require the new version and render it instead    
+    // Require the new version and render it instead
     ReactDOM.render(<App />, ROOT_ELEMENT);
   });
 }

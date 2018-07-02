@@ -27,13 +27,6 @@ const vhostKeys = [
   'poggioacaiano',
 ];
 
-try {
-  throw new Error('before init actions!');
-} catch (e) {
-  console.log('catch excpetion: sent error to sentry');
-  Raven.captureMessage(e.toString());
-}
-
 // registering state change
 function init(initConfig) {
   return (dispatch, getState) => {
@@ -81,8 +74,6 @@ function init(initConfig) {
         }
       })
       .then(() => {
-        throw new Error('exception inside action!');
-
         const { user, vhost } = getState();
         const userType = getUserType(user);
         // User is not premium and ads enabled in configuration => show interstitial
