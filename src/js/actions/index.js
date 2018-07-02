@@ -32,7 +32,6 @@ function init(initConfig) {
     if (getState().generic.initialized) {
       return Promise.resolve();
     }
-
     dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS() } });
     if (!process.env.LOCAL_DEV) {
       dispatch(listenToWindowEvents('focus', focusAction));

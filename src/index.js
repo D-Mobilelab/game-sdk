@@ -2,7 +2,9 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import Raven from 'raven-js';
 import store from './store';
+import version from './version';
 
 import App from './App';
 import { localStorage } from './js/lib/LocalStorage';
@@ -19,17 +21,27 @@ function onDomLoaded() {
   ROOT_ELEMENT = document.createElement('div');
   ROOT_ELEMENT.id = 'gfsdk_root_new';
   window.document.body.appendChild(ROOT_ELEMENT);
-  ReactDOM.render(
-    <Provider store={store}>
-      <App label={getLabel()} />
-    </Provider>,
-    ROOT_ELEMENT,
-  );
+  if (!window.docomo.SENTRY_ENABLE) {
+    window.docomo.SENTRY_URL = null;
+  }
+
+  Raven.config(window.docomo.SENTRY_URL, {
+    release: version.build,
+    label: window.docomo.WHITE_LABEL,
+    settrack: window.docomo.B_TEST_ID,
+  }).install().context(() => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App label={getLabel()} />
+      </Provider>,
+      ROOT_ELEMENT,
+    );
+  });
 }
 
 if (module.hot) {
   module.hot.accept('./App.js', () => {
-    // Require the new version and render it instead    
+    // Require the new version and render it instead
     ReactDOM.render(<App />, ROOT_ELEMENT);
   });
 }
