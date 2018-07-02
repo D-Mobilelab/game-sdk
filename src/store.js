@@ -16,7 +16,7 @@ window.docomo || (window.docomo = {});
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middlewares = [createRavenMiddleware(Raven), thunkMiddleware, trackingMiddleware];
+const middlewares = [createRavenMiddleware(Raven, {}), thunkMiddleware, trackingMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
   /* eslint-disable global-require */
@@ -26,7 +26,6 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 /** eslint-enable */
-middlewares.push(createRavenMiddleware(Raven, {}));
 
 // CREATE THE REDUX STORE
 const store = createStore(

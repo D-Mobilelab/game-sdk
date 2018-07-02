@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Raven from 'raven-js';
 import store from './store';
+import version from './version';
 
 import App from './App';
 import { localStorage } from './js/lib/LocalStorage';
@@ -20,16 +21,14 @@ function onDomLoaded() {
   ROOT_ELEMENT = document.createElement('div');
   ROOT_ELEMENT.id = 'gfsdk_root_new';
   window.document.body.appendChild(ROOT_ELEMENT);
-  if (process.env.LOCAL_DEV === true || !window.docomo.SENTRY_ENABLE) {
+  if (!window.docomo.SENTRY_ENABLE) {
     window.docomo.SENTRY_URL = null;
   }
 
   Raven.config(window.docomo.SENTRY_URL, {
-    captureUnhandledRejections: true,
-    tags: {
-      label: window.docomo.WHITE_LABEL,
-      settrack: window.docomo.B_TEST_ID,
-    },
+    release: version.build,
+    label: window.docomo.WHITE_LABEL,
+    settrack: window.docomo.B_TEST_ID,
   }).install().context(() => {
     ReactDOM.render(
       <Provider store={store}>

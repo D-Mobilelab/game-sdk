@@ -1,6 +1,5 @@
 import FacebookPixelAdapter from 'facebookpixeladapter';
 import ReactGA from 'react-ga';
-import Raven from 'raven-js';
 import * as Constants from '../lib/Constants';
 import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
