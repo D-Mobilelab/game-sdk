@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
   const logger = createLogger();
   middlewares.push(logger);
 }
-if(window.Raven){
+if(window.Raven.isSetup()){
   middlewares.push(createRavenMiddleware(window.Raven));
 }
 else{

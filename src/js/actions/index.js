@@ -99,7 +99,9 @@ function init(initConfig) {
         }
       })
       .catch((reason) => {
-        window.Raven.captureException(reason);
+        if (window.Raven && window.Raven.isSetup()) {
+          window.Raven.captureException(reason);
+        }
         dispatch({
           type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, reason: reason.toString(),
         });
