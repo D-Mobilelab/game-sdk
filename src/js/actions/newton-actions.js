@@ -55,12 +55,17 @@ export function login() {
     }
     loginOptions.logged = logged;
 
-    return NewtonAdapter.login(loginOptions)
+    return NewtonAdapter.login(loginOptions).then(() => {
+      dispatch({ type: 'INIT_NEWTON', initializedNewton: true });
+    })
       .catch((reason) => {
-        dispatch({ type: 'INIT_FINISH', initialized:false, initPending: false, message: reason });
-        console.warn(reason);
+        dispatch({ type: 'INIT_FINISH', initialized: false, initPending: false, initializedNewton: false, message: reason });
         console.log('Error on Newton init, init pending resolved!');
-        throw reason;
+        console.warn(reason);
+        if (window.Raven && window.Raven.isSetup()) {
+          window.Raven.captureException(reason);
+        }
+        // throw reason;
       });
   };
 }

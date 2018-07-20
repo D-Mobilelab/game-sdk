@@ -194,7 +194,7 @@ function syncUserData(results) {
 
     /**
      * This is the unique _id that in newton stands for userid-gameid object
-     * and should always be added to the request otherwise php 
+     * and should always be added to the request otherwise php
      * try to set on newton with a POST and not
      * with a PATCH resulting in a newton error 'Duplicate key error'
      */

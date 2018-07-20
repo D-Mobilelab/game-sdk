@@ -56,6 +56,11 @@ function init(initConfig) {
       .then(() => dispatch(userActions.getUser()))
       .then(() => dispatch(gameinfoActions.getGameInfo()))
       .then(() => {
+        // return if you want to wait
+        dispatch(newtonActions.init());
+        return dispatch(newtonActions.login());
+      })
+      .then(() => {
         const { user, vhost } = getState();
         if (vhost.FB_TRACKING_ENABLE) { FacebookPixelAdapter.init(vhost.FB_PIXELID); }
         dispatch(sharerActions.initFacebook({
@@ -82,15 +87,11 @@ function init(initConfig) {
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });
+
         if (getState().generic.loadUserDataCalled) {
           return dispatch(userDataActions.loadUserData());
         }
         return Promise.resolve();
-      })
-      .then(() => {
-        // return if you want to wait
-        dispatch(newtonActions.init());
-        return dispatch(newtonActions.login());
       })
       .then(() => {
         if (getState().generic.session_start_after_init) {
