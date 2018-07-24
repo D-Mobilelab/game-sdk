@@ -67,7 +67,6 @@ function init(initConfig) {
           fbAppId: vhost.FB_APPID,
           enableTracking: vhost.FB_TRACKING_ENABLE,
         }));
-
         if (vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL) {
           ReactGA.initialize(vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL);
           ReactGA.set({ '&uid': user.user });
@@ -88,6 +87,7 @@ function init(initConfig) {
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });
+
         if (getState().generic.loadUserDataCalled) {
           return dispatch(userDataActions.loadUserData());
         }
@@ -95,6 +95,7 @@ function init(initConfig) {
       })
       .then(() => {
         if (getState().generic.session_start_after_init) {
+          console.log('session started after init');
           dispatch(sessionActions.startSession());
         }
       })

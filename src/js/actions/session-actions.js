@@ -57,26 +57,34 @@ export function startSession() {
       return;
     }
 
-    // Not initialized but init called and pending
-    if (!getState().generic.initialized && getState().generic.initPending) {
-      dispatch({ type: 'ADD_TO_AFTER_INIT', session_start_after_init: true });
-      // Not initialized, not even called init
-    } else if (!getState().generic.initialized && !getState().generic.initPending) {
-      /**
-       * TODO:
-       * Init not event called before startSession
-       * report an error in debug env
-       */
-
-      Reporter.add('error', 'start session before init!');
-      console.log('You should call init before startSession!');
-    } else if (getState().user.canPlay || getState().user.canDownload) {
+    if (getState().user.canPlay || getState().user.canDownload) {
       dispatch((getMenuType() === 'extended') ? hideMenuList() : hideMenu());
       dispatch(hideGameOver());
       dispatch(doStartSession());
     } else {
       console.log('User cannot play');
     }
+
+    // Not initialized but init called and pending
+    // if (!getState().generic.initialized && getState().generic.initPending) {
+    //   dispatch({ type: 'ADD_TO_AFTER_INIT', session_start_after_init: true });
+    //   // Not initialized, not even called init
+    // } else if (!getState().generic.initialized && !getState().generic.initPending) {
+    //   /**
+    //    * TODO:
+    //    * Init not event called before startSession
+    //    * report an error in debug env
+    //    */
+
+    //   Reporter.add('error', 'start session before init!');
+    //   console.log('You should call init before startSession!');
+    // } else if (getState().user.canPlay || getState().user.canDownload) {
+    //   dispatch((getMenuType() === 'extended') ? hideMenuList() : hideMenu());
+    //   dispatch(hideGameOver());
+    //   dispatch(doStartSession());
+    // } else {
+    //   console.log('User cannot play');
+    // }
   };
 }
 
@@ -107,9 +115,9 @@ export function endSession(data = { score: 0, level: 1 }) {
        */
       Reporter.add('error', 'endSession before init!');
       console.log('Cannot end a session before initialized');
-      return;
+      // return;
     }
-    
+
     const { FW_TYPE_PROFILE, GFSDK_ENDSESSION_TO_LANDING, CAT_DEFAULT_SUBSCRIBE_URL, DEST_DOMAIN } = vhost;
     const creativity = location.getQueryStringKey('utm_term');
 
@@ -131,8 +139,7 @@ export function endSession(data = { score: 0, level: 1 }) {
     }
 
     // and a session was started
-    if (Object.keys(getState().session).length > 0
-      && getState().session.opened) {
+    if (Object.keys(getState().session).length > 0 && getState().session.opened) {
       const endTime = new Date();
       const session = { score: data.score, level: data.level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
@@ -141,7 +148,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
-      
+
       if (freemiumCondition) {
         dispatch(redirectLanding({
           CAT_DEFAULT_SUBSCRIBE_URL,
@@ -151,9 +158,9 @@ export function endSession(data = { score: 0, level: 1 }) {
         }));
         return;
       }
-      
+
       if (FW_TYPE_PROFILE === 'bandai' && game_type === 'bandai') {
-        // always show if on bandai service and game is a bandai one
+      // always show if on bandai service and game is a bandai one
         dispatch(showEnterNameModal());
 
         return;
@@ -161,32 +168,38 @@ export function endSession(data = { score: 0, level: 1 }) {
         if (initConfig.lite === false) {
           dispatch(showGameOver());
         }
-        // Call standard leaderboard
-        const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
-        const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
-          withCredentials: true,
-          params: {
-            score: lastSession.score,
-            level: lastSession.level,
-            duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-            start: lastSession.startTime.getTime(),
-            label: getState().game_info.label,
-            userId: getState().user.user,
-            cors_compliant: 1,
-          },
-        })
-          .then((response) => {
-          // get ranking?
-          // response.data.ranking
-          // response.data.gameInfo
-          // dispatch(setMissingGameInfoPart(response.data.gameInfo));
-            dispatch(setRank(response.data.rank));
-            dispatch(setRelated(response.data.related || []));
 
-          });
-        return gameOverPromise;
+        if (getState().generic.initialized) {
+          console.log("i'm going to save the score");
+
+          // Call standard leaderboard
+          const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
+          const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
+            withCredentials: true,
+            params: {
+              score: lastSession.score,
+              level: lastSession.level,
+              duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
+              start: lastSession.startTime.getTime(),
+              label: getState().game_info.label,
+              userId: getState().user.user,
+              cors_compliant: 1,
+            },
+          })
+            .then((response) => {
+            // get ranking?
+            // response.data.ranking
+            // response.data.gameInfo
+            // dispatch(setMissingGameInfoPart(response.data.gameInfo));
+              dispatch(setRank(response.data.rank));
+              dispatch(setRelated(response.data.related || []));
+            });
+          return gameOverPromise;
+        }
+
+        console.warn('GameOver: score not saved session not started correctly, check newton configuration!');
       } else if (game_type === 'default' && initConfig.lite === false && FW_TYPE_PROFILE === 'bandai') {
-        // Non-bandai game on bandai portal and without gameover => requires the button
+      // Non-bandai game on bandai portal and without gameover => requires the button
         dispatch(showEnterNameModal({ showReplayButton: true }));
         return;
       }
@@ -217,8 +230,8 @@ export function registerScore(alias, inputFocus) {
       // track DefaultNicknameAdded
       eventName = 'DefaultNicknameAdded';
     }
-    // TODO: 
-    // userId = NewtonInstance.getUserToken();    
+    // TODO:
+    // userId = NewtonInstance.getUserToken();
     const lastSession = getState().session;
     const userId = getState().user.user;
     const { vhost } = getState();

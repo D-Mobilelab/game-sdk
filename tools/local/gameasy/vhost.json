@@ -10,6 +10,7 @@
         "FB_TRACKING_ENABLE": true,
         "FW_TYPE_PROFILE": "gameasy",
         "GFSDK_MENU_TYPE": "extended",
-        "GFSDK_ENDSESSION_TO_LANDING": true
+        "GFSDK_ENDSESSION_TO_LANDING": true,
+        "SHOW_SHAREBUTTONS": false
     }
 }

@@ -42,6 +42,7 @@ export class Gameover extends Component {
 
   render() {
     const { theme, dictionary } = this.props;
+
     const classNames = [theme.gameover];
     classNames.push(this.props.show ? theme.gameover_show : theme.gameover_hide);
     const classes = classNames.join(' ');
@@ -61,7 +62,7 @@ export class Gameover extends Component {
             <Row style={{ position: 'relative' }}>
               <Column cols={8}>
                 <Image src={imageUrl} />
-                <Button center={true} style={{width:'50%'}} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
+                <Button center={true} style={{ width: '50%' }} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
               </Column>
               <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
                 <div className={theme.scoreContainer}>
@@ -83,18 +84,30 @@ export class Gameover extends Component {
                 </div>
               </Column>
             </Row>
-            <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
-              <Column cols={4} offset={2}>
-                <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                  <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
-                </Button>
-              </Column>
-              <Column cols={4}>
-                <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
-                  <Icon name='share' theme={theme.icon_share} />
-                </Button>
-              </Column>
-            </Row>
+            {
+              (this.props.vhost.SHOW_SHAREBUTTONS)
+                ? (<Row style={{ margin: '20px 0px', textAlign: 'center' }}>
+                  <Column cols={4} offset={2}>
+                    <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                      <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
+                    </Button>
+                  </Column>
+                  <Column cols={4}>
+                    <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
+                      <Icon name='share' theme={theme.icon_share} />
+                    </Button>
+                  </Column>
+                </Row>)
+                : (
+                  <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
+                    <Column cols={12}>
+                      <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                        <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
+                      </Button>
+                    </Column>
+                  </Row>
+                )
+            }
             <Row>
               <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
                 {
@@ -133,7 +146,7 @@ Gameover.defaultProps = {
     related: [
       { images: { cover: { ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w253/xx_gameasy/mnt/alfresco_content_prod/contentstore/2014/9/9/15/50/584124cf-f364-4419-8af7-5d0428371d36/cheese-lab.bin?v=1485251871' } } },
       { images: { cover: { ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w253/xx_gameasy/mnt/alfresco_content_prod/contentstore/2016/5/26/18/56/b5a6c5b4-1f2b-4002-8fed-ba11f9dcd33b/jumping-light.bin?v=1485251932' } } },
-      { images: { cover: { ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w253/xx_gameasy/mnt/alfresco_content_prod/contentstore/2015/11/16/12/5/b36412bd-1893-4dc8-835c-28284da9a631/paper-plane-flight.bin?v=1485252028' } } }
+      { images: { cover: { ratio_1: 'http://s2.motime.com/p/bcontents/absimageapp1/h0/w253/xx_gameasy/mnt/alfresco_content_prod/contentstore/2015/11/16/12/5/b36412bd-1893-4dc8-835c-28284da9a631/paper-plane-flight.bin?v=1485252028' } } },
     ],
   },
 };

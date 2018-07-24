@@ -9,6 +9,7 @@ export default function generic(state = {
   connectionState: { online: true, type: 'none' },
   initialized: false,
   initPending: false,
+  initializedNewton: false,
   session_start_after_init: false,
   initConfig: {
     lite: true,
@@ -48,6 +49,8 @@ export default function generic(state = {
       return Object.assign({}, state, { initConfig: action.initConfig, initPending: action.initPending });
     case 'INIT_ERROR':
       return Object.assign({}, state, { error: action.reason });
+    case 'INIT_NEWTON':
+      return Object.assign({}, state, { initializedNewton: action.initializedNewton });
     case 'INIT_FINISHED':
       return Object.assign({}, state, { message: action.message, initialized: action.initialized, initPending: action.initPending });
     case 'ADD_TO_AFTER_INIT':
