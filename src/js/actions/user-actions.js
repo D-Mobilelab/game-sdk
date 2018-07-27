@@ -49,6 +49,9 @@ export function getUser() {
   return (dispatch) => {
     dispatch({ type: 'USER_CHECK_LOAD_START' });
     const query = {};
+
+    console.log('user type: UO20');
+
     return AxiosInstance.get(Constants.USER_CHECK, { withCredentials: true, params: query })
       .then((userResponse) => {
         const user = userResponse.data;

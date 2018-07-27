@@ -7,6 +7,7 @@ import * as HistoryGame from '../lib/HistoryGame';
 import { getUserType, getLabel, getMenuType } from './utils';
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
+import * as user30Actions from './user30-actions';
 import * as gameinfoActions from './gameinfo-actions';
 import * as userDataActions from './userData-actions';
 import * as menuActions from './menu-actions';
@@ -53,12 +54,21 @@ function init(initConfig) {
           dispatch(listenToWindowEvents('popstate', historyHandler));
         }
       })
-      .then(() => dispatch(userActions.getUser()))
+      .then(() => {
+        if (!getState().vhost.ENABLE_NEWTON_USER) {
+          dispatch(userActions.getUser()); // UO20
+        }
+      })
       .then(() => dispatch(gameinfoActions.getGameInfo()))
       .then(() => {
         // return if you want to wait
         dispatch(newtonActions.init());
         return dispatch(newtonActions.login());
+      })
+      .then(() => {
+        if (getState().vhost.ENABLE_NEWTON_USER) {
+          return dispatch(user30Actions.uo30GetUser()); // UO30
+        }
       })
       .then(() => {
         const { user, vhost } = getState();
@@ -69,12 +79,14 @@ function init(initConfig) {
         }));
         if (vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL) {
           ReactGA.initialize(vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL);
-          ReactGA.set({ '&uid': user.user });
+          ReactGA.set({ '&uid': user.user }); // uo30?
         }
       })
       .then(() => {
         const { user, vhost } = getState();
+
         const userType = getUserType(user);
+        console.log(userType, user);
         // User is not premium and ads enabled in configuration => show interstitial
         const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
         if (condition) {
@@ -138,6 +150,7 @@ export const Actions = {
   goToRelated,
   ...sessionActions,
   ...userActions,
+  ...user30Actions,
   ...menuActions,
   ...menulistActions,
   ...gameoverActions,

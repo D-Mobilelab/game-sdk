@@ -41,6 +41,7 @@ export function login() {
       return accumulator;
     }, queryString);
 
+
     const loginOptions = {
       type: 'external',
       userProperties,
@@ -50,7 +51,7 @@ export function login() {
     // guest: unlogged, free: facebook, premium: acquisition
     if (getUserType(currentState.user) !== 'guest') {
       logged = true;
-      loginOptions.userId = currentState.user.user;
+      loginOptions.userId = currentState.user.user; //uo30?
       loginOptions.userProperties.user_type = getUserType(currentState.user);
     }
     loginOptions.logged = logged;

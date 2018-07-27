@@ -35,11 +35,17 @@ function getUserDataFromServer() {
     }
 
     const NewtonInstance = Newton.getSharedInstance();
+
+    let externalToken = user.user; // UO20
+    if (getState().vhost.ENABLE_NEWTON_USER) {
+      externalToken = ''; // UO30
+    }
+
     const userDataGetApi = vhost.MOA_API_APPLICATION_OBJECTS_GET
       .replace(':QUERY', JSON.stringify({ contentId: getContentId() }))
       .replace(':ID', user.userData._id || '')
       .replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken()))
-      .replace(':EXTERNAL_TOKEN', user.user) // userId
+      .replace(':EXTERNAL_TOKEN', externalToken) // empty for user30
       .replace(':COLLECTION', 'gameInfo');
 
     dispatch({ type: 'LOAD_USER_DATA_SERVER_START' });
@@ -95,9 +101,16 @@ function setUserDataOnServer(newInfo) {
      * to ensure the user server side it's in sync with the local one
      */
     const NewtonInstance = Newton.getSharedInstance();
+    // NewtonInstance.syncUserState();
+
+    let externalToken = user.user; // UO20
+    if (getState().vhost.ENABLE_NEWTON_USER) {
+      externalToken = ''; // UO30
+    }
+
     const body = {
       access_token: NewtonInstance.getUserToken(),
-      external_token: user.user,
+      external_token: externalToken, // user30?
       id: user.userData._id || '',
       info: infoSerialized,
       domain: Location.getOrigin(),
