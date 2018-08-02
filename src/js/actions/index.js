@@ -56,7 +56,7 @@ function init(initConfig) {
       })
       .then(() => {
         if (!getState().vhost.ENABLE_NEWTON_USER) {
-          dispatch(userActions.getUser()); // UO20
+          return dispatch(userActions.getUser()); // UO20
         }
       })
       .then(() => dispatch(gameinfoActions.getGameInfo()))
@@ -86,7 +86,7 @@ function init(initConfig) {
         const { user, vhost } = getState();
 
         const userType = getUserType(user);
-        console.log(userType, user);
+        console.log('user: '+userType);
         // User is not premium and ads enabled in configuration => show interstitial
         const condition = [userType !== 'premium', (vhost.SHOW_INGAME_ADS && vhost.SHOW_INGAME_ADS == 1)].every(elem => elem);
         if (condition) {
@@ -100,9 +100,9 @@ function init(initConfig) {
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });
 
-        if (getState().generic.loadUserDataCalled) {
+        // if (getState().generic.loadUserDataCalled) {
           return dispatch(userDataActions.loadUserData());
-        }
+        // }
         return Promise.resolve();
       })
       .then(() => {

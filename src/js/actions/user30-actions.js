@@ -65,7 +65,6 @@ export function uo30GetUser() {
     return AxiosInstance.get(getUserApi, { withCredentials: true, params: query })
       .then((userResponse) => {
         const user = userResponse.data;
-        console.log(user,userResponse.data);
         if (user.state === '200') {
           user.user = ''; // fallback uo20 attribute 
         }

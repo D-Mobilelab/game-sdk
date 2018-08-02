@@ -41,14 +41,13 @@ export function getContentId() {
  * @returns {String} - return the type of the user
  */
 export function getUserType(userInfo) {
-  if (!userInfo.user) {
-    return 'guest';
-  } else if (!userInfo.subscribed) {
-    return 'free';
-  } else if (userInfo.subscribed) {
+  if (userInfo.subscribed) {
     return 'premium';
+  } else if (userInfo.logged) {
+    return 'free';
+  } else {
+    return 'guest';
   }
-  return 'guest';
 }
 
 export function isStandAlone() {
