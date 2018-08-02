@@ -10,6 +10,7 @@ export default function generic(state = {
   initialized: false,
   initPending: false,
   initializedNewton: false,
+  initializedGA: false,
   session_start_after_init: false,
   initConfig: {
     lite: true,
@@ -51,6 +52,8 @@ export default function generic(state = {
       return Object.assign({}, state, { error: action.reason });
     case 'INIT_NEWTON':
       return Object.assign({}, state, { initializedNewton: action.initializedNewton });
+    case 'INIT_GA':
+      return Object.assign({}, state, { initializedGA: action.initializedGA });
     case 'INIT_FINISHED':
       return Object.assign({}, state, { message: action.message, initialized: action.initialized, initPending: action.initPending });
     case 'ADD_TO_AFTER_INIT':
