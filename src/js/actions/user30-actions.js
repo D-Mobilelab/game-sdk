@@ -24,18 +24,8 @@ export function uo30GetUserFavourites() {
     let getFavPromise;
     dispatch({ type: 'GET_FAVOURITES_START' });
     if (getState().user.logged) {
-
-      console.warn('TODO: GET_FAVOURITES_START user.getcollection... ');
-
-      // getFavPromise = AxiosInstance.get(Constants.USER_GET_LIKE, {
-      //   withCredentials: true,
-      //   params: {
-      //     user_id: getState().user.user, // userID user30?
-      //     size: 51,
-      //   },
-      //   validateStatus: status => status === 200 || status === 404,
-      // });
-      getFavPromise = Promise.resolve({ data: [] });
+      const NewtonInstance = Newton.getSharedInstance();
+      getFavPromise = AxiosInstance.get(getState().vhost.MOA_API_FAVORITES_GETLIST_UO30.replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken())), {withCredentials: true, params: {size: 51},validateStatus: status => status === 200 || status === 404});
     } else {
       getFavPromise = Promise.resolve({ data: [] });
     }
@@ -66,7 +56,7 @@ export function uo30GetUser() {
       .then((userResponse) => {
         const user = userResponse.data;
         if (user.state === '200') {
-          user.user = ''; // fallback uo20 attribute 
+          user.user = ''; // fallback uo20 attribute
         }
 
         if (process.env.NODE_ENV === 'development') {
@@ -106,37 +96,41 @@ export function uo30RemoveGameLike(gameId) {
   return (dispatch, getState) => {
     dispatch({ type: 'REMOVE_GAME_LIKE_START' });
 
-    console.error('TODO: REMOVE_GAME_LIKE_START user.setcollection... ');
+    const NewtonInstance = Newton.getSharedInstance();
 
-    // const URL = `${Constants.USER_DELETE_LIKE}?content_id=${gameId}&user_id=${getState().user.user}`; // user30?
-    // return AxiosInstance.post(URL, {}, { withCredentials: true })
-    //   .then(() => {
-    //     dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId } });
-    //   })
-    //   .catch((reason) => {
-    //     dispatch({ type: 'REMOVE_GAME_LIKE_ERROR', payload: reason });
-    //   });
+    const query = {
+      contentId: gameId,
+      contentType: 'item',
+      timestamp: Date.now(),
+    };
+    return AxiosInstance.get(getState().vhost.MOA_API_FAVORITES_DELETE_UO30.replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken())), { withCredentials: true, params: query })
+      .then((response) => {
+        dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId } });
+      })
+      .catch((reason) => {
+        dispatch({ type: 'REMOVE_GAME_LIKE_ERROR', payload: reason });
+      });
   };
 }
 
 export function uo30AddGameLike(gameId) {
   return (dispatch, getState) => {
     dispatch({ type: 'ADD_GAME_LIKE_START' });
-    
-    console.error('TODO: ADD_GAME_LIKE_START user.setcollection... ');
 
-    // const query = {
-    //   content_id: gameId,
-    //   user_id: getState().user.user, // user30?
-    // };
-    // return AxiosInstance.get(Constants.USER_SET_LIKE, { withCredentials: true, params: query })
-    //   .then((response) => {
-    //     const { object_id } = response.data;
-    //     dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: object_id, content_id: object_id } });
-    //   })
-    //   .catch((reason) => {
-    //     dispatch({ type: 'ADD_GAME_LIKE_ERROR', payload: reason });
-    //   });
+    const NewtonInstance = Newton.getSharedInstance();
+
+    const query = {
+      contentId: gameId,
+      contentType: 'item',
+      timestamp: Date.now(),
+    };
+    return AxiosInstance.get(getState().vhost.MOA_API_FAVORITES_SET_UO30.replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken())), { withCredentials: true, params: query })
+      .then((response) => {
+        dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: gameId, content_id: gameId } });
+      })
+      .catch((reason) => {
+        dispatch({ type: 'ADD_GAME_LIKE_ERROR', payload: reason });
+      });
   };
 }
 
@@ -147,6 +141,7 @@ export function uo30ToggleGameLike() {
 
     const isFavourite = user.favourites.some(favourite => (favourite.id === game_info.id));
     const contentId = game_info.content_id;
+
     if (isFavourite) {
       return dispatch(uo30RemoveGameLike(contentId));
     }
