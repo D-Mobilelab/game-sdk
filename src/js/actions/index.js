@@ -67,9 +67,15 @@ function init(initConfig) {
           fbAppId: vhost.FB_APPID,
           enableTracking: vhost.FB_TRACKING_ENABLE,
         }));
-        if (vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL) {
-          ReactGA.initialize(vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL);
-          ReactGA.set({ '&uid': user.user });
+
+        try {
+          if (vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL) {
+            ReactGA.initialize(vhost.GOOGLE_ANALYTICS_ID_UNIVERSAL);
+            ReactGA.set({ '&uid': user.user });
+            dispatch({ type: 'INIT_GA', initializedGA: true });
+          }
+        } catch (e) {
+          console.log('GA not initialized, reason:'+e);
         }
       })
       .then(() => {
@@ -98,15 +104,15 @@ function init(initConfig) {
           console.log('session started after init');
           dispatch(sessionActions.startSession());
         }
-      })
-      .catch((reason) => {
-        if (window.Raven && window.Raven.isSetup()) {
-          window.Raven.captureException(reason);
-        }
-        dispatch({
-          type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, reason: reason.toString(),
-        });
       });
+    // .catch((reason) => {
+    //   if (window.Raven && window.Raven.isSetup()) {
+    //     window.Raven.captureException(reason);
+    //   }
+    //   dispatch({
+    //     type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, reason: reason.toString(),
+    //   });
+    // });
   };
 }
 
