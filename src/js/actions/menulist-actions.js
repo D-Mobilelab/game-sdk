@@ -8,7 +8,7 @@ export function menuGoToHome() {
     }
     setTimeout(function(){
       window.location.href = Location.getOrigin();
-    },1000);
+    },1500);
     dispatch({ type: 'MENU_GO_TO_HOME' });
   };
 }

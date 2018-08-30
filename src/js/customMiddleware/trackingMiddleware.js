@@ -158,7 +158,7 @@ const trackingMiddleware = store => next => (action) => {
     case 'GO_TO_HOME':
       eventObject = {
         rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
-        name: (action.type=='MENU_GO_TO_HOME')?'MENU_GO_TO_HOME':'GO_TO_HOME',
+        name: (action.type=='MENU_GO_TO_HOME')?'MenuGoToHome':'GoToHome',
         properties: {
           action: 'Yes',
           category: 'Behavior',
