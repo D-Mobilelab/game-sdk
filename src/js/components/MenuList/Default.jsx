@@ -23,7 +23,7 @@ export class Menulist extends Component {
 
   goHome(e) {
     e.preventDefault();
-    this.props.actions.goToHome();
+    this.props.actions.menuGoToHome();
   }
 
   goZoom(e) {
@@ -38,6 +38,7 @@ export class Menulist extends Component {
 
   play(e) {
     e.preventDefault();
+    this.props.actions.replay();
     this.props.actions.startSession();
   }
 

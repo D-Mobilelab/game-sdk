@@ -1,13 +1,21 @@
 import Location from '../lib/Location';
 
-export function goToHome() {
+export function menuGoToHome() {
   return (dispatch) => {
     // If I'm in iframe...
     if (window !== window.top) {
       window.parent.postMessage('GO_TO_HOME', '*');
     }
-    window.location.href = Location.getOrigin();
-    dispatch({ type: 'GO_TO_HOME' });
+    setTimeout(function(){
+      window.location.href = Location.getOrigin();
+    },1500);
+    dispatch({ type: 'MENU_GO_TO_HOME' });
+  };
+}
+
+export function replay() {
+  return (dispatch) => {
+    dispatch({ type: 'MENU_REPLAY' });
   };
 }
 
