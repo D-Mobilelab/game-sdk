@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/D-Mobilelab/game-sdk.svg?branch=master)](https://travis-ci.org/D-Mobilelab/game-sdk)
-[![Coverage Status](https://coveralls.io/repos/github/D-Mobilelab/game-sdk/badge.svg?branch=master)](https://coveralls.io/github/D-Mobilelab/game-sdk?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/D-Mobilelab/game-sdk/badge.svg?branch=master)](https://coveralls.io/github/D-Mobilelab/game-sdk?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/D-Mobilelab/game-sdk.svg)](https://greenkeeper.io/)
 
 # GameSDK v2.x
 Tech docs [https://d-mobilelab.github.io/game-sdk/docs/2.6.0/](https://d-mobilelab.github.io/game-sdk/docs/2.6.0/)
