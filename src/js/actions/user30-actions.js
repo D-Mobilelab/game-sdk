@@ -1,10 +1,10 @@
-import Raven from 'raven-js';
+import Newton from 'newton';
 import * as Constants from '../lib/Constants';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getContentId } from './utils';
 import { localStorage } from '../lib/LocalStorage';
 
-export function canPlay() {
+export function uo30CanPlay() {
   return (dispatch) => {
     const url = Constants.CAN_DOWNLOAD_API_URL.replace(':ID', getContentId());
     return AxiosInstance.get(url, {
@@ -19,19 +19,13 @@ export function canPlay() {
   };
 }
 
-export function getUserFavourites() {
+export function uo30GetUserFavourites() {
   return (dispatch, getState) => {
     let getFavPromise;
     dispatch({ type: 'GET_FAVOURITES_START' });
     if (getState().user.logged) {
-      getFavPromise = AxiosInstance.get(Constants.USER_GET_LIKE, {
-        withCredentials: true,
-        params: {
-          user_id: getState().user.user, // userID
-          size: 51,
-        },
-        validateStatus: status => status === 200 || status === 404,
-      });
+      const NewtonInstance = Newton.getSharedInstance();
+      getFavPromise = AxiosInstance.get(getState().vhost.MOA_API_FAVORITES_GETLIST_UO30.replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken())), {withCredentials: true, params: {size: 51},validateStatus: status => status === 200 || status === 404});
     } else {
       getFavPromise = Promise.resolve({ data: [] });
     }
@@ -45,40 +39,44 @@ export function getUserFavourites() {
   };
 }
 
-export function getUser() {
-  return (dispatch) => {
+export function uo30GetUser() {
+  return (dispatch, getState) => {
     dispatch({ type: 'USER_CHECK_LOAD_START' });
     const query = {};
 
-    console.log('user type: UO20');
+    console.log('user type: UO30');
 
-    return AxiosInstance.get(Constants.USER_CHECK, { withCredentials: true, params: query })
+    const NewtonInstance = Newton.getSharedInstance();
+    // if(NewtonInstance.isUserLogged()) {
+    //   NewtonInstance.syncUserState();
+    // }
+    const getUserApi = getState().vhost.MOA_API_USER_PROFILE_GET.replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken()));
+
+    return AxiosInstance.get(getUserApi, { withCredentials: true, params: query })
       .then((userResponse) => {
         const user = userResponse.data;
+        if (user.state === '200') {
+          user.user = ''; // fallback uo20 attribute
+        }
 
         if (process.env.NODE_ENV === 'development') {
           const userType = localStorage.getItem('gfsdk-debug-user_type');
           if (userType === 'guest') {
             user.user = null;
-            user.subscribed = false;
           } else if (userType === 'free') {
             user.user = decodeURIComponent(localStorage.getItem('gfsdk-debug-user_id'));
-            user.subscribed = false;
           } else if (userType === 'premium') {
             user.user = localStorage.getItem('gfsdk-debug-user_id');
-            user.subscribed = true;
           }
         }
 
         dispatch({ type: 'USER_CHECK_LOAD_END', user });
-        if (!user.user) {
-          Raven.setUserContext();
-        } else {
-          Raven.setUserContext(user);
+        if (window.Raven && window.Raven.isSetup()) {
+          window.Raven.setUserContext(user);
         }
 
         return Promise.all([
-          dispatch(getUserFavourites()),
+          dispatch(uo30GetUserFavourites()),
         ]);
       })
       .catch((reason) => {
@@ -88,19 +86,25 @@ export function getUser() {
 }
 
 
-export function increaseMatchPlayed() {
+export function uo30IncreaseMatchPlayed() {
   return {
     type: 'INCREASE_MATCH_PLAYED',
   };
 }
 
-export function removeGameLike(gameId) {
+export function uo30RemoveGameLike(gameId) {
   return (dispatch, getState) => {
     dispatch({ type: 'REMOVE_GAME_LIKE_START' });
 
-    const URL = `${Constants.USER_DELETE_LIKE}?content_id=${gameId}&user_id=${getState().user.user}`;
-    return AxiosInstance.post(URL, {}, { withCredentials: true })
-      .then(() => {
+    const NewtonInstance = Newton.getSharedInstance();
+
+    const query = {
+      contentId: gameId,
+      contentType: 'item',
+      timestamp: Date.now(),
+    };
+    return AxiosInstance.get(getState().vhost.MOA_API_FAVORITES_DELETE_UO30.replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken())), { withCredentials: true, params: query })
+      .then((response) => {
         dispatch({ type: 'REMOVE_GAME_LIKE_END', payload: { id: gameId } });
       })
       .catch((reason) => {
@@ -109,17 +113,20 @@ export function removeGameLike(gameId) {
   };
 }
 
-export function addGameLike(gameId) {
+export function uo30AddGameLike(gameId) {
   return (dispatch, getState) => {
     dispatch({ type: 'ADD_GAME_LIKE_START' });
+
+    const NewtonInstance = Newton.getSharedInstance();
+
     const query = {
-      content_id: gameId,
-      user_id: getState().user.user,
+      contentId: gameId,
+      contentType: 'item',
+      timestamp: Date.now(),
     };
-    return AxiosInstance.get(Constants.USER_SET_LIKE, { withCredentials: true, params: query })
+    return AxiosInstance.get(getState().vhost.MOA_API_FAVORITES_SET_UO30.replace(':ACCESS_TOKEN', encodeURIComponent(NewtonInstance.getUserToken())), { withCredentials: true, params: query })
       .then((response) => {
-        const { object_id } = response.data;
-        dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: object_id, content_id: object_id } });
+        dispatch({ type: 'ADD_GAME_LIKE_END', payload: { id: gameId, content_id: gameId } });
       })
       .catch((reason) => {
         dispatch({ type: 'ADD_GAME_LIKE_ERROR', payload: reason });
@@ -127,16 +134,17 @@ export function addGameLike(gameId) {
   };
 }
 
-export function toggleGameLike() {
+export function uo30ToggleGameLike() {
   return (dispatch, getState) => {
     const { user } = getState();
     const { game_info } = getState();
 
     const isFavourite = user.favourites.some(favourite => (favourite.id === game_info.id));
     const contentId = game_info.content_id;
+
     if (isFavourite) {
-      return dispatch(removeGameLike(contentId));
+      return dispatch(uo30RemoveGameLike(contentId));
     }
-    return dispatch(addGameLike(contentId));
+    return dispatch(uo30AddGameLike(contentId));
   };
 }
