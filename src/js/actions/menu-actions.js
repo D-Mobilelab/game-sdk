@@ -30,3 +30,16 @@ export function hideMenu() {
     type: 'HIDE_MENU',
   };
 }
+
+export function goToHome() {
+  return (dispatch) => {
+    // If I'm in iframe...
+    if (window !== window.top) {
+      window.parent.postMessage('GO_TO_HOME', '*');
+    }
+    setTimeout(function(){
+      window.location.href = Location.getOrigin();
+    },1000);
+    dispatch({ type: 'GO_TO_HOME' });
+  };
+}

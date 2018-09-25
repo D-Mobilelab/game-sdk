@@ -10,7 +10,6 @@ import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, sho
 import { setRelated } from './gameinfo-actions';
 import { getContentId, getUserType, getMenuType } from './utils';
 import { showBanner } from './banner-actions';
-import fromConsole from '../lib/fromConsole';
 import location from '../lib/Location';
 
 let onStartCallback = () => { };
@@ -52,11 +51,6 @@ export function registerOnStartCallback(callback) {
 
 export function startSession() {
   return (dispatch, getState) => {
-    if (fromConsole() && process.env.NODE_ENV === 'production') {
-      console.warn('Can\'t be called from console!');
-      return;
-    }
-
     if (getState().user.canPlay || getState().user.canDownload) {
       dispatch((getMenuType() === 'extended') ? hideMenuList() : hideMenu());
       dispatch(hideGameOver());
@@ -101,10 +95,6 @@ export function endSession(data = { score: 0, level: 1 }) {
     data.level = 1;
   }
   return (dispatch, getState) => {
-    if (fromConsole() && process.env.NODE_ENV === 'production') {
-      console.warn('Can\'t be called from console!');
-      return;
-    }
     const { user, vhost, generic } = getState();
     // only if already initialized
     if (!generic.initialized) {

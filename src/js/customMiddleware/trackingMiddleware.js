@@ -31,6 +31,7 @@ const trackingMiddleware = store => next => (action) => {
   const userFrom = (qs.dest || qs.trackExecutionKey) ? 'acquisition' : 'natural';
   const userType = getUserType(currentState.user);
   const { CONTENT_RANKING } = currentState.vhost;
+  const hasGa = currentState.generic.initializedGA;
   let eventObject = null;
 
   switch (action.type) {
@@ -59,11 +60,13 @@ const trackingMiddleware = store => next => (action) => {
         },
       });
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
     case 'GAMEPIX_INTERSTITIAL_CALLBACK':
       eventObject = {
@@ -78,11 +81,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
     case 'START_SESSION':
       eventObject = {
@@ -98,11 +103,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
     case 'END_SESSION':
       eventObject = {
@@ -118,16 +125,17 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
-    case 'GO_TO_HOME':
+    case 'MENU_REPLAY':
       eventObject = {
-        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
-        name: 'GoToHome',
+        name: "MenuReplay",
         properties: {
           action: 'Yes',
           category: 'Behavior',
@@ -138,11 +146,36 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
+      break;
+    case 'MENU_GO_TO_HOME':
+    case 'GO_TO_HOME':
+      eventObject = {
+        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
+        name: (action.type=='MENU_GO_TO_HOME')?'MenuGoToHome':'GoToHome',
+        properties: {
+          action: 'Yes',
+          category: 'Behavior',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+        },
+      };
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
     case 'TOGGLE_MENU_LIST_BUTTONS':
       eventObject = {
@@ -161,15 +194,17 @@ const trackingMiddleware = store => next => (action) => {
       }
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
     case 'GO_TO_ACCOUNT':
       eventObject = {
-        name: 'GoToAccount',
+        name: 'MenuGoToAccount',
         properties: {
           action: 'Yes',
           category: 'Behavior',
@@ -180,15 +215,17 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
     case 'GO_TO_ZOOM':
       eventObject = {
-        name: 'GoToZoom',
+        name: 'MenuGoToZoom',
         properties: {
           action: 'Yes',
           category: 'Behavior',
@@ -199,12 +236,14 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
-      break;          
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
+      break;
     case 'INIT_ERROR':
       eventObject = {
         name: 'SdkInitError',
@@ -219,11 +258,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: eventObject.properties.label,
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
       break;
     case 'REDIRECT_ON_STORE':
       eventObject = {
@@ -236,11 +277,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: currentState.game_info.content_id || '',
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: currentState.game_info.content_id || '',
+        });
+      }
       break;
     case 'SHOW_BANNER':
       eventObject = {
@@ -253,11 +296,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: currentState.game_info.content_id || '',
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: currentState.game_info.content_id || '',
+        });
+      }
       break;
     case 'HIDE_BANNER':
       eventObject = {
@@ -270,11 +315,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: currentState.game_info.content_id || '',
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: currentState.game_info.content_id || '',
+        });
+      }
       break;
     case 'BACK_CLICKED':
       eventObject = {
@@ -287,11 +334,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: currentState.game_info.content_id || '',
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: currentState.game_info.content_id || '',
+        });
+      }
       break;
     case 'RELATED_CLICKED':
       eventObject = {
@@ -305,11 +354,13 @@ const trackingMiddleware = store => next => (action) => {
       };
       NewtonAdapter.trackEvent(eventObject);
       PixelTrack(eventObject, { user_type: userType });
-      ReactGA.event({
-        category: eventObject.properties.category,
-        action: eventObject.name,
-        label: action.payload.id || '',
-      });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: action.payload.id || '',
+        });
+      }
       break;
     case 'REGISTER_SCORE_SUCCESS':
       if (action.payload.shouldTrack) {
@@ -325,11 +376,13 @@ const trackingMiddleware = store => next => (action) => {
         };
         NewtonAdapter.trackEvent(eventObject);
         PixelTrack(eventObject, { user_type: userType });
-        ReactGA.event({
-          category: eventObject.properties.category,
-          action: eventObject.name,
-          label: eventObject.properties.label,
-        });
+        if (hasGa) {
+          ReactGA.event({
+            category: eventObject.properties.category,
+            action: eventObject.name,
+            label: eventObject.properties.label,
+          });
+        }
       }
       break;
     case 'HIDE_ENTER_NAME':
@@ -346,11 +399,13 @@ const trackingMiddleware = store => next => (action) => {
         };
         NewtonAdapter.trackEvent(eventObject);
         PixelTrack(eventObject, { user_type: userType });
-        ReactGA.event({
-          category: eventObject.properties.category,
-          action: eventObject.name,
-          label: eventObject.properties.label,
-        });
+        if (hasGa) {
+          ReactGA.event({
+            category: eventObject.properties.category,
+            action: eventObject.name,
+            label: eventObject.properties.label,
+          });
+        }
       }
       break;
     default:
