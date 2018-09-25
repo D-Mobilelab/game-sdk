@@ -33,7 +33,10 @@ export class Gameover extends Component {
 
   handleFavourites(evt) {
     evt.preventDefault();
-    this.props.actions.toggleGameLike();
+    if(this.props.vhost.ENABLE_NEWTON_USER)
+      this.props.actions.uo30ToggleGameLike();
+    else
+      this.props.actions.toggleGameLike();
   }
 
   handleOnClickRelated(related) {

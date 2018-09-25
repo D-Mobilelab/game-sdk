@@ -172,7 +172,7 @@ export function endSession(data = { score: 0, level: 1 }) {
               duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
               start: lastSession.startTime.getTime(),
               label: getState().game_info.label,
-              userId: getState().user.user,
+              userId: getState().user.user, //uo30?
               cors_compliant: 1,
             },
           })
@@ -223,7 +223,7 @@ export function registerScore(alias, inputFocus) {
     // TODO:
     // userId = NewtonInstance.getUserToken();
     const lastSession = getState().session;
-    const userId = getState().user.user;
+    const userId = getState().user.user;  //user30?
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();
