@@ -1,6 +1,7 @@
 import createRavenMiddleware from 'raven-for-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
 import reducer from './js/reducers/index';
 import trackingMiddleware from './js/customMiddleware/trackingMiddleware';
 
@@ -18,17 +19,12 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = [thunkMiddleware, trackingMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
-  /* eslint-disable global-require */
-  const createLogger = require('redux-logger');
-  /** eslint-enable */
-  const logger = createLogger();
-  middlewares.push(logger);
+  middlewares.push(createLogger());
 }
-if(window.Raven && window.Raven.isSetup()){
+if (window.Raven && window.Raven.isSetup()) {
   middlewares.push(createRavenMiddleware(window.Raven));
-}
-else{
-  console.warn("Raven library not found");
+} else {
+  console.warn('Raven library not found');
 }
 /** eslint-enable */
 

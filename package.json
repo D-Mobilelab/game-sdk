@@ -72,7 +72,7 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
-    "axios": "^0.15.2",
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.10.0",
     "docomo-utils": "^1.2.8",
@@ -82,13 +82,13 @@
     "prop-types": "^15.5.10",
     "raven-for-redux": "^1.1.1",
     "raven-js": "^3.18.1",
-    "react": "^15.5.4",
+    "react": "^16.5.2",
     "react-addons-css-transition-group": "^15.6.0",
-    "react-dom": "^15.3.1",
+    "react-dom": "^16.5.2",
     "react-ga": "^2.5.3",
-    "react-redux": "^4.4.5",
-    "redux": "^3.6.0",
-    "redux-logger": "^2.7.4",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.1.0"
   }
 }
