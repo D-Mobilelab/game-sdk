@@ -53,7 +53,7 @@
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
     position: absolute;
-    bottom: 100px;
+    bottom: 70px;
 }
 
 .list{
@@ -78,18 +78,30 @@
 .plus{
     border-radius: 50%;
     background: #FFFFFF;
-    height: 70px;
-    width: 70px;
+    height: 50px;
+    width: 50px;
     text-align: center;
     color: #00C1E2;
     position: absolute;
-    margin-right: 24px;
+    margin-right: 34px;
     z-index: 1002;
     box-shadow: 0px 0px 30px #000;
     font-weight: bold;
     font-size: 45px;
     bottom: 21px;
     right: 0px;
+}
+
+.plusclose{
+    transform:rotate(45deg);
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+}
+
+.plusopen{
+    transform:rotate(0deg);
+    transition-duration: 0.5s;
+    transition-timing-function: ease; 
 }
 
 .label{
@@ -175,11 +187,11 @@
 @media (orientation: landscape) {
  .list{
     transform:scale(0.8);
-    right: 9px;
+    right: -14px;
  }
 
  .open{
-    bottom: 50px;
+    bottom: 30px;
  }
 
  .item{
@@ -189,5 +201,6 @@
  .plus{
     transform: scale(0.8);
     bottom: 5px;
+    margin-right:16px;
  }
 }

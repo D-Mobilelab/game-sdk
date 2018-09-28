@@ -48,13 +48,16 @@ export class Menulist extends Component {
     const classNamesContainer = [theme.container];
     const classNamesList = [theme.list];
     const classNamesOverlay = [theme.overlay];
+    const classNamePlus = [theme.plus];
 
     classNamesContainer.push(this.props.show ? theme.show : theme.hide);
     classNamesList.push(this.props.showList ? theme.open : theme.close);
     classNamesOverlay.push(this.props.showList ? theme.show : theme.hide);
+    classNamePlus.push(this.props.showList ? theme.plusopen : theme.plusclose);
 
     const classesList = classNamesList.join(' ');
     const classesOverlay = classNamesOverlay.join(' ');
+    const classesPlus = classNamePlus.join(' ');
 
     return (
       <div className={(this.props.show ? theme.show : theme.hide)}>
@@ -97,7 +100,7 @@ export class Menulist extends Component {
             </span>
           </li>
         </ul>
-        <div onClick={this.toggleList} className={theme.plus}>
+        <div onClick={this.toggleList} className={classesPlus}>
           <XIcon circle={theme.circle} path={theme.x}></XIcon>
         </div>
       </div>
