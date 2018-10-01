@@ -187,7 +187,7 @@
 @media (orientation: landscape) {
  .list{
     transform:scale(0.8);
-    right: -14px;
+    right: -5px;
  }
 
  .open{
@@ -199,8 +199,19 @@
  }
 
  .plus{
-    transform: scale(0.8);
     bottom: 5px;
-    margin-right:16px;
+    margin-right:21px;
  }
+
+ .plusclose{
+    transform:scale(0.8) rotate(45deg);
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+}
+
+.plusopen{
+    transform:scale(0.8) rotate(0deg);
+    transition-duration: 0.5s;
+    transition-timing-function: ease; 
+}
 }
