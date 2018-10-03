@@ -7,7 +7,7 @@ export class XIcon extends Component {
 
   render() {
     return (
-      <svg viewBox="0 0 70 70" width="70" height="70" className={this.props.position}>
+      <svg viewBox="0 0 70 70" width="50" height="50" className={this.props.position}>
         <circle className={this.props.circle} cx={this.props.radius} cy={this.props.radius} r={this.props.radius}/>
         <g transform="matrix( 0.5431671142578125, 0, 0, 0.5431671142578125, 144.1,140.35) ">
           <g transform="matrix( 1, 0, 0, 1, 0,0) ">
