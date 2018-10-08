@@ -5,14 +5,11 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import App from './App';
-import { localStorage } from './js/lib/LocalStorage';
+// import { localStorage } from './js/lib/LocalStorage';
 import SDK from './SDK';
 import { getLabel } from './js/actions/utils';
 
 /* global __webpack_public_path__:true, RUNTIME_PUBLIC_PATH */
-if (process.env.APP_ENV === 'HYBRID') {
-  __webpack_public_path__ = RUNTIME_PUBLIC_PATH;
-}
 
 let ROOT_ELEMENT = null;
 function onDomLoaded() {

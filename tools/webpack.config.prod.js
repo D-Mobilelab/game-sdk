@@ -4,8 +4,6 @@ var webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 var baseConfiguration = require('./webpack.config.base');
 var getAssetsChunkName = require('./getAssetsChunkName')(process.env.NODE_ENV);
-var FILENAME = '[name].[chunkhash:5].min.js';
-var FILENAME_HYBRID = '[name].[chunkhash:5].hybrid.min.js';
 
 var prodConfiguration = Object.create(baseConfiguration);
 var ROOT_DIRECTORY = null;
@@ -16,7 +14,7 @@ if (process.env.ROOT_DIRECTORY) {
   prodConfiguration.output.publicPath = ROOT_DIRECTORY;
 }
 
-prodConfiguration.output.filename = process.env.APP_ENV === "WEB" ? FILENAME : FILENAME_HYBRID;
+prodConfiguration.output.filename = '[name].[chunkhash:5].min.js';
 prodConfiguration.devtool = 'source-map';
 
 prodConfiguration.plugins = [

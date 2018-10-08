@@ -42,8 +42,6 @@ export default function generic(state = {
   focus: true,
 }, action) {
   switch (action.type) {
-    case 'SET_IS_HYBRID':
-      return Object.assign({}, state, { hybrid: action.hybrid });
     case 'SET_LABEL':
       return Object.assign({}, state, { label: action.label });
     case 'INIT_START':
