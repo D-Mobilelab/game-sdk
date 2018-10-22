@@ -19,8 +19,10 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/Gameover/Zain'));
               case 'gamempire':
                 return importLazy(System.import('./js/components/Gameover/Gamempire'));
+              case 'h3g':
+                return importLazy(System.import('./js/components/Gameover/H3g'));
               default:
-                return importLazy(System.import('./js/components/Gameover/Gameasy'));
+                return importLazy(System.import('./js/components/Gameover/H3g'));
             }
           },
           Banner: () => {
