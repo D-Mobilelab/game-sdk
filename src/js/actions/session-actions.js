@@ -13,7 +13,6 @@ import { showBanner } from './banner-actions';
 import location from '../lib/Location';
 
 let onStartCallback = () => { };
-const hybrid = process.env.APP_ENV === 'HYBRID';
 
 function doStartSession() {
   return (dispatch, getState) => {
@@ -113,7 +112,6 @@ export function endSession(data = { score: 0, level: 1 }) {
 
     const bannerCondition = [
       (user.matchPlayed % 3 === 0),
-      !hybrid,
       (generic.platformInfo.android || generic.platformInfo.ios),
       vhost.INSTALL_HYBRID_VISIBLE,
     ].every(condition => condition === true);

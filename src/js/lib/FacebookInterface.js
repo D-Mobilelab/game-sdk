@@ -24,9 +24,6 @@ export class FacebookInterface {
    * @memberof FacebookInterface
    */
   init(config) {
-    if (process.env.APP_ENV === 'HYBRID') {
-      return;
-    }
     this.config = config;
     this.downloadSDK();
   }
