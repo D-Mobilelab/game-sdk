@@ -65,7 +65,7 @@ export class Gameover extends Component {
             <Row style={{ position: 'relative' }}>
               <Column cols={8}>
                 <Image src={imageUrl} />
-                {(`${this.props.label}`!='h3g')?( 
+                {(`${this.props.label}`!='h3goplay')?( 
                 <Button center={true} style={{ width: '50%' }} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
                 ):('')}
               </Column>
@@ -92,7 +92,7 @@ export class Gameover extends Component {
           </div>
           <div>
 
-            {(`${this.props.label}`=='h3g')?(
+            {(`${this.props.label}` == 'h3goplay')?(
               <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
                 <Column cols={12}>
                   <Button center={false} style={{ width: '90%' }} onClick={this.handleReplay} mytheme={theme.btn}>
@@ -108,7 +108,7 @@ export class Gameover extends Component {
                 
                   <Column cols={4} offset={2}>
                     <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                     {(`${this.props.label}`=='h3g') ? ( 
+                     {(`${this.props.label}`=='h3goplay') ? ( 
                       <span>Add</span>
                      ):(
                       <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
@@ -117,7 +117,7 @@ export class Gameover extends Component {
                   </Column>
                   <Column cols={4}>
                     <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
-                      {(`${this.props.label}`=='h3g') ? ( 
+                      {(`${this.props.label}`=='h3goplay') ? ( 
                         <span>Share</span>
                       ):(
                         <Icon name='share' theme={theme.icon_share} />
@@ -130,6 +130,32 @@ export class Gameover extends Component {
                     <Column cols={12}>
                       <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
                         <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
+                      </Button>
+                    </Column>
+                  </Row>
+                )
+            }
+
+            {
+              (this.props.vhost.SHOW_SHAREBUTTONS)
+                ? (<Row style={{textAlign: 'center', width: '90%', margin: 'auto' }}>
+                
+                  <Column cols={6}>
+                    <Button style={{ width: '100%' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                      <span>Add</span>
+                    </Button>
+                  </Column>
+                  <Column cols={6}>
+                    <Button style={{ width: '100%' }} mytheme={theme.btn_share} onClick={this.handleShare}>
+                        <span>Share</span>
+                    </Button>
+                  </Column>
+                </Row>)
+                : (
+                  <Row style={{textAlign: 'center', width: '90%', margin: 'auto' }}>
+                    <Column cols={12}>
+                      <Button style={{ width: '100%' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                        Add
                       </Button>
                     </Column>
                   </Row>
