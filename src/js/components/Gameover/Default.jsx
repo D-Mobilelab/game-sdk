@@ -65,7 +65,9 @@ export class Gameover extends Component {
             <Row style={{ position: 'relative' }}>
               <Column cols={8}>
                 <Image src={imageUrl} />
+                {(`${this.props.label}`!='h3g')?( 
                 <Button center={true} style={{ width: '50%' }} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
+                ):('')}
               </Column>
               <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
                 <div className={theme.scoreContainer}>
@@ -87,17 +89,39 @@ export class Gameover extends Component {
                 </div>
               </Column>
             </Row>
+          </div>
+          <div>
+
+            {(`${this.props.label}`=='h3g')?(
+              <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
+                <Column cols={12}>
+                  <Button center={false} style={{ width: '90%' }} onClick={this.handleReplay} mytheme={theme.btn}>
+                    {this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}
+                  </Button>
+                </Column>
+              </Row>):('')
+            }
+
             {
               (this.props.vhost.SHOW_SHAREBUTTONS)
                 ? (<Row style={{ margin: '20px 0px', textAlign: 'center' }}>
+                
                   <Column cols={4} offset={2}>
                     <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                     {(`${this.props.label}`=='h3g') ? ( 
+                      <span>Add</span>
+                     ):(
                       <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
+                     )}
                     </Button>
                   </Column>
                   <Column cols={4}>
                     <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
-                      <Icon name='share' theme={theme.icon_share} />
+                      {(`${this.props.label}`=='h3g') ? ( 
+                        <span>Share</span>
+                      ):(
+                        <Icon name='share' theme={theme.icon_share} />
+                     )}
                     </Button>
                   </Column>
                 </Row>)
@@ -111,6 +135,7 @@ export class Gameover extends Component {
                   </Row>
                 )
             }
+
             <Row>
               <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
                 {

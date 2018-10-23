@@ -22,7 +22,7 @@ export default class App extends React.Component {
               case 'h3g':
                 return importLazy(System.import('./js/components/Gameover/H3g'));
               default:
-                return importLazy(System.import('./js/components/Gameover/H3g'));
+                return importLazy(System.import('./js/components/Gameover/Gameasy'));
             }
           },
           Banner: () => {
@@ -41,6 +41,8 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/Menu/MenuZain'));
               case 'gamempire':
                 return importLazy(System.import('./js/components/Menu/MenuGamempire'));
+              case 'h3g':
+                return importLazy(System.import('./js/components/Menu/MenuH3g'));
               default:
                 return importLazy(System.import('./js/components/Menu/MenuGameasy'));
             }

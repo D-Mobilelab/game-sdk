@@ -4,7 +4,7 @@
 
 /* base */
 
-@value font_family: montserratultra_light, Verdana, Geneva, sans-serif;
+@value font_family: HelveticaNeue-Bold, Verdana, Geneva, sans-serif;
 
 @value background: #ffffff;
 @value foreground: #000000;
@@ -18,9 +18,10 @@
 @value button_background: #ffffff;
 @value button_foreground: #000000;
 
-@value button_outline_background: transparent;
+@value button_outline_background: #ffffff;
 @value button_outline_foreground: #000000;
 
+  
 
 .gameover {
     composes: gameover from './default.css';
@@ -58,11 +59,19 @@ h1{
 }
 
 .trophy{
-    color:#000000;
+    color: #f13268;
+    background: linear-gradient(to right, #fd950d, #f87112, #f04f14, #f13268, #fb2da2, #ea2e2e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
 }
 
 .podium{
-    color: #000000;
+    color: #f13268;
+    background: linear-gradient(to right, #fd950d, #f87112, #f04f14, #f13268, #fb2da2, #ea2e2e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0);
 }
 
 /* button */
@@ -87,6 +96,9 @@ h1{
     background: button_background;
     color: button_foreground;
     font-family: font_family;
+    text-transform: capitalize;
+    font-weight: bold;
+    color:#ffffff;
 
     background-image: linear-gradient(to right, #fd950d, #f87112, #f04f14, #f13268, #fb2da2, #ea2e2e);
     border:none;
@@ -113,5 +125,5 @@ h1{
 .btn_share {
     composes: btn_outline;
     border-color:header_foreground;
-    color:header_background;
+    color:header_foreground;
 }
