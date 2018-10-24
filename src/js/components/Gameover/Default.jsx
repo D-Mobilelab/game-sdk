@@ -95,14 +95,14 @@ export class Gameover extends Component {
             {(`${this.props.label}` == 'h3goplay')?(
               <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
                 <Column cols={12}>
-                  <Button center={false} style={{ width: '90%' }} onClick={this.handleReplay} mytheme={theme.btn}>
+                  <Button center={false} style={{ width: '95%' }} onClick={this.handleReplay} mytheme={theme.btn}>
                     {this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}
                   </Button>
                 </Column>
               </Row>):('')
             }
 
-            {
+            {(`${this.props.label}` != 'h3goplay')?(
               (this.props.vhost.SHOW_SHAREBUTTONS)
                 ? (<Row style={{ margin: '20px 0px', textAlign: 'center' }}>
                 
@@ -133,15 +133,15 @@ export class Gameover extends Component {
                       </Button>
                     </Column>
                   </Row>
-                )
+                )):('')
             }
 
-            {
+            {(`${this.props.label}` == 'h3goplay')?(
               (this.props.vhost.SHOW_SHAREBUTTONS)
-                ? (<Row style={{textAlign: 'center', width: '90%', margin: 'auto' }}>
+                ? (<Row style={{textAlign: 'center', width: '95%', margin: 'auto' }}>
                 
                   <Column cols={6}>
-                    <Button style={{ width: '100%' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                    <Button style={{ width: '100%' }} mytheme={(this.props.isGameFavourite)?theme.btn_like_full:theme.btn_like} onClick={this.handleFavourites}>
                       <span>Add</span>
                     </Button>
                   </Column>
@@ -152,14 +152,14 @@ export class Gameover extends Component {
                   </Column>
                 </Row>)
                 : (
-                  <Row style={{textAlign: 'center', width: '90%', margin: 'auto' }}>
+                  <Row style={{textAlign: 'center', width: '95%', margin: 'auto' }}>
                     <Column cols={12}>
-                      <Button style={{ width: '100%' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
+                      <Button style={{ width: '100%' }} mytheme={(this.props.isGameFavourite)?theme.btn_like_full:theme.btn_like} onClick={this.handleFavourites}>
                         Add
                       </Button>
                     </Column>
                   </Row>
-                )
+                )):('')
             }
 
             <Row>

@@ -122,6 +122,12 @@ h1{
     composes: btn_outline;
 }
 
+.btn_like_full {
+    composes: btn_outline;
+    background: foreground;
+    color: background;
+}
+
 .btn_share {
     composes: btn_outline;
     border-color:header_foreground;
