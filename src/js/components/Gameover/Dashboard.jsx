@@ -15,7 +15,7 @@ export class Dashboard extends Component {
   render() {
     const { theme, dictionary } = this.props;
 
-    let btns_like_share=(true
+    let btns_like_share=(
         <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
             <Column cols={4} offset={2}>
             <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
