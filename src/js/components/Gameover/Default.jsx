@@ -4,6 +4,8 @@ import { Grid, Row, Column } from '../Layout/index';
 import Image from '../Image/Image';
 import { List, ListItem } from '../Related';
 import Button from '../MaterialButton/Default';
+import Dashboard from '../Gameover/Dashboard';
+import DashboardH3g from '../Gameover/DashboardH3g';
 import Icon from '../Icon/index.jsx';
 
 export class Gameover extends Component {
@@ -44,7 +46,7 @@ export class Gameover extends Component {
   }
 
   render() {
-    const { theme, dictionary } = this.props;
+    const { theme } = this.props;
 
     const classNames = [theme.gameover];
     classNames.push(this.props.show ? theme.gameover_show : theme.gameover_hide);
@@ -52,6 +54,10 @@ export class Gameover extends Component {
 
     const percentage = Math.round((window.innerWidth * 60) / 100);
     const imageUrl = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
+
+    let dashboardClassic=(<Dashboard theme={theme} vhost={this.props.vhost} label={this.props.label} handleReplay={this.handleReplay} handleShare={this.handleShare} handleFavourites={this.handleFavourites} dictionary={this.props.dictionary}></Dashboard>);
+    let dashboardH3g=(<DashboardH3g theme={theme} vhost={this.props.vhost} label={this.props.label} handleReplay={this.handleReplay} handleShare={this.handleShare} handleFavourites={this.handleFavourites} dictionary={this.props.dictionary}></DashboardH3g>);
+    let dashboard=(this.props.label == 'h3goplay')?dashboardH3g:dashboardClassic;
 
     return (
       <Grid>
@@ -92,75 +98,7 @@ export class Gameover extends Component {
           </div>
           <div>
 
-            {(`${this.props.label}` == 'h3goplay')?(
-              <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
-                <Column cols={12}>
-                  <Button center={false} style={{ width: '95%' }} onClick={this.handleReplay} mytheme={theme.btn}>
-                    {this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}
-                  </Button>
-                </Column>
-              </Row>):('')
-            }
-
-            {(`${this.props.label}` != 'h3goplay')?(
-              (this.props.vhost.SHOW_SHAREBUTTONS)
-                ? (<Row style={{ margin: '20px 0px', textAlign: 'center' }}>
-                
-                  <Column cols={4} offset={2}>
-                    <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                     {(`${this.props.label}`=='h3goplay') ? ( 
-                      <span>Add</span>
-                     ):(
-                      <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
-                     )}
-                    </Button>
-                  </Column>
-                  <Column cols={4}>
-                    <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
-                      {(`${this.props.label}`=='h3goplay') ? ( 
-                        <span>Share</span>
-                      ):(
-                        <Icon name='share' theme={theme.icon_share} />
-                     )}
-                    </Button>
-                  </Column>
-                </Row>)
-                : (
-                  <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
-                    <Column cols={12}>
-                      <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                        <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
-                      </Button>
-                    </Column>
-                  </Row>
-                )):('')
-            }
-
-            {(`${this.props.label}` == 'h3goplay')?(
-              (this.props.vhost.SHOW_SHAREBUTTONS)
-                ? (<Row style={{textAlign: 'center', width: '95%', margin: 'auto' }}>
-                
-                  <Column cols={6}>
-                    <Button style={{ width: '100%' }} mytheme={(this.props.isGameFavourite)?theme.btn_like_full:theme.btn_like} onClick={this.handleFavourites}>
-                      <span>Add</span>
-                    </Button>
-                  </Column>
-                  <Column cols={6}>
-                    <Button style={{ width: '100%' }} mytheme={theme.btn_share} onClick={this.handleShare}>
-                        <span>Share</span>
-                    </Button>
-                  </Column>
-                </Row>)
-                : (
-                  <Row style={{textAlign: 'center', width: '95%', margin: 'auto' }}>
-                    <Column cols={12}>
-                      <Button style={{ width: '100%' }} mytheme={(this.props.isGameFavourite)?theme.btn_like_full:theme.btn_like} onClick={this.handleFavourites}>
-                        Add
-                      </Button>
-                    </Column>
-                  </Row>
-                )):('')
-            }
+            {dashboard}
 
             <Row>
               <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
@@ -173,6 +111,7 @@ export class Gameover extends Component {
                 }
               </List>
             </Row>
+
           </div>
         </div>
       </Grid>
