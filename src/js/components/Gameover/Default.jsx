@@ -55,8 +55,14 @@ export class Gameover extends Component {
     const percentage = Math.round((window.innerWidth * 60) / 100);
     const imageUrl = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
 
-    let dashboardClassic=(<Dashboard theme={theme} vhost={this.props.vhost} label={this.props.label} handleReplay={this.handleReplay} handleShare={this.handleShare} handleFavourites={this.handleFavourites} dictionary={this.props.dictionary}></Dashboard>);
-    let dashboardH3g=(<DashboardH3g theme={theme} vhost={this.props.vhost} label={this.props.label} handleReplay={this.handleReplay} handleShare={this.handleShare} handleFavourites={this.handleFavourites} dictionary={this.props.dictionary}></DashboardH3g>);
+    let methods={
+      handleReplay: this.handleReplay,
+      handleShare: this.handleShare,
+      handleFavourites: this.handleFavourites
+    };
+
+    let dashboardClassic=(<Dashboard theme={theme} options={this.props} methods={methods}></Dashboard>);
+    let dashboardH3g=(<DashboardH3g theme={theme} options={this.props} methods={methods}></DashboardH3g>);
     let dashboard=(this.props.label == 'h3goplay')?dashboardH3g:dashboardClassic;
 
     return (
@@ -78,7 +84,7 @@ export class Gameover extends Component {
               <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
                 <div className={theme.scoreContainer}>
                   <div>
-                    <div style={{ textAlign: 'center' }}>
+                    <div style={{ textAlign: 'center' }} className={theme.trophy_container}>
                       <Icon name='trophy' theme={theme.trophy}/>
                       <h3>{this.props.dictionary.WEBAPP_CONGRATULATIONS_SCORE}</h3>
                       <h2>{this.props.score}</h2>

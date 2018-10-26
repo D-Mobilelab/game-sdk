@@ -133,3 +133,14 @@ h1{
     border-color:header_foreground;
     color:header_foreground;
 }
+
+.trophy_container{
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 742.967 16.017" height="17.085" width="792.499" preserveAspectRatio="none"><defs><linearGradient id="a"><stop offset="0"/><stop offset="1" stop-opacity="0"/></linearGradient><radialGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.14048 0 0 .0715 -50.493 22.943)" r="321.429" fy="206.648" fx="370" cy="206.648" cx="370" id="b" xlink:href="%23a"/><filter height="1.143" y="-.072" width="1.013" x="-.007" id="c" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="1.791"/></filter></defs><path transform="translate(0 -45.684)" d="M4.902 46.688v14.01h733.164v-14.01H4.902z" opacity=".427" fill="url(%23b)" filter="url(%23c)"/></svg>');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 6px;
+}
+
+.divider{
+    display: none;
+}
