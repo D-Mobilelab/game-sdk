@@ -61,6 +61,10 @@
     composes: scoreContainer from './default.css';
 }
 
+.trophy_container{
+    
+}
+
 .trophy{
     color:#e7f943;
 }

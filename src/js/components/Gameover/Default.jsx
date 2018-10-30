@@ -4,6 +4,8 @@ import { Grid, Row, Column } from '../Layout/index';
 import Image from '../Image/Image';
 import { List, ListItem } from '../Related';
 import Button from '../MaterialButton/Default';
+import Dashboard from '../Gameover/Dashboard';
+import DashboardH3g from '../Gameover/DashboardH3g';
 import Icon from '../Icon/index.jsx';
 
 export class Gameover extends Component {
@@ -44,7 +46,7 @@ export class Gameover extends Component {
   }
 
   render() {
-    const { theme, dictionary } = this.props;
+    const { theme } = this.props;
 
     const classNames = [theme.gameover];
     classNames.push(this.props.show ? theme.gameover_show : theme.gameover_hide);
@@ -52,6 +54,16 @@ export class Gameover extends Component {
 
     const percentage = Math.round((window.innerWidth * 60) / 100);
     const imageUrl = this.props.game_info.images.cover.ratio_1.replace('[HSIZE]', 0).replace('[WSIZE]', percentage);
+
+    let methods={
+      handleReplay: this.handleReplay,
+      handleShare: this.handleShare,
+      handleFavourites: this.handleFavourites
+    };
+
+    let dashboardClassic=(<Dashboard theme={theme} options={this.props} methods={methods}></Dashboard>);
+    let dashboardH3g=(<DashboardH3g theme={theme} options={this.props} methods={methods}></DashboardH3g>);
+    let dashboard=(this.props.label == 'h3goplay')?dashboardH3g:dashboardClassic;
 
     return (
       <Grid>
@@ -65,12 +77,14 @@ export class Gameover extends Component {
             <Row style={{ position: 'relative' }}>
               <Column cols={8}>
                 <Image src={imageUrl} />
+                {(`${this.props.label}`!='h3goplay')?( 
                 <Button center={true} style={{ width: '50%' }} onClick={this.handleReplay} mytheme={theme.btn}>{this.props.dictionary.WEBAPP_CANVAS_BUTTON_PLAY}</Button>
+                ):('')}
               </Column>
               <Column cols={4} style={{ position: 'absolute', right: '0', height: '100%' }}>
                 <div className={theme.scoreContainer}>
                   <div>
-                    <div style={{ textAlign: 'center' }}>
+                    <div style={{ textAlign: 'center' }} className={theme.trophy_container}>
                       <Icon name='trophy' theme={theme.trophy}/>
                       <h3>{this.props.dictionary.WEBAPP_CONGRATULATIONS_SCORE}</h3>
                       <h2>{this.props.score}</h2>
@@ -87,30 +101,11 @@ export class Gameover extends Component {
                 </div>
               </Column>
             </Row>
-            {
-              (this.props.vhost.SHOW_SHAREBUTTONS)
-                ? (<Row style={{ margin: '20px 0px', textAlign: 'center' }}>
-                  <Column cols={4} offset={2}>
-                    <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                      <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
-                    </Button>
-                  </Column>
-                  <Column cols={4}>
-                    <Button style={{ width: '90px' }} mytheme={theme.btn_share} onClick={this.handleShare}>
-                      <Icon name='share' theme={theme.icon_share} />
-                    </Button>
-                  </Column>
-                </Row>)
-                : (
-                  <Row style={{ margin: '20px 0px', textAlign: 'center' }}>
-                    <Column cols={12}>
-                      <Button style={{ width: '90px' }} mytheme={theme.btn_like} onClick={this.handleFavourites}>
-                        <Icon name='heart' theme={theme.icon_like} full={this.props.isGameFavourite}/>
-                      </Button>
-                    </Column>
-                  </Row>
-                )
-            }
+          </div>
+          <div>
+
+            {dashboard}
+
             <Row>
               <List title={this.props.dictionary.WEBAPP_RELATED_TITLE}>
                 {
@@ -122,6 +117,7 @@ export class Gameover extends Component {
                 }
               </List>
             </Row>
+
           </div>
         </div>
       </Grid>
