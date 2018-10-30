@@ -9,10 +9,10 @@
         "FB_PIXELID": "341154372977039",
         "FB_TRACKING_ENABLE": true,
         "FW_TYPE_PROFILE": "gameasy",
-        "GFSDK_MENU_TYPE": "extended",
         "GFSDK_ENDSESSION_TO_LANDING": true,
         "SHOW_SHAREBUTTONS": false,
         "ENABLE_NEWTON_USER": true,
+        "LAYOUT_STYLE": "h3goplay",
         "MOA_API_USER_PROFILE_GET":"http://resources2.motime.com/lapis/apps/userprop.get?access_token=:ACCESS_TOKEN&fw=gameasy&white_label=xx_gameasy&vh=test.gameasy.it&settrack=&settrack_params=%7B%22endpoint%22%3A%2210.1.23.245%3A9901%22%2C%22uid%22%3A%2250fac4d09ddfdb9fb27b51a38b31cf4a%22%2C%22label%22%3A%22it_testmuchgossip%22%2C%22pid%22%3A10601%2C%22environment%22%3A%22DEV%22%2C%22trkid%22%3A%2214501920180724_339ee05c21a7f8c02983648c5a9ee567%22%7D"
     }
 }
