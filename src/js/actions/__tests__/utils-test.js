@@ -97,6 +97,6 @@ describe('Gameinfo tests', () => {
     expect(getUserType({ user: 'abcdefghi123456789', subscribed: true })).toEqual('premium');
     expect(getUserType({ user: null })).toEqual('guest');
     expect(getUserType({ user: null })).toEqual('guest');
-    expect(getUserType({ user: '1231512', subscribed: false })).toEqual('free');
+    expect(getUserType({ user: '1231512', subscribed: false, logged: true })).toEqual('free');
   });
 });
