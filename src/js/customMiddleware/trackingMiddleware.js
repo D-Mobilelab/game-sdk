@@ -177,6 +177,50 @@ const trackingMiddleware = store => next => (action) => {
         });
       }
       break;
+    case 'ADD_GAME_LIKE_END':
+      eventObject = {
+        name: 'Add',
+        rank: getContentRanking('Add', 'Favorites', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
+        properties: {
+          category: 'Favorites',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+          action: 'Yes',
+        },
+      };
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
+      break;
+    case 'REMOVE_GAME_LIKE_END':
+      eventObject = {
+        name: 'Remove',
+        rank: getContentRanking('Remove', 'Favorites', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
+        properties: {
+          category: 'Favorites',
+          game_title: currentState.game_info.title,
+          label: currentState.game_info.content_id,
+          valuable: 'No',
+          action: 'Yes',
+        },
+      };
+      NewtonAdapter.trackEvent(eventObject);
+      PixelTrack(eventObject, { user_type: userType });
+      if (hasGa) {
+        ReactGA.event({
+          category: eventObject.properties.category,
+          action: eventObject.name,
+          label: eventObject.properties.label,
+        });
+      }
+      break;
     case 'TOGGLE_MENU_LIST_BUTTONS':
       eventObject = {
         properties: {
