@@ -38,6 +38,7 @@ const trackingMiddleware = store => next => (action) => {
     case 'INIT_FINISHED':
       eventObject = {
         name: 'GameLoad',
+        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         properties: {
           action: 'Yes',
           category: 'Play',
@@ -157,7 +158,6 @@ const trackingMiddleware = store => next => (action) => {
     case 'MENU_GO_TO_HOME':
     case 'GO_TO_HOME':
       eventObject = {
-        rank: getContentRanking('GameLoad', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         name: (action.type=='MENU_GO_TO_HOME')?'MenuGoToHome':'GoToHome',
         properties: {
           action: 'Yes',
