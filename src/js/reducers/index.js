@@ -11,6 +11,7 @@ import gameOverBandai from './gameOverBandai';
 import banner from './banner';
 import interstitial from './interstitial';
 import menu_list from './menu_list';
+import styles from './styles';
 
 export default combineReducers({
   banner,
@@ -24,4 +25,5 @@ export default combineReducers({
   vhost,
   interstitial,
   gameOverBandai,
+  styles,
 });

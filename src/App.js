@@ -1,6 +1,7 @@
 import React from 'react';
 import LazilyLoad, { importLazy } from './LazilyLoad';
 import Interstitial from './js/components/Interstitial/Interstitial';
+import Gameover from './js/components/Gameover/Go';
 import './css/generic.css';
 
 export default class App extends React.Component {
@@ -9,22 +10,22 @@ export default class App extends React.Component {
       <div>
         <Interstitial />
         <LazilyLoad modules={{
-          Gameover: () => {
-            switch (this.props.label) {
-              case 'bandai':
-                return function Noop() { return null; };
-              case 'gamifive':
-                return importLazy(System.import('./js/components/GamifiveOver'));
-              case 'zain':
-                return importLazy(System.import('./js/components/Gameover/Zain'));
-              case 'gamempire':
-                return importLazy(System.import('./js/components/Gameover/Gamempire'));
-              case 'h3goplay':
-                return importLazy(System.import('./js/components/Gameover/H3g'));
-              default:
-                return importLazy(System.import('./js/components/Gameover/Gameasy'));
-            }
-          },
+          // Gameover: () => {
+          //   switch (this.props.label) {
+          //     case 'bandai':
+          //       return function Noop() { return null; };
+          //     case 'gamifive':
+          //       return importLazy(System.import('./js/components/GamifiveOver'));
+          //     case 'zain':
+          //       return importLazy(System.import('./js/components/Gameover/Zain'));
+          //     case 'gamempire':
+          //       return importLazy(System.import('./js/components/Gameover/Gamempire'));
+          //     case 'h3goplay':
+          //       return importLazy(System.import('./js/components/Gameover/H3g'));
+          //     default:
+          //       return importLazy(System.import('./js/components/Gameover/Gameasy'));
+          //   }
+          // },
           Banner: () => {
             if (this.props.label === 'gameasy') {
               return importLazy(System.import('./js/components/Banner/Container'));
@@ -60,7 +61,7 @@ export default class App extends React.Component {
             return function Noop() { return null; };
           },
         }}>
-          {({ Gameover, Banner, Menu, MenuList, EnterNameContainer }) => (
+          {({ Banner, Menu, MenuList, EnterNameContainer }) => (
             <div>
               <EnterNameContainer />
               <Gameover />

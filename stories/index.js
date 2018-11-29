@@ -24,6 +24,8 @@ import BannerAndroid from '../src/js/components/Banner/android/Banner';
 
 import { ZainGameover, GamempireGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index';
 
+import Gameover2 from '../src/js/components/Gameover/Last';
+
 import Menulist from '../src/js/components/MenuList';
 
 const MyButton = withTheme(MaterialButton, gameasy);
@@ -197,3 +199,7 @@ const MenulistStory = storiesOf('Menulist', module);
 MenulistStory.addDecorator(withKnobs);
 MenulistStory.add('default', () => <Menulist show={boolean('Show', true)} showList={boolean('Show List', true)} showOverlay={boolean('Show Overlay', true)} />);
 
+
+const Gameover2Story = storiesOf('Gameover2', module);
+// Gameover2Story.addDecorator(withKnobs);
+Gameover2Story.add('default', () => <Gameover2/>);

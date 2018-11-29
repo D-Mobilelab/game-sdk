@@ -44,6 +44,16 @@ export default class SDK {
     return store.dispatch(Actions.init(initConfig));
   }
 
+   /**
+   * Set styles
+   * call this function on sdk init
+   * @memberOf SDK
+   */
+  setStyles(styles) {
+    const { store } = privates.get(this);
+    return store.dispatch(Actions.setStyles(styles));
+  }
+
   /**
    * Returns the whole state!
    * @returns {Object}

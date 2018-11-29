@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   rank: state.session.rank,
   dictionary: state.generic.dictionary,
   vhost: state.vhost,
+  styles: state.styles,
 });
 
 const mapDispatchToProps = dispatch => ({
