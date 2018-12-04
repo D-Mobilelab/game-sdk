@@ -1,5 +1,5 @@
-import connect from './connectGameover';
-import { GameasyGameover } from './index';
+import connect from './connect';
+import { GameasyGameover } from './index_old';
 
 
 export default connect(GameasyGameover)

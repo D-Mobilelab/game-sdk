@@ -1,4 +1,4 @@
-import connect from './connectGameover';
+import connect from './connect';
 import { H3gGameover } from './index';
 
 

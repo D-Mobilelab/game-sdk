@@ -6,7 +6,7 @@ import { linkTo } from '@storybook/addon-links';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import MaterialButton from '../src/js/components/MaterialButton/MaterialButton';
-import EnterName from '../src/js/components/EnterName/EnterName';
+import EnterName from '../src/js/components/EnterName/EnterName_old';
 import Leaderboard from '../src/js/components/EnterName/Leaderboard';
 import withTheme from '../src/js/components/withTheme';
 
@@ -22,9 +22,9 @@ import gamempireMenuTheme from '../src/js/components/Menu/theme/gamempire.css';
 import BannerIOS from '../src/js/components/Banner/ios/Banner';
 import BannerAndroid from '../src/js/components/Banner/android/Banner';
 
-import { ZainGameover, GamempireGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index';
+import { ZainGameover, GamempireGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index_old';
 
-import Gameover2 from '../src/js/components/Gameover/Last';
+import Gameover2 from '../src/js/components/Gameover/Gameover';
 
 import Menulist from '../src/js/components/MenuList';
 

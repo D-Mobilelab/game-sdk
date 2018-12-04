@@ -4,7 +4,7 @@ const main = {
     opacity: '0.5',
   },
   container: {
-    font_family: 'montserratultra_light',
+    font_family: 'HelveticaNeue-Bold',
     background: '#ffffff',
     radius: '0px',
     border: '4px solid black',

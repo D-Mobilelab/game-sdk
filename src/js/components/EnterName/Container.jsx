@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 /** TODO: import only needed actions */
 import { Actions } from '../../actions/index';
-import EnterName from './EnterName';
+import EnterName from './EnterName_old';
 import Leaderboard from './Leaderboard';
 import css from './common.css';
 

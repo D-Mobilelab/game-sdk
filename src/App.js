@@ -1,7 +1,8 @@
 import React from 'react';
 import LazilyLoad, { importLazy } from './LazilyLoad';
 import Interstitial from './js/components/Interstitial/Interstitial';
-import Gameover from './js/components/Gameover/Go';
+import Leaderboard from './js/components/Leaderboard/index';
+import EnterName from './js/components/EnterName/index';
 import './css/generic.css';
 
 export default class App extends React.Component {
@@ -9,6 +10,8 @@ export default class App extends React.Component {
     return (
       <div>
         <Interstitial />
+        <EnterName />
+        <Leaderboard />
         <LazilyLoad modules={{
           // Gameover: () => {
           //   switch (this.props.label) {
@@ -54,17 +57,15 @@ export default class App extends React.Component {
                 return importLazy(System.import('./js/components/MenuList/Gameasy'));
             }
           },
-          EnterNameContainer: () => {
-            if (this.props.label === 'bandai') {
-              return importLazy(System.import('./js/components/EnterName/Container'));
-            }
-            return function Noop() { return null; };
-          },
+          // EnterNameContainer: () => {
+          //   if (this.props.label === 'bandai') {
+          //     return importLazy(System.import('./js/components/EnterName/Container'));
+          //   }
+          //   return function Noop() { return null; };
+          // },
         }}>
-          {({ Banner, Menu, MenuList, EnterNameContainer }) => (
+          {({ Banner, Menu, MenuList }) => (
             <div>
-              <EnterNameContainer />
-              <Gameover />
               <Banner />
               <Menu />
               <MenuList />

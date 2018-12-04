@@ -1,5 +1,5 @@
-import connect from './connectGameover';
-import { GamempireGameover } from './index';
+import connect from './connect';
+import { GamempireGameover } from './index_old';
 
 
 export default connect(GamempireGameover)

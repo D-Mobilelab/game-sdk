@@ -4,8 +4,8 @@ import { Grid, Row, Column } from '../Layout/index';
 import Image from '../Image/Image';
 import { List, ListItem } from '../Related';
 import Button from '../MaterialButton/Default';
-import Dashboard from '../Gameover/Dashboard';
-import DashboardH3g from '../Gameover/DashboardH3g';
+import Dashboard from './Dashboard';
+import DashboardH3g from './DashboardH3g';
 import Icon from '../Icon/index.jsx';
 
 export class Gameover extends Component {

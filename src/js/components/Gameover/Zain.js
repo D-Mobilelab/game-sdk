@@ -1,5 +1,5 @@
-import connect from './connectGameover';
-import { ZainGameover } from './index';
+import connect from './connect';
+import { ZainGameover } from './index_old';
 
 
 export default connect(ZainGameover)
