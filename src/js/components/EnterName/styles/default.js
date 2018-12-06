@@ -7,7 +7,7 @@ const main = {
     font_family: 'HelveticaNeue-Bold',
     background: '#ffffff',
     radius: '0px',
-    border: '4px solid black',
+    border: '4px solid #cccccc',
   },
   play:{
     background: '#000000',

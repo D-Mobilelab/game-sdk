@@ -6,10 +6,11 @@ import { Actions } from '../../actions/index';
 const mapStateToProps = state => ({
   isGameFavourite: state.user.favourites.some(favourite => (favourite.id === state.game_info.id)),
   label: state.generic.label,
-  show: state.game_over.show,
+  show: state.game_over.showLeaderboard,
   game_info: state.game_info,
   user: state.user,
   score: state.session.score,
+  positions: state.game_over.leaderboard,
   rank: state.session.rank,
   dictionary: state.generic.dictionary,
   vhost: state.vhost,

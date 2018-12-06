@@ -11,7 +11,7 @@ const Overlay = styled.div`
   top: 0px;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: 899;
   background-color: ${props => props.theme.overlay.background};
   opacity: ${props => props.theme.overlay.opacity};
 `;
@@ -21,7 +21,7 @@ const Frame = styled.div`
   padding: 5%;
   text-align: center;
   position: relative;
-  z-index: 1001;
+  z-index: 900;
   max-width: 740px;
   margin: 0px auto;
 `;
@@ -196,35 +196,10 @@ export class Leaderboard extends Component {
           <HighScoreTitle>HIGH SCORE</HighScoreTitle> 
           <HighScoreList>
 
-            <ScoreListRow>
-              <Position>1st</Position>
-              <Score>2.835</Score>
-              <Name>STE</Name>
-            </ScoreListRow>
-
-            <ScoreListRow>
-              <Position>2nd</Position>
-              <Score>2.835</Score>
-              <Name>STE</Name>
-            </ScoreListRow>
-            
-            <ScoreListRow>
-              <Position>3th</Position>
-              <Score>2.835</Score>
-              <Name>STE</Name>
-            </ScoreListRow>
-            
-            <ScoreListRow>
-              <Position>4th</Position>
-              <Score>2.835</Score>
-              <Name>STE</Name>
-            </ScoreListRow>
-            
-            <ScoreListRow>
-              <Position>5th</Position>
-              <Score>2.835</Score>
-              <Name>STE</Name>
-            </ScoreListRow>
+            {this.props.positions.map(function(position, i){
+                return <ScoreListRow><Position>{i+1}{(i===0)?'st':(i===1)?'nd':(i===2)?'rd':'th'}</Position><Score>{position.score}</Score><Name>{position.player_name}</Name></ScoreListRow>;
+                return <ObjectRow obj={object} key={i} />;
+            })}
 
           </HighScoreList>
           <Divider>

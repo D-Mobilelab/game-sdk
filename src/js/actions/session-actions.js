@@ -6,7 +6,7 @@ import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
-import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard, redirectLanding } from './gameover-actions';
+import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
 import { setRelated } from './gameinfo-actions';
 import { getContentId, getUserType, getMenuType } from './utils';
 import { showBanner } from './banner-actions';
@@ -53,6 +53,8 @@ export function startSession() {
     if (getState().user.canPlay || getState().user.canDownload) {
       dispatch((getMenuType() === 'extended') ? hideMenuList() : hideMenu());
       dispatch(hideGameOver());
+      dispatch(hideEnterNameModal());
+      dispatch(hideLeaderboard());
       dispatch(doStartSession());
     } else {
       console.log('User cannot play');
@@ -147,11 +149,23 @@ export function endSession(data = { score: 0, level: 1 }) {
         return;
       }
 
-      if (FW_TYPE_PROFILE !== 'gamifive') {
+      console.log('FW_TYPE_PROFILE@@@@@@@@', FW_TYPE_PROFILE);
+
+      if (initConfig.lite === false) {
+        if (FW_TYPE_PROFILE === 'gamifive') {
+          dispatch(showGameOver());
+          return;
+        }
         dispatch(showEnterNameModal());
-        // dispatch(showGameOver());
         return;
       }
+
+
+      // if (FW_TYPE_PROFILE !== 'gamifive') {
+      //   dispatch(showEnterNameModal());
+      //   // dispatch(showGameOver());
+      //   return;
+      // }
       // else if (game_type === 'default' && FW_TYPE_PROFILE !== 'bandai') {
       //   if (initConfig.lite === false) {
       //     dispatch(showGameOver());
@@ -214,14 +228,10 @@ export function registerScore(alias, inputFocus) {
     const shouldTrack = true;
     let eventName = 'NicknameAdded';
     if (inputFocus === 0 && alias === 'aaa') {
-      // Not inserted
-      // track DefaultNicknameAdded
       eventName = 'DefaultNicknameAdded';
     }
-    // TODO:
-    // userId = NewtonInstance.getUserToken();
     const lastSession = getState().session;
-    const userId = getState().user.user;  //user30?
+    const userId = getState().user.user;
     const { vhost } = getState();
     const { content_id, category } = getState().game_info;
     const NewtonInstance = Newton.getSharedInstance();

@@ -17,28 +17,29 @@ import './styles/globalcss';
 
 // const BandaiButton = withTheme(MaterialButton, bandaiTheme);
 const Overlay = styled.div`
-  display: ${props => (props.visible === true) ? 'block' : 'block'};
+  display: ${props => (props.visible === true) ? 'block' : 'none'};
   position: absolute;
   top: 0px;
   width: 100%;
   height: 100%;
-  z-index: 1000;
+  z-index: 899;
   background-color: ${props => props.theme.overlay.background};
   opacity: ${props => props.theme.overlay.opacity};
 `;
 
 const Frame = styled.div`
-  display: ${props => (props.visible === true) ? 'block' : 'block'};
   padding: 5%;
   text-align: center;
   position: relative;
-  z-index: 1001;
+  z-index: 900;
   max-width: 740px;
   margin: 0px auto;
+  margin-top:${props => (props.visible === true) ? '0px' : '-195px'};
+  transition: margin-top 0.5s ease;
 `;
 
 const Container = styled.div`
-  height: 300px;
+  height: 160px;
   width: 100%;
   background-color: ${props => props.theme.container.background};
   border-radius: ${props => props.theme.container.radius};
@@ -49,13 +50,33 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  text-align:center;
-  padding:10px;
+  color: #000000;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 5px 0;
 `;
 
 const Module = styled.div`
   text-align:center;
   padding:10px;
+`;
+
+const Letter = styled.input`
+  display: inline-block;
+  font-family: inherit;
+  margin: 0 1px 0 0;
+  padding: 0;
+  border: 0;
+  width: 30px;
+  -webkit-appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 35px;
+  background: #fff;
+  color: #000;
+  border-bottom: 2px solid #cccccc
 `;
 
 const Save = styled.button`
@@ -68,95 +89,85 @@ const Save = styled.button`
 export class EnterName extends Component {
   constructor(props) {
     super(props);
-    // this.onKeyUp = this.onKeyUp.bind(this);
-    // this.onInputFocus = this.onInputFocus.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
+    this.onInputFocus = this.onInputFocus.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onClick = this.onClick.bind(this);
-    // this.serializeForm = this.serializeForm.bind(this);
-    // this.state = {
-    //   dismiss: false,
-    //   focusOn: 0,
-    //   letters: [null, null, null],
-    //   placeholder: 'a',
-    // };
+    this.serializeForm = this.serializeForm.bind(this);
+    this.state = {
+      dismiss: false,
+      focusOn: 0,
+      letters: [null, null, null],
+      placeholder: 'a',
+    };
   }
 
   componentDidMount() {
     this.currentAlias = sessionStorage.getItem('gfsdk-alias-name');
-    this.currentAlias = 'ALE';
     if (this.currentAlias) {
       this.props.actions.setLetters(this.currentAlias.split(''));
     }
   }
 
-  // serializeForm() {
-  //   /** serialize the form */
-  //   const elements = [].slice.call(this.refs.myForm);
-  //   const alias = elements
-  //     .filter(element => element.type === 'text')
-  //     .map(element => element.value === '' ? this.state.placeholder : element.value)
-  //     .join('');
-  //   return alias;
-  // }
+  serializeForm() {
+    const elements = [].slice.call(this.refs.myForm);
+    const alias = elements
+      .filter(element => element.type === 'text')
+      .map(element => element.value === '' ? this.state.placeholder : element.value)
+      .join('');
+    return alias;
+  }
 
   onClick() {
-    // const name = this.serializeForm();
-    const name = 'ugo';
+    const name = this.serializeForm();
     // Save in storage and in state only if different from default
     if (name !== 'aaa') {
-      // this.setState({ letters: name.split('') });
       this.props.actions.setLetters(name.split(''));
+      this.setState({ letters: name.split('') });
       sessionStorage.setItem('gfsdk-alias-name', name);
     }
     // this.props.onSubmit(name, this.state.focusOn);
-    // this.setState({ focusOn: 0 });
+    this.props.actions.registerScore(name, this.state.focusOn);
+    this.setState({ focusOn: 0 });
+  }
+  
+  // onSubmit(e, alias, inputFocus) {
+  onSubmit(e) {
+    e.preventDefault();
+    // this.props.actions.registerScore(alias, inputFocus);
   }
 
-  // onSubmit(e) {
-  //   /**
-  //    * iOS safari can't process correctly the submit
-  //    */
-  //   e.preventDefault();
-  // }
+  onKeyUp(e) {
+    const key = e.keyCode || e.which || e.charCode;
+    if (key === 8) {
+      // on delete
+      console.log(`Delete key ${key} ${String.fromCharCode(key)}`);
+      if (this.state.focusOn > 0) {
+        this.setState({ focusOn: this.state.focusOn - 1 }, () => {
+          this[`input${this.state.focusOn}`].focus();
+        });
+      }
+    } else {
+      // On input
+      if (this.state.focusOn < this.state.letters.length - 1) {
+        this.setState({ focusOn: this.state.focusOn + 1 }, () => {
+          // Switch focus to next input
+          this[`input${this.state.focusOn}`].focus();
+        });
+      } else {
+        // give the focus to the button!
+        this[`input${this.state.focusOn}`].blur();
+      }
+    }
+  }
 
-  // onKeyUp(e) {
-  //   const key = e.keyCode || e.which || e.charCode;
-  //   // const inputValue = this[`input${this.state.focusOn}`].value;
-  //   // on delete go backwards
-  //   // 8 is delete
-  //   const character = String.fromCharCode(key);
-  //   if (key === 8) {
-  //     console.log(`Delete key ${key} ${String.fromCharCode(key)}`);
-  //     // on delete
-  //     if (this.state.focusOn > 0) {
-  //       this.setState({ focusOn: this.state.focusOn - 1 }, () => {
-  //         // Switch focus to previous input
-  //         // console.log("previous focus", this.state);
-  //         this[`input${this.state.focusOn}`].focus();
-  //       });
-  //     }
-  //   } else {
-  //     // On input
-  //     if (this.state.focusOn < this.state.letters.length - 1) {
-  //       this.setState({ focusOn: this.state.focusOn + 1 }, () => {
-  //         // Switch focus to next input
-  //         // console.log("next focus", this.state);
-  //         this[`input${this.state.focusOn}`].focus();
-  //       });
-  //     } else {
-  //       // give the focus to the button?
-  //       this[`input${this.state.focusOn}`].blur();
-  //     }
-  //   }
-  // }
-
-  // onInputFocus(e) {
-  //   try {
-  //     e.target.value = '';
-  //     const inputOnFocusNumber = parseInt(e.target.id.split('_')[1], 10);
-  //     this.setState({ focusOn: inputOnFocusNumber });
-  //   } catch (e) {}
-  // }
+  onInputFocus(e) {
+    try {
+      e.target.value = '';
+      const inputOnFocusNumber = parseInt(e.target.id.split('_')[1], 10);
+      this.setState({ focusOn: inputOnFocusNumber });
+    } catch (e) {}
+  }
 
   render() {
     const themeClass = merge(theme, this.props.styles.styles);
@@ -167,12 +178,14 @@ export class EnterName extends Component {
         <Overlay visible={this.props.show}/>
         <Frame visible={this.props.show}>
           <Container>
-            <Title>Inserisci il tuo nome</Title>
+            <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
+            <Title>Inserisci le tue iniziali</Title>
             <Module>
               {
                 this.props.letters.map((letter, i) => {
                   return (
-                    <input
+                    <Letter
+                      onFocus={this.onInputFocus}
                       id={`input_${i}`}
                       key={`input_${i}`}
                       ref={(ref) => { this[`input${i}`] = ref; }}
@@ -186,6 +199,7 @@ export class EnterName extends Component {
               }
             </Module>
             <Save onClick={this.onClick}>Continue</Save>
+            </form>
         </Container>
         </Frame>
       </div>

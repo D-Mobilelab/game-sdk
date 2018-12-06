@@ -6,6 +6,7 @@ import { Actions } from '../../actions/index';
 const mapStateToProps = state => ({
   styles: state.styles,
   letters: state.game_over.letters,
+  show: state.game_over.showEnterName,
 });
 
 const mapDispatchToProps = dispatch => ({
