@@ -21,6 +21,7 @@ const main = {
     button: {
       background: '#000000',
       color: '#ffffff',
+      font_family: 'HelveticaNeue-Bold',
     },
   },
 };

@@ -102,9 +102,9 @@ const Save = styled.button`
   border: 0px;
   background-color:${props => props.theme.entername.button.background};
   color:${props => props.theme.entername.button.color};
+  font-family: ${props => props.theme.entername.button.font_family};
   text-transform: uppercase;
   width: 120px;
-  font-weight: bold;
   font-size: 20px;
   border-radius: 5px;
 `;
