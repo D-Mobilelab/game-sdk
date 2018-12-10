@@ -180,7 +180,7 @@ export class Gameover extends Component {
 
   render() {
 
-    const themeClass = merge(theme, this.props.styles.styles);
+    const themeClass = merge(theme, this.props.styles);
 
     return (
       <ThemeProvider theme={themeClass}>

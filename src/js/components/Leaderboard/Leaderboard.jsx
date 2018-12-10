@@ -12,8 +12,8 @@ const Overlay = styled.div`
   width: 100%;
   height: 100%;
   z-index: 899;
-  background-color: ${props => props.theme.overlay.background};
-  opacity: ${props => props.theme.overlay.opacity};
+  background-color: ${props => props.theme.leaderboard.overlay.background};
+  opacity: ${props => props.theme.leaderboard.overlay.opacity};
 `;
 
 const Frame = styled.div`
@@ -27,12 +27,13 @@ const Frame = styled.div`
 `;
 
 const Container = styled.div`
-  height: 500px;
+  height: 480px;
   width: 100%;
-  background-color: ${props => props.theme.container.background};
-  border-radius: ${props => props.theme.container.radius};
-  border: ${props => props.theme.container.border};
-  font-family: ${props => props.theme.container.font_family};
+  background-color: ${props => props.theme.leaderboard.container.background};
+  color: ${props => props.theme.leaderboard.container.color};
+  border-radius: ${props => props.theme.leaderboard.container.radius};
+  border: ${props => props.theme.leaderboard.container.border};
+  font-family: ${props => props.theme.leaderboard.container.font_family};
   box-sizing: border-box;
   padding:10px;
 
@@ -43,11 +44,13 @@ const ScoreTitle = styled.div`
   font-size: 1.4em;
   text-align: center;
   font-weight:bold;
+  color: ${props => props.theme.leaderboard.title.color};
 `;
 
 const ScoreContainer = styled.div`
   display:table;
   margin:0px auto;
+  margin-top: 10px;
 `;
 
 const ArrowLeft = styled.div`
@@ -57,11 +60,13 @@ const ArrowLeft = styled.div`
     width: 15px;
     height: 0px;
     border-top:8px solid transparent;
-    border-left:8px solid black;
+    border-left:8px solid #000000;
+    border-left-color: ${props => props.theme.leaderboard.arrow.color};
     border-right:8px solid transparent;
     border-bottom:8px solid transparent;
     display:block;
     content:"";
+    color: #ffffff;
   }
 `;
 
@@ -81,27 +86,34 @@ const ArrowRight = styled.div`
     height: 0px;
     border-top:8px solid transparent;
     border-left:8px solid transparent;
-    border-right:8px solid black;
+    border-right:8px solid #000000;
+    border-right-color: ${props => props.theme.leaderboard.arrow.color};
     border-bottom:8px solid transparent;
     display:block;
     content:"";
+    color: #ffffff;
     }
 `;
 
 const HighScoreTitle = styled.div`
   margin-top: 20px;
+  margin-bottom: 5px;
   clear: both;
   font-size: 1.3em;
   font-weight: bold;
+  color:  ${props => props.theme.leaderboard.table_score.title_color};
 `;
 
 const HighScoreList = styled.div`
   display:table;
   border-top:solid thin #000000;
+  border-top-color: ${props => props.theme.leaderboard.table_score.border_top_color};
   border-bottom:solid thin #000000;
+  border-bottom-color: ${props => props.theme.leaderboard.table_score.border_bottom_color};
   padding-top:10px;
   padding-bottom:10px;
-  width:100%;
+  width: 90%;
+  margin-left: 15px;
 `;
 
 
@@ -113,7 +125,7 @@ const Divider = styled.div`
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-    background: #000000;
+    background: ${props => props.theme.leaderboard.divider.color};
     margin: 10px;
     display: inline-block;
   }
@@ -121,9 +133,11 @@ const Divider = styled.div`
 
 const ScoreListRow = styled.div`
   display:table-row;
+  height: 25px;
   &:first-child{
     font-size: 1.5em;
-
+    color: ${props => props.theme.leaderboard.table_score.first_row_color};
+    height: 30px;
   }
 `;
 
@@ -147,13 +161,15 @@ const Name = styled.div`
 const Message = styled.div`
   text-align:center;
   text-transform: uppercase;
-  margin-top:20px;
+  margin-top:5px;
   margin-bottom:20px;
+  color: ${props => props.theme.leaderboard.message.color};
 `;
 
 const PlayAgain = styled.button`
-  background-color: ${props => props.theme.play.background};
-  color: ${props => props.theme.play.color};
+  background-color: ${props => props.theme.leaderboard.button.background};
+  color: ${props => props.theme.leaderboard.button.color};
+  font-family: ${props => props.theme.leaderboard.button.font_family};
   border-radius: 25px;
   height: 40px;
   line-height: 40px;
@@ -179,7 +195,7 @@ export class Leaderboard extends Component {
   }
 
   render() {
-    const themeClass = merge(theme, this.props.styles.styles);
+    const themeClass = merge(theme, this.props.styles);
 
     return (
       <ThemeProvider theme={themeClass}>

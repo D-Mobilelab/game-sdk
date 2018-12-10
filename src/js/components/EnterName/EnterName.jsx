@@ -11,20 +11,20 @@ import React, { Component } from 'react';
 import merge from 'deepmerge';
 import styled, { ThemeProvider } from 'styled-components';
 import { sessionStorage } from '../../lib/LocalStorage';
-import { setLetters } from '../../actions/gameover-actions';
+// import { setLetters } from '../../actions/gameover-actions';
 import theme from './styles/default';
 import './styles/globalcss';
 
 // const BandaiButton = withTheme(MaterialButton, bandaiTheme);
 const Overlay = styled.div`
-  display: ${props => (props.visible === true) ? 'block' : 'none'};
+  display: ${props => ((props.visible === true) ? 'block' : 'none')};
   position: absolute;
   top: 0px;
   width: 100%;
   height: 100%;
   z-index: 899;
-  background-color: ${props => props.theme.overlay.background};
-  opacity: ${props => props.theme.overlay.opacity};
+  background-color: ${props => props.theme.entername.overlay.background};
+  opacity: ${props => props.theme.entername.overlay.opacity};
 `;
 
 const Frame = styled.div`
@@ -34,26 +34,43 @@ const Frame = styled.div`
   z-index: 900;
   max-width: 740px;
   margin: 0px auto;
-  margin-top:${props => (props.visible === true) ? '0px' : '-195px'};
+  margin-top:${props => ((props.visible === true) ? '0px' : '-195px')};
   transition: margin-top 0.5s ease;
 `;
 
 const Container = styled.div`
   height: 160px;
   width: 100%;
-  background-color: ${props => props.theme.container.background};
-  border-radius: ${props => props.theme.container.radius};
-  border: ${props => props.theme.container.border};
-  font-family: ${props => props.theme.container.font_family};
+  background-color: ${props => props.theme.entername.container.background};
+  border-radius: ${props => props.theme.entername.container.radius};
+  border: ${props => props.theme.entername.container.border};
+  font-family: ${props => props.theme.entername.container.font_family};
   box-sizing: border-box;
   padding:10px;
 `;
 
 const Title = styled.div`
-  color: #000000;
+  color: ${props => props.theme.entername.title.color};
   text-transform: uppercase;
   text-align: center;
   padding: 5px 0;
+`;
+
+const Layout = styled.div`
+  display:table;
+  margin:0px auto;
+  width: 100%;
+  margin-top: 15px;
+`;
+
+const Left = styled.div`
+  display:table-cell;
+  vertical-align:middle;
+`;
+
+const Right = styled.div`
+  display:table-cell;
+  vertical-align:middle;
 `;
 
 const Module = styled.div`
@@ -74,16 +91,22 @@ const Letter = styled.input`
   text-transform: uppercase;
   text-align: center;
   font-size: 35px;
-  background: #fff;
-  color: #000;
-  border-bottom: 2px solid #cccccc
+  color: ${props => props.theme.entername.letters.color};
+  background: ${props => props.theme.entername.letters.background};
+  border-bottom: ${props => props.theme.entername.letters.border_bottom};
 `;
 
 const Save = styled.button`
-  text-align:center;
-  padding:10px;
-  background-color:#000;
-  color:#fff;
+  text-align: center;
+  padding: 10px;
+  border: 0px;
+  background-color:${props => props.theme.entername.button.background};
+  color:${props => props.theme.entername.button.color};
+  text-transform: uppercase;
+  width: 120px;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 5px;
 `;
 
 export class EnterName extends Component {
@@ -113,7 +136,7 @@ export class EnterName extends Component {
     const elements = [].slice.call(this.refs.myForm);
     const alias = elements
       .filter(element => element.type === 'text')
-      .map(element => element.value === '' ? this.state.placeholder : element.value)
+      .map(element => (element.value === '' ? this.state.placeholder : element.value))
       .join('');
     return alias;
   }
@@ -130,7 +153,7 @@ export class EnterName extends Component {
     this.props.actions.registerScore(name, this.state.focusOn);
     this.setState({ focusOn: 0 });
   }
-  
+
   // onSubmit(e, alias, inputFocus) {
   onSubmit(e) {
     e.preventDefault();
@@ -170,46 +193,50 @@ export class EnterName extends Component {
   }
 
   render() {
-    const themeClass = merge(theme, this.props.styles.styles);
+    const themeClass = merge(theme, this.props.styles);
 
     return (
       <ThemeProvider theme={themeClass}>
-      <div>
-        <Overlay visible={this.props.show}/>
-        <Frame visible={this.props.show}>
-          <Container>
-            <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
-            <Title>Inserisci le tue iniziali</Title>
-            <Module>
-              {
-                this.props.letters.map((letter, i) => {
-                  return (
-                    <Letter
-                      onFocus={this.onInputFocus}
-                      id={`input_${i}`}
-                      key={`input_${i}`}
-                      ref={(ref) => { this[`input${i}`] = ref; }}
-                      type='text'
-                      maxLength='1'
-                      autoComplete='off'
-                      defaultValue={letter}
-                      placeholder='a'
-                    />)
-                })
-              }
-            </Module>
-            <Save onClick={this.onClick}>Continue</Save>
-            </form>
-        </Container>
-        </Frame>
-      </div>
+        <div>
+          <Overlay visible={this.props.show}/>
+          <Frame visible={this.props.show}>
+            <Container>
+              <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
+                <Title>Inserisci le tue iniziali</Title>
+                <Layout>
+                  <Left>
+                    <Module>
+                      {
+                        this.props.letters.map((letter, i) => (
+                      <Letter
+                        onFocus={this.onInputFocus}
+                        id={`input_${i}`}
+                        key={`input_${i}`}
+                        ref={(ref) => { this[`input${i}`] = ref; }}
+                        type='text'
+                        maxLength='1'
+                        autoComplete='off'
+                        defaultValue={letter}
+                        placeholder='a'
+                      />))
+                      }
+                    </Module>
+                  </Left>
+                  <Right>
+                    <Save onClick={this.onClick}>Enter</Save>
+                  </Right>
+                </Layout>
+              </form>
+            </Container>
+          </Frame>
+        </div>
       </ThemeProvider>
     );
   }
 
   render2() {
     return (
-      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>        
+      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
         <button className={css.closeButton} onClick={this.props.onDismiss}></button>
         <div className={css.title}>{this.props.title}</div>
         <div className={css.formContainer}>
@@ -217,8 +244,7 @@ export class EnterName extends Component {
             <div className={css.element}>
               <div className={css.inputBlock}>
                 {
-                  this.state.letters.map((letter, i) => {
-                    return (
+                  this.state.letters.map((letter, i) => (
                       <input onFocus={this.onInputFocus}
                         className={css.inputLetter}
                         id={`input_${i}`}
@@ -229,8 +255,7 @@ export class EnterName extends Component {
                         autoComplete='off'
                         defaultValue={letter}
                         placeholder={this.state.placeholder}
-                      />)
-                  })
+                      />))
                 }
               </div>
             </div>
@@ -264,8 +289,8 @@ export default EnterName;
 EnterName.defaultProps = {
   title: '',
   buttonLabel: '',
-  onSubmit: function () { },
-  onDismiss: function () { },
+  onSubmit () { },
+  onDismiss () { },
   show: false,
   loading: false,
 };
