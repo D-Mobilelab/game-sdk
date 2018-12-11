@@ -41,10 +41,13 @@ const Frame = styled.div`
 const Container = styled.div`
   height: 160px;
   width: 100%;
-  background-color: ${props => props.theme.entername.container.background};
+  background: ${props => props.theme.entername.container.background};
+  background-color: ${props => props.theme.entername.container.backgroundColor};
+  background-repeat: ${props => props.theme.entername.container.backgroundRepeat};
   border-radius: ${props => props.theme.entername.container.radius};
   border: ${props => props.theme.entername.container.border};
-  font-family: ${props => props.theme.entername.container.font_family};
+  border-image: ${props => props.theme.entername.container.borderImage};
+  font-family: ${props => props.theme.entername.container.fontFamily};
   box-sizing: border-box;
   padding:10px;
 `;
@@ -102,7 +105,7 @@ const Save = styled.button`
   border: 0px;
   background-color:${props => props.theme.entername.button.background};
   color:${props => props.theme.entername.button.color};
-  font-family: ${props => props.theme.entername.button.font_family};
+  font-family: ${props => props.theme.entername.button.fontFamily};
   text-transform: uppercase;
   width: 120px;
   font-size: 20px;

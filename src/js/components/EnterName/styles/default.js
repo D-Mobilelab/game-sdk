@@ -5,10 +5,12 @@ const main = {
       opacity: '0.5',
     },
     container: {
-      font_family: 'HelveticaNeue-Bold',
+      fontFamily: 'HelveticaNeue-Bold',
       background: '#ffffff',
       radius: '0px',
       border: '4px solid #cccccc',
+      backgroundColor: '',
+      backgroundRepeat: '',
     },
     title: {
       color: '#ffffff',
@@ -21,7 +23,7 @@ const main = {
     button: {
       background: '#000000',
       color: '#ffffff',
-      font_family: 'HelveticaNeue-Bold',
+      fontFamily: 'HelveticaNeue-Bold',
     },
   },
 };

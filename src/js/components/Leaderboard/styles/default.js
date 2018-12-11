@@ -10,6 +10,8 @@ const main = {
       radius: '0px',
       border: '4px solid #cccccc',
       color: '#000000',
+      backgroundColor: '',
+      backgroundRepeat: '',
     },
     title: {
       color: '#000000',

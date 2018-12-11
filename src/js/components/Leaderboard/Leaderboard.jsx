@@ -29,10 +29,13 @@ const Frame = styled.div`
 const Container = styled.div`
   height: 480px;
   width: 100%;
-  background-color: ${props => props.theme.leaderboard.container.background};
+  background: ${props => props.theme.leaderboard.container.background};
+  background-color: ${props => props.theme.leaderboard.container.backgroundColor};
+  background-repeat: ${props => props.theme.leaderboard.container.backgroundRepeat};
   color: ${props => props.theme.leaderboard.container.color};
   border-radius: ${props => props.theme.leaderboard.container.radius};
   border: ${props => props.theme.leaderboard.container.border};
+  border-image: ${props => props.theme.leaderboard.container.borderImage};
   font-family: ${props => props.theme.leaderboard.container.font_family};
   box-sizing: border-box;
   padding:10px;
