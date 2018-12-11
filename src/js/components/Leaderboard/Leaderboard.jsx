@@ -203,13 +203,13 @@ export class Leaderboard extends Component {
         <Overlay visible={this.props.show}/>
         <Frame visible={this.props.show}>
           <Container>
-          <ScoreTitle>Your Score</ScoreTitle>
+          <ScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_YOUR_SCORE}</ScoreTitle>
           <ScoreContainer>
             <ArrowLeft/>
               <YourScore>{this.props.score}</YourScore>
-            <ArrowRight/>  
+            <ArrowRight/>
           </ScoreContainer>
-          <HighScoreTitle>HIGH SCORE</HighScoreTitle> 
+          <HighScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_HIGH_SCORE}</HighScoreTitle>
           <HighScoreList>
 
             {this.props.positions.map(function(position, i){
@@ -223,8 +223,8 @@ export class Leaderboard extends Component {
             <span></span>
             <span></span>
           </Divider>
-          <Message>Congratulations!<br/>play again and get the <br/>top of the ranking</Message>
-          <PlayAgain  onClick={this.handleReplay}>Play Again</PlayAgain>
+          <Message>{this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE}</Message>
+          <PlayAgain  onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
         </Container>
         </Frame>
       </div>

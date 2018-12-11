@@ -202,7 +202,7 @@ export class EnterName extends Component {
           <Frame visible={this.props.show}>
             <Container>
               <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
-                <Title>Inserisci le tue iniziali</Title>
+                <Title>{this.props.dictionary.WEBAPP_GAMEOVER_INSERT_ALIAS}</Title>
                 <Layout>
                   <Left>
                     <Module>
@@ -223,7 +223,7 @@ export class EnterName extends Component {
                     </Module>
                   </Left>
                   <Right>
-                    <Save onClick={this.onClick}>Enter</Save>
+                    <Save onClick={this.onClick}>{this.props.dictionary.WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON}</Save>
                   </Right>
                 </Layout>
               </form>

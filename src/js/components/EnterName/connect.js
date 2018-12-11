@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   styles: state.styles,
   letters: state.game_over.letters,
   show: state.game_over.showEnterName,
+  dictionary: state.generic.dictionary,
 });
 
 const mapDispatchToProps = dispatch => ({
