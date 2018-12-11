@@ -104,6 +104,7 @@ const HighScoreTitle = styled.div`
   clear: both;
   font-size: 1.3em;
   font-weight: bold;
+  text-transform: uppercase;
   color:  ${props => props.theme.leaderboard.table_score.title_color};
 `;
 
@@ -226,7 +227,7 @@ export class Leaderboard extends Component {
             <span></span>
             <span></span>
           </Divider>
-          <Message>{this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE}</Message>
+          <Message dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} />
           <PlayAgain  onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
         </Container>
         </Frame>
