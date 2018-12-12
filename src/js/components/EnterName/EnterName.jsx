@@ -38,7 +38,7 @@ const Frame = styled.div`
   text-align: center;
   position: relative;
   z-index: 900;
-  max-width: 740px;
+  max-width: 450px;
   margin: 0px auto;
   transform: translateY(-250px);
   display:${props => ((props.visible === true) ? 'block' : 'none')};

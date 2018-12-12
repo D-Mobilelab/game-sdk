@@ -5,7 +5,7 @@ const main = {
       opacity: '0.5',
     },
     container: {
-      font_family: 'HelveticaNeue-Bold',
+      fontFamily: 'HelveticaNeue-Bold',
       background: '#ffffff',
       radius: '0px',
       border: '4px solid #cccccc',
@@ -35,7 +35,7 @@ const main = {
     button: {
       background: '#000000',
       color: '#ffffff',
-      font_family: 'inherit',
+      fontFamily: 'inherit',
       borderRadius: '25px',
     },
   },

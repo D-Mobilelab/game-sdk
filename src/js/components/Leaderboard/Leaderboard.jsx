@@ -37,13 +37,13 @@ const Frame = styled.div`
   text-align: center;
   position: relative;
   z-index: 900;
-  max-width: 740px;
+  max-width: 450px;
   margin: 0px auto;
   transform: translateY(-1000px);
 `;
 
 const Container = styled.div`
-  height: 510px;
+  height: 500px;
   width: 100%;
   background: ${props => props.theme.leaderboard.container.background};
   background-color: ${props => props.theme.leaderboard.container.backgroundColor};
@@ -154,6 +154,7 @@ const Divider = styled.div`
 const ScoreListRow = styled.div`
   display:table-row;
   height: 25px;
+  color: ${props => props.theme.leaderboard.table_score.color};
   &:first-child{
     font-size: 1.5em;
     color: ${props => props.theme.leaderboard.table_score.first_row_color};
@@ -179,22 +180,29 @@ const Name = styled.div`
 `;
 
 const Message = styled.div`
-  text-align:center;
-  text-transform: uppercase;
-  margin-top:5px;
-  margin-bottom:20px;
+  height:90px;
+  position: relative;
   color: ${props => props.theme.leaderboard.message.color};
+  >span{
+    transform: translate(-50%, -50%);
+    position:absolute;
+    top:50%;
+    left:50%;
+    font-size: 0.96em;
+    width:100%;
+    text-transform: uppercase;
+    }
 `;
 
 const PlayAgain = styled.button`
   background-color: ${props => props.theme.leaderboard.button.background};
   color: ${props => props.theme.leaderboard.button.color};
-  font-family: ${props => props.theme.leaderboard.button.font_family};
+  font-family: ${props => props.theme.leaderboard.button.fontFamily};
   border-radius: ${props => props.theme.leaderboard.button.borderRadius};
   height: 40px;
   border: none;
   text-transform: uppercase;
-  font-size: 1.2em;
+  font-size: 1.4em;
   width: 200px;
 `;
 
@@ -240,7 +248,7 @@ export class Leaderboard extends Component {
             <span></span>
             <span></span>
           </Divider>
-          <Message dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} />
+          <Message><span dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} /></Message>
           <PlayAgain  onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
         </Container>
         </Frame>
