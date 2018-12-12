@@ -36,6 +36,7 @@ const main = {
       background: '#000000',
       color: '#ffffff',
       font_family: 'inherit',
+      borderRadius: '25px',
     },
   },
 };

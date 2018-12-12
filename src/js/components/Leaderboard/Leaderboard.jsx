@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import merge from 'deepmerge';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, css, keyframes } from 'styled-components';
 import theme from './styles/default';
 import './styles/globalcss';
 
+
+const animationIn = keyframes`
+    0%   {
+      opacity: 0;
+      transform: translateY(-250px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+`;
+
+const animationInRule = css`
+  ${animationIn} 600ms cubic-bezier(.67,1.99,.64,.6) forwards;
+`;
 
 const Overlay = styled.div`
   display: ${props => (props.visible === true) ? 'block' : 'none'};
@@ -17,17 +32,18 @@ const Overlay = styled.div`
 `;
 
 const Frame = styled.div`
-  display: ${props => (props.visible === true) ? 'block' : 'none'};
+  animation: ${props => ((props.visible === true) ? animationInRule : 'none')};
   padding: 5%;
   text-align: center;
   position: relative;
   z-index: 900;
   max-width: 740px;
   margin: 0px auto;
+  transform: translateY(-1000px);
 `;
 
 const Container = styled.div`
-  height: 480px;
+  height: 510px;
   width: 100%;
   background: ${props => props.theme.leaderboard.container.background};
   background-color: ${props => props.theme.leaderboard.container.backgroundColor};
@@ -36,7 +52,7 @@ const Container = styled.div`
   border-radius: ${props => props.theme.leaderboard.container.radius};
   border: ${props => props.theme.leaderboard.container.border};
   border-image: ${props => props.theme.leaderboard.container.borderImage};
-  font-family: ${props => props.theme.leaderboard.container.font_family};
+  font-family: ${props => props.theme.leaderboard.container.fontFamily};
   box-sizing: border-box;
   padding:10px;
 
@@ -174,16 +190,13 @@ const PlayAgain = styled.button`
   background-color: ${props => props.theme.leaderboard.button.background};
   color: ${props => props.theme.leaderboard.button.color};
   font-family: ${props => props.theme.leaderboard.button.font_family};
-  border-radius: 25px;
+  border-radius: ${props => props.theme.leaderboard.button.borderRadius};
   height: 40px;
-  line-height: 40px;
   border: none;
   text-transform: uppercase;
   font-size: 1.2em;
   width: 200px;
 `;
-
-
 
 
 export class Leaderboard extends Component {

@@ -1,21 +1,26 @@
-// import React, { Component } from 'react';
-// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
-// import MaterialButton from '../MaterialButton/MaterialButton';
-// import bandaiTheme from '../MaterialButton/theme/bandai.css';
-// import withTheme from '../withTheme';
-// import transitions from './transitions.css';
-// import css from './enterName.css';
-
 import React, { Component } from 'react';
 import merge from 'deepmerge';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, css, keyframes } from 'styled-components';
 import { sessionStorage } from '../../lib/LocalStorage';
-// import { setLetters } from '../../actions/gameover-actions';
 import theme from './styles/default';
 import './styles/globalcss';
 
-// const BandaiButton = withTheme(MaterialButton, bandaiTheme);
+const animationIn = keyframes`
+    0%   {
+      opacity: 0;
+      transform: translateY(-250px);
+      display:none;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+`;
+
+const animationInRule = css`
+  ${animationIn} 600ms cubic-bezier(.67,1.99,.64,.6) forwards;
+`;
+
 const Overlay = styled.div`
   display: ${props => ((props.visible === true) ? 'block' : 'none')};
   position: absolute;
@@ -28,14 +33,15 @@ const Overlay = styled.div`
 `;
 
 const Frame = styled.div`
+  animation: ${props => ((props.visible === true) ? animationInRule : 'none')};
   padding: 5%;
   text-align: center;
   position: relative;
   z-index: 900;
   max-width: 740px;
   margin: 0px auto;
-  margin-top:${props => ((props.visible === true) ? '0px' : '-195px')};
-  transition: margin-top 0.5s ease;
+  transform: translateY(-250px);
+  display:${props => ((props.visible === true) ? 'block' : 'none')};
 `;
 
 const Container = styled.div`
@@ -146,21 +152,17 @@ export class EnterName extends Component {
 
   onClick() {
     const name = this.serializeForm();
-    // Save in storage and in state only if different from default
     if (name !== 'aaa') {
       this.props.actions.setLetters(name.split(''));
       this.setState({ letters: name.split('') });
       sessionStorage.setItem('gfsdk-alias-name', name);
     }
-    // this.props.onSubmit(name, this.state.focusOn);
     this.props.actions.registerScore(name, this.state.focusOn);
     this.setState({ focusOn: 0 });
   }
 
-  // onSubmit(e, alias, inputFocus) {
   onSubmit(e) {
     e.preventDefault();
-    // this.props.actions.registerScore(alias, inputFocus);
   }
 
   onKeyUp(e) {

@@ -13,7 +13,7 @@ const main = {
       backgroundRepeat: '',
     },
     title: {
-      color: '#ffffff',
+      color: '#000000',
     },
     letters: {
       border_bottom: '2px solid #cccccc',
