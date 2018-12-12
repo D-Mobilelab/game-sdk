@@ -152,10 +152,6 @@ export function endSession(data = { score: 0, level: 1 }) {
       console.log('FW_TYPE_PROFILE@@@@@@@@', FW_TYPE_PROFILE);
 
       if (initConfig.lite === false) {
-        if (FW_TYPE_PROFILE === 'gamifive') {
-          dispatch(showGameOver());
-          return;
-        }
         dispatch(showEnterNameModal());
         return;
       }
