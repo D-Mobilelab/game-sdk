@@ -10,8 +10,8 @@
 
 @font-face{
     font-family: 'montserratultra_light';
-    src: url('../../Gameover/font/montserrat-ultralight-webfont.eot');
-    src: url('../../Gameover/font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('../../Gameover/font/montserrat-ultralight-webfont.woff') format('woff'), url('../../Gameover/font/montserrat-ultralight-webfont.ttf') format('truetype'), url('../../Gameover/font/montserrat-ultralight-webfont.svg') format('svg');
+    src: url('../font/montserrat-ultralight-webfont.eot');
+    src: url('../font/montserrat-ultralight-webfont.eot') format('embedded-opentype'), url('../font/montserrat-ultralight-webfont.woff') format('woff'), url('../font/montserrat-ultralight-webfont.ttf') format('truetype'), url('../font/montserrat-ultralight-webfont.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
