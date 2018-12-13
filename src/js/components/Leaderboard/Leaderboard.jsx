@@ -26,7 +26,7 @@ const Overlay = styled.div`
   top: 0px;
   width: 100%;
   height: 100%;
-  z-index: 899;
+  z-index: 8100;
   background-color: ${props => props.theme.leaderboard.overlay.background};
   opacity: ${props => props.theme.leaderboard.overlay.opacity};
 `;
@@ -36,7 +36,7 @@ const Frame = styled.div`
   padding: 5%;
   text-align: center;
   position: relative;
-  z-index: 900;
+  z-index: 8101;
   max-width: 450px;
   margin: 0px auto;
   transform: translateY(-1000px);
@@ -56,6 +56,20 @@ const Container = styled.div`
   box-sizing: border-box;
   padding:10px;
 
+`;
+
+const CloseX = styled.i`
+  position: absolute;
+  top: 26px;
+  right: 29px;
+  font: normal 1em/1 Arial,sans-serif;
+  text-align: right;
+  font-size: 2em;
+  display: inline-block;
+  color: ${props => props.theme.leaderboard.close_x.color};
+  &:before{
+    content: '×';
+  }
 `;
 
 const ScoreTitle = styled.div`
@@ -212,11 +226,17 @@ export class Leaderboard extends Component {
   constructor(props) {
     super(props);
     this.handleReplay = this.handleReplay.bind(this);
+    this.onClose = this.onClose.bind(this);
   }
 
   handleReplay(evt) {
     evt.preventDefault();
     this.props.actions.startSession();
+  }
+
+  onClose(evt) {
+    evt.preventDefault();
+    this.props.actions.hideLeaderboard();
   }
 
   render() {
@@ -228,6 +248,7 @@ export class Leaderboard extends Component {
           <Overlay visible={this.props.show}/>
           <Frame visible={this.props.show}>
             <Container showReplayButton={this.props.showReplayButton}>
+              <CloseX onClick={this.onClose}/>
               <ScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_YOUR_SCORE}</ScoreTitle>
               <ScoreContainer>
                 <ArrowLeft/>

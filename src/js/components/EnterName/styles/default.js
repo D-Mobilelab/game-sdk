@@ -12,6 +12,9 @@ const main = {
       backgroundColor: '',
       backgroundRepeat: '',
     },
+    close_x: {
+      color: '#000000',
+    },
     title: {
       color: '#000000',
     },

@@ -27,7 +27,7 @@ const Overlay = styled.div`
   top: 0px;
   width: 100%;
   height: 100%;
-  z-index: 899;
+  z-index: 8100;
   background-color: ${props => props.theme.entername.overlay.background};
   opacity: ${props => props.theme.entername.overlay.opacity};
 `;
@@ -37,7 +37,7 @@ const Frame = styled.div`
   padding: 5%;
   text-align: center;
   position: relative;
-  z-index: 900;
+  z-index: 8101;
   max-width: 450px;
   margin: 0px auto;
   transform: translateY(-250px);
@@ -56,6 +56,20 @@ const Container = styled.div`
   font-family: ${props => props.theme.entername.container.fontFamily};
   box-sizing: border-box;
   padding:10px;
+`;
+
+const CloseX = styled.i`
+  position: absolute;
+  top: 26px;
+  right: 29px;
+  font: normal 1em/1 Arial,sans-serif;
+  text-align: right;
+  font-size: 2em;
+  display: inline-block;
+  color: ${props => props.theme.entername.close_x.color};
+  &:before{
+    content: '×';
+  }
 `;
 
 const Title = styled.div`
@@ -125,6 +139,7 @@ export class EnterName extends Component {
     this.onInputFocus = this.onInputFocus.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onClose = this.onClose.bind(this);
     this.serializeForm = this.serializeForm.bind(this);
     this.state = {
       dismiss: false,
@@ -197,6 +212,11 @@ export class EnterName extends Component {
     } catch (e) {}
   }
 
+  onClose(evt) {
+    evt.preventDefault();
+    this.props.actions.hideEnterNameModal();
+  }
+
   render() {
     const themeClass = merge(theme, this.props.styles);
 
@@ -206,6 +226,7 @@ export class EnterName extends Component {
           <Overlay visible={this.props.show}/>
           <Frame visible={this.props.show}>
             <Container>
+              <CloseX onClick={this.onClose}/>
               <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
                 <Title>{this.props.dictionary.WEBAPP_GAMEOVER_INSERT_ALIAS}</Title>
                 <Layout>
@@ -238,55 +259,6 @@ export class EnterName extends Component {
       </ThemeProvider>
     );
   }
-
-  render2() {
-    return (
-      <div className={css.container} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
-        <button className={css.closeButton} onClick={this.props.onDismiss}></button>
-        <div className={css.title}>{this.props.title}</div>
-        <div className={css.formContainer}>
-          <form className={css.form} ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
-            <div className={css.element}>
-              <div className={css.inputBlock}>
-                {
-                  this.state.letters.map((letter, i) => (
-                      <input onFocus={this.onInputFocus}
-                        className={css.inputLetter}
-                        id={`input_${i}`}
-                        key={`input_${i}`}
-                        ref={(ref) => { this[`input${i}`] = ref; }}
-                        type='text'
-                        maxLength='1'
-                        autoComplete='off'
-                        defaultValue={letter}
-                        placeholder={this.state.placeholder}
-                      />))
-                }
-              </div>
-            </div>
-            <div className={css.element}>
-              <BandaiButton ref='submitButton' type='button' isLoading={this.props.loading} disabled={this.props.loading} onClick={this.onClick}>
-                {this.props.buttonLabel.toUpperCase()}
-              </BandaiButton>
-            </div>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-//   render() {
-//     return (
-//       <ReactCSSTransitionGroup
-//         transitionAppear={true}
-//         transitionAppearTimeout={600}
-//         transitionEnterTimeout={600}
-//         transitionLeaveTimeout={1200}
-//         transitionName={transitions}>
-//         {(this.props.show) ? this.returnComponent() : null}
-//       </ReactCSSTransitionGroup>
-//     )
-//   }
 }
 
 export default EnterName;
