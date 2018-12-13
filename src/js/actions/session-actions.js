@@ -7,8 +7,7 @@ import { hideMenu, showMenu } from './menu-actions';
 import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
-import { setRelated } from './gameinfo-actions';
-import { getContentId, getUserType, getMenuType } from './utils';
+import { getUserType, getMenuType } from './utils';
 import { showBanner } from './banner-actions';
 import location from '../lib/Location';
 
@@ -135,7 +134,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       dispatch({ type: 'END_SESSION', session });
       dispatch(increaseMatchPlayed());
       dispatch((getMenuType() === 'extended') ? showMenuList() : showMenu());
-      const lastSession = getState().session;
+      // const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
 
@@ -149,10 +148,12 @@ export function endSession(data = { score: 0, level: 1 }) {
         return;
       }
 
-      console.log('FW_TYPE_PROFILE@@@@@@@@', FW_TYPE_PROFILE);
-
       if (initConfig.lite === false) {
-        dispatch(showEnterNameModal());
+        if (game_type === 'bandai') {
+          dispatch(showEnterNameModal());
+        } else {
+          dispatch(showEnterNameModal({ showReplayButton: true }));
+        }
         return;
       }
 

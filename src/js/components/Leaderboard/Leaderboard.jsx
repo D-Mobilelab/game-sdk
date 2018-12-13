@@ -21,7 +21,7 @@ const animationInRule = css`
 `;
 
 const Overlay = styled.div`
-  display: ${props => (props.visible === true) ? 'block' : 'none'};
+  display: ${props => ((props.visible === true) ? 'block' : 'none')};
   position: absolute;
   top: 0px;
   width: 100%;
@@ -43,7 +43,7 @@ const Frame = styled.div`
 `;
 
 const Container = styled.div`
-  height: 500px;
+  height: ${props => ((props.showReplayButton === true) ? '500px' : '450px')};
   width: 100%;
   background: ${props => props.theme.leaderboard.container.background};
   background-color: ${props => props.theme.leaderboard.container.backgroundColor};
@@ -204,11 +204,11 @@ const PlayAgain = styled.button`
   text-transform: uppercase;
   font-size: 1.4em;
   width: 200px;
+  display: ${props => ((props.showReplayButton === true) ? '' : 'none')};
 `;
 
 
 export class Leaderboard extends Component {
-  
   constructor(props) {
     super(props);
     this.handleReplay = this.handleReplay.bind(this);
@@ -224,39 +224,38 @@ export class Leaderboard extends Component {
 
     return (
       <ThemeProvider theme={themeClass}>
-      <div>
-        <Overlay visible={this.props.show}/>
-        <Frame visible={this.props.show}>
-          <Container>
-          <ScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_YOUR_SCORE}</ScoreTitle>
-          <ScoreContainer>
-            <ArrowLeft/>
-              <YourScore>{this.props.score}</YourScore>
-            <ArrowRight/>
-          </ScoreContainer>
-          <HighScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_HIGH_SCORE}</HighScoreTitle>
-          <HighScoreList>
+        <div>
+          <Overlay visible={this.props.show}/>
+          <Frame visible={this.props.show}>
+            <Container showReplayButton={this.props.showReplayButton}>
+              <ScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_YOUR_SCORE}</ScoreTitle>
+              <ScoreContainer>
+                <ArrowLeft/>
+                <YourScore>{this.props.score}</YourScore>
+                <ArrowRight/>
+              </ScoreContainer>
+              <HighScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_HIGH_SCORE}</HighScoreTitle>
+              <HighScoreList>
 
-            {this.props.positions.map(function(position, i){
+                {this.props.positions.map((position, i) => {
                 return <ScoreListRow><Position>{i+1}{(i===0)?'st':(i===1)?'nd':(i===2)?'rd':'th'}</Position><Score>{position.score}</Score><Name>{position.player_name}</Name></ScoreListRow>;
                 return <ObjectRow obj={object} key={i} />;
             })}
 
-          </HighScoreList>
-          <Divider>
-            <span></span>
-            <span></span>
-            <span></span>
-          </Divider>
-          <Message><span dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} /></Message>
-          <PlayAgain  onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
-        </Container>
-        </Frame>
-      </div>
+              </HighScoreList>
+              <Divider>
+                <span></span>
+                <span></span>
+                <span></span>
+              </Divider>
+              <Message><span dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} /></Message>
+              <PlayAgain showReplayButton={this.props.showReplayButton} onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
+            </Container>
+          </Frame>
+        </div>
       </ThemeProvider>
     );
   }
-
 }
 
 export default Leaderboard;
