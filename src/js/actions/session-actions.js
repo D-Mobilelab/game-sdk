@@ -6,7 +6,7 @@ import * as Constants from '../lib/Constants';
 import { hideMenu, showMenu } from './menu-actions';
 import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
-import { hideGameOver, hideEnterNameModal, showGameOver, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
+import { hideGameOver, hideEnterNameModal, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
 import { getUserType, getMenuType } from './utils';
 import { showBanner } from './banner-actions';
 import location from '../lib/Location';
@@ -148,60 +148,16 @@ export function endSession(data = { score: 0, level: 1 }) {
         return;
       }
 
-      if (initConfig.lite === false) {
-        if (game_type === 'bandai') {
-          dispatch(showEnterNameModal());
-        } else {
-          dispatch(showEnterNameModal({ showReplayButton: true }));
-        }
+      if (FW_TYPE_PROFILE === 'bandai' && game_type === 'bandai') {
+        dispatch(showEnterNameModal());
         return;
       }
 
+      if (initConfig.lite === false) {
+        dispatch(showEnterNameModal({ showReplayButton: true }));
+        return;
+      }
 
-      // if (FW_TYPE_PROFILE !== 'gamifive') {
-      //   dispatch(showEnterNameModal());
-      //   // dispatch(showGameOver());
-      //   return;
-      // }
-      // else if (game_type === 'default' && FW_TYPE_PROFILE !== 'bandai') {
-      //   if (initConfig.lite === false) {
-      //     dispatch(showGameOver());
-      //   }
-
-      //   if (getState().generic.initialized) {
-      //     console.log("i'm going to save the score");
-
-      //     // Call standard leaderboard
-      //     const GAMEOVER_API = Constants.GAME_OVER_JSON_API_URL.replace(':CONTENT_ID', getContentId());
-      //     const gameOverPromise = AxiosInstance.get(GAMEOVER_API, {
-      //       withCredentials: true,
-      //       params: {
-      //         score: lastSession.score,
-      //         level: lastSession.level,
-      //         duration: new Date(lastSession.endTime) - new Date(lastSession.startTime),
-      //         start: lastSession.startTime.getTime(),
-      //         label: getState().game_info.label,
-      //         userId: getState().user.user, //uo30?
-      //         cors_compliant: 1,
-      //       },
-      //     })
-      //       .then((response) => {
-      //       // get ranking?
-      //       // response.data.ranking
-      //       // response.data.gameInfo
-      //       // dispatch(setMissingGameInfoPart(response.data.gameInfo));
-      //         dispatch(setRank(response.data.rank));
-      //         dispatch(setRelated(response.data.related || []));
-      //       });
-      //     return gameOverPromise;
-      //   }
-
-      //   console.warn('GameOver: score not saved session not started correctly, check newton configuration!');
-      // } else if (game_type === 'default' && initConfig.lite === false && FW_TYPE_PROFILE === 'bandai') {
-      // // Non-bandai game on bandai portal and without gameover => requires the button
-      //   dispatch(showEnterNameModal({ showReplayButton: true }));
-      //   return;
-      // }
       return;
     }
     /**
