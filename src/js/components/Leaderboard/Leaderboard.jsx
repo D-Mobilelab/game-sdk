@@ -54,8 +54,18 @@ const Container = styled.div`
   border-image: ${props => props.theme.leaderboard.container.borderImage};
   font-family: ${props => props.theme.leaderboard.container.fontFamily};
   box-sizing: border-box;
-  padding:10px;
+`;
 
+const Top = styled.div`
+  margin:0px;
+  background: ${props => props.theme.leaderboard.top.background};
+  padding: 10px 10px 0px 10px;
+  `;
+  
+  const Bottom = styled.div`
+  margin:0px;
+  background: ${props => props.theme.leaderboard.bottom.background};
+  padding: 10px 10px 13px 10px;
 `;
 
 const CloseX = styled.i`
@@ -251,29 +261,33 @@ export class Leaderboard extends Component {
           <Overlay visible={this.props.show}/>
           <Frame visible={this.props.show}>
             <Container showReplayButton={this.props.showReplayButton}>
-              <CloseX onClick={this.onClose}/>
-              <ScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_YOUR_SCORE}</ScoreTitle>
-              <ScoreContainer>
-                <ArrowLeft/>
-                <YourScore>{this.props.score}</YourScore>
-                <ArrowRight/>
-              </ScoreContainer>
-              <HighScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_HIGH_SCORE}</HighScoreTitle>
-              <HighScoreList>
+              <Top>
+                <CloseX onClick={this.onClose}/>
+                <ScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_YOUR_SCORE}</ScoreTitle>
+                <ScoreContainer>
+                  <ArrowLeft/>
+                  <YourScore>{this.props.score}</YourScore>
+                  <ArrowRight/>
+                </ScoreContainer>
+                <HighScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_HIGH_SCORE}</HighScoreTitle>
+                <HighScoreList>
 
-                {this.props.positions.map((position, i) => {
-                return <ScoreListRow><Position>{i+1}{(i===0)?'st':(i===1)?'nd':(i===2)?'rd':'th'}</Position><Score>{position.score}</Score><Name>{position.player_name}</Name></ScoreListRow>;
-                return <ObjectRow obj={object} key={i} />;
-            })}
+                  {this.props.positions.map((position, i) => {
+                  return <ScoreListRow><Position>{i+1}{(i===0)?'st':(i===1)?'nd':(i===2)?'rd':'th'}</Position><Score>{position.score}</Score><Name>{position.player_name}</Name></ScoreListRow>;
+                  return <ObjectRow obj={object} key={i} />;
+              })}
 
-              </HighScoreList>
-              <Divider>
-                <span></span>
-                <span></span>
-                <span></span>
-              </Divider>
-              <Message><span dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} /></Message>
-              <PlayAgain showReplayButton={this.props.showReplayButton} onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
+                </HighScoreList>
+              </Top>
+              <Bottom>
+                <Divider>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </Divider>
+                <Message><span dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} /></Message>
+                <PlayAgain showReplayButton={this.props.showReplayButton} onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
+              </Bottom>
             </Container>
           </Frame>
         </div>

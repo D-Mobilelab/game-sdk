@@ -13,6 +13,12 @@ const main = {
       backgroundColor: '',
       backgroundRepeat: '',
     },
+    top: {
+      background: '',
+    },
+    bottom: {
+      background: '',
+    },
     close_x: {
       color: '#000000',
       top: '-10px',
