@@ -15,6 +15,8 @@ const main = {
     },
     close_x: {
       color: '#000000',
+      top: '-10px',
+      right: '-5px',
     },
     title: {
       color: '#000000',

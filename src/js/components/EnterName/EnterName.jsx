@@ -60,8 +60,8 @@ const Container = styled.div`
 
 const CloseX = styled.i`
   position: relative;
-  top: -10px;
-  right: -5px;
+  top:  ${props => props.theme.entername.close_x.top};
+  right:  ${props => props.theme.entername.close_x.right};
   font: normal 1em/1 Arial,sans-serif;
   text-align: right;
   font-size: 2em;
@@ -80,7 +80,6 @@ const Title = styled.div`
   text-transform: uppercase;
   text-align: center;
   padding: 5px 0;
-  font-size: 1.2em;
 `;
 
 const Layout = styled.div`

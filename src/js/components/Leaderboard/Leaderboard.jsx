@@ -60,8 +60,8 @@ const Container = styled.div`
 
 const CloseX = styled.i`
   position: relative;
-  top: -15px;
-  right: -10px;
+  top:  ${props => props.theme.leaderboard.close_x.top};
+  right:  ${props => props.theme.leaderboard.close_x.right};
   font: normal 1em/1 Arial,sans-serif;
   text-align: right;
   font-size: 2em;
