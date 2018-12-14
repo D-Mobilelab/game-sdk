@@ -59,12 +59,15 @@ const Container = styled.div`
 `;
 
 const CloseX = styled.i`
-  position: absolute;
-  top: 26px;
-  right: 29px;
+  position: relative;
+  top: -10px;
+  right: -5px;
   font: normal 1em/1 Arial,sans-serif;
   text-align: right;
   font-size: 2em;
+  display: inline-block;
+  color: #ffffff;
+  width: 100%;
   display: inline-block;
   color: ${props => props.theme.entername.close_x.color};
   &:before{
@@ -77,6 +80,7 @@ const Title = styled.div`
   text-transform: uppercase;
   text-align: center;
   padding: 5px 0;
+  font-size: 1.2em;
 `;
 
 const Layout = styled.div`
@@ -94,6 +98,10 @@ const Left = styled.div`
 const Right = styled.div`
   display:table-cell;
   vertical-align:middle;
+`;
+
+const Form = styled.form`
+  margin-top: -27px;
 `;
 
 const Module = styled.div`
@@ -227,7 +235,7 @@ export class EnterName extends Component {
           <Frame visible={this.props.show}>
             <Container>
               <CloseX onClick={this.onClose}/>
-              <form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
+              <Form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
                 <Title>{this.props.dictionary.WEBAPP_GAMEOVER_INSERT_ALIAS}</Title>
                 <Layout>
                   <Left>
@@ -252,7 +260,7 @@ export class EnterName extends Component {
                     <Save onClick={this.onClick}>{this.props.dictionary.WEBAPP_GAMEOVER_INSERT_ALIAS_BUTTON}</Save>
                   </Right>
                 </Layout>
-              </form>
+              </Form>
             </Container>
           </Frame>
         </div>

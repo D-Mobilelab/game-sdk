@@ -59,13 +59,15 @@ const Container = styled.div`
 `;
 
 const CloseX = styled.i`
-  position: absolute;
-  top: 26px;
-  right: 29px;
+  position: relative;
+  top: -15px;
+  right: -10px;
   font: normal 1em/1 Arial,sans-serif;
   text-align: right;
   font-size: 2em;
   display: inline-block;
+  text-align: right;
+  width: 100%;
   color: ${props => props.theme.leaderboard.close_x.color};
   &:before{
     content: '×';
@@ -77,6 +79,7 @@ const ScoreTitle = styled.div`
   font-size: 1.4em;
   text-align: center;
   font-weight:bold;
+  margin-top: -28px;
   color: ${props => props.theme.leaderboard.title.color};
 `;
 
