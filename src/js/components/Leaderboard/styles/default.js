@@ -48,10 +48,6 @@ const main = {
       color: '#ffffff',
       fontFamily: 'inherit',
       borderRadius: '25px',
-      // backgroundImage: '',
-      // backgroundPosition: '',
-      // backgroundRepeat: '',
-      // backgroundSize: '',
     },
   },
 };
