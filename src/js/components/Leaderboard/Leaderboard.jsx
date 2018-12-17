@@ -222,7 +222,8 @@ const Message = styled.div`
 `;
 
 const PlayAgain = styled.button`
-  background-color: ${props => props.theme.leaderboard.button.background};
+  background-color: ${props => props.theme.leaderboard.button.backgroundColor};
+  background:  ${props => props.theme.leaderboard.button.background};
   color: ${props => props.theme.leaderboard.button.color};
   font-family: ${props => props.theme.leaderboard.button.fontFamily};
   border-radius: ${props => props.theme.leaderboard.button.borderRadius};

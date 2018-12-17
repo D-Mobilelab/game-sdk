@@ -26,9 +26,11 @@ const main = {
       color: '#000000',
     },
     button: {
-      background: '#000000',
+      background: '',
+      backgroundColor: '#000000',
       color: '#ffffff',
       fontFamily: 'HelveticaNeue-Bold',
+      borderRadius: '5px',
     },
   },
 };

@@ -44,10 +44,14 @@ const main = {
       color: '#000000',
     },
     button: {
-      background: '#000000',
+      backgroundColor: '#000000',
       color: '#ffffff',
       fontFamily: 'inherit',
       borderRadius: '25px',
+      // backgroundImage: '',
+      // backgroundPosition: '',
+      // backgroundRepeat: '',
+      // backgroundSize: '',
     },
   },
 };

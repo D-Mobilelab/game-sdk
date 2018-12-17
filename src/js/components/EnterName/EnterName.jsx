@@ -130,13 +130,17 @@ const Save = styled.button`
   text-align: center;
   padding: 10px;
   border: 0px;
-  background-color:${props => props.theme.entername.button.background};
+  background:${props => props.theme.entername.button.background};
+  background-color:${props => props.theme.entername.button.backgroundColor};
   color:${props => props.theme.entername.button.color};
   font-family: ${props => props.theme.entername.button.fontFamily};
   text-transform: uppercase;
   width: 120px;
   font-size: 20px;
-  border-radius: 5px;
+  border-radius: ${props => props.theme.entername.button.borderRadius};
+  &:focus{
+      outline: none;
+  }
 `;
 
 export class EnterName extends Component {
