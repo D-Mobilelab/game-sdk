@@ -181,6 +181,7 @@ const Divider = styled.div`
 const ScoreListRow = styled.div`
   display:table-row;
   height: 25px;
+  font-size: ${props => props.theme.leaderboard.table_score.font_size};
   color: ${props => props.theme.leaderboard.table_score.color};
   &:first-child{
     font-size: 1.5em;
@@ -207,16 +208,17 @@ const Name = styled.div`
 `;
 
 const Message = styled.div`
-  height:90px;
+  height:85px;
   position: relative;
   color: ${props => props.theme.leaderboard.message.color};
+  margin-top: -10px;
   >span{
     transform: translate(-50%, -50%);
     position:absolute;
     top:50%;
     left:50%;
     font-size: 0.96em;
-    width:100%;
+    width:90%;
     text-transform: uppercase;
     }
 `;
@@ -274,7 +276,8 @@ export class Leaderboard extends Component {
                 <HighScoreList>
 
                   {this.props.positions.map((position, i) => {
-                  return <ScoreListRow><Position>{i+1}{(i===0)?'st':(i===1)?'nd':(i===2)?'rd':'th'}</Position><Score>{position.score}</Score><Name>{position.player_name}</Name></ScoreListRow>;
+                  return <ScoreListRow><Position>{i + 1}{this.props.dictionary['WEBAPP_GAMEOVER_POSITION_' + (i + 1)]}</Position><Score>{position.score}</Score><Name>{position.player_name}</Name></ScoreListRow>;
+                  // return <ScoreListRow><Position>{i+1}{(i===0)?'st':(i===1)?'nd':(i===2)?'rd':'th'}</Position><Score>{position.score}</Score><Name>{position.player_name}</Name></ScoreListRow>;
                   return <ObjectRow obj={object} key={i} />;
               })}
 
