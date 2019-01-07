@@ -36,6 +36,7 @@ const main = {
       border_bottom_color: '#000000',
       color: '#000000',
       first_row_color: '#000000',
+      first_row_font_weight: '',
       font_size: '1.3em',
     },
     divider: {

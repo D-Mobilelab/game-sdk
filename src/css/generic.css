@@ -27,3 +27,19 @@
     font-weight: normal;
     font-style: normal;
   }
+
+  @font-face {
+    font-family: 'Vodafone_Lt';
+    src: url('./font/VodafoneLt-Regular.woff') format('woff'),
+        url('./font/VodafoneLt-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vodafone_Rg';
+    src: url('./font/VodafoneRg-Regular.woff') format('woff'),
+        url('./font/VodafoneRg-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

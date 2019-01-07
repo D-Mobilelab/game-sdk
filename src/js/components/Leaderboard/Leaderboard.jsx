@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import merge from 'deepmerge';
 import styled, { ThemeProvider, css, keyframes } from 'styled-components';
 import theme from './styles/default';
-import './styles/globalcss';
+// import './styles/globalcss';
 
 
 const animationIn = keyframes`
@@ -40,6 +40,8 @@ const Frame = styled.div`
   max-width: 450px;
   margin: 0px auto;
   transform: translateY(-1000px);
+  overflow-y: scroll;
+  height: 90vh;
 `;
 
 const Container = styled.div`
@@ -186,6 +188,7 @@ const ScoreListRow = styled.div`
   &:first-child{
     font-size: 1.5em;
     color: ${props => props.theme.leaderboard.table_score.first_row_color};
+    font-weight: ${props => props.theme.leaderboard.table_score.first_row_font_weight};
     height: 30px;
   }
 `;

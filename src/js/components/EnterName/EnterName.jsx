@@ -3,7 +3,7 @@ import merge from 'deepmerge';
 import styled, { ThemeProvider, css, keyframes } from 'styled-components';
 import { sessionStorage } from '../../lib/LocalStorage';
 import theme from './styles/default';
-import './styles/globalcss';
+// import './styles/globalcss';
 
 const animationIn = keyframes`
     0%   {
