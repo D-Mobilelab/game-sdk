@@ -26,14 +26,6 @@
     src: url('./font/HelveticaNeue-Bold.woff?-kewlib&v=1979') format('woff'), url('./font/HelveticaNeue-Bold.ttf?-kewlib&v=1979') format('truetype');
     font-weight: normal;
     font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Vodafone_Lt';
-    src: url('./font/VodafoneLt-Regular.woff') format('woff'),
-        url('./font/VodafoneLt-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
 }
 
 @font-face {
