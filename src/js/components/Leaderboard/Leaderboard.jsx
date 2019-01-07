@@ -253,6 +253,7 @@ export class Leaderboard extends Component {
   onClose(evt) {
     evt.preventDefault();
     this.props.actions.hideLeaderboard();
+    this.props.actions.startSession();
   }
 
   render() {

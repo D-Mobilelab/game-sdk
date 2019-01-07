@@ -226,6 +226,7 @@ export class EnterName extends Component {
   onClose(evt) {
     evt.preventDefault();
     this.props.actions.hideEnterNameModal();
+    this.props.actions.startSession();
   }
 
   render() {
