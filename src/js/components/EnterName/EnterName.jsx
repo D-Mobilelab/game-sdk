@@ -42,6 +42,10 @@ const Frame = styled.div`
   margin: 0px auto;
   transform: translateY(-250px);
   display:${props => ((props.visible === true) ? 'block' : 'none')};
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
 `;
 
 const Container = styled.div`

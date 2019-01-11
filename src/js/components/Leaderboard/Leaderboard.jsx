@@ -33,15 +33,19 @@ const Overlay = styled.div`
 
 const Frame = styled.div`
   animation: ${props => ((props.visible === true) ? animationInRule : 'none')};
+  display:${props => ((props.visible === true) ? 'block' : 'none')};
   padding: 5%;
   text-align: center;
-  position: relative;
+  position: absolute;
   z-index: 8101;
   max-width: 450px;
   margin: 0px auto;
-  transform: translateY(-1000px);
+  transform: translateY(-1200px);
   overflow-y: scroll;
   height: 90vh;
+  top: 0px;
+  left: 0px;
+  right: 0px;
 `;
 
 const Container = styled.div`
