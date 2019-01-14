@@ -36,7 +36,7 @@ const Frame = styled.div`
   display:${props => ((props.visible === true) ? 'block' : 'none')};
   padding: 5%;
   text-align: center;
-  position: absolute;
+  position: fixed;
   z-index: 8101;
   max-width: 450px;
   margin: 0px auto;
