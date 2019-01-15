@@ -1,7 +1,7 @@
 /** Connect to redux store */
 import React, { Component } from 'react';
 import merge from 'deepmerge';
-import styled, { ThemeProvider, css, keyframes } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import theme from './styles/default';
 
 const Menu = styled.div`
@@ -27,12 +27,16 @@ export class MenuContainer extends Component {
     this.props.actions.goToHome();
   }
 
+  // const themeClass = merge(theme, this.props.styles);
+
   render() {
     return (
-      <MenuComponent show={this.props.menu.show}
-        position={this.props.menu.position}
-        {...this.props} onClick={this.onClick}
-      />
+      <ThemeProvider theme={theme}>
+        <MenuComponent show={this.props.menu.show}
+          position={this.props.menu.position}
+          {...this.props} onClick={this.onClick}
+        />
+      </ThemeProvider>
     );
   }
 }

@@ -4,15 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Actions } from '../../actions/index';
 
 const mapStateToProps = state => ({
-  label: state.generic.label,
-  show: state.game_over.showLeaderboard,
-  showReplayButton: state.game_over.showReplayButton,
-  game_info: state.game_info,
-  user: state.user,
-  score: state.session.score,
-  positions: state.game_over.leaderboard,
-  dictionary: state.generic.dictionary,
-  vhost: state.vhost,
+  menu: state.menu,
   styles: state.styles,
 });
 
@@ -21,6 +13,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default function connectLeaderboard(leaderboard) {
-  return connect(mapStateToProps, mapDispatchToProps)(leaderboard);
+export default function connectMenu(menu) {
+  return connect(mapStateToProps, mapDispatchToProps)(menu);
 }
