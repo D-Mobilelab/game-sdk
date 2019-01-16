@@ -1,6 +1,11 @@
 const main = {
-  button: {
-      background:'#ffffff',
+  menu: {
+    circle: {
+      background: '#ffffff',
+    },
+    path: {
+      fill: '#000000',
+    },
   },
 };
 

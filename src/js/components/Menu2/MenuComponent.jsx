@@ -16,13 +16,11 @@ const Button = styled.div`
     border-radius: 30px;
     z-index: 8110;
 
-    background:${props => props.theme.button.background};
+    background:${props => props.theme.menu.circle.background};
+    fill:${props => props.theme.menu.path.fill};
 
     left: ${props =>(props.currentPositionX+'px')};
     top: ${props =>(props.currentPositionY+'px')};
-
-    /* left: ${props => (props.position == "BOTTOM_RIGHT"? (window.innerWidth-70)+'px':'0px')};
-    top: ${props => (props.position == "BOTTOM_RIGHT"? (window.innerHeight-70)+'px':'0px')}; */
 `;
 
 
@@ -36,46 +34,36 @@ export class Menu extends Component {
     this.onMouseUp = throttle(this.onMouseUp, 300, this);
     this.onMouseMove = throttle(this.onMouseMove, 5, this);
     this.onTouchMove = throttle(this.onTouchMove, 5, this);
-    this.calcPositions = this.calcPositions.bind(this);
-    // this.onResize = this.onResize.bind(this);
-    this.halfWidth = 30;
+    this.onResize = this.onResize.bind(this);
+    this.margin = {
+      top: 10,
+      left: 10,
+      bottom: 70,
+      right: 70,
+    };
     this.OFFSET = 10;
     this.mapPositions = this.calcPositions();
 
     this.state = {
       active: false,
       drag: false,
-      positionX: 200,
-      positionY: 200,
-      position: this.mapPositions[this.props.position],
+      position: this.mapPositions[props.menu.position],
       pointerDownPosition: { x: 0, y: 0 },
       pointerUpPosition: { x: 0, y: 0 },
     };
   }
 
-  // onResize() {
-  //   const angle = window.screen.orientation ? window.screen.orientation.angle : window.orientation;
-  //   switch (angle) {
-  //     case 0:
-  //       this.mapPositions = this.calcPositions();
-  //       this.setState({ ...this.state, position: this.mapPositions[this.props.position] });
-  //       break;
-  //     case -90:
-  //     case 90:
-  //       this.mapPositions = this.calcPositions();
-  //       this.setState({ ...this.state, position: this.mapPositions[this.props.position] });
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+  onResize() {
+    this.mapPositions = this.calcPositions();
+    this.setState({ ...this.state, position: this.mapPositions[this.props.menu.position] });
+  }
 
   calcPositions() {
     return {
-      TOP_LEFT: { x: this.halfWidth, y: this.halfWidth },
-      TOP_RIGHT: { x: (window.innerWidth - this.halfWidth), y: this.halfWidth },
-      BOTTOM_RIGHT: { x: (window.innerWidth - this.halfWidth), y: (window.innerHeight - this.halfWidth) },
-      BOTTOM_LEFT: { x: this.halfWidth, y: (window.innerHeight - this.halfWidth) },
+      TOP_LEFT: { x: this.margin['top'], y: this.margin['left'] },
+      TOP_RIGHT: { x: (window.innerWidth - this.margin['right']), y: this.margin['top'] },
+      BOTTOM_RIGHT: { x: (window.innerWidth - this.margin['right']), y: (window.innerHeight - this.margin['bottom']) },
+      BOTTOM_LEFT: { x: this.margin['left'], y: (window.innerHeight - this.margin['bottom']) },
     };
   }
 
@@ -143,9 +131,8 @@ export class Menu extends Component {
   }
 
   onPointerMove(event) {
-    const position = { x: Math.round(event.clientX), y: Math.round(event.clientY) };
+    const position = { x: Math.round(event.clientX)-30, y: Math.round(event.clientY)-30 };
     if (this.state.active) {
-      console.log(position);
       this.setState({ ...this.state, drag: true, position, positionX: position.x, positionY: position.y });
     }
   }
@@ -185,7 +172,7 @@ export class Menu extends Component {
 
     return (
       <ThemeProvider theme={themeClass}>
-        <Button ref='menu' data-mipqa='menu' visible={this.props.menu.show} position={this.props.menu.position} currentPositionX={this.state.positionX} currentPositionY={this.state.positionY}>
+        <Button ref='menu' data-mipqa='menu' visible={this.props.menu.show} position={this.props.menu.position} currentPositionX={this.state.position.x} currentPositionY={this.state.position.y}>
           <svg viewBox="0 0 70 70" width="60" height="60">
             <path className={this.props.path} d="M51.5,33.5L51.5,33.5L51.5,33.5l-14-13.9l0,0l0,0c-0.7-0.7-1.4-1.1-2.1-1.1c-0.7,0-1.4,0.4-2.2,1.1l-14,13.9
                 c0,0,0,0-0.1,0.1c-1.2,0.9-1.7,1.9-1.6,2.9l0,0c0.2,0.9,0.9,1.4,2.3,1.4h2c0.1,0,0.2,0,0.3,0.1l0,0l0,0c0.1,0.1,0.1,0.2,0.1,0.3

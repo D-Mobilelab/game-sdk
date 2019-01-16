@@ -21,22 +21,6 @@ export default class App extends React.Component {
             }
             return function Noop() { return null; };
           },
-          // Menu: () => {
-          //   switch (this.props.label) {
-          //     case 'bandai':
-          //       return importLazy(System.import('./js/components/Menu/MenuBandai'));
-          //     case 'gamifive':
-          //       return importLazy(System.import('./js/components/Menu/MenuGamifive'));
-          //     case 'zain':
-          //       return importLazy(System.import('./js/components/Menu/MenuZain'));
-          //     case 'gamempire':
-          //       return importLazy(System.import('./js/components/Menu/MenuGamempire'));
-          //     case 'h3goplay':
-          //       return importLazy(System.import('./js/components/Menu/MenuH3g'));
-          //     default:
-          //       return importLazy(System.import('./js/components/Menu/MenuGameasy'));
-          //   }
-          // },
           MenuList: () => {
             switch (this.props.label) {
               default:
