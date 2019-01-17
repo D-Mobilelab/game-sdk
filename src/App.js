@@ -3,7 +3,7 @@ import LazilyLoad, { importLazy } from './LazilyLoad';
 import Interstitial from './js/components/Interstitial/Interstitial';
 import Leaderboard from './js/components/Leaderboard/index';
 import EnterName from './js/components/EnterName/index';
-import Menu from './js/components/Menu2/index';
+import Menu from './js/components/Menu/index';
 import './css/generic.css';
 
 export default class App extends React.Component {

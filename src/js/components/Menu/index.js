@@ -1,5 +1,5 @@
 import connect from './connect';
-import { Menu } from './MenuComponent.jsx';
+import { Menu } from './Menu.jsx';
 
 export default connect(Menu);
 

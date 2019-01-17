@@ -10,19 +10,24 @@ const Button = styled.div`
     cursor: pointer;
     width: 60px;
     height: 60px;
-    transform: ${props => ((props.visible === true) ? 'scale(1)' : 'scale(0)')};
-    transition: transform .15s linear;
+    transform: ${(props) => {
+      if (props.visible) {
+        return (props.active) ? 'scale(0.9)' : 'scale(1)';
+      }
+      return 'scale(0)';
+    }};
+    transition: transform .10s linear;
     overflow: hidden;
-    border-radius: 30px;
+    border-radius: 35px;
     z-index: 8110;
-
+    border-width: 3px;
+    border-style:solid;
+    border-color: ${props => props.theme.menu.circle.borderColor};
     background:${props => props.theme.menu.circle.background};
     fill:${props => props.theme.menu.path.fill};
-
-    left: ${props =>(props.currentPositionX+'px')};
-    top: ${props =>(props.currentPositionY+'px')};
+    left: ${props => (`${props.currentPositionX}px`)};
+    top: ${props => (`${props.currentPositionY}px`)};
 `;
-
 
 
 export class Menu extends Component {
@@ -60,10 +65,10 @@ export class Menu extends Component {
 
   calcPositions() {
     return {
-      TOP_LEFT: { x: this.margin['top'], y: this.margin['left'] },
-      TOP_RIGHT: { x: (window.innerWidth - this.margin['right']), y: this.margin['top'] },
-      BOTTOM_RIGHT: { x: (window.innerWidth - this.margin['right']), y: (window.innerHeight - this.margin['bottom']) },
-      BOTTOM_LEFT: { x: this.margin['left'], y: (window.innerHeight - this.margin['bottom']) },
+      TOP_LEFT: { x: this.margin.top, y: this.margin.left },
+      TOP_RIGHT: { x: (window.innerWidth - this.margin.right), y: this.margin.top },
+      BOTTOM_RIGHT: { x: (window.innerWidth - this.margin.right), y: (window.innerHeight - this.margin.bottom) },
+      BOTTOM_LEFT: { x: this.margin.left, y: (window.innerHeight - this.margin.bottom) },
     };
   }
 
@@ -131,7 +136,7 @@ export class Menu extends Component {
   }
 
   onPointerMove(event) {
-    const position = { x: Math.round(event.clientX)-30, y: Math.round(event.clientY)-30 };
+    const position = { x: Math.round(event.clientX) - 30, y: Math.round(event.clientY) - 30 };
     if (this.state.active) {
       this.setState({ ...this.state, drag: true, position, positionX: position.x, positionY: position.y });
     }
@@ -172,7 +177,7 @@ export class Menu extends Component {
 
     return (
       <ThemeProvider theme={themeClass}>
-        <Button ref='menu' data-mipqa='menu' visible={this.props.menu.show} position={this.props.menu.position} currentPositionX={this.state.position.x} currentPositionY={this.state.position.y}>
+        <Button ref='menu' data-mipqa='menu' visible={this.props.menu.show} position={this.props.menu.position} active={this.state.active} currentPositionX={this.state.position.x} currentPositionY={this.state.position.y}>
           <svg viewBox="0 0 70 70" width="60" height="60">
             <path className={this.props.path} d="M51.5,33.5L51.5,33.5L51.5,33.5l-14-13.9l0,0l0,0c-0.7-0.7-1.4-1.1-2.1-1.1c-0.7,0-1.4,0.4-2.2,1.1l-14,13.9
                 c0,0,0,0-0.1,0.1c-1.2,0.9-1.7,1.9-1.6,2.9l0,0c0.2,0.9,0.9,1.4,2.3,1.4h2c0.1,0,0.2,0,0.3,0.1l0,0l0,0c0.1,0.1,0.1,0.2,0.1,0.3
