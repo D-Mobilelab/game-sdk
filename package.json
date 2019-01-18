@@ -76,6 +76,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.10.0",
+    "copy-webpack-plugin": "^4.6.0",
     "deepmerge": "^2.2.1",
     "docomo-utils": "^1.2.8",
     "facebookpixeladapter": "^0.1.2",
