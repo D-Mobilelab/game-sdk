@@ -74,20 +74,19 @@ const Top = styled.div`
   padding: 10px 10px 13px 10px;
 `;
 
-const CloseX = styled.i`
+const CloseX = styled.span`
   position: relative;
   top:  ${props => props.theme.leaderboard.close_x.top};
   right:  ${props => props.theme.leaderboard.close_x.right};
-  font: normal 1em/1 Arial,sans-serif;
+  /* font-family: Arial,sans-serif; */
   text-align: right;
-  font-size: 2em;
+  font-size: 1.2em;
   display: inline-block;
-  text-align: right;
+  color: #ffffff;
   width: 100%;
-  color: ${props => props.theme.leaderboard.close_x.color};
-  &:before{
-    content: '×';
-  }
+  display: inline-block;
+  color: ${props => props.theme.entername.close_x.color};
+  margin-bottom: 10px;
 `;
 
 const ScoreTitle = styled.div`
@@ -273,7 +272,7 @@ export class Leaderboard extends Component {
           <Frame visible={this.props.show}>
             <Container showReplayButton={this.props.showReplayButton}>
               <Top>
-                <CloseX onClick={this.onClose}/>
+                <CloseX onClick={this.onClose}>&times;</CloseX>
                 <ScoreTitle>{this.props.dictionary.WEBAPP_GAMEOVER_YOUR_SCORE}</ScoreTitle>
                 <ScoreContainer>
                   <ArrowLeft/>

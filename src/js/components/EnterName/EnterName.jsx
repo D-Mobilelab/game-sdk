@@ -62,21 +62,19 @@ const Container = styled.div`
   padding:10px;
 `;
 
-const CloseX = styled.i`
+const CloseX = styled.span`
   position: relative;
   top:  ${props => props.theme.entername.close_x.top};
   right:  ${props => props.theme.entername.close_x.right};
-  font: normal 1em/1 Arial,sans-serif;
+  /* font-family: Arial,sans-serif; */
   text-align: right;
-  font-size: 2em;
+  font-size: 1.2em;
   display: inline-block;
   color: #ffffff;
   width: 100%;
   display: inline-block;
   color: ${props => props.theme.entername.close_x.color};
-  &:before{
-    content: '×';
-  }
+  margin-bottom: 10px;
 `;
 
 const Title = styled.div`
@@ -242,7 +240,7 @@ export class EnterName extends Component {
           <Overlay visible={this.props.show}/>
           <Frame visible={this.props.show}>
             <Container>
-              <CloseX onClick={this.onClose}/>
+              <CloseX onClick={this.onClose}>&times;</CloseX>
               <Form ref='myForm' onKeyUp={this.onKeyUp} onSubmit={this.onSubmit}>
                 <Title>{this.props.dictionary.WEBAPP_GAMEOVER_INSERT_ALIAS}</Title>
                 <Layout>
