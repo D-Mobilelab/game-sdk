@@ -6,7 +6,7 @@ import { linkTo } from '@storybook/addon-links';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
 
 import MaterialButton from '../src/js/components/MaterialButton/MaterialButton';
-import EnterName from '../src/js/components/EnterName/EnterName';
+import EnterName from '../src/js/components/EnterName/EnterName_old';
 import Leaderboard from '../src/js/components/EnterName/Leaderboard';
 import withTheme from '../src/js/components/withTheme';
 
@@ -22,7 +22,9 @@ import gamempireMenuTheme from '../src/js/components/Menu/theme/gamempire.css';
 import BannerIOS from '../src/js/components/Banner/ios/Banner';
 import BannerAndroid from '../src/js/components/Banner/android/Banner';
 
-import { ZainGameover, GamempireGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index';
+import { ZainGameover, GamempireGameover, GameasyGameover, DefaultGameover } from '../src/js/components/Gameover/index_old';
+
+import Gameover2 from '../src/js/components/Gameover/Gameover';
 
 import Menulist from '../src/js/components/MenuList';
 
@@ -197,3 +199,7 @@ const MenulistStory = storiesOf('Menulist', module);
 MenulistStory.addDecorator(withKnobs);
 MenulistStory.add('default', () => <Menulist show={boolean('Show', true)} showList={boolean('Show List', true)} showOverlay={boolean('Show Overlay', true)} />);
 
+
+const Gameover2Story = storiesOf('Gameover2', module);
+// Gameover2Story.addDecorator(withKnobs);
+Gameover2Story.add('default', () => <Gameover2/>);

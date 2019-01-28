@@ -4,15 +4,16 @@ import { bindActionCreators } from 'redux';
 import { Actions } from '../../actions/index';
 
 const mapStateToProps = state => ({
-  isGameFavourite: state.user.favourites.some(favourite => (favourite.id === state.game_info.id)),
   label: state.generic.label,
-  show: state.game_over.show,
+  show: state.game_over.showLeaderboard,
+  showReplayButton: state.game_over.showReplayButton,
   game_info: state.game_info,
   user: state.user,
   score: state.session.score,
-  rank: state.session.rank,
+  positions: state.game_over.leaderboard,
   dictionary: state.generic.dictionary,
   vhost: state.vhost,
+  styles: state.styles,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -20,6 +21,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default function connectGameover(gameover) {
-  return connect(mapStateToProps, mapDispatchToProps)(gameover);
+export default function connectLeaderboard(leaderboard) {
+  return connect(mapStateToProps, mapDispatchToProps)(leaderboard);
 }

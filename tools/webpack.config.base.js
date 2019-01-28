@@ -1,6 +1,7 @@
 /* eslint-disable */
 var path = require('path');
 var webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var babelLoader = {
   test: /\.jsx?$/,
@@ -83,7 +84,12 @@ var devConfiguration = {
       // chunks: ["pageA", "pageB"],
       // (Only use these entries)
       minChunks: Infinity,
-    })
+    }),
+    new CopyWebpackPlugin([{
+      from: 'src/js/components/EnterName/border.png',
+      to: 'assets',
+      toType: 'dir'
+    }],  { debug: 'info' })
   ],
   // module end
   resolve: {

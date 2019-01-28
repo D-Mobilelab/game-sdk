@@ -26,6 +26,13 @@ export function hideEnterNameModal(userInput = false) {
   };
 }
 
+export function setLetters(letters) {
+  return {
+    type: 'SET_LETTERS',
+    payload: { letters },
+  };
+}
+
 export function showLeaderboard() {
   return {
     type: 'SHOW_LEADERBOARD',
