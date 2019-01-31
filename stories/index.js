@@ -14,7 +14,7 @@ import gameasy from '../src/js/components/MaterialButton/theme/gameasy.css';
 import standard from '../src/js/components/MaterialButton/theme/default.css';
 import bandai from '../src/js/components/MaterialButton/theme/bandai.css';
 
-import MenuComponent from '../src/js/components/Menu/MenuComponent';
+import MenuComponent from '../src/js/components/Menu/Menu';
 import Toast from '../src/js/components/Toast/Toast';
 import bandaiMenuTheme from '../src/js/components/Menu/theme/bandai.css';
 import gamempireMenuTheme from '../src/js/components/Menu/theme/gamempire.css';

@@ -89,6 +89,11 @@ var devConfiguration = {
       from: 'src/js/components/EnterName/border.png',
       to: 'assets',
       toType: 'dir'
+    },
+    {
+      from: 'src/js/components/Menu/bandai.png',
+      to: 'assets',
+      toType: 'dir'
     }],  { debug: 'info' })
   ],
   // module end

@@ -8,3 +8,5 @@ plugins/
 .idea/
 dist/**
 .DS_*
+sample/
+!sample/game-folder
