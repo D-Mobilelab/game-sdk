@@ -31,13 +31,7 @@ export function load(VHOST_API_URL, keys) {
 
 export function dictLoad(DICTIONARY_API) {
   return (dispatch) => {
-    const dictionary = JSON.parse(localStorage.getItem('gfsdk_dictionary'));
     const action = { type: 'DICTIONARY_LOAD_END', payload: {} };
-    if (dictionary) {
-      action.payload = dictionary;
-      dispatch(action);
-      return Promise.resolve();
-    }
     return AxiosInstance.get(DICTIONARY_API, { withCredentials: true }).then((response) => {
       action.payload = response.data;
       dispatch(action);
