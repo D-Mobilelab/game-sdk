@@ -4,6 +4,7 @@ import Interstitial from './js/components/Interstitial/Interstitial';
 import Leaderboard from './js/components/Leaderboard/index';
 import EnterName from './js/components/EnterName/index';
 import Menu from './js/components/Menu/index';
+import Fullscreen from './js/components/Fullscreen/index';
 import './css/generic.css';
 
 export default class App extends React.Component {
@@ -14,6 +15,7 @@ export default class App extends React.Component {
         <EnterName />
         <Leaderboard />
         <Menu />
+        <Fullscreen />
         <LazilyLoad modules={{
           Banner: () => {
             if (this.props.label === 'gameasy') {
