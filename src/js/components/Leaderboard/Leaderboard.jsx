@@ -41,11 +41,16 @@ const Frame = styled.div`
   max-width: 450px;
   margin: 0px auto;
   transform: translateY(-1200px);
-  overflow-y: scroll;
-  height: 90vh;
+  overflow-y: auto;
+  height: 80vh;
   top: 0px;
   left: 0px;
   right: 0px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { 
+    display: none;
+  }
 `;
 
 const Container = styled.div`
