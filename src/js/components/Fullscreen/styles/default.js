@@ -1,8 +1,7 @@
 const main = {
   fullscreen: {
     button: {
-      borderColor: '#000000',
-      background: '#ffffff',
+      borderColor: '#ffffff',
     },
   },
 };

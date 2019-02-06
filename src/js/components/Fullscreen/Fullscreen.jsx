@@ -3,34 +3,59 @@ import merge from 'deepmerge';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from './styles/default';
 
-const Button = styled.div`
-    width: 100px;
-    height: 20px;
-    padding:20px;
-    border-width: 3px;
-    border-style:solid;
-    cursor: pointer;
-    position: fixed;
-    bottom:10px;
-    z-index:99999;
-    border-color: ${props => props.theme.fullscreen.button.borderColor};
-    background:${props => props.theme.fullscreen.button.background};
+const Icon = styled.div`    
+  cursor: pointer;
+  position: fixed;
+  bottom:0px;
+  z-index:99999;
+  fill: ${props => props.theme.fullscreen.button.borderColor};
 `;
 
 
 export class Fullscreen extends Component {
   constructor(props) {
     super(props);
-
     this.onToggle = this.onToggle.bind(this);
+    this.isFullscreen = false;
 
-    this.state = {
-      active: false,
-    };
+    // this.state = {
+    //   isFullscreen: true,
+    // };
   }
 
-  onToggle(){
+  onToggle() {
     console.log('toggle fullscreen');
+    
+    const elem = document.documentElement;
+
+    try{
+      if (this.isFullscreen) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { /* Firefox */
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE/Edge */
+          document.msExitFullscreen();
+        }
+        this.isFullscreen = false;
+      } else {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+          elem.msRequestFullscreen();
+        }
+        this.isFullscreen=true;
+      }
+    } catch(e){
+      console.log(e);
+    }
+
   }
 
   render() {
@@ -38,9 +63,11 @@ export class Fullscreen extends Component {
 
     return (
       <ThemeProvider theme={themeClass}>
-        <Button onClick={this.onToggle}>
-            Fullscreen
-        </Button>
+        <Icon onClick={this.onToggle}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24">
+            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+          </svg>
+        </Icon>
       </ThemeProvider>
     );
   }

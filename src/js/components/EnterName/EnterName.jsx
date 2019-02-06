@@ -49,7 +49,7 @@ const Frame = styled.div`
 `;
 
 const Container = styled.div`
-  height: 160px;
+  height: 180px;
   width: 100%;
   background: ${props => props.theme.entername.container.background};
   background-color: ${props => props.theme.entername.container.backgroundColor};
