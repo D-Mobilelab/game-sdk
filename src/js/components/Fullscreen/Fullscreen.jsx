@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import merge from 'deepmerge';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from './styles/default';
+import screenfull from 'screenfull';
 
 const Icon = styled.div`    
   cursor: pointer;
@@ -17,45 +18,19 @@ export class Fullscreen extends Component {
     super(props);
     this.onToggle = this.onToggle.bind(this);
     this.isFullscreen = false;
-
-    // this.state = {
-    //   isFullscreen: true,
-    // };
   }
 
   onToggle() {
-    console.log('toggle fullscreen');
-    
-    const elem = document.documentElement;
-
-    try{
-      if (this.isFullscreen) {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { /* Firefox */
-          document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-          document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE/Edge */
-          document.msExitFullscreen();
-        }
-        this.isFullscreen = false;
-      } else {
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem.mozRequestFullScreen) { /* Firefox */
-          elem.mozRequestFullScreen();
-        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-          elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE/Edge */
-          elem.msRequestFullscreen();
-        }
-        this.isFullscreen=true;
-      }
-    } catch(e){
-      console.log(e);
+    const _this = this;
+    if (this.isFullscreen) {
+      screenfull.exit(document.querySelector('canvas')).then(function(){
+        _this.isFullscreen = false;
+      });
+    } else {
+      screenfull.request(document.querySelector('canvas')).then(function(){
+        _this.isFullscreen = true;
+      });
     }
-
   }
 
   render() {
