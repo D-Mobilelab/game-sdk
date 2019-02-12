@@ -41,7 +41,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Play',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
@@ -74,7 +74,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Play',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
@@ -95,7 +95,7 @@ const trackingMiddleware = store => next => (action) => {
         rank: getContentRanking('GameStart', 'Play', currentState.game_info.content_id, userType, CONTENT_RANKING, userFrom),
         properties: {
           category: 'Play',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'Yes',
           action: 'Yes',
@@ -117,7 +117,7 @@ const trackingMiddleware = store => next => (action) => {
         name: 'GameEnd',
         properties: {
           category: 'Play',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
           action: 'No',
@@ -139,7 +139,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Behavior',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
@@ -162,7 +162,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Behavior',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
@@ -182,7 +182,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Behavior',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
@@ -208,7 +208,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Behavior',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
@@ -229,7 +229,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'Yes',
           category: 'Behavior',
-          game_title: currentState.game_info.title,
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id,
           valuable: 'No',
         },
@@ -250,7 +250,7 @@ const trackingMiddleware = store => next => (action) => {
         properties: {
           action: 'No',
           category: 'SDK_ERROR',
-          game_title: currentState.game_info.title || '',
+          game_title: currentState.game_info.default_title || currentState.game_info.title,
           label: currentState.game_info.content_id || '',
           valuable: 'No',
           reason: currentState.generic.error,
@@ -342,26 +342,6 @@ const trackingMiddleware = store => next => (action) => {
         });
       }
       break;
-    case 'RELATED_CLICKED':
-      eventObject = {
-        name: 'GameOverRelated',
-        properties: {
-          action: 'Yes',
-          category: 'Behavior',
-          valuable: 'No',
-          game_title: action.payload.title,
-        },
-      };
-      NewtonAdapter.trackEvent(eventObject);
-      PixelTrack(eventObject, { user_type: userType });
-      if (hasGa) {
-        ReactGA.event({
-          category: eventObject.properties.category,
-          action: eventObject.name,
-          label: action.payload.id || '',
-        });
-      }
-      break;
     case 'REGISTER_SCORE_SUCCESS':
       if (action.payload.shouldTrack) {
         eventObject = {
@@ -369,7 +349,7 @@ const trackingMiddleware = store => next => (action) => {
           properties: {
             action: 'Yes',
             category: 'Play',
-            game_title: currentState.game_info.title,
+            game_title: currentState.game_info.default_title || currentState.game_info.title,
             label: currentState.game_info.content_id,
             valuable: 'No',
           },
@@ -392,7 +372,7 @@ const trackingMiddleware = store => next => (action) => {
           properties: {
             action: 'Yes',
             category: 'Play',
-            game_title: currentState.game_info.title,
+            game_title: currentState.game_info.default_title || currentState.game_info.title,
             label: currentState.game_info.content_id,
             valuable: 'No',
           },
