@@ -42,15 +42,15 @@ const Frame = styled.div`
   margin: 0px auto;
   transform: translateY(-1200px);
   overflow-y: auto;
-  height: 100vh;
+  height: 80vh;
   top: 0px;
   left: 0px;
   right: 0px;
+  scrollbar-width: none;
 
   &::-webkit-scrollbar { 
     display: none;
   }
-
 `;
 
 const Container = styled.div`
