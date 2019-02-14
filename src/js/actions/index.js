@@ -3,7 +3,6 @@ import ReactGA from 'react-ga';
 import * as Constants from '../lib/Constants';
 import { isAndroid, isIOS } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
-import * as HistoryGame from '../lib/HistoryGame';
 import { getUserType, getLabel, getMenuType } from './utils';
 import * as sessionActions from './session-actions';
 import * as userActions from './user-actions';
@@ -136,24 +135,9 @@ function generateReportAction() {
   };
 }
 
-function goToRelated(related) {
-  setTimeout(() => {
-    if (related.format && related.format !== 'androidapplications') {
-      HistoryGame.push(`${window.location.origin}${window.location.pathname}`);
-    }
-    window.location.replace(related.url_play);
-  }, 100);
-
-  return {
-    type: 'RELATED_CLICKED',
-    payload: related,
-  };
-}
-
 export const Actions = {
   init,
   generateReportAction,
-  goToRelated,
   ...sessionActions,
   ...userActions,
   ...user30Actions,
