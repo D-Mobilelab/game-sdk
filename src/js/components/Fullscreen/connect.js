@@ -6,6 +6,7 @@ import { Actions } from '../../actions/index';
 const mapStateToProps = state => ({
   styles: state.styles,
   dictionary: state.generic.dictionary,
+  initConfig: state.generic.initConfig,
 });
 
 const mapDispatchToProps = dispatch => ({

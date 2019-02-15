@@ -61,7 +61,7 @@ export function getLabel() {
     const label = localStorage.getItem('gfsdk-debug-label');
     if (label) { WHITE_LABEL = label; }
   }
-  if (!WHITE_LABEL) { throw new Error('Missing gamfive info label!'); }
+  // if (!WHITE_LABEL) { throw new Error('Missing gamfive info label!'); }
   return WHITE_LABEL;
 }
 
