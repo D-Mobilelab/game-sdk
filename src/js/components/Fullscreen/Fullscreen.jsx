@@ -20,9 +20,9 @@ export class Fullscreen extends Component {
   }
 
   onToggle(){
-    let element=this.props.initConfig.fullscreen_el || null;
-    screenfull.toggle(document.querySelector(element)).then(() => {
-      console.log('toggle Fullscreen:',element);
+    let fullscreen_element=this.props.initConfig.fullscreen_element || null;
+    screenfull.toggle(document.querySelector(fullscreen_element)).then(() => {
+      console.log('toggle Fullscreen:',fullscreen_element);
     });
   }
 
