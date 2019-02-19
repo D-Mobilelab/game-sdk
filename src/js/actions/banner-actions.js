@@ -28,7 +28,6 @@ export function redirectOnStore(fromPage) {
     const returnUrl = `${domainWithCountry}${game_info.url_zoom}`;
     generatePony(vhost, { return_url: returnUrl })
       .then((pony) => {
-        // "https://app.appsflyer.com/com.docomodigital.gameasy.ww?pid=Webapp&c=<page>&af_sub1=<af_sub1>"
         const storeUrl = (generic.platformInfo.android ? vhost.GOOGLEPLAY_STORE_URL : vhost.ITUNES_STORE_URL);
         const finalStoreUrl = storeUrl
           .replace('<page>', fromPage)

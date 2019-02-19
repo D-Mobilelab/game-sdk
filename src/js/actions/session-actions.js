@@ -113,7 +113,6 @@ export function endSession(data = { score: 0, level: 1 }) {
 
     const bannerCondition = [
       (user.matchPlayed % 3 === 0),
-      (generic.platformInfo.android || generic.platformInfo.ios),
       vhost.INSTALL_HYBRID_VISIBLE,
     ].every(condition => condition === true);
 
@@ -123,7 +122,17 @@ export function endSession(data = { score: 0, level: 1 }) {
       GFSDK_ENDSESSION_TO_LANDING,
     ].every(condition => condition === true);
 
-    if (bannerCondition && !freemiumCondition) {
+    const AndroidCondition = [
+      generic.platformInfo.android,
+      (typeof vhost.GOOGLEPLAY_STORE_URL !== "undefined")
+    ].every(condition => condition === true);
+
+    const IosCondition = [
+      generic.platformInfo.ios,
+      (typeof vhost.ITUNES_STORE_URL !== "undefined")
+    ].every(condition => condition === true);
+
+    if (bannerCondition && !freemiumCondition && (AndroidCondition || IosCondition)) {
       dispatch(showBanner());
     }
 
