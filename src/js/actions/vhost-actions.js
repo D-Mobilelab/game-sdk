@@ -1,4 +1,3 @@
-// import { localStorage } from '../lib/LocalStorage';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getLabel } from './utils';
 
@@ -6,7 +5,7 @@ export function load(VHOST_API_URL, keys) {
   return (dispatch) => {
     dispatch({ type: 'VHOST_LOAD_START' });
     
-    const vhost = window.CONFIG;
+    const vhost = window.GFSDK_CONFIG;
     if (typeof vhost !== 'undefined') {
       if (!vhost.FW_TYPE_PROFILE) {
         vhost.FW_TYPE_PROFILE = getLabel();
@@ -29,7 +28,7 @@ export function load(VHOST_API_URL, keys) {
 
 export function dictLoad(DICTIONARY_API) {
   return (dispatch) => {
-    const dictionary = window.DICTIONARY;
+    const dictionary = window.GFSDK_DICTIONARY;
     const action = { type: 'DICTIONARY_LOAD_END', payload: {} };
     if (dictionary) {
       action.payload = dictionary;
