@@ -4,6 +4,7 @@ import Interstitial from './js/components/Interstitial/Interstitial';
 import Leaderboard from './js/components/Leaderboard/index';
 import EnterName from './js/components/EnterName/index';
 import Menu from './js/components/Menu/index';
+import Adv from './js/components/Adv/index';
 import './css/generic.css';
 
 export default class App extends React.Component {
@@ -14,13 +15,14 @@ export default class App extends React.Component {
         <EnterName />
         <Leaderboard />
         <Menu />
+        <Adv />
         <LazilyLoad modules={{
-          Banner: () => {
-            if (this.props.label === 'gameasy') {
-              return importLazy(System.import('./js/components/Banner/Container'));
-            }
-            return function Noop() { return null; };
-          },
+          // Banner: () => {
+          //   if (this.props.label === 'gameasy') {
+          //     return importLazy(System.import('./js/components/Banner/Container'));
+          //   }
+          //   return function Noop() { return null; };
+          // },
           MenuList: () => {
             switch (this.props.label) {
               default:
@@ -30,7 +32,7 @@ export default class App extends React.Component {
         }}>
           {({ Banner, MenuList }) => (
             <div>
-              <Banner />
+              {/* <Banner /> */}
               <MenuList />
             </div>)
           }
