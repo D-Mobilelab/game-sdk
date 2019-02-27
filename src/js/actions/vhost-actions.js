@@ -1,15 +1,12 @@
-import { localStorage } from '../lib/LocalStorage';
 import { AxiosInstance } from '../lib/AxiosService';
 import { getLabel } from './utils';
 
 export function load(VHOST_API_URL, keys) {
   return (dispatch) => {
     dispatch({ type: 'VHOST_LOAD_START' });
-    const vhost = JSON.parse(localStorage.getItem('gfsdk_vhost'));
-    /**
-     * Avoid a call if there's the vhost in localStorage (saved by webapp)
-     */
-    if (vhost) {
+    
+    const vhost = window.GFSDK_CONFIG;
+    if (typeof vhost !== 'undefined') {
       if (!vhost.FW_TYPE_PROFILE) {
         vhost.FW_TYPE_PROFILE = getLabel();
       }
@@ -31,7 +28,7 @@ export function load(VHOST_API_URL, keys) {
 
 export function dictLoad(DICTIONARY_API) {
   return (dispatch) => {
-    const dictionary = JSON.parse(localStorage.getItem('gfsdk_dictionary'));
+    const dictionary = window.GFSDK_DICTIONARY;
     const action = { type: 'DICTIONARY_LOAD_END', payload: {} };
     if (dictionary) {
       action.payload = dictionary;
