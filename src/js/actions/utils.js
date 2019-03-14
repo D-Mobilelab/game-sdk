@@ -25,14 +25,10 @@ export function normalizeGameInfo(gameInfo) {
  * @throws - Cannot get content id from url
  */
 export function getContentId() {
-  const urlToMatch = Location.getCurrentHref();
-  const contentIdRegex = new RegExp(Constants.CONTENT_ID_REGEX);
-  const match = urlToMatch.match(contentIdRegex);
-
-  if (match !== null && match.length > 0) {
-    return match[2];
+  if (window.GamifiveInfo && window.GamifiveInfo.game) {
+    return window.GamifiveInfo.game.id;
   }
-  throw new Error('Cannot get content id from url');
+  throw new Error('Cannot get content id from gamifiveinfo');
 }
 
 /**
@@ -62,14 +58,4 @@ export function getLabel() {
     if (label) { WHITE_LABEL = label; }
   }
   return WHITE_LABEL;
-}
-
-export function getMenuType() {
-  let MENU_TYPE = window.GamifiveInfo ? window.GamifiveInfo.GFSDK_MENU_TYPE : null;
-  if (process.env.LOCAL_DEV) {
-    /** overwrite with localStorage if any */
-    const local_menu_type = localStorage.getItem('gfsdk-debug-menu-type');
-    if (local_menu_type) { MENU_TYPE = local_menu_type; }
-  }
-  return MENU_TYPE;
 }
