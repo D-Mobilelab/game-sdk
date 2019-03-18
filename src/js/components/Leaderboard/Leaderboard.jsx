@@ -274,7 +274,7 @@ export class Leaderboard extends Component {
         <div>
           <Overlay visible={this.props.show}/>
           <Frame visible={this.props.show}>
-            <Container showReplayButton={this.props.showReplayButton}>
+            <Container data-mipqa="leaderBoard" showReplayButton={this.props.showReplayButton}>
               <Top>
                 <CloseX onClick={this.onClose}>
                 <svg width="20" height="20">
@@ -303,7 +303,7 @@ export class Leaderboard extends Component {
                   <span></span>
                 </Divider>
                 <Message><span dangerouslySetInnerHTML={{ __html: this.props.dictionary.WEBAPP_GAMEOVER_MESSAGE }} /></Message>
-                <PlayAgain showReplayButton={this.props.showReplayButton} onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
+                <PlayAgain data-mipqa="playAgain" showReplayButton={this.props.showReplayButton} onClick={this.handleReplay}>{this.props.dictionary.WEBAPP_REPLAY}</PlayAgain>
               </Bottom>
             </Container>
           </Frame>
