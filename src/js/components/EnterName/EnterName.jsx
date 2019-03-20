@@ -3,7 +3,7 @@ import merge from 'deepmerge';
 import styled, { ThemeProvider, css, keyframes } from 'styled-components';
 import { sessionStorage } from '../../lib/LocalStorage';
 import theme from './styles/default';
-// import './styles/globalcss';
+import Adv from '../Adv/index';
 
 const animationIn = keyframes`
     0%   {
@@ -46,6 +46,8 @@ const Frame = styled.div`
   top: 0px;
   left: 0px;
   right: 0px;
+  overflow-y: auto;
+  height: 100vh;
 `;
 
 const Container = styled.div`
@@ -272,6 +274,8 @@ export class EnterName extends Component {
                 </Layout>
               </Form>
             </Container>
+
+            <Adv></Adv>
           </Frame>
         </div>
       </ThemeProvider>

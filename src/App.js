@@ -15,7 +15,7 @@ export default class App extends React.Component {
         <EnterName />
         <Leaderboard />
         <Menu />
-        <Adv />
+        {/* <Adv /> */}
         <LazilyLoad modules={{
           // Banner: () => {
           //   if (this.props.label === 'gameasy') {

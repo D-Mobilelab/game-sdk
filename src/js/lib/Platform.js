@@ -13,4 +13,8 @@ const isAndroid = (UA = window.navigator.userAgent) => /Android/.test(UA);
  */
 const isIOS = (UA = window.navigator.userAgent) => /iP(hone|od|ad)/.test(UA);
 
-export default { isAndroid, isIOS };
+const name = (isAndroid) => {
+  return (isAndroid) ? 'android' : 'ios';
+};
+
+export default { isAndroid, isIOS, name };

@@ -1,7 +1,7 @@
 import FacebookPixelAdapter from 'facebookpixeladapter';
 import ReactGA from 'react-ga';
 import * as Constants from '../lib/Constants';
-import { isAndroid, isIOS } from '../lib/Platform';
+import { isAndroid, isIOS, name } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
 import { getUserType, getLabel, getMenuType } from './utils';
 import * as sessionActions from './session-actions';
@@ -34,7 +34,7 @@ function init(initConfig) {
       return Promise.resolve();
     }
 
-    dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS() } });
+    dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS(), name: name() } });
     if (!process.env.LOCAL_DEV) {
       dispatch(listenToWindowEvents('focus', focusAction));
       dispatch(listenToWindowEvents('blur', focusAction));
