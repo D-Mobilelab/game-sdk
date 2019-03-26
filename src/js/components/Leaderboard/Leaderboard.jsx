@@ -257,12 +257,14 @@ export class Leaderboard extends Component {
 
   handleReplay(evt) {
     evt.preventDefault();
+    this.props.actions.hideBanner();
     this.props.actions.startSession();
   }
 
   onClose(evt) {
     evt.preventDefault();
     this.props.actions.hideLeaderboard();
+    this.props.actions.hideBanner();
     this.props.actions.startSession();
   }
 
