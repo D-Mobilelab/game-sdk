@@ -9,12 +9,11 @@ const Frame = styled.div`
   max-width: 450px;
   margin: 0px auto;
   position: relative;
-  top: 50px;
   background-color: white;
   color: #000;
   border-radius: 10px;
   background-image: ${(props) => { 
-   return "url('http://localhost:9090/" + props.platform +"_ver_2.png')"; 
+    return "url('http://localhost:9090/" + props.platform +"_ver_2.png')"; 
   }};
   background-repeat: no-repeat;
   background-size: cover;

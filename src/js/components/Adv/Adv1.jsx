@@ -9,12 +9,11 @@ const Frame = styled.div`
   max-width: 450px;
   margin: 0px auto;
   position: relative;
-  top: 50px;
   background-color: white;
   color: #000;
   border-radius: 10px;
   background-image: ${(props) => { 
-   return "url('http://localhost:9090/" + props.platform +"_ver_1.png')"; 
+    return "url('http://localhost:9090/" + props.platform +"_ver_1.png')"; 
   }};
   background-repeat: no-repeat;
   background-size: cover;
@@ -79,8 +78,10 @@ export class Adv1 extends Component {
     return (
         <ThemeProvider theme={themeClass}>
             <Frame platform={this.props.plaftormInfo.name}>
-                <Text>{this.props.dictionary.WEBAPP_HYBRIDINSTALL_APPINFO_IOS}</Text>
-                <Text>{this.props.dictionary.WEBAPP_HYBRIDINSTALL_APPINFOSMALL_IOS}</Text>
+                <Text>
+                  {this.props.dictionary.WEBAPP_HYBRIDINSTALL_APPINFO_IOS}<br/>
+                  {this.props.dictionary.WEBAPP_HYBRIDINSTALL_APPINFOSMALL_IOS}
+                </Text>
                 <Button onClick={this.props.handleGetAppButton}>{this.props.dictionary.WEBAPP_BANNER_BUTTON}</Button>
                 <CloseX onClick={this.props.onClose}>
                 <svg width="20" height="20">

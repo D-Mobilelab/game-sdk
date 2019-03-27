@@ -2,7 +2,7 @@ const main = {
   adv: {
     overlay: {
       background: '#000000',
-      opacity: '0.5',
+      opacity: '0.6',
     },
     close_x: {
       color: '#000000',

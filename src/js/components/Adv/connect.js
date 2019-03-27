@@ -4,6 +4,7 @@ import { Actions } from '../../actions/index';
 
 const mapStateToProps = state => ({
   show: state.banner.show,
+  version: state.banner.version,
   styles: state.styles,
   plaftormInfo: state.generic.platformInfo,
   dictionary: state.generic.dictionary,
