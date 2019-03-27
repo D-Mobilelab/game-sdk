@@ -100,15 +100,12 @@ function init(initConfig) {
         return true;
       })
       .then(() => {
-        dispatch((getMenuType() === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
+        dispatch((getState().vhost.GFSDK_MENU_TYPE === 'extended') ? menulistActions.showMenuList() : menuActions.showMenu());
         dispatch({
           type: 'INIT_FINISHED', message: 'FINISHED', initialized: true, initPending: false,
         });
 
-        // if (getState().generic.loadUserDataCalled) {
-          return dispatch(userDataActions.loadUserData());
-        // }
-        return Promise.resolve();
+        return dispatch(userDataActions.loadUserData());
       })
       .then(() => {
         if (getState().generic.session_start_after_init) {
@@ -116,14 +113,6 @@ function init(initConfig) {
           dispatch(sessionActions.startSession());
         }
       });
-    // .catch((reason) => {
-    //   if (window.Raven && window.Raven.isSetup()) {
-    //     window.Raven.captureException(reason);
-    //   }
-    //   dispatch({
-    //     type: 'INIT_ERROR', message: 'INIT_ERROR', initialized: false, initPending: false, reason: reason.toString(),
-    //   });
-    // });
   };
 }
 

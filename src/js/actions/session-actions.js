@@ -7,7 +7,7 @@ import { hideMenu, showMenu } from './menu-actions';
 import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
-import { getUserType, getMenuType } from './utils';
+import { getUserType } from './utils';
 import { showBanner } from './banner-actions';
 import location from '../lib/Location';
 
@@ -50,7 +50,7 @@ export function registerOnStartCallback(callback) {
 export function startSession() {
   return (dispatch, getState) => {
     if (getState().user.canPlay || getState().user.canDownload) {
-      dispatch((getMenuType() === 'extended') ? hideMenuList() : hideMenu());
+      dispatch((getState().vhost.GFSDK_MENU_TYPE === 'extended') ? hideMenuList() : hideMenu());
       dispatch(hideGameOver());
       dispatch(hideEnterNameModal());
       dispatch(hideLeaderboard());
@@ -58,27 +58,6 @@ export function startSession() {
     } else {
       console.log('User cannot play');
     }
-
-    // Not initialized but init called and pending
-    // if (!getState().generic.initialized && getState().generic.initPending) {
-    //   dispatch({ type: 'ADD_TO_AFTER_INIT', session_start_after_init: true });
-    //   // Not initialized, not even called init
-    // } else if (!getState().generic.initialized && !getState().generic.initPending) {
-    //   /**
-    //    * TODO:
-    //    * Init not event called before startSession
-    //    * report an error in debug env
-    //    */
-
-    //   Reporter.add('error', 'start session before init!');
-    //   console.log('You should call init before startSession!');
-    // } else if (getState().user.canPlay || getState().user.canDownload) {
-    //   dispatch((getMenuType() === 'extended') ? hideMenuList() : hideMenu());
-    //   dispatch(hideGameOver());
-    //   dispatch(doStartSession());
-    // } else {
-    //   console.log('User cannot play');
-    // }
   };
 }
 
@@ -142,7 +121,7 @@ export function endSession(data = { score: 0, level: 1 }) {
       const session = { score: data.score, level: data.level, endTime, opened: false };
       dispatch({ type: 'END_SESSION', session });
       dispatch(increaseMatchPlayed());
-      dispatch((getMenuType() === 'extended') ? showMenuList() : showMenu());
+      dispatch((vhost.GFSDK_MENU_TYPE === 'extended') ? showMenuList() : showMenu());
       // const lastSession = getState().session;
       const { game_type } = getState().game_info;
       const { initConfig } = getState().generic;
@@ -194,8 +173,8 @@ export function registerScore(alias, inputFocus) {
     }
     const lastSession = getState().session;
     const userId = getState().user.user;
-    const { user, vhost, generic } = getState();
-    const { content_id, category } = getState().game_info;
+    const { vhost } = getState();
+    const { id, category_id, category } = getState().game_info;    
     const NewtonInstance = Newton.getSharedInstance();
     const sessionId = NewtonInstance.getSessionId();
     const params = {
@@ -204,8 +183,8 @@ export function registerScore(alias, inputFocus) {
       level: lastSession.level,
       gametime: new Date(lastSession.endTime) - new Date(lastSession.startTime),
       user_id: userId,
-      category_id: category.id_category,
-      content_id,
+      category_id:  category_id || category.id_category,
+      content_id: id,
       session_id: sessionId,
     };
 
