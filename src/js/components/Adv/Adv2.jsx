@@ -23,44 +23,43 @@ const Frame = styled.div`
 
 const CloseX = styled.div`
   position: absolute;
-  top:  ${props => props.theme.adv.close_x.top};
-  right:  ${props => props.theme.adv.close_x.right};
+  top:  ${props => props.theme.adv2.close_x.top};
+  right:  ${props => props.theme.adv2.close_x.right};
   text-align: right;
   font-size: 1.2em;
   display: inline-block;
-  color: #ffffff;
   width: 100%;
   display: inline-block;
-  fill: ${props => props.theme.adv.close_x.color};
+  fill: ${props => props.theme.adv2.close_x.color};
   margin-bottom: 5px;
   margin-top: 5px;
 `;
 
 const Button = styled.div`
     bottom: 10px;
-    width: 150px;
-    height: 30px;
+    width: ${props => props.theme.adv2.button.width};
+    height: ${props => props.theme.adv2.button.height};
     z-index: 8100;
-    background-color: #45dac8;
-    color: #ffff;
-    border-radius: 20px;
-    line-height: 30px;
+    background-color: ${props => props.theme.adv2.button.background};
+    color: ${props => props.theme.adv2.button.color};
+    border-radius: ${props => props.theme.adv2.button.borderRadius};
+    line-height: ${props => props.theme.adv2.button.lineHeight};
     text-align: center;
-    font-weight: bold;
+    font-weight: ${props => props.theme.adv2.button.fontWeight};
     font-family: helvetica;
-    text-transform: uppercase;
-    border: 3px solid white;
+    text-transform: ${props => props.theme.adv2.button.textTransform};
+    border: ${props => props.theme.adv2.button.border};
     font-size: 1.1em;
     position: absolute;
-    right: 12px;
+    right: 25px;
 `;
 
 const Text = styled.div`
     width: 200px;
     z-index: 8100;
-    color: #ffff;
-    font-family: helvetica;
-    font-size: 1em;
+    color: ${props => props.theme.adv2.text.color};
+    font-family: ${props => props.theme.adv2.text.font};
+    font-size:${props => props.theme.adv2.text.fontSize};
     margin-left: 127px;
     font-weight: bold;
     margin-top: 60px;
