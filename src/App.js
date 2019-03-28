@@ -17,12 +17,6 @@ export default class App extends React.Component {
         <Menu />
         <Adv />
         <LazilyLoad modules={{
-          // Banner: () => {
-          //   if (this.props.label === 'gameasy') {
-          //     return importLazy(System.import('./js/components/Banner/Container'));
-          //   }
-          //   return function Noop() { return null; };
-          // },
           MenuList: () => {
             switch (this.props.label) {
               default:
@@ -30,9 +24,8 @@ export default class App extends React.Component {
             }
           },
         }}>
-          {({ Banner, MenuList }) => (
+          {({ MenuList }) => (
             <div>
-              {/* <Banner /> */}
               <MenuList />
             </div>)
           }
