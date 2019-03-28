@@ -25,7 +25,7 @@ const main = {
     },
     text: {
       color: '#ffffff',
-      font: 'helvetica',
+      font: 'HelveticaNeue-Bold',
       fontSize: '1.1em',
     },
   },
@@ -49,8 +49,8 @@ const main = {
     },
     text: {
       color: '#ffffff',
-      font: 'helvetica',
-      fontSize: '1em',
+      font: 'HelveticaNeue-Bold',
+      fontSize: '1.2em',
     },
   },
 };

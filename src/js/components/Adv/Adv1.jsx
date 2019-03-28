@@ -19,6 +19,7 @@ const Frame = styled.div`
   background-size: cover;
   height: 235px;
   width: 320px;
+  box-shadow: 3px 3px 15px #00000080;
 `;
 
 const CloseX = styled.div`
@@ -62,6 +63,7 @@ const Text = styled.div`
     font-size:${props => props.theme.adv1.text.fontSize};
     text-align:center;
     margin: 0px auto;
+    margin-top: 5px;
 `;
 
 export class Adv1 extends Component {

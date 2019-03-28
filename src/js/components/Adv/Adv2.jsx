@@ -19,6 +19,7 @@ const Frame = styled.div`
   background-size: cover;
   height: 235px;
   width: 320px;
+  box-shadow: 3px 3px 15px #00000080;
 `;
 
 const CloseX = styled.div`
@@ -36,7 +37,7 @@ const CloseX = styled.div`
 `;
 
 const Button = styled.div`
-    bottom: 10px;
+    bottom: 17px;
     width: ${props => props.theme.adv2.button.width};
     height: ${props => props.theme.adv2.button.height};
     z-index: 8100;
@@ -55,14 +56,15 @@ const Button = styled.div`
 `;
 
 const Text = styled.div`
-    width: 200px;
+    width: 155px;
     z-index: 8100;
     color: ${props => props.theme.adv2.text.color};
     font-family: ${props => props.theme.adv2.text.font};
     font-size:${props => props.theme.adv2.text.fontSize};
-    margin-left: 127px;
+    margin-left: 136px;
     font-weight: bold;
-    margin-top: 60px;
+    margin-top: 16px;
+    line-height: 25px;
 `;
 
 export class Adv2 extends Component {
