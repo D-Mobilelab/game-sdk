@@ -10,6 +10,12 @@ export function showBanner() {
   };
 }
 
+export function deferredBanner() {
+  return {
+    type: 'DEFERRED_BANNER',
+  };
+}
+
 export function hideBanner(loading = false) {
   return {
     type: 'HIDE_BANNER',

@@ -8,7 +8,7 @@ import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
 import { getUserType } from './utils';
-import { showBanner } from './banner-actions';
+import { showBanner, deferredBanner } from './banner-actions';
 import location from '../lib/Location';
 
 let onStartCallback = () => { };
@@ -90,10 +90,10 @@ export function endSession(data = { score: 0, level: 1 }) {
     const { FW_TYPE_PROFILE, GFSDK_ENDSESSION_TO_LANDING, CAT_DEFAULT_SUBSCRIBE_URL, DEST_DOMAIN } = vhost;
     const creativity = location.getQueryStringKey('utm_term');
 
-    // const bannerCondition = [
-    //   (user.matchPlayed % 3 === 0),
-    //   vhost.INSTALL_HYBRID_VISIBLE,
-    // ].every(condition => condition === true);
+    const bannerCondition = [
+      (user.matchPlayed % 3 === 0),
+      vhost.INSTALL_HYBRID_VISIBLE,
+    ].every(condition => condition === true);
 
     const freemiumCondition = [
       getUserType(user) !== 'premium',
@@ -101,19 +101,19 @@ export function endSession(data = { score: 0, level: 1 }) {
       GFSDK_ENDSESSION_TO_LANDING,
     ].every(condition => condition === true);
 
-    // const AndroidCondition = [
-    //   generic.platformInfo.android,
-    //   (typeof vhost.GOOGLEPLAY_STORE_URL !== "undefined")
-    // ].every(condition => condition === true);
+    const AndroidCondition = [
+      generic.platformInfo.android,
+      (typeof vhost.GOOGLEPLAY_STORE_URL !== "undefined")
+    ].every(condition => condition === true);
 
-    // const IosCondition = [
-    //   generic.platformInfo.ios,
-    //   (typeof vhost.ITUNES_STORE_URL !== "undefined")
-    // ].every(condition => condition === true);
+    const IosCondition = [
+      generic.platformInfo.ios,
+      (typeof vhost.ITUNES_STORE_URL !== "undefined")
+    ].every(condition => condition === true);
 
-    // if (bannerCondition && !freemiumCondition && (AndroidCondition || IosCondition)) {
-    //   dispatch(showBanner());
-    // }
+    if (bannerCondition && !freemiumCondition && (AndroidCondition || IosCondition)) {
+      (generic.initConfig.lite)?dispatch(showBanner()):dispatch(deferredBanner());
+    }
 
     // and a session was started
     if (Object.keys(getState().session).length > 0 && getState().session.opened) {
@@ -173,7 +173,7 @@ export function registerScore(alias, inputFocus) {
     }
     const lastSession = getState().session;
     const userId = getState().user.user;
-    const { vhost } = getState();
+    const { vhost, banner } = getState();
     const { id, category_id, category } = getState().game_info;    
     const NewtonInstance = Newton.getSharedInstance();
     const sessionId = NewtonInstance.getSessionId();
@@ -206,32 +206,9 @@ export function registerScore(alias, inputFocus) {
           dispatch(hideEnterNameModal());
           dispatch(showLeaderboard());
 
-          // const bannerCondition = [
-          //   (user.matchPlayed % 3 === 0),
-          //   vhost.INSTALL_HYBRID_VISIBLE,
-          // ].every(condition => condition === true);
-
-          // const freemiumCondition = [
-          //   getUserType(user) !== 'premium',
-          //   !isNaN(creativity),
-          //   GFSDK_ENDSESSION_TO_LANDING,
-          // ].every(condition => condition === true);
-      
-          // const AndroidCondition = [
-          //   generic.platformInfo.android,
-          //   (typeof vhost.GOOGLEPLAY_STORE_URL !== "undefined")
-          // ].every(condition => condition === true);
-      
-          // const IosCondition = [
-          //   generic.platformInfo.ios,
-          //   (typeof vhost.ITUNES_STORE_URL !== "undefined")
-          // ].every(condition => condition === true);
-
-          // if (bannerCondition && !freemiumCondition && (AndroidCondition || IosCondition)) {
-            console.log('view banner');
+          if (banner.deferredShow) {
             dispatch(showBanner());
-          // }
-
+          }
         } else {
           dispatch({ type: 'REGISTER_SCORE_FAIL', payload: { error: realResponse } });
         }

@@ -12,9 +12,7 @@ const Frame = styled.div`
   background-color: white;
   color: #000;
   border-radius: 10px;
-  background-image: ${(props) => { 
-    return "url('http://localhost:9090/" + props.platform +"_ver_2.png')"; 
-  }};
+  background-image: ${props =>  props.theme.adv2.frame.backgroundImage[props.platform]};
   background-repeat: no-repeat;
   background-size: cover;
   height: 235px;

@@ -6,6 +6,11 @@ const main = {
     },
   },
   adv1: {
+    frame: {
+      backgroundImage: {
+        ios: "url('http://localhost:9090/ios_ver_1.png')",
+      },
+    },
     close_x: {
       color: '#000000',
       top: '0px',
@@ -30,6 +35,11 @@ const main = {
     },
   },
   adv2: {
+    frame: {
+      backgroundImage: {
+        ios: "url('http://localhost:9090/ios_ver_2.png')",
+      },
+    },
     close_x: {
       color: '#000000',
       top: '0px',
