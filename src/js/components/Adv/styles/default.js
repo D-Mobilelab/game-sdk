@@ -8,7 +8,7 @@ const main = {
   adv1: {
     frame: {
       backgroundImage: {
-        ios: "url('/static_env/js/wl/webstore_html5game/img/ios_ver_1.png')",
+        ios: "url('/static_env/html5game/img/images/banner/ios_ver_1.png')",
       },
     },
     close_x: {
@@ -37,7 +37,7 @@ const main = {
   adv2: {
     frame: {
       backgroundImage: {
-        ios: "url('/static_env/js/wl/webstore_html5game/img/ios_ver_2.png')",
+        ios: "url('/static_env/html5game/img/images/banner/ios_ver_2.png')",
       },
     },
     close_x: {
