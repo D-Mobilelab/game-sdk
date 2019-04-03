@@ -13,7 +13,7 @@ import * as menuActions from './menu-actions';
 import * as gameoverActions from './gameover-actions';
 import * as vhostActions from './vhost-actions';
 import * as newtonActions from './newton-actions';
-import * as bannerActions from './banner-actions';
+import * as advActions from './adv-actions';
 import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 import * as menulistActions from './menulist-actions';
@@ -135,7 +135,7 @@ export const Actions = {
   ...gameoverActions,
   ...userDataActions,
   ...gameinfoActions,
-  ...bannerActions,
+  ...advActions,
   ...sharerActions,
   ...styleActions,
 };

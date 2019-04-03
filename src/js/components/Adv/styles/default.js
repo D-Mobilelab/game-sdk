@@ -12,7 +12,7 @@ const main = {
       },
     },
     close_x: {
-      color: '#000000',
+      color: '#FFFFFF',
       top: '0px',
       right: '5px',
     },
@@ -41,7 +41,7 @@ const main = {
       },
     },
     close_x: {
-      color: '#000000',
+      color: '#FFFFFF',
       top: '0px',
       right: '5px',
     },

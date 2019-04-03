@@ -9,7 +9,7 @@ const Frame = styled.div`
   max-width: 450px;
   margin: 0px auto;
   position: relative;
-  background-color: white;
+  background-color: #000;
   color: #000;
   border-radius: 10px;
   background-image: ${props =>  props.theme.adv2.frame.backgroundImage[props.platform]};

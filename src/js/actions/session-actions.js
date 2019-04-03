@@ -8,7 +8,7 @@ import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
 import { getUserType } from './utils';
-import { showBanner, deferredBanner } from './banner-actions';
+import { showBanner, deferredBanner } from './adv-actions';
 import location from '../lib/Location';
 
 let onStartCallback = () => { };
