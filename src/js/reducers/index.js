@@ -7,13 +7,13 @@ import session from './session';
 import game_info from './game_info';
 import vhost from './vhost';
 import game_over from './game_over';
-import adv from './adv';
+import banner from './adv';
 import interstitial from './interstitial';
 import menu_list from './menu_list';
 import styles from './styles';
 
 export default combineReducers({
-  adv,
+  banner,
   generic,
   session,
   user,
