@@ -77,8 +77,8 @@ export class Adv1 extends Component {
         <ThemeProvider theme={themeClass}>
             <Frame platform={this.props.plaftormInfo.name}>
                 <Text>
-                  {this.props.dictionary.WEBAPP_HYBRIDINSTALL_APPINFO_IOS}<br/>
-                  {this.props.dictionary.WEBAPP_HYBRIDINSTALL_APPINFOSMALL_IOS}
+                  {this.props.dictionary['WEBAPP_HYBRIDINSTALL_APPINFO_'+this.props.plaftormInfo.name.toUpperCase()]}<br/>
+                  {this.props.dictionary['WEBAPP_HYBRIDINSTALL_APPINFOSMALL_'+this.props.plaftormInfo.name.toUpperCase()]}
                 </Text>
                 <Button onClick={this.props.handleGetAppButton}>{this.props.dictionary.WEBAPP_BANNER_BUTTON}</Button>
                 <CloseX onClick={this.props.onClose}>
