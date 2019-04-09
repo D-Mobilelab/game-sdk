@@ -1,8 +1,16 @@
 import { ponyToken as generatePony } from 'docomo-utils';
 
 export function showBanner() {
+  const version = Math.floor( Math.random()*2+1);
   return {
     type: 'SHOW_BANNER',
+    version,
+  };
+}
+
+export function deferredBanner() {
+  return {
+    type: 'DEFERRED_BANNER',
   };
 }
 

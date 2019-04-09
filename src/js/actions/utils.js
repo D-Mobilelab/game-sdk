@@ -28,6 +28,11 @@ export function getContentId() {
   if (window.GamifiveInfo && window.GamifiveInfo.game) {
     return window.GamifiveInfo.game.id;
   }
+
+  if (window.localStorage.getItem('gfsdk-debug-game_id') && process.env.LOCAL_DEV) {
+    return window.localStorage.getItem('gfsdk-debug-game_id');
+  }
+
   throw new Error('Cannot get content id from gamifiveinfo');
 }
 

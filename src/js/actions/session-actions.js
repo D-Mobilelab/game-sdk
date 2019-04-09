@@ -8,7 +8,7 @@ import { hideMenuList, showMenuList } from './menulist-actions';
 import { increaseMatchPlayed } from './user-actions';
 import { hideGameOver, hideEnterNameModal, showEnterNameModal, showLeaderboard, hideLeaderboard, redirectLanding } from './gameover-actions';
 import { getUserType } from './utils';
-import { showBanner } from './banner-actions';
+import { showBanner, deferredBanner } from './adv-actions';
 import location from '../lib/Location';
 
 let onStartCallback = () => { };
@@ -112,7 +112,7 @@ export function endSession(data = { score: 0, level: 1 }) {
     ].every(condition => condition === true);
 
     if (bannerCondition && !freemiumCondition && (AndroidCondition || IosCondition)) {
-      dispatch(showBanner());
+      (generic.initConfig.lite)?dispatch(showBanner()):dispatch(deferredBanner());
     }
 
     // and a session was started
@@ -173,7 +173,7 @@ export function registerScore(alias, inputFocus) {
     }
     const lastSession = getState().session;
     const userId = getState().user.user;
-    const { vhost } = getState();
+    const { vhost, banner } = getState();
     const { id, category_id, category } = getState().game_info;    
     const NewtonInstance = Newton.getSharedInstance();
     const sessionId = NewtonInstance.getSessionId();
@@ -205,6 +205,10 @@ export function registerScore(alias, inputFocus) {
           dispatch({ type: 'REGISTER_SCORE_SUCCESS', payload });
           dispatch(hideEnterNameModal());
           dispatch(showLeaderboard());
+
+          if (banner.deferredShow) {
+            dispatch(showBanner());
+          }
         } else {
           dispatch({ type: 'REGISTER_SCORE_FAIL', payload: { error: realResponse } });
         }

@@ -1,7 +1,7 @@
 import FacebookPixelAdapter from 'facebookpixeladapter';
 import ReactGA from 'react-ga';
 import * as Constants from '../lib/Constants';
-import { isAndroid, isIOS } from '../lib/Platform';
+import { isAndroid, isIOS, name } from '../lib/Platform';
 import Reporter from '../lib/Reporter';
 import { getUserType, getLabel, getMenuType } from './utils';
 import * as sessionActions from './session-actions';
@@ -13,7 +13,7 @@ import * as menuActions from './menu-actions';
 import * as gameoverActions from './gameover-actions';
 import * as vhostActions from './vhost-actions';
 import * as newtonActions from './newton-actions';
-import * as bannerActions from './banner-actions';
+import * as advActions from './adv-actions';
 import * as sharerActions from './sharer-actions';
 import * as interstitialActions from './interstitial-actions';
 import * as menulistActions from './menulist-actions';
@@ -34,7 +34,7 @@ function init(initConfig) {
       return Promise.resolve();
     }
 
-    dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS() } });
+    dispatch({ type: 'PLATFORM_INFO', payload: { android: isAndroid(), ios: isIOS(), name: name() } });
     if (!process.env.LOCAL_DEV) {
       dispatch(listenToWindowEvents('focus', focusAction));
       dispatch(listenToWindowEvents('blur', focusAction));
@@ -135,7 +135,7 @@ export const Actions = {
   ...gameoverActions,
   ...userDataActions,
   ...gameinfoActions,
-  ...bannerActions,
+  ...advActions,
   ...sharerActions,
   ...styleActions,
 };

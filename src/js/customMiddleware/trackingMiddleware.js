@@ -273,6 +273,7 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
+          version: currentState.banner.version,
         },
       };
       NewtonAdapter.trackEvent(eventObject);
@@ -282,6 +283,7 @@ const trackingMiddleware = store => next => (action) => {
           category: eventObject.properties.category,
           action: eventObject.name,
           label: currentState.game_info.content_id || '',
+          value: currentState.banner.version,
         });
       }
       break;
@@ -292,6 +294,7 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
+          version: currentState.banner.version,
         },
       };
       NewtonAdapter.trackEvent(eventObject);
@@ -301,6 +304,7 @@ const trackingMiddleware = store => next => (action) => {
           category: eventObject.properties.category,
           action: eventObject.name,
           label: currentState.game_info.content_id || '',
+          value: currentState.banner.version,
         });
       }
       break;
@@ -311,6 +315,7 @@ const trackingMiddleware = store => next => (action) => {
           action: 'Yes',
           category: 'Behavior',
           valuable: 'Yes',
+          version: currentState.banner.version,
         },
       };
       NewtonAdapter.trackEvent(eventObject);
@@ -320,6 +325,7 @@ const trackingMiddleware = store => next => (action) => {
           category: eventObject.properties.category,
           action: eventObject.name,
           label: currentState.game_info.content_id || '',
+          value: currentState.banner.version,
         });
       }
       break;
